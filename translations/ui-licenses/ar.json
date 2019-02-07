@@ -42,5 +42,7 @@
     "licenses.licenseDescription": "الوصف",
     "licenses.customProperties": "خصائص الترخيص",
     "licenses.parentLicense": "الرخصة الأصلية",
-    "licenses.editLicense": "Edit License"
+    "licenses.editLicense": "تحرير الترخيص",
+    "licenses.updateLicense": "تحديث الترخيص",
+    "licenses.createLicense": "إنشاء ترخيص"
 }
