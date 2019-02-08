@@ -8,7 +8,7 @@
     "agreements.agreementInfo": "Agreement information",
     "agreements.agreementName": "Agreement name",
     "agreements.agreementDescription": "Description",
-    "agreements.agreementCancelDeadline": "Cancellation deadline",
+    "agreements.agreementCancelDeadline": "Prazo de cancelamento",
     "agreements.agreementRenewPrio": "Renewal priority",
     "agreements.agreementStatus": "Agreement status",
     "agreements.agreementIsPerpetual": "Is perpetual?",
@@ -42,5 +42,7 @@
     "licenses.licenseDescription": "Description",
     "licenses.customProperties": "License Properties",
     "licenses.parentLicense": "Parent License",
-    "licenses.editLicense": "Edit License"
+    "licenses.editLicense": "Editar licença",
+    "licenses.updateLicense": "Atualizar licença",
+    "licenses.createLicense": "Criar licença"
 }
