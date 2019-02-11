@@ -44,5 +44,6 @@
     "licenses.parentLicense": "الرخصة الأصلية",
     "licenses.editLicense": "تحرير الترخيص",
     "licenses.updateLicense": "تحديث الترخيص",
-    "licenses.createLicense": "إنشاء ترخيص"
+    "licenses.createLicense": "إنشاء ترخيص",
+    "prop.status": "Status"
 }
