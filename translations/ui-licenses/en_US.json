@@ -44,5 +44,6 @@
     "licenses.parentLicense": "Parent license",
     "licenses.editLicense": "Edit License",
     "licenses.updateLicense": "Update License",
-    "licenses.createLicense": "Create License"
+    "licenses.createLicense": "Create License",
+    "prop.status": "Status"
 }
