@@ -44,5 +44,6 @@
     "licenses.parentLicense": "上级许可证",
     "licenses.editLicense": "编辑许可证",
     "licenses.updateLicense": "更新许可证",
-    "licenses.createLicense": "创建许可证"
+    "licenses.createLicense": "创建许可证",
+    "prop.status": "Status"
 }
