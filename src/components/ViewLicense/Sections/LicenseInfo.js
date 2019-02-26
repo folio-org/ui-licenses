@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Pluggable } from '@folio/stripes/core';
-import { FormattedMessage } from 'react-intl';
+import { get } from 'lodash';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import {
   Accordion,
   Col,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
+
+import LicenseOrganizations from './LicenseOrganizations';
 
 class LicenseInfo extends React.Component {
   static propTypes = {
@@ -21,6 +23,12 @@ class LicenseInfo extends React.Component {
     this.props.license.parent = { id : license.id, name: license.name };
   }
 
+  renderEndDate(license) {
+    if (license.openEnded) return <FormattedMessage id="ui-licenses.prop.openEnded" />;
+    if (license.endDate) return <FormattedDate value={license.endDate} />;
+
+    return '-';
+  }
 
   render() {
     const { license } = this.props;
@@ -28,45 +36,61 @@ class LicenseInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={<FormattedMessage id="ui-licenses.licenses.licenseInfo" />}
+        label={<FormattedMessage id="ui-licenses.section.licenseInformation" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-licenses.licenses.licenseName" />}
-              value={license.name}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.licenses.parentLicense" />}>
-              <Pluggable
-                aria-haspopup="true"
-                type="find-license"
-                dataKey="license"
-                searchLabel="+"
-                searchButtonStyle="default"
-                selectLicense={lic => this.onSetParentLicense(lic)}
-                {...this.props}
-              >
-                <span>[no license-selection plugin]</span>
-              </Pluggable>
-              {' '}
-              {(license.parent || {}).name}
-            </KeyValue>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-licenses.licenses.licenseDescription" />}
-              value={license.description}
-            />
-          </Col>
-        </Row>
+        <React.Fragment>
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={<FormattedMessage id="ui-licenses.prop.name" />}>
+                <div data-test-license-name>
+                  {license.name}
+                </div>
+              </KeyValue>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6} md={3}>
+              <KeyValue label={<FormattedMessage id="ui-licenses.prop.type" />}>
+                <div data-test-license-type>
+                  {get(license, ['type', 'label'], '-')}
+                </div>
+              </KeyValue>
+            </Col>
+            <Col xs={6} md={3}>
+              <KeyValue label={<FormattedMessage id="ui-licenses.prop.status" />}>
+                <div data-test-license-status>
+                  {get(license, ['status', 'label'], '-')}
+                </div>
+              </KeyValue>
+            </Col>
+            <Col xs={6} md={3}>
+              <KeyValue label={<FormattedMessage id="ui-licenses.prop.startDate" />}>
+                <div data-test-license-start-date>
+                  {license.startDate ? <FormattedDate value={license.startDate} /> : '-'}
+                </div>
+              </KeyValue>
+            </Col>
+            <Col xs={6} md={3}>
+              <KeyValue label={<FormattedMessage id="ui-licenses.prop.endDate" />}>
+                <div data-test-license-end-date>
+                  {this.renderEndDate(license)}
+                </div>
+              </KeyValue>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={<FormattedMessage id="ui-licenses.prop.description" />}>
+                <div data-test-license-description>
+                  {license.description || '-'}
+                </div>
+              </KeyValue>
+            </Col>
+          </Row>
+        </React.Fragment>
+        <LicenseOrganizations license={this.props.license} />
       </Accordion>
     );
   }

@@ -1,7 +1,7 @@
 {
   "name": "@folio/licenses",
-  "version": "2.0.1",
-  "description": "License functionality for Stripes",
+  "version": "2.1.2",
+  "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
   "license": "Apache-2.0",
@@ -11,7 +11,11 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run demo --show",
+    "test": "stripes test nightmare --run crud/text-term/select-term/orgs",
+    "test-crud": "stripes test nightmare --run crud",
+    "test-text-term": "stripes test nightmare --run text-term",
+    "test-select-term": "stripes test nightmare --run select-term",
+    "test-orgs": "stripes test nightmare --run orgs",
     "lint": "eslint src"
   },
   "devDependencies": {
@@ -22,6 +26,7 @@
     "eslint": "^5.5.0"
   },
   "dependencies": {
+    "@folio/stripes-erm-components": "^1.0.3",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
@@ -36,7 +41,7 @@
     "type": "app",
     "displayName": "ui-licenses.meta.title",
     "route": "/licenses",
-    "home": "/licenses",
+    "home": "/licenses?sort=Name&filters=status.Active",
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
@@ -49,11 +54,19 @@
         "visible": true
       },
       {
-        "permissionName": "ui-licenses.licenses.edit",
-        "displayName": "UI: ui-licenses module is enabled",
+        "permissionName": "ui-licenses.licenses.view",
+        "displayName": "Licenses: Can view licenses",
         "visible": true,
         "subPermissions": [
           "module.licenses.enabled"
+        ]
+      },
+      {
+        "permissionName": "ui-licenses.licenses.edit",
+        "displayName": "Licenses: Can create and edit licenses",
+        "visible": true,
+        "subPermissions": [
+          "ui-licenses.licenses.view"
         ]
       },
       {
@@ -64,6 +77,11 @@
         ],
         "visible": true
       }
-    ]
+    ],
+    "icons": [{
+      "name": "app",
+      "alt": "ERM license functionality for Stripes",
+      "title": "Licenses"
+    }]
   }
 }

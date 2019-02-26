@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -13,8 +13,9 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  LicenseHeader,
   LicenseInfo,
-  LicenseCustomProperties,
+  LicenseTerms,
 } from './Sections';
 
 import EditLicense from '../EditLicense';
@@ -29,6 +30,9 @@ class ViewLicense extends React.Component {
   });
 
   static propTypes = {
+    defaultLicenseValues: PropTypes.shape({
+      customProperties: PropTypes.object,
+    }),
     editLink: PropTypes.string,
     match: PropTypes.object,
     mutator: PropTypes.shape({
@@ -47,26 +51,47 @@ class ViewLicense extends React.Component {
     stripes: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-    this.getActionMenu = this.getActionMenu.bind(this);
-  }
-
   state = {
     sections: {
       licenseInfo: true,
-      licenseProperties: true
+      licenseTerms: true,
     }
   }
 
-  getLicense() {
+  getLicense = () => {
     return get(this.props.resources.selectedLicense, ['records', 0], {});
   }
 
-  getSectionProps() {
+  getInitialValues = () => {
+    const license = cloneDeep(this.getLicense());
+    const { customProperties = {}, orgs, status, type } = license;
+
+    if (status && status.id) {
+      license.status = status.id;
+    }
+
+    if (type && type.id) {
+      license.type = type.id;
+    }
+
+    if (orgs && orgs.length) {
+      license.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
+    }
+
+    const defaultCustomProperties = get(this.props.defaultLicenseValues, ['customProperties'], {});
+    license.customProperties = {
+      ...defaultCustomProperties,
+      ...customProperties,
+    };
+
+    return license;
+  }
+
+  getSectionProps = () => {
     return {
       license: this.getLicense(),
       onToggle: this.handleSectionToggle,
+      parentResources: this.props.parentResources,
       stripes: this.props.stripes,
     };
   }
@@ -80,12 +105,7 @@ class ViewLicense extends React.Component {
     }));
   }
 
-  handleSubmit = (license) => {
-    this.props.mutator.selectedLicense.PUT(license)
-      .then(() => this.props.onCloseEdit());
-  }
-
-  renderLoadingPane() {
+  renderLoadingPane = () => {
     return (
       <Pane
         id="pane-view-license"
@@ -101,11 +121,11 @@ class ViewLicense extends React.Component {
     );
   }
 
-  renderEditLayer() {
+  renderEditLayer = () => {
     const { resources: { query } } = this.props;
 
     return (
-      <FormattedMessage id="ui-licenses.licenses.editLicense">
+      <FormattedMessage id="ui-licenses.editLicense">
         {layerContentLabel => (
           <Layer
             isOpen={query.layer === 'edit'}
@@ -113,9 +133,10 @@ class ViewLicense extends React.Component {
           >
             <EditLicense
               {...this.props}
+              onCancel={this.props.onCloseEdit}
               onSubmit={this.handleSubmit}
               parentMutator={this.props.mutator}
-              initialValues={this.getLicense()}
+              initialValues={this.getInitialValues()}
             />
           </Layer>
         )}
@@ -123,8 +144,13 @@ class ViewLicense extends React.Component {
     );
   }
 
-  getActionMenu = () => {
+  getActionMenu = ({ onToggle }) => {
     if (!this.props.stripes.hasPerm('ui-licenses.licenses.edit')) return null;
+
+    const handleClick = () => {
+      this.props.onEdit();
+      onToggle();
+    };
 
     return (
       <React.Fragment>
@@ -132,10 +158,10 @@ class ViewLicense extends React.Component {
           buttonStyle="dropdownItem"
           href={this.props.editLink}
           id="clickable-edit-license"
-          onClick={this.props.onEdit}
+          onClick={handleClick}
         >
           <Icon icon="edit">
-            <FormattedMessage id="ui-licenses.licenses.editLicense" />
+            <FormattedMessage id="ui-licenses.editLicense" />
           </Icon>
         </Button>
       </React.Fragment>
@@ -157,15 +183,16 @@ class ViewLicense extends React.Component {
         onClose={this.props.onClose}
         actionMenu={this.getActionMenu}
       >
+        <LicenseHeader {...sectionProps} />
         <AccordionSet>
           <LicenseInfo
             id="licenseInfo"
             open={this.state.sections.licenseInfo}
             {...sectionProps}
           />
-          <LicenseCustomProperties
-            id="licenseCustomProperties"
-            open={this.state.sections.licenseCustomProperties}
+          <LicenseTerms
+            id="licenseTerms"
+            open={this.state.sections.licenseTerms}
             {...sectionProps}
           />
         </AccordionSet>

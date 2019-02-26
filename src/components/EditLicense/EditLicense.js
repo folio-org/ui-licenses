@@ -6,27 +6,33 @@ import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes/components';
 
 import LicenseForm from '../LicenseForm';
 
+const handleSubmit = (agreement, dispatch, props) => {
+  props.onUpdate(agreement)
+    .then(() => props.onCancel());
+};
+
 class EditLicense extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
-    onCloseEdit: PropTypes.func,
+    onCancel: PropTypes.func,
     onRemove: PropTypes.func,
+    onUpdate: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     parentResources: PropTypes.object,
-    parentMutator: PropTypes.object
+    parentMutator: PropTypes.object,
   }
 
   renderFirstMenu() {
     return (
       <PaneMenu>
-        <FormattedMessage id="ui-licenses.licenses.closeNewLicense">
+        <FormattedMessage id="ui-licenses.closeNewLicense">
           {ariaLabel => (
             <IconButton
               icon="times"
-              onClick={this.props.onCloseEdit}
+              onClick={this.props.onCancel}
               aria-label={ariaLabel}
             />
           )}
@@ -42,10 +48,10 @@ class EditLicense extends React.Component {
     let label;
     if (initialValues && initialValues.id) {
       id = 'clickable-updatelicense';
-      label = <FormattedMessage id="ui-licenses.licenses.updateLicense" />;
+      label = <FormattedMessage id="ui-licenses.updateLicense" />;
     } else {
       id = 'clickable-createlicense';
-      label = <FormattedMessage id="ui-licenses.licenses.createLicense" />;
+      label = <FormattedMessage id="ui-licenses.createLicense" />;
     }
 
     return (
@@ -67,7 +73,7 @@ class EditLicense extends React.Component {
   render() {
     const { initialValues } = this.props;
     const paneTitle = initialValues && initialValues.id ?
-      initialValues.name : <FormattedMessage id="ui-licenses.licenses.createLicense" />;
+      initialValues.name : <FormattedMessage id="ui-licenses.createLicense" />;
 
     return (
       <form id="form-license">
@@ -86,8 +92,8 @@ class EditLicense extends React.Component {
 
 export default stripesForm({
   form: 'EditLicense',
-  // validate,
-  // asyncValidate,
+  onSubmit: handleSubmit,
   navigationCheck: true,
   enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
 })(EditLicense);
