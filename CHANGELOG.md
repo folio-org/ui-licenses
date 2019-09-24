@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 3.5.1 2019-09-24
+* Fetch more pick lists in settings. ERM-471
+
 ## 3.5.0 2019-09-09
 * Added support for `mod-organizations-storage` 2.0
 * Added settings page for License Terms. ERM-391
