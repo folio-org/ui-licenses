@@ -94,6 +94,7 @@ class AmendmentFormInfo extends React.Component {
           <Col xs={10} md={5}>
             <Field
               backendDateStandard="YYYY-MM-DD"
+              component={Datepicker}
               dateFormat="YYYY-MM-DD"
               disabled={values.openEnded}
               id="edit-amendment-end-date"
