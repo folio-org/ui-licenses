@@ -73,7 +73,7 @@ export default class Licenses extends React.Component {
         <AppIcon
           size="small"
           app="licenses"
-          iconKey={'app'}
+          iconKey="app"
         >
           {a.name}
         </AppIcon>
