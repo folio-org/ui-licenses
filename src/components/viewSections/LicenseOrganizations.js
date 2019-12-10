@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import { ViewOrganizationCard } from '@folio/stripes/stripes-erm-components';
+=======
+import ViewOrganizationCard from '../../../../stripes-erm-components/lib/ViewOrganizationCard';
+>>>>>>> 811829e629b7d252d6868347bba7bf3c0cfb25de
 import { Accordion, Badge, Icon, Layout } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
