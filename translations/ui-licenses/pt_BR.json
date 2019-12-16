@@ -66,7 +66,7 @@
     "license": "Licença",
     "licensePlural": "{count} {count, plural, one {licença} other {licenças}}",
     "errors.termNoteWithoutValue": "Um valor deve ser definido para este termo para salvar uma anotação",
-    "organizations.addOrganizationToLicense": "Adicionar organização à licença",
+    "organizations.addOrganizationToLicense": "Adicionar organização",
     "errors.termVisibilityWithoutValue": "Um valor deve ser definido para este termo para alterar a visibilidade",
     "prop.termVisibility": "Visibilidade",
     "term.title": "Termo {number}",
