@@ -172,6 +172,11 @@ export default class TermsListField extends React.Component {
     if (term.type === TERM_TYPE_NUMBER) {
       FieldComponent = TextField;
       fieldProps.type = 'number';
+      const min = 0;
+      const max = Number.MAX_SAFE_INTEGER;
+      if (currentValue.value < min || currentValue.value > max) {
+        errors[term.value] = <FormattedMessage id="ui-licenses.errors.termValueNotInRange" values={{ min, max }} />;
+      }
     }
 
     const handleChange = e => {
