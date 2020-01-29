@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Accordion } from '@folio/stripes/components';
-import { CustomPropertiesList } from '@folio/stripes-erm-components';
 
-export default class Terms extends React.Component {
+import { Accordion } from '@folio/stripes/components';
+
+import { FormTerms } from '@folio/stripes-erm-components';
+
+class FormCustomProperties extends React.Component {
   static propTypes = {
+    data: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    record: PropTypes.shape({ customProperties: PropTypes.object }),
-    terms: PropTypes.arrayOf(PropTypes.object),
-  }
+  };
 
   render() {
-    const { id, onToggle, open, record, terms } = this.props;
-
+    const { data, id, onToggle, open } = this.props;
     return (
       <Accordion
         id={id}
@@ -23,11 +23,10 @@ export default class Terms extends React.Component {
         open={open}
         onToggle={onToggle}
       >
-        <CustomPropertiesList
-          resource={record}
-          customProperties={terms}
-        />
+        <FormTerms data={data} />
       </Accordion>
     );
   }
 }
+
+export default FormCustomProperties;
