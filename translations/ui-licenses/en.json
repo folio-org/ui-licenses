@@ -19,8 +19,6 @@
   "newLicense": "New license",
   "updateLicense": "Update license",
 
-  "notSet": "Not set",
-
   "showTags": "Show Tags",
   "tags": "Tags",
 
@@ -37,8 +35,6 @@
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
   "errors.termNameHasNonAlpha": "The term name can only contain Latin alphabetical characters (a-z) and non-leading numeric characters.",
-  "errors.termNoteWithoutValue": "A value must be set for this term in order to save a note",
-  "errors.termValueNotInRange" : "Please enter a whole number in the range {min} to {max} to continue",
   "errors.termVisibilityWithoutValue": "A value must be set for this term in order to change visibility",
 
   "filters.organization": "Organizations",
@@ -64,7 +60,6 @@
   "prop.orgRole": "Role",
   "prop.parentLicense": "Parent License",
   "prop.terms": "License Terms",
-  "prop.termName": "Name",
   "prop.termNote": "Note",
   "prop.termValue": "Value",
   "prop.termVisibility": "Visibility",
@@ -85,7 +80,7 @@
   "section.licenseAgreements": "Agreements linked to this license",
   "section.licenseInformation": "License information",
   "section.organizations": "Organizations",
-  "section.supplementInformation": "Supplementary information",
+  "section.supplementaryDocuments": "Supplementary Documents",
   "section.terms": "Terms",
 
   "settings.general": "General",
@@ -131,12 +126,6 @@
   "terms.term": "Term",
   "terms.primaryTerms": "Primary terms",
   "terms.optionalTerms": "Optional terms",
-  "term.title": "Term {number}",
-  "term.internalTrue": "Internal",
-  "term.internalFalse": "Public",
-  "term.internalNote": "Internal note",
-  "term.publicNote": "Public note",
-  "term.removeTerm": "Remove term",
 
   "warn.clearEndDate": "End date will be cleared because \"Open ended\" is checked."
 }

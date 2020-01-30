@@ -23,7 +23,11 @@ class FormCustomProperties extends React.Component {
         open={open}
         onToggle={onToggle}
       >
-        <FormTerms data={data} />
+        <FormTerms
+          data={data}
+          optionalSectionLabel={<FormattedMessage id="ui-licenses.terms.optionalTerms" />}
+          primarySectionLabel={<FormattedMessage id="ui-licenses.terms.primaryTerms" />}
+        />
       </Accordion>
     );
   }
