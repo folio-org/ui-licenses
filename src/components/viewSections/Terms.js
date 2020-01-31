@@ -24,8 +24,8 @@ export default class Terms extends React.Component {
         onToggle={onToggle}
       >
         <CustomPropertiesList
-          resource={record}
           customProperties={terms}
+          resource={record}
         />
       </Accordion>
     );
