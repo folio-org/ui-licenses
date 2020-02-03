@@ -4,9 +4,9 @@ import { FormattedMessage } from 'react-intl';
 
 import { Accordion } from '@folio/stripes/components';
 
-import { FormTerms } from '@folio/stripes-erm-components';
+import { FormCustomProperties } from '@folio/stripes-erm-components';
 
-class FormCustomProperties extends React.Component {
+class FormTerms extends React.Component {
   static propTypes = {
     data: PropTypes.object,
     id: PropTypes.string,
@@ -15,7 +15,7 @@ class FormCustomProperties extends React.Component {
   };
 
   render() {
-    const { data, id, onToggle, open } = this.props;
+    const { id, onToggle, open, data: { terms = [] } } = this.props;
     return (
       <Accordion
         id={id}
@@ -23,14 +23,16 @@ class FormCustomProperties extends React.Component {
         open={open}
         onToggle={onToggle}
       >
-        <FormTerms
-          data={data}
+        <FormCustomProperties
+          customProperties={terms}
+          name="customProperties"
           optionalSectionLabel={<FormattedMessage id="ui-licenses.terms.optionalTerms" />}
           primarySectionLabel={<FormattedMessage id="ui-licenses.terms.primaryTerms" />}
+          type="terms"
         />
       </Accordion>
     );
   }
 }
 
-export default FormCustomProperties;
+export default FormTerms;

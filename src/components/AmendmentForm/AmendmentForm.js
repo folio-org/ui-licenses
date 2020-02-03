@@ -25,7 +25,7 @@ import {
   AmendmentFormInfo,
   FormCoreDocs,
   FormSupplementaryDocs,
-  FormCustomProperties,
+  FormTerms,
 } from '../formSections';
 
 import css from './AmendmentForm.css';
@@ -55,7 +55,7 @@ class AmendmentForm extends React.Component {
     sections: {
       amendmentFormCoreDocs: true,
       amendmentFormSupplementaryDocs: true,
-      amendmentFormCustomProperties: true,
+      amendmentFormTerms: true,
     }
   }
 
@@ -199,7 +199,7 @@ class AmendmentForm extends React.Component {
                         </Col>
                       </Row>
                       <FormCoreDocs {...this.getSectionProps('amendmentFormCoreDocs')} />
-                      <FormCustomProperties {...this.getSectionProps('amendmentFormCustomProperties')} />
+                      <FormTerms {...this.getSectionProps('amendmentFormTerms')} />
                       <FormSupplementaryDocs {...this.getSectionProps('amendmentFormSupplementaryDocs')} />
                     </AccordionSet>
                   </div>
