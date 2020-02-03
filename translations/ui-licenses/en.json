@@ -29,6 +29,10 @@
   "coreDocs.none": "No core documents have been added.",
   "coreDocs.removeCoreDoc": "Remove core document",
 
+  "terms.count": "{count, number} saved {count, plural, one {term} other {terms}}",
+
+  "terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses.",
+
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
   "errors.termVisibilityWithoutValue": "A value must be set for this term in order to change visibility",
@@ -97,6 +101,10 @@
   "terms.add": "Add term",
   "terms.primaryTerms": "Primary terms",
   "terms.optionalTerms": "Optional terms",
+  "terms.callout.delete.error": "There was an error deleting the term. {error}",
+  "terms.callout.delete.success": "Term successfully deleted.",
+  "terms.callout.save.error": "There was an error saving the term. {error}",
+  "terms.callout.save.success": "Term successfully saved.",
 
   "warn.clearEndDate": "End date will be cleared because \"Open ended\" is checked."
 }
