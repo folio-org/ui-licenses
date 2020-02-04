@@ -28,7 +28,7 @@ class FormTerms extends React.Component {
           name="customProperties"
           optionalSectionLabel={<FormattedMessage id="ui-licenses.terms.optionalTerms" />}
           primarySectionLabel={<FormattedMessage id="ui-licenses.terms.primaryTerms" />}
-          type="terms"
+          translationKey="term"
         />
       </Accordion>
     );
