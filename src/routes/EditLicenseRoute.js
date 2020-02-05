@@ -125,11 +125,11 @@ class EditLicenseRoute extends React.Component {
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: get(o, 'atType.value') }));
 
     // Add the default terms to the already-set terms.
-    initialValues.terms = initialValues.terms || {};
+    initialValues.customProperties = initialValues.customProperties || {};
     const terms = get(resources, 'terms.records', []);
     terms
-      .filter(t => t.primary && initialValues.terms[t.name] === undefined)
-      .forEach(t => { initialValues.terms[t.name] = ''; });
+      .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
+      .forEach(t => { initialValues.customProperties[t.name] = ''; });
 
     return initialValues;
   }
