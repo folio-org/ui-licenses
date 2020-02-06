@@ -118,7 +118,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it(`should set term to: ${term.value}`, done => {
         nightmare
-          .type('[data-test-customproperty=optional] [data-test-customproperty-name]', term.label)
+          .select('[data-test-customproperty=optional] [data-test-customproperty-name]', term.name)
           .type('[data-test-customproperty=optional] [data-test-customproperty-value]', term.value)
           .type('[data-test-customproperty=optional] [data-test-customproperty-note]', term.note)
           .type('[data-test-customproperty=optional] [data-test-customproperty-public-note]', term.publicNote)
