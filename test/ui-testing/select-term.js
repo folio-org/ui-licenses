@@ -4,8 +4,8 @@ module.exports.test = (uiTestCtx) => {
   Term.test(
     uiTestCtx,
     {
-      name: 'authIP',
-      label: 'IP authentication supported?',
+      name: 'authSAML',
+      label: 'SAML compliant authentication supported?',
       value: 'No',
       editedValue: 'Yes',
       note: 'Internal note',
