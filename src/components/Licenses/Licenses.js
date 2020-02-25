@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
+  Checkbox,
   FormattedUTCDate,
   Icon,
   MultiColumnList,
@@ -24,6 +25,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
+import ExportLicenseAsCSVModal from '../ExportLicenseAsCSVModal';
 
 import LicenseFilters from '../LicenseFilters';
 
@@ -49,6 +51,8 @@ export default class Licenses extends React.Component {
 
   state = {
     filterPaneIsVisible: true,
+    selectedLicenses: {},
+    showExportLicenseAsCSVModal: false,
   }
 
   columnMapping = {
@@ -68,7 +72,15 @@ export default class Licenses extends React.Component {
   }
 
   formatter = {
-    name: a => {
+    '': resource => (
+      <Checkbox
+        name={`selected-${resource.id}`}
+        checked={!!(this.state.selectedLicenses[resource.id])}
+        onChange={() => this.handleToggleLicenseCheckBox(resource)}
+        onClick={e => e.stopPropagation()}
+      />
+    ),
+    'name': a => {
       return (
         <AppIcon
           size="small"
@@ -79,10 +91,46 @@ export default class Licenses extends React.Component {
         </AppIcon>
       );
     },
-    type: ({ type }) => type && type.label,
-    status: ({ status }) => status && status.label,
-    startDate: ({ startDate }) => (startDate ? <FormattedUTCDate value={startDate} /> : ''),
-    endDate: license => <LicenseEndDate license={license} />,
+    'type': ({ type }) => type && type.label,
+    'status': ({ status }) => status && status.label,
+    'startDate': ({ startDate }) => (startDate ? <FormattedUTCDate value={startDate} /> : ''),
+    'endDate': license => <LicenseEndDate license={license} />,
+  }
+
+
+  getActionMenu = ({ onToggle }) => {
+    const { selectedLicenses } = this.state;
+    const count = Object.values(selectedLicenses).filter(item => item === true).length;
+    return (
+      <Button
+        buttonStyle="dropdownItem"
+        disabled={count === 0}
+        id="export-licenses-csv"
+        onClick={() => {
+          this.openExportLicenseAsCSVModal();
+          onToggle();
+        }}
+      >
+        <FormattedMessage id="ui-licenses.export.csv.label" values={{ count }} />
+      </Button>
+    );
+  };
+
+  handleToggleLicenseCheckBox = (license) => {
+    this.setState(prevState => ({
+      selectedLicenses: {
+        ...prevState.selectedLicenses,
+        [license.id]: !(prevState.selectedLicenses[license.id])
+      },
+    }));
+  }
+
+  openExportLicenseAsCSVModal = () => {
+    this.setState({ showExportLicenseAsCSVModal: true });
+  }
+
+  closeExportLicenseAsCSVModal = () => {
+    this.setState({ showExportLicenseAsCSVModal: false });
   }
 
   rowFormatter = (row) => {
@@ -203,6 +251,7 @@ export default class Licenses extends React.Component {
       source,
     } = this.props;
 
+    const { selectedLicenses } = this.state;
     const query = queryGetter() || {};
     const count = source ? source.totalCount() : 0;
     const sortOrder = query.sort || '';
@@ -289,6 +338,7 @@ export default class Licenses extends React.Component {
                     </Pane>
                   }
                   <Pane
+                    actionMenu={this.getActionMenu}
                     appIcon={<AppIcon app="licenses" />}
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
@@ -309,14 +359,22 @@ export default class Licenses extends React.Component {
                       onNeedMoreData={onNeedMoreData}
                       isSelected={({ item }) => item.id === selectedRecordId}
                       rowFormatter={this.rowFormatter}
+                      rowUpdater={resource => this.state.selectedLicenses[resource.id]}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                       sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                       totalCount={count}
                       virtualize
-                      visibleColumns={['name', 'type', 'status', 'startDate', 'endDate']}
+                      visibleColumns={['', 'name', 'type', 'status', 'startDate', 'endDate']}
                     />
                   </Pane>
                   {children}
+                  {this.state.showExportLicenseAsCSVModal &&
+                  <ExportLicenseAsCSVModal
+                    onClose={this.closeExportLicenseAsCSVModal}
+                    selectedLicenses={Object.keys(selectedLicenses).filter(item => selectedLicenses[item] === true)}
+                    terms={data.terms}
+                  />
+        }
                 </Paneset>
               );
             }

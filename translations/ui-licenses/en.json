@@ -33,6 +33,16 @@
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
   "errors.termVisibilityWithoutValue": "A value must be set for this term in order to change visibility",
 
+  "export.csv.label": "Export selected as CSV ({count, number} items)",
+
+  "exportLicenses": "Export licenses as CSV",
+
+  "exportLicensesModal.message": "Please select which license details to export",
+  "exportLicensesModal.selectAll": "Select all/deselect all",
+  "exportLicensesModal.licenseInformation": "License information",
+  "exportLicensesModal.terms": "Terms",
+  "exportLicensesModal.termNames": "Term names",
+
   "filters.organization": "Organizations",
   "filters.organizationRole": "Organization role",
 
@@ -49,12 +59,14 @@
   "prop.agreementStatus": "Agreement status",
   "prop.description": "Description",
   "prop.endDate": "End date",
+  "prop.internalNote": "Internal note",
   "prop.linkStatus": "Link status",
   "prop.name": "Name",
   "prop.openEnded": "Open ended",
   "prop.orgName": "Name",
   "prop.orgRole": "Role",
   "prop.parentLicense": "Parent License",
+  "prop.publicNote": "Public note",
   "prop.terms": "License Terms",
   "prop.termNote": "Note",
   "prop.termValue": "Value",
