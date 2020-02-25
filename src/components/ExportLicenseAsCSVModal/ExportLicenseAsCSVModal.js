@@ -14,6 +14,7 @@ import css from './ExportLicenseAsCSVModal.css';
 
 export default class ExportLicenseAsCSVModal extends React.Component {
   static propTypes = {
+    onCompareLicenseTerms: PropTypes.func,
     onClose: PropTypes.func,
     selectedLicenses: PropTypes.arrayOf(PropTypes.string),
     terms: PropTypes.arrayOf(PropTypes.object),
@@ -50,13 +51,10 @@ export default class ExportLicenseAsCSVModal extends React.Component {
   }
 
   renderCheckboxesList = (section) => {
-    const { terms, termNames } = this.state;
     return (
       <>
         <Checkbox
-          checked={section === 'terms' ?
-            Object.values({ ...terms, ...termNames }).includes(false) !== true :
-            Object.values(this.state[section]).includes(false) !== true}
+          checked={Object.values(this.state[section]).includes(false) !== true}
           label={<strong><FormattedMessage id={`ui-licenses.exportLicensesModal.${section}`} /></strong>}
           onChange={(e) => this.toggleSelectSection(e, section)}
           value={section}
@@ -86,14 +84,17 @@ export default class ExportLicenseAsCSVModal extends React.Component {
       <ModalFooter>
         <Button
           buttonStyle="primary"
-          disabled={Object.values({ ...licenseInformation, ...terms, ...termNames }).every(item => item === false)}
+          disabled={Object.values({ ...licenseInformation, ...terms, ...termNames }).includes(true) !== true}
           id="export-licenses-modal-save-button"
           onClick={() => {
-            return {
+            const payload = {
               ids: this.props.selectedLicenses,
-              include: { ...pickBy(licenseInformation), ...pickBy(termNames) },
+              include: { ...pickBy(licenseInformation), ...{ 'customProperties': pickBy(termNames) } },
               terms: pickBy(terms)
             };
+
+            this.props.onCompareLicenseTerms(payload)
+              .finally(() => this.props.onClose());
           }}
         >
           <FormattedMessage id="stripes-components.saveAndClose" />
@@ -152,16 +153,9 @@ export default class ExportLicenseAsCSVModal extends React.Component {
   toggleSelectSection = (e, section) => {
     const { checked } = e.target;
 
-    if (section === 'terms') {
-      this.setState(() => ({
-        terms: mapValues(this.terms, () => checked),
-        termNames: mapValues(this.termNames, () => checked)
-      }));
-    } else {
-      this.setState(() => ({
-        [section]: mapValues(this[section], () => checked),
-      }));
-    }
+    this.setState(() => ({
+      [section]: mapValues(this[section], () => checked),
+    }));
   }
 
   updateSelection = (e, section) => {

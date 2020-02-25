@@ -36,6 +36,7 @@ export default class Licenses extends React.Component {
     children: PropTypes.node,
     contentRef: PropTypes.object,
     data: PropTypes.object,
+    onCompareLicenseTerms: PropTypes.func,
     onNeedMoreData: PropTypes.func,
     queryGetter: PropTypes.func,
     querySetter: PropTypes.func,
@@ -244,6 +245,7 @@ export default class Licenses extends React.Component {
       children,
       contentRef,
       data,
+      onCompareLicenseTerms,
       onNeedMoreData,
       queryGetter,
       querySetter,
@@ -371,6 +373,7 @@ export default class Licenses extends React.Component {
                   {this.state.showExportLicenseAsCSVModal &&
                   <ExportLicenseAsCSVModal
                     onClose={this.closeExportLicenseAsCSVModal}
+                    onCompareLicenseTerms={onCompareLicenseTerms}
                     selectedLicenses={Object.keys(selectedLicenses).filter(item => selectedLicenses[item] === true)}
                     terms={data.terms}
                   />
