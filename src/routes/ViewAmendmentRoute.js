@@ -4,6 +4,9 @@ import { get } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { FormattedMessage } from 'react-intl';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { ConfirmationModal } from '@folio/stripes/components';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/Amendment';
@@ -54,6 +57,11 @@ class ViewAmendmentsRoute extends React.Component {
     handlers: {},
   }
 
+  constructor(props) {
+    super(props);
+    this.state = { showConfirmDelete: false };
+  }
+
   getAmendment = () => {
     const { match, resources } = this.props;
     const amendments = get(resources, 'license.records[0].amendments', []);
@@ -83,6 +91,10 @@ class ViewAmendmentsRoute extends React.Component {
       .then(this.handleClose);
   }
 
+  showDeleteConfirmationModal = () => this.setState({ showConfirmDelete: true });
+
+  hideDeleteConfirmationModal = () => this.setState({ showConfirmDelete: false });
+
   fetchIsPending = () => {
     return Object.values(this.props.resources)
       .filter(r => r && r.resource !== 'licenses')
@@ -95,22 +107,37 @@ class ViewAmendmentsRoute extends React.Component {
 
   render() {
     const { handlers, resources } = this.props;
-
+    const amendment = this.getAmendment();
+    const name = amendment?.name;
     return (
-      <View
-        data={{
-          amendment: this.getAmendment(),
-          license: get(resources, 'license.records[0]', {}),
-          terms: get(resources, 'terms.records', []),
-        }}
-        handlers={{
-          ...handlers,
-          onClose: this.handleClose,
-          onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete,
-        }}
-        isLoading={get(resources, 'license.isPending')}
-        urls={this.urls}
-      />
+      <>
+        <View
+          data={{
+            amendment,
+            license: get(resources, 'license.records[0]', {}),
+            terms: get(resources, 'terms.records', []),
+          }}
+          handlers={{
+            ...handlers,
+            onClose: this.handleClose,
+            onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete && this.showDeleteConfirmationModal,
+          }}
+          isLoading={get(resources, 'license.isPending')}
+          urls={this.urls}
+        />
+        {this.state.showConfirmDelete && (
+          <ConfirmationModal
+            id="delete-job-confirmation"
+            confirmLabel={<FormattedMessage id="ui-licenses.amendments.delete.confirmLabel" />}
+            heading={<FormattedMessage id="ui-licenses.amendments.delete.confirmHeading" />}
+            message={<SafeHTMLMessage id="ui-licenses.amendments.delete.confirmMessage" values={{ name }} />}
+            onCancel={this.hideDeleteConfirmationModal}
+            onConfirm={this.handleDelete}
+            buttonStyle="danger"
+            open
+          />
+        )}
+      </>
     );
   }
 }

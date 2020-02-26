@@ -25,6 +25,10 @@
   "amendments.amendmentInfo": "Amendment information",
   "amendments.update": "Update amendment",
 
+  "amendments.delete.confirmLabel": "Delete",
+  "amendments.delete.confirmHeading": "Delete amendment",
+  "amendments.delete.confirmMessage": "Amendment <strong>{name}</strong> will be <strong>deleted</strong>.",
+
   "coreDocs.add": "Add core document",
   "coreDocs.none": "No core documents have been added.",
   "coreDocs.removeCoreDoc": "Remove core document",

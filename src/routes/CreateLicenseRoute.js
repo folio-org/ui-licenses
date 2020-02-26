@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { ToastContext, stripesConnect } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/LicenseForm';
@@ -80,6 +80,8 @@ class CreateLicenseRoute extends React.Component {
     handlers: {},
   }
 
+  static contextType = ToastContext;
+
   constructor(props) {
     super(props);
 
@@ -117,6 +119,8 @@ class CreateLicenseRoute extends React.Component {
     mutator.licenses
       .POST(license)
       .then(({ id }) => {
+        const callout = this.context;
+        callout.current.sendCallout({ message: 'Hello! New license!' });
         history.push(`/licenses/${id}${location.search}`);
       });
   }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { cloneDeep, get } from 'lodash';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { ToastContext, stripesConnect } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
 import Form from '../components/LicenseForm';
@@ -97,6 +97,8 @@ class EditLicenseRoute extends React.Component {
     handlers: {},
   }
 
+  static contextType = ToastContext;
+
   constructor(props) {
     super(props);
 
@@ -142,7 +144,11 @@ class EditLicenseRoute extends React.Component {
   handleSubmit = (license) => {
     this.props.mutator.license
       .PUT(license)
-      .then(this.handleClose);
+      .then(() => {
+        const callout = this.context;
+        callout.current.sendCallout({ message: 'Hello again! License updated!' });
+        this.handleClose();
+      });
   }
 
   fetchIsPending = () => {
