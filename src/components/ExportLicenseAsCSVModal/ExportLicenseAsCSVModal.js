@@ -27,7 +27,7 @@ export default class ExportLicenseAsCSVModal extends React.Component {
     this.termsArray = ['value', 'note', 'publicNote', 'internal'];
     this.termNamesArray = sortBy(props.terms, (term) => {
       return term?.label?.toLowerCase();
-    }).map(item => item.name); // Sort terms array of objects by the label
+    }).map(item => item.name); // Sort terms array of objects by the label and return a new array of term names
 
     /* create objects of the format
         { 'name' : '<FormattedMessage id=ui-licenses.exportLicensesModal.name />',
