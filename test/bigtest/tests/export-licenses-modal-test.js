@@ -21,8 +21,8 @@ const terms = [
     label: 'Access restricted to on-campus/campus network?'
   }
 ];
-const selectedLicenses = ['1', '2'];
 
+const selectedLicenses = ['1', '2'];
 const onCompareLicenseTerms = spy(() => Promise.resolve());
 const onClose = spy();
 
@@ -41,7 +41,6 @@ const checkBoxes = {
   internal: 11,
   termName: 12
 };
-
 
 describe('ExportLicenseAsCSVModal', () => {
   describe('Select all properties', () => {
