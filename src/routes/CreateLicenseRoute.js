@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import compose from 'compose-function';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import { ToastContext, stripesConnect } from '@folio/stripes/core';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/LicenseForm';
@@ -80,7 +81,7 @@ class CreateLicenseRoute extends React.Component {
     handlers: {},
   }
 
-  static contextType = ToastContext;
+  static contextType = CalloutContext;
 
   constructor(props) {
     super(props);
@@ -115,12 +116,11 @@ class CreateLicenseRoute extends React.Component {
 
   handleSubmit = (license) => {
     const { history, location, mutator } = this.props;
-
+    const name = license?.name;
     mutator.licenses
       .POST(license)
       .then(({ id }) => {
-        const callout = this.context;
-        callout.current.sendCallout({ message: 'Hello! New license!' });
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.create.callout" values={{ name }} /> });
         history.push(`/licenses/${id}${location.search}`);
       });
   }

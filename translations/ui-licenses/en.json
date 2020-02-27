@@ -10,6 +10,8 @@
   "closeEditLicense": "Close edit license pane",
   "createLicense": "Create license",
   "create": "Create",
+  "create.callout": "<strong>License created:</strong> {name}",
+  "update.callout": "<strong>License updated:</strong> {name}",
   "delete": "Delete",
   "editLicense": "Edit license",
   "edit": "Edit",
@@ -22,9 +24,12 @@
   "amendments.add": "Add amendment",
   "amendments.closePane": "Close edit amendment pane",
   "amendments.create": "Create amendment",
+  "amendments.create.callout": "<strong>Amendment created:</strong> {name}",
   "amendments.amendmentInfo": "Amendment information",
   "amendments.update": "Update amendment",
-
+  "amendments.update.callout": "<strong>Amendment updated:</strong> {name}",
+  
+  "amendments.delete.callout": "<strong>Amendment deleted:</strong> {name}",
   "amendments.delete.confirmLabel": "Delete",
   "amendments.delete.confirmHeading": "Delete amendment",
   "amendments.delete.confirmMessage": "Amendment <strong>{name}</strong> will be <strong>deleted</strong>.",

@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, get } from 'lodash';
 import compose from 'compose-function';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import { ToastContext, stripesConnect } from '@folio/stripes/core';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+
 
 import withFileHandlers from './components/withFileHandlers';
 import Form from '../components/LicenseForm';
@@ -97,7 +99,7 @@ class EditLicenseRoute extends React.Component {
     handlers: {},
   }
 
-  static contextType = ToastContext;
+  static contextType = CalloutContext;
 
   constructor(props) {
     super(props);
@@ -142,11 +144,11 @@ class EditLicenseRoute extends React.Component {
   }
 
   handleSubmit = (license) => {
+    const name = license?.name;
     this.props.mutator.license
       .PUT(license)
       .then(() => {
-        const callout = this.context;
-        callout.current.sendCallout({ message: 'Hello again! License updated!' });
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.update.callout" values={{ name }} /> });
         this.handleClose();
       });
   }

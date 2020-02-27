@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import compose from 'compose-function';
-
-import { stripesConnect } from '@folio/stripes/core';
-import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+import { FormattedMessage } from 'react-intl';
 import { ConfirmationModal } from '@folio/stripes/components';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -57,6 +57,8 @@ class ViewAmendmentsRoute extends React.Component {
     handlers: {},
   }
 
+  static contextType = CalloutContext;
+
   constructor(props) {
     super(props);
     this.state = { showConfirmDelete: false };
@@ -79,6 +81,7 @@ class ViewAmendmentsRoute extends React.Component {
   handleDelete = () => {
     const license = get(this.props.resources, 'license.records[0]', {});
     const { match: { params } } = this.props;
+    const name = license?.amendments.filter(obj => obj.id === params?.amendmentId)[0]?.name;
 
     this.props.mutator.license
       .PUT({
@@ -88,7 +91,10 @@ class ViewAmendmentsRoute extends React.Component {
           _delete: true,
         }],
       })
-      .then(this.handleClose);
+      .then(() => {
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.amendments.delete.callout" values={{ name }} /> });
+        this.handleClose();
+      });
   }
 
   showDeleteConfirmationModal = () => this.setState({ showConfirmDelete: true });
