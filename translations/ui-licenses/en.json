@@ -42,6 +42,16 @@
   "exportLicensesModal.licenseInformation": "License information",
   "exportLicensesModal.terms": "Terms",
   "exportLicensesModal.termNames": "Term names",
+  "exportLicensesModal.name": "Name",
+  "exportLicensesModal.startDate": "Start date",
+  "exportLicensesModal.endDate": "End date",
+  "exportLicensesModal.status": "Status",
+  "exportLicensesModal.type": "Type",
+  "exportLicensesModal.value": "Value",
+  "exportLicensesModal.note": "Internal note",
+  "exportLicensesModal.publicNote": "Public note",
+  "exportLicensesModal.internal": "Visibility",
+
 
   "filters.organization": "Organizations",
   "filters.organizationRole": "Organization role",

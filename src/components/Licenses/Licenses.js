@@ -81,7 +81,7 @@ export default class Licenses extends React.Component {
         onClick={e => e.stopPropagation()}
       />
     ),
-    'name': a => {
+    name: a => {
       return (
         <AppIcon
           size="small"
@@ -92,10 +92,10 @@ export default class Licenses extends React.Component {
         </AppIcon>
       );
     },
-    'type': ({ type }) => type && type.label,
-    'status': ({ status }) => status && status.label,
-    'startDate': ({ startDate }) => (startDate ? <FormattedUTCDate value={startDate} /> : ''),
-    'endDate': license => <LicenseEndDate license={license} />,
+    type: ({ type }) => type && type.label,
+    status: ({ status }) => status && status.label,
+    startDate: ({ startDate }) => (startDate ? <FormattedUTCDate value={startDate} /> : ''),
+    endDate: license => <LicenseEndDate license={license} />,
   }
 
 
@@ -371,13 +371,13 @@ export default class Licenses extends React.Component {
                   </Pane>
                   {children}
                   {this.state.showExportLicenseAsCSVModal &&
-                  <ExportLicenseAsCSVModal
-                    onClose={this.closeExportLicenseAsCSVModal}
-                    onCompareLicenseTerms={onCompareLicenseTerms}
-                    selectedLicenses={Object.keys(selectedLicenses).filter(item => selectedLicenses[item] === true)}
-                    terms={data.terms}
-                  />
-        }
+                    <ExportLicenseAsCSVModal
+                      onClose={this.closeExportLicenseAsCSVModal}
+                      onCompareLicenseTerms={onCompareLicenseTerms}
+                      selectedLicenses={Object.keys(selectedLicenses).filter(item => selectedLicenses[item] === true)}
+                      terms={data.terms}
+                    />
+                  }
                 </Paneset>
               );
             }

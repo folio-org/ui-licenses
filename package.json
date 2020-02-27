@@ -36,7 +36,6 @@
     "@folio/stripes": "^2.12.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
-    "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
     "chai-spies": "^1.0.0",
     "core-js": "^3.6.1",

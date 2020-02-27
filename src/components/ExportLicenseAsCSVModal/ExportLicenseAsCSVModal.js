@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mapValues, pickBy } from 'lodash';
+import { mapValues, pickBy, sortBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   Button,
@@ -14,8 +14,8 @@ import css from './ExportLicenseAsCSVModal.css';
 
 export default class ExportLicenseAsCSVModal extends React.Component {
   static propTypes = {
-    onCompareLicenseTerms: PropTypes.func,
     onClose: PropTypes.func,
+    onCompareLicenseTerms: PropTypes.func,
     selectedLicenses: PropTypes.arrayOf(PropTypes.string),
     terms: PropTypes.arrayOf(PropTypes.object),
   };
@@ -23,32 +23,65 @@ export default class ExportLicenseAsCSVModal extends React.Component {
   constructor(props) {
     super(props);
 
-    this.licenseInformation = {
-      name: <FormattedMessage id="ui-licenses.prop.name" />,
-      startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
-      endDate: <FormattedMessage id="ui-licenses.prop.endDate" />,
-      status: <FormattedMessage id="ui-licenses.prop.status" />,
-      type: <FormattedMessage id="ui-licenses.prop.type" />,
-    };
+    this.licenseInformationArray = ['name', 'startDate', 'endDate', 'status', 'type'];
+    this.termsArray = ['value', 'note', 'publicNote', 'internal'];
+    this.termNamesArray = sortBy(props.terms, (term) => {
+      return term?.label?.toLowerCase();
+    }).map(item => item.name); // Sort terms array of objects by the label
 
-    this.terms = {
-      value: <FormattedMessage id="ui-licenses.prop.termValue" />,
-      note: <FormattedMessage id="ui-licenses.prop.internalNote" />,
-      publicNote: <FormattedMessage id="ui-licenses.prop.publicNote" />,
-      internal: <FormattedMessage id="ui-licenses.prop.termVisibility" />,
-    };
+    /* create objects of the format
+        { 'name' : '<FormattedMessage id=ui-licenses.exportLicensesModal.name />',
+          'startDate' : '<FormattedMessage id=ui-licenses.exportLicensesModal.startDate />',
+        ...
+        }
+      for the terms and licenseInformation arrays
+    */
+    this.licenseInformation = this.licenseInformationArray.reduce((obj, prop) => (
+      { ...obj, [prop]: <FormattedMessage id={`ui-licenses.exportLicensesModal.${prop}`} /> }
+    ), {});
 
+    this.terms = this.termsArray.reduce((obj, prop) => (
+      { ...obj, [prop]: <FormattedMessage id={`ui-licenses.exportLicensesModal.${prop}`} /> }
+    ), {});
+
+    // Create an object with a mapping between the term name and its label
     this.termNames = props.terms.reduce((map, term) => {
       map[term.name] = term.label;
       return map;
     }, {});
 
+    // Default state for all the checkboxes initialized to fasle (unchecked)
     this.state = {
       licenseInformation: mapValues(this.licenseInformation, () => false),
       terms: mapValues(this.terms, () => false),
       termNames: mapValues(this.termNames, () => false)
     };
   }
+
+  toggleSelectAll = (e) => {
+    const { checked } = e.target;
+
+    this.setState(() => ({
+      licenseInformation: mapValues(this.licenseInformation, () => checked),
+      terms: mapValues(this.terms, () => checked),
+      termNames: mapValues(this.termNames, () => checked)
+    }));
+  }
+
+  toggleSelectSection = (e, section) => {
+    const { checked } = e.target;
+
+    this.setState(() => ({
+      [section]: mapValues(this[section], () => checked),
+    }));
+  }
+
+  updateSelection = (e, section) => {
+    const { checked, name } = e.target;
+    this.setState(prevState => ({
+      [section]: { ...prevState[section], [name]: checked }
+    }));
+  };
 
   renderCheckboxesList = (section) => {
     return (
@@ -61,15 +94,15 @@ export default class ExportLicenseAsCSVModal extends React.Component {
         />
         <Layout className="padding-start-gutter">
           {
-          Object.entries(this[section]).map(([prop, value], index) => (
+          this[`${section}Array`].map((item, index) => (
             <Checkbox
-              checked={this.state[section][prop]}
+              checked={this.state[section][item]}
               key={index}
-              label={value}
+              label={this[section][item]}
               labelClass={css.labelClass}
-              name={prop}
+              name={item}
               onChange={(e) => this.updateSelection(e, section)}
-              value={prop}
+              value={item}
             />
           ))
         }
@@ -139,31 +172,6 @@ export default class ExportLicenseAsCSVModal extends React.Component {
       </Modal>
     );
   }
-
-  toggleSelectAll = (e) => {
-    const { checked } = e.target;
-
-    this.setState(() => ({
-      licenseInformation: mapValues(this.licenseInformation, () => checked),
-      terms: mapValues(this.terms, () => checked),
-      termNames: mapValues(this.termNames, () => checked)
-    }));
-  }
-
-  toggleSelectSection = (e, section) => {
-    const { checked } = e.target;
-
-    this.setState(() => ({
-      [section]: mapValues(this[section], () => checked),
-    }));
-  }
-
-  updateSelection = (e, section) => {
-    const { checked, name } = e.target;
-    this.setState(prevState => ({
-      [section]: { ...prevState[section], [name]: checked }
-    }));
-  };
 
   render() {
     return (

@@ -2,7 +2,6 @@ import {
   clickable,
   collection,
   interactor,
-  isPresent,
 } from '@bigtest/interactor';
 
 @interactor class CheckboxInteractor {

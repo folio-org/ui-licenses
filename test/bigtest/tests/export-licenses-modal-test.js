@@ -13,12 +13,12 @@ const interactor = new ExportLicenseAsCSVModalInteractor();
 
 const terms = [
   {
-    'name': 'authorisedUsers',
-    'label': 'Definition of authorised user'
+    name: 'authorisedUsers',
+    label: 'Definition of authorised user'
   },
   {
-    'name': 'remoteAccess',
-    'label': 'Access restricted to on-campus/campus network?'
+    name: 'remoteAccess',
+    label: 'Access restricted to on-campus/campus network?'
   }
 ];
 const selectedLicenses = ['1', '2'];
@@ -27,19 +27,19 @@ const onCompareLicenseTerms = spy(() => Promise.resolve());
 const onClose = spy();
 
 const checkBoxes = {
-  'selectAll': 0,
-  'licenseInformation': 1,
-  'name': 2,
-  'startDate': 3,
-  'endDate': 4,
-  'status': 5,
-  'type': 6,
-  'terms': 7,
-  'value': 8,
-  'note': 9,
-  'publicNote': 10,
-  'internal': 11,
-  'termName': 12
+  selectAll: 0,
+  licenseInformation: 1,
+  name: 2,
+  startDate: 3,
+  endDate: 4,
+  status: 5,
+  type: 6,
+  terms: 7,
+  value: 8,
+  note: 9,
+  publicNote: 10,
+  internal: 11,
+  termName: 12
 };
 
 
