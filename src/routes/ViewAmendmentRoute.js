@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import compose from 'compose-function';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
-
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { FormattedMessage } from 'react-intl';
+
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -59,10 +59,7 @@ class ViewAmendmentsRoute extends React.Component {
 
   static contextType = CalloutContext;
 
-  constructor(props) {
-    super(props);
-    this.state = { showConfirmDelete: false };
-  }
+  state = { showConfirmDelete: false };
 
   getAmendment = () => {
     const { match, resources } = this.props;

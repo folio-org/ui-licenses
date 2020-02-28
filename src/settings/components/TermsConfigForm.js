@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { FieldArray } from 'react-final-form-arrays';
 
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { Callout, Pane } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 import { CustomPropertiesConfigListFieldArray } from '@folio/stripes-erm-components';
