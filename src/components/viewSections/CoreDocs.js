@@ -51,19 +51,25 @@ export default class CoreDocs extends React.Component {
     const { id, onToggle, open } = this.props;
     const { docs = [] } = this.props.record;
 
+    const recordType = (id === 'amendmentCoreDocs') ? 'amendment' : 'license';
+
     return (
-      <Accordion
-        displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderBadge()}
-        id={id}
-        label={<FormattedMessage id="ui-licenses.section.coreDocs" />}
-        onToggle={onToggle}
-        open={open}
-      >
-        <Layout className="padding-bottom-gutter">
-          { docs.length ? this.renderDocs(docs) : <FormattedMessage id="ui-licenses.coreDocs.none" /> }
-        </Layout>
-      </Accordion>
+      <FormattedMessage id={`ui-licenses.${recordType}`}>
+        {type => (
+          <Accordion
+            displayWhenClosed={this.renderBadge()}
+            displayWhenOpen={this.renderBadge()}
+            id={id}
+            label={<FormattedMessage id="ui-licenses.section.coreDocs" />}
+            onToggle={onToggle}
+            open={open}
+          >
+            <Layout className="padding-bottom-gutter">
+              { docs.length ? this.renderDocs(docs) : <FormattedMessage id="ui-licenses.emptyAccordion.coreDocuments" values={{ type: type.toLowerCase() }} /> }
+            </Layout>
+          </Accordion>
+        )}
+      </FormattedMessage>
     );
   }
 }

@@ -16,18 +16,27 @@ export default class Terms extends React.Component {
   render() {
     const { id, onToggle, open, record, terms } = this.props;
 
+    const recordType = (id === 'amendmentTerms') ? 'amendment' : 'license';
+
     return (
-      <Accordion
-        id={id}
-        label={<FormattedMessage id="ui-licenses.section.terms" />}
-        open={open}
-        onToggle={onToggle}
-      >
-        <CustomPropertiesList
-          customProperties={terms}
-          resource={record}
-        />
-      </Accordion>
+      <FormattedMessage id={`ui-licenses.${recordType}`}>
+        {type => (
+          <Accordion
+            id={id}
+            label={<FormattedMessage id="ui-licenses.section.terms" />}
+            open={open}
+            onToggle={onToggle}
+          >
+            {
+              terms?.length ?
+                <CustomPropertiesList
+                  customProperties={terms}
+                  resource={record}
+                /> : <FormattedMessage id="ui-licenses.emptyAccordion.terms" values={{ type: type.toLowerCase() }} />
+            }
+          </Accordion>
+        )}
+      </FormattedMessage>
     );
   }
 }
