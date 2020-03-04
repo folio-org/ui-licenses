@@ -28,6 +28,7 @@ export default class CoreDocs extends React.Component {
         }),
       ),
     }).isRequired,
+    recordType: PropTypes.string.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -48,10 +49,8 @@ export default class CoreDocs extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id, onToggle, open, recordType } = this.props;
     const { docs = [] } = this.props.record;
-
-    const recordType = (id === 'amendmentCoreDocs') ? 'amendment' : 'license';
 
     return (
       <FormattedMessage id={`ui-licenses.${recordType}`}>

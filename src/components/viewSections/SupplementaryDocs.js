@@ -28,6 +28,7 @@ export default class SupplementaryDocs extends React.Component {
         }),
       ),
     }).isRequired,
+    recordType: PropTypes.string.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -49,10 +50,8 @@ export default class SupplementaryDocs extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id, onToggle, open, recordType } = this.props;
     const { supplementaryDocs = [] } = this.props.record;
-
-    const recordType = (id === 'amendmentSupplementaryDocs') ? 'amendment' : 'license';
 
     return (
       <FormattedMessage id={`ui-licenses.${recordType}`}>

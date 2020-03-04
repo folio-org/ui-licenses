@@ -10,13 +10,12 @@ export default class Terms extends React.Component {
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     record: PropTypes.shape({ customProperties: PropTypes.object }),
+    recordType: PropTypes.string.isRequired,
     terms: PropTypes.arrayOf(PropTypes.object),
   }
 
   render() {
-    const { id, onToggle, open, record, terms } = this.props;
-
-    const recordType = (id === 'amendmentTerms') ? 'amendment' : 'license';
+    const { id, onToggle, open, record, recordType, terms } = this.props;
 
     return (
       <FormattedMessage id={`ui-licenses.${recordType}`}>
