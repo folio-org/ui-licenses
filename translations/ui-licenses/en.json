@@ -8,7 +8,7 @@
   "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
 
   "closeEditLicense": "Close edit license pane",
-  "createLicense": "Create license",
+  "createLicense": "New license",
   "create": "Create",
   "create.callout": "<strong>License created:</strong> {name}",
   "update.callout": "<strong>License updated:</strong> {name}",

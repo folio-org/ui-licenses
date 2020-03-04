@@ -2,7 +2,7 @@
     "settings.general": "General",
     "meta.title": "Licenses",
     "prop.status": "Status",
-    "createLicense": "Create license",
+    "createLicense": "New license",
     "editLicense": "Edit license",
     "newLicense": "New license",
     "updateLicense": "Update license",
