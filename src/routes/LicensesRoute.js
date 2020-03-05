@@ -157,17 +157,8 @@ class LicensesRoute extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload),
-    }).then(response => {
-      if (response.ok) {
-        return response.blob();
-      } else {
-        throw new Error('failed');
-      }
-    })
-      .then(this.downloadBlob())
-      .catch(error => {
-        throw error;
-      });
+    }).then(response => response.blob())
+      .then(this.downloadBlob());
   }
 
   handleNeedMoreData = () => {

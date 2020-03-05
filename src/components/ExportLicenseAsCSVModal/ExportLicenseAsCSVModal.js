@@ -124,7 +124,7 @@ export default class ExportLicenseAsCSVModal extends React.Component {
             };
 
             this.props.onCompareLicenseTerms(payload)
-              .finally(() => this.props.onClose());
+              .then(() => this.props.onClose());
           }}
         >
           <FormattedMessage id="stripes-components.saveAndClose" />
