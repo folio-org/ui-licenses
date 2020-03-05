@@ -47,7 +47,7 @@ export default class ExportLicenseAsCSVModal extends React.Component {
       };
     });
 
-    // Default state for all the checkboxes initialized to fasle (unchecked)
+    // Default state for all the checkboxes initialized to false (unchecked)
     this.state = {
       licenseInformation: mapValues(keyBy(this.licenseInformation, 'key'), () => false),
       terms: mapValues(keyBy(this.terms, 'key'), () => false),
