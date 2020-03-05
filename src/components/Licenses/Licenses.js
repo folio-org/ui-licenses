@@ -101,7 +101,6 @@ export default class Licenses extends React.Component {
     endDate: license => <LicenseEndDate license={license} />,
   }
 
-
   getActionMenu = ({ onToggle }) => {
     const { selectedLicenses } = this.state;
     const count = Object.values(selectedLicenses).filter(item => item === true).length;
