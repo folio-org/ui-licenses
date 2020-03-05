@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
-import { getSASParams } from '@folio/stripes-erm-components';
+import { generateQueryParams } from '@folio/stripes-erm-components';
 
 import View from '../components/Licenses';
 import NoPermissions from '../components/NoPermissions';
@@ -21,19 +21,14 @@ class LicensesRoute extends React.Component {
       perRequest: RESULT_COUNT_INCREMENT,
       limitParam: 'perPage',
       path: 'licenses/licenses',
-      params: getSASParams({
+      params: generateQueryParams({
         searchKey: 'name',
-        columnMap: {
-          'Name': 'name',
-          'Type': 'type',
-          'Status': 'status',
-          'Start Date': 'startDate',
-          'End Date': 'endDate'
-        },
         filterKeys: {
-          orgs: 'orgs.org',
+          org: 'orgs.org',
           role: 'orgs.role',
+          status: 'status.value',
           tags: 'tags.value',
+          type: 'type.value'
         },
       })
     },
@@ -52,7 +47,7 @@ class LicensesRoute extends React.Component {
       path: 'licenses/refdata/LicenseOrg/role',
       shouldRefresh: () => false,
     },
-    tagsValues: {
+    tags: {
       type: 'okapi',
       path: 'tags',
       params: {
