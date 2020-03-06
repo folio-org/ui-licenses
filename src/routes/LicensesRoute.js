@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
-import { getSASParams } from '@folio/stripes-erm-components';
+import { generateQueryParams } from '@folio/stripes-erm-components';
 
 import View from '../components/Licenses';
 import NoPermissions from '../components/NoPermissions';
@@ -21,19 +21,14 @@ class LicensesRoute extends React.Component {
       perRequest: RESULT_COUNT_INCREMENT,
       limitParam: 'perPage',
       path: 'licenses/licenses',
-      params: getSASParams({
+      params: generateQueryParams({
         searchKey: 'name',
-        columnMap: {
-          'Name': 'name',
-          'Type': 'type',
-          'Status': 'status',
-          'Start Date': 'startDate',
-          'End Date': 'endDate'
-        },
         filterKeys: {
-          orgs: 'orgs.org',
+          org: 'orgs.org',
           role: 'orgs.role',
+          status: 'status.value',
           tags: 'tags.value',
+          type: 'type.value'
         },
       })
     },
@@ -52,7 +47,7 @@ class LicensesRoute extends React.Component {
       path: 'licenses/refdata/LicenseOrg/role',
       shouldRefresh: () => false,
     },
-    tagsValues: {
+    tags: {
       type: 'okapi',
       path: 'tags',
       params: {
@@ -60,6 +55,11 @@ class LicensesRoute extends React.Component {
         query: 'cql.allRecords=1 sortby label',
       },
       records: 'tags',
+    },
+    terms: {
+      type: 'okapi',
+      path: 'licenses/custprops',
+      shouldRefresh: () => false,
     },
     query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -79,6 +79,11 @@ class LicensesRoute extends React.Component {
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
       logger: PropTypes.object,
+      okapi: PropTypes.shape({
+        tenant: PropTypes.string.isRequired,
+        token: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+      }).isRequired,
     }),
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -124,6 +129,32 @@ class LicensesRoute extends React.Component {
     }
   }
 
+  downloadBlob = () => (
+    blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'compare_terms.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  )
+
+  handleCompareLicenseTerms = (payload) => {
+    const { stripes: { okapi } } = this.props;
+
+    return fetch(`${okapi.url}/licenses/licenses/compareTerms`, {
+      method: 'POST',
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload),
+    }).then(response => response.blob())
+      .then(this.downloadBlob());
+  }
 
   handleNeedMoreData = () => {
     if (this.source) {
@@ -151,13 +182,15 @@ class LicensesRoute extends React.Component {
     return (
       <View
         data={{
-          licenses: get(resources, 'licenses.records', []),
-          statusValues: get(resources, 'statusValues.records', []),
-          typeValues: get(resources, 'typeValues.records', []),
-          orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          tagsValues: get(resources, 'tagsValues.records', []),
+          licenses: resources?.licenses?.records ?? [],
+          statusValues: resources?.statusValues?.records ?? [],
+          typeValues: resources?.typeValues?.records ?? [],
+          orgRoleValues: resources?.orgRoleValues?.records ?? [],
+          tagsValues: resources?.tagsValues?.records ?? [],
+          terms: resources?.terms?.records ?? [],
         }}
         selectedRecordId={match.params.id}
+        onCompareLicenseTerms={this.handleCompareLicenseTerms}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
