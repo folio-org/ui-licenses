@@ -110,10 +110,10 @@ export default class LicenseFormInfo extends React.Component {
             />
           </Col>
           <Col style={{ paddingTop: 20 }} xs={2}>
-            <Field name="openEnded" type="checkbox">
+            <Field name="openEnded">
               {props => {
                 return (<Checkbox
-                  checked={props.input.value}
+                  checked={props.input.checked}
                   id="edit-license-open-ended"
                   label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
                   onChange={e => {
