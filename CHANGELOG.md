@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 3.7.2 2020-03-27
+* Fixed filtering licenses by tag. ERM-810
+
 ## 3.7.1 2020-03-12
 * Fixed internal contacts accordion label.
 
