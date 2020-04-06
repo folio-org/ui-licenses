@@ -4,7 +4,7 @@ import {
   isPresent,
 } from '@bigtest/interactor';
 
-import DuplicateModalInteractor from '@folio/stripes-erm-components/lib/DuplicateModal/tests/interactor';
+// import DuplicateModalInteractor from '@folio/stripes-erm-components/lib/DuplicateModal/tests/interactor';
 
 @interactor class HeaderDropdown {
   click = clickable('button');
@@ -19,7 +19,7 @@ export default @interactor class LicenseViewInteractor {
   isViewLicense = isPresent('#pane-view-license');
   headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  duplicateModal = new DuplicateModalInteractor();
+  // duplicateModal = new DuplicateModalInteractor();
 
   whenLoaded() {
     return this.when(() => this.isViewLicense).timeout(5000);
