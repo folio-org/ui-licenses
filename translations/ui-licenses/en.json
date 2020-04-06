@@ -7,6 +7,7 @@
   "amendment": "Amendment",
   "license": "License",
   "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
+  "licenses.duplicate": "Duplicate",
 
   "apply": "Apply",
   "cancel": "Cancel",
@@ -47,6 +48,13 @@
   "deleteLicense": "Delete license",
   "deletedLicense": "<strong>Deleted license:</strong> {name}",
   "delete.confirmMessage": "License <strong>{name}</strong> and any attached amendments will be <strong>deleted</strong>.",
+
+  "duplicateLicenseModal.licenseInfo": "License information",
+  "duplicateLicenseModal.coreDocs": "Core documents",
+  "duplicateLicenseModal.internalContacts": "Internal contacts",
+  "duplicateLicenseModal.organizations": "Organizations",
+  "duplicateLicenseModal.supplementaryDocs": "Supplementary documents",
+  "duplicateLicenseModal.terms": "Terms",
 
   "emptyAccordion.internalContacts": "No internal contacts for this license",
   "emptyAccordion.organizations": "No organizations for this license",
