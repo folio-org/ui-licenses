@@ -12,12 +12,20 @@ export default class DuplicateLicenseModal extends React.Component {
     { key: 'supplementaryDocs', value: <FormattedMessage id="ui-licenses.duplicateLicenseModal.supplementaryDocs" /> },
   ];
 
+  translationIds = {
+    cloneEndpointError: 'ui-licenses.duplicateLicenseModal.cloneEndpointError',
+    duplicateModalLabel: 'ui-licenses.duplicateLicenseModal.duplicateLicense',
+    duplicateModalMessage: 'ui-licenses.duplicateLicenseModal.duplicateMessage',
+    duplicateModalError: 'ui-licenses.duplicateLicenseModal.duplicateModalError',
+    invalidResponseError: 'ui-licenses.duplicateLicenseModal.invalidResponseError',
+  };
+
   render() {
     return (
       <DuplicateModal
         {...this.props}
         cloneableProperties={this.cloneableProperties}
-        translationKey="license"
+        translationIds={this.translationIds}
       />
     );
   }
