@@ -5,6 +5,7 @@ import { DuplicateModal } from '@folio/stripes-erm-components';
 export default class DuplicateLicenseModal extends React.Component {
   cloneableProperties = [
     { key: 'licenseInfo', value: <FormattedMessage id="ui-licenses.duplicateLicenseModal.licenseInfo" /> },
+    { key: 'licenseDateInfo', value: <FormattedMessage id="ui-licenses.duplicateLicenseModal.licenseDateInfo" /> },
     { key: 'internalContacts', value: <FormattedMessage id="ui-licenses.duplicateLicenseModal.internalContacts" /> },
     { key: 'organizations', value: <FormattedMessage id="ui-licenses.duplicateLicenseModal.organizations" /> },
     { key: 'coreDocs', value : <FormattedMessage id="ui-licenses.duplicateLicenseModal.coreDocs" /> },

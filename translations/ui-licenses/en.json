@@ -56,6 +56,7 @@
   "duplicateLicenseModal.duplicateModalError": "Error: the license was not duplicated",
   "duplicateLicenseModal.internalContacts": "Internal contacts",
   "duplicateLicenseModal.invalidResponseError": "Unable to duplicate the license. The response received from the server was invalid.",
+  "duplicateLicenseModal.licenseDateInfo": "License date information",
   "duplicateLicenseModal.licenseInfo": "License information",
   "duplicateLicenseModal.organizations": "Organizations",
   "duplicateLicenseModal.supplementaryDocs": "Supplementary documents",
