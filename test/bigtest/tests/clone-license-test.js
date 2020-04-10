@@ -25,7 +25,7 @@ const internalContactData = {
   role: { label: 'License owner', value: 'license' },
 };
 
-describe.skip('Clone License test', () => {
+describe('Clone License test', () => {
   setupApplication();
   const licenseView = new LicenseViewInteractor();
   const licenseEdit = new LicenseFormInteractor();
