@@ -10,7 +10,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/License';
-import { urls } from '../components/utils';
+import { preventResourceRefresh, urls } from '../components/utils';
 import { errorTypes } from '../constants';
 
 class ViewLicenseRoute extends React.Component {
@@ -43,10 +43,7 @@ class ViewLicenseRoute extends React.Component {
     license: {
       type: 'okapi',
       path: 'licenses/licenses/:{id}',
-      shouldRefresh: (resource, action) => {
-        if (resource.name !== 'license') return true;
-        return !action.meta.originatingActionType?.includes('DELETE');
-      },
+      shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
     },
     linkedAgreements: {
       type: 'okapi',
