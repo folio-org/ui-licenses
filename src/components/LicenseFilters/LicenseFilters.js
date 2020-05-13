@@ -163,7 +163,7 @@ export default class LicenseFilters extends React.Component {
   renderCustomPropertyFilters = () => {
     return <CustomPropertyFilters
       {...this.props}
-      name="term"
+      custPropName="term"
     />;
   }
 
