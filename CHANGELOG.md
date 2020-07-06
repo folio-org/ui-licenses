@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 4.0.1 2020-07-06
+* Fixed issue with only 10 results being retrieved for internal contacts. ERM-980
+
 ## 4.0.0 2020-06-11
 * Added permission set and ability to delete licenses. ERM-748
 * Show/hide pick list actions based on refdata category type. ERM-735
