@@ -2,6 +2,7 @@
 
 ##  4.1.0 IN PROGRESS
 * Added ability to set and view notes on organizations. ERM-967
+* Refactor `bigtest/mirage` with `miragejs`.
 
 ## 4.0.0 2020-06-11
 * Added permission set and ability to delete licenses. ERM-748
