@@ -104,7 +104,7 @@ export default class LicenseFilters extends React.Component {
     );
   }
 
-  renderOrgRoleFilter = () => {
+  renderOrganizationRoleFilter = () => {
     const roles = this.props.data.orgRoleValues;
     const dataOptions = roles.map(role => ({
       value: role.id,
@@ -177,7 +177,7 @@ export default class LicenseFilters extends React.Component {
         {this.renderCheckboxFilter('status')}
         {this.renderCheckboxFilter('type')}
         {this.renderOrganizationFilter()}
-        {this.renderOrgRoleFilter()}
+        {this.renderOrganizationRoleFilter()}
         {this.renderTagsFilter()}
         {this.renderCustomPropertyFilters()}
       </AccordionSet>
