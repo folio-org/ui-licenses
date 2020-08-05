@@ -95,6 +95,7 @@ export default class LicenseFormInfo extends React.Component {
               name="startDate"
               parse={v => v} // Lets us pass an empty string instead of `undefined`
               parser={parseDateOnlyString}
+              usePortal
             />
           </Col>
           <Col md={5} xs={10}>
@@ -107,6 +108,7 @@ export default class LicenseFormInfo extends React.Component {
               name="endDate"
               parse={v => v} // Lets us pass an empty string instead of `undefined`
               parser={parseDateOnlyString}
+              usePortal
               validate={this.validateEndDate}
             />
           </Col>
