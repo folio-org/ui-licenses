@@ -10,7 +10,7 @@ import withFileHandlers from './components/withFileHandlers';
 
 import Form from '../components/AmendmentForm';
 
-const RECORDS_PER_PAGE = '100';
+const RECORDS_PER_REQUEST = 100;
 
 class EditAmendmentRoute extends React.Component {
   static manifest = Object.freeze({
@@ -22,9 +22,8 @@ class EditAmendmentRoute extends React.Component {
     documentCategories: {
       type: 'okapi',
       path: 'licenses/refdata/DocumentAttachment/atType',
-      params: {
-        perPage: RECORDS_PER_PAGE,
-      },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     statusValues: {
