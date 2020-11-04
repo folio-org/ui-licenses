@@ -11,6 +11,7 @@ import NoPermissions from '../components/NoPermissions';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
+const RECORDS_PER_PAGE = 100;
 
 class LicensesRoute extends React.Component {
   static manifest = Object.freeze({
@@ -41,7 +42,7 @@ class LicensesRoute extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/License/type',
       params: {
-        perPage: '100',
+        perPage: RECORDS_PER_PAGE,
       },
       shouldRefresh: () => false,
     },

@@ -11,6 +11,7 @@ import Form from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
 
 const RECORDS_PER_REQUEST = 100;
+const RECORDS_PER_PAGE = 100;
 
 class EditLicenseRoute extends React.Component {
   static manifest = Object.freeze({
@@ -33,7 +34,7 @@ class EditLicenseRoute extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/License/type',
       params: {
-        perPage: '100',
+        perPage: RECORDS_PER_PAGE,
       },
       shouldRefresh: () => false,
     },
@@ -46,7 +47,7 @@ class EditLicenseRoute extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/DocumentAttachment/atType',
       params: {
-        perPage: '100',
+        perPage: RECORDS_PER_PAGE,
       },
       shouldRefresh: () => false,
     },
@@ -54,7 +55,7 @@ class EditLicenseRoute extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/InternalContact/role',
       params: {
-        perPage: '100',
+        perPage: RECORDS_PER_PAGE,
       },
       shouldRefresh: () => false,
     },
