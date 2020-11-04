@@ -40,6 +40,9 @@ class LicensesRoute extends React.Component {
     typeValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/type',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     orgRoleValues: {

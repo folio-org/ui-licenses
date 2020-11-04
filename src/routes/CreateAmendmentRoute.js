@@ -19,6 +19,9 @@ class CreateAmendmentRoute extends React.Component {
     documentCategories: {
       type: 'okapi',
       path: 'licenses/refdata/DocumentAttachment/atType',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     statusValues: {

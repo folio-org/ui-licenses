@@ -32,6 +32,9 @@ class EditLicenseRoute extends React.Component {
     typeValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/type',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     orgRoleValues: {
@@ -42,11 +45,17 @@ class EditLicenseRoute extends React.Component {
     documentCategories: {
       type: 'okapi',
       path: 'licenses/refdata/DocumentAttachment/atType',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     contactRoleValues: {
       type: 'okapi',
       path: 'licenses/refdata/InternalContact/role',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     users: {
