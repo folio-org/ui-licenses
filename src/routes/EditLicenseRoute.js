@@ -11,7 +11,7 @@ import Form from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
 
 const RECORDS_PER_REQUEST = 100;
-const RECORDS_PER_PAGE = 100;
+const RECORDS_PER_PAGE = '100';
 
 class EditLicenseRoute extends React.Component {
   static manifest = Object.freeze({

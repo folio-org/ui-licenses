@@ -10,7 +10,7 @@ import withFileHandlers from './components/withFileHandlers';
 
 import Form from '../components/AmendmentForm';
 
-const RECORDS_PER_PAGE = 100;
+const RECORDS_PER_PAGE = '100';
 
 class EditAmendmentRoute extends React.Component {
   static manifest = Object.freeze({

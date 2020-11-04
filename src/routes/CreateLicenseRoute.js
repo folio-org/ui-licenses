@@ -10,7 +10,7 @@ import withFileHandlers from './components/withFileHandlers';
 import View from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
 
-const RECORDS_PER_PAGE = 100;
+const RECORDS_PER_PAGE = '100';
 
 class CreateLicenseRoute extends React.Component {
   static manifest = Object.freeze({
