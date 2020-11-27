@@ -41,6 +41,7 @@ export default class Amendment extends React.Component {
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func,
+      onDuplicate: PropTypes.func,
     }),
     isLoading: PropTypes.bool,
     urls: PropTypes.shape({
@@ -79,15 +80,28 @@ export default class Amendment extends React.Component {
     return (
       <>
         {urls.editAmendment &&
-          <Button
-            buttonStyle="dropdownItem"
-            id="clickable-dropdown-edit-amendment"
-            to={urls.editAmendment()}
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-licenses.edit" />
-            </Icon>
-          </Button>
+          <>
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-dropdown-edit-amendment"
+              to={urls.editAmendment()}
+            >
+              <Icon icon="edit">
+                <FormattedMessage id="ui-licenses.edit" />
+              </Icon>
+            </Button>
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-dropdown-duplicate-amendment"
+              onClick={() => {
+                handlers.onDuplicate();
+              }}
+            >
+              <Icon icon="duplicate">
+                <FormattedMessage id="ui-licenses.licenses.duplicate" />
+              </Icon>
+            </Button>
+          </>
         }
         {handlers.onDelete &&
           <Button
