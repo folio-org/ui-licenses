@@ -1,4 +1,3 @@
-
 import {
   clickable,
   collection,
@@ -10,7 +9,7 @@ import {
 
 @interactor class CheckboxInteractor {
   click = clickable();
-  label = property("value");
+  label = property('value');
   value = value;
 }
 
