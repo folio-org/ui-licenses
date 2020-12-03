@@ -31,27 +31,27 @@ describe('Duplicate amendment modal tests', () => {
       expect(modalInteractor.isDuplicateModalPresent).to.be.true;
     });
 
-    it('renders selectAll at the top', () => {
+    it('renders selectAll checkbox at the top', () => {
       expect(modalInteractor.checkBoxList(0).label).to.equal('selectAll');
     });
 
-    it('renders amendmentInfo second', () => {
+    it('renders amendmentInfo checkbox', () => {
       expect(modalInteractor.checkBoxList(1).label).to.equal('amendmentInfo');
     });
 
-    it('renders amendmentDateInfo third', () => {
+    it('renders amendmentDateInfo checkbox', () => {
       expect(modalInteractor.checkBoxList(2).label).to.equal('amendmentDateInfo');
     });
 
-    it('renders coreDocs fourth', () => {
+    it('renders coreDocs checkbox', () => {
       expect(modalInteractor.checkBoxList(3).label).to.equal('coreDocs');
     });
 
-    it('renders terms fifth', () => {
+    it('renders terms checkbox', () => {
       expect(modalInteractor.checkBoxList(4).label).to.equal('terms');
     });
 
-    it('renders supplementaryDocs sixth', () => {
+    it('renders supplementaryDocs checkbox', () => {
       expect(modalInteractor.checkBoxList(5).label).to.equal('supplementaryDocs');
     });
 
@@ -73,7 +73,7 @@ describe('Duplicate amendment modal tests', () => {
         });
       });
 
-      describe('Selecting some options', () => {
+      describe('Selecting amendmentDateInfo and supplementaryDocs checkboxes', () => {
         beforeEach(async function () {
           await modalInteractor.checkBoxList(2).click();
           await modalInteractor.checkBoxList(5).click();
@@ -89,7 +89,7 @@ describe('Duplicate amendment modal tests', () => {
         });
       });
 
-      describe('Selecting some other options', () => {
+      describe('Selecting amendmentInfo, coreDocs and terms checkboxes', () => {
         beforeEach(async function () {
           await modalInteractor.checkBoxList(1).click();
           await modalInteractor.checkBoxList(3).click();
