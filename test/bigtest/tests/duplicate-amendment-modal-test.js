@@ -81,9 +81,10 @@ describe('Duplicate amendment modal tests', () => {
         });
 
         it('sends correct duplication params', () => {
-          const expectedPayload = {};
-          expectedPayload[modalInteractor.checkBoxList(2).label] = true;
-          expectedPayload[modalInteractor.checkBoxList(5).label] = true;
+          const expectedPayload = {
+            amendmentDateInfo: true,
+            supplementaryDocs:true
+          };
 
           expect(onClone).to.have.been.called.with(expectedPayload);
         });
@@ -98,10 +99,11 @@ describe('Duplicate amendment modal tests', () => {
         });
 
         it('sends correct duplication params', () => {
-          const expectedPayload = {};
-          expectedPayload[modalInteractor.checkBoxList(1).label] = true;
-          expectedPayload[modalInteractor.checkBoxList(3).label] = true;
-          expectedPayload[modalInteractor.checkBoxList(4).label] = true;
+          const expectedPayload = {
+            amendmentInfo: true,
+            coreDocs: true,
+            terms: true
+          };
 
           expect(onClone).to.have.been.called.with(expectedPayload);
         });
