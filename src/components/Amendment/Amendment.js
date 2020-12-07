@@ -15,7 +15,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
 import {
   AmendmentInfo,
@@ -146,6 +146,7 @@ export default class Amendment extends React.Component {
     return (
       <Pane
         actionMenu={this.renderActionMenu}
+        appIcon={<AppIcon app="licenses" iconKey="amendment" size="small" />}
         lastMenu={this.renderEditAmendmentPaneMenu()}
         paneTitle={amendment.name}
         {...paneProps}
