@@ -148,7 +148,7 @@ class ViewAmendmentsRoute extends React.Component {
   }
 
   urls = {
-    editAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && ((amendmentId = null) => `/licenses/${this.props.match.params.id}/amendments/${amendmentId || this.props.match.params.amendmentId}/edit${this.props.location.search}`),
+    editAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (amendmentId => `/licenses/${this.props.match.params.id}/amendments/${amendmentId}/edit${this.props.location.search}`),
   }
 
   render() {
@@ -167,7 +167,7 @@ class ViewAmendmentsRoute extends React.Component {
             ...handlers,
             onClose: this.handleClose,
             onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete && this.showDeleteConfirmationModal,
-            onDuplicate: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDuplicate && this.showDuplicateModal
+            onClone: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDuplicate && this.showDuplicateModal
           }}
           isLoading={get(resources, 'license.isPending')}
           urls={this.urls}
