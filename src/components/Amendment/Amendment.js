@@ -73,7 +73,7 @@ export default class Amendment extends React.Component {
   }
 
   renderActionMenu = ({ onToggle }) => {
-    const { data: {amendment: {id: amendmentId}}, handlers, urls } = this.props;
+    const { data: { amendment: { id: amendmentId } }, handlers, urls } = this.props;
 
     if (!urls.editAmendment && !handlers.onDelete) return null;
 
@@ -122,7 +122,7 @@ export default class Amendment extends React.Component {
   }
 
   renderEditAmendmentPaneMenu = () => {
-    const { data: {amendment: {id: amendmentId}} } = this.props;
+    const { data: { amendment: { id: amendmentId } } } = this.props;
     return (
       <IfPermission perm="ui-licenses.licenses.edit">
         <PaneMenu>
