@@ -100,7 +100,7 @@ class ViewAmendmentsRoute extends React.Component {
       });
   }
 
-  handleDuplicate = (cloneableProperties) => {
+  handleClone = (cloneableProperties) => {
     const { history, match, stripes: { okapi } } = this.props;
 
     return fetch(`${okapi.url}/licenses/amendments/${match.params.amendmentId}/clone`, {
@@ -167,14 +167,14 @@ class ViewAmendmentsRoute extends React.Component {
             ...handlers,
             onClose: this.handleClose,
             onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete && this.showDeleteConfirmationModal,
-            onClone: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDuplicate && this.showDuplicateModal
+            onClone: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleClone && this.showDuplicateModal
           }}
           isLoading={get(resources, 'license.isPending')}
           urls={this.urls}
         />
         { this.state.showDuplicate &&
           <DuplicateAmendmentModal
-            onClone={this.handleDuplicate}
+            onClone={this.handleClone}
             onClose={this.closeDuplicateModal}
           />
         }
