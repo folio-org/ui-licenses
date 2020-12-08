@@ -146,7 +146,7 @@ export default class Amendment extends React.Component {
     return (
       <Pane
         actionMenu={this.renderActionMenu}
-        appIcon={<AppIcon app="licenses" iconKey="amendment" size="small" />}
+        appIcon={<AppIcon app="licenses" iconKey="amendment" />}
         lastMenu={this.renderEditAmendmentPaneMenu()}
         paneTitle={<FormattedMessage id="ui-licenses.amendments.view.paneTitle" values={{ name: amendment.name }} />}
         {...paneProps}
