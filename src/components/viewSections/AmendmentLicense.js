@@ -38,9 +38,9 @@ export default class AmendmentLicense extends React.Component {
           <Col xs={12}>
             <KeyValue label={
               <Headline
+                margin="none"
                 size="large"
                 tag="h3"
-                margin="none"
               >
                 <FormattedMessage id="ui-licenses.prop.parentLicense" />
               </Headline>
