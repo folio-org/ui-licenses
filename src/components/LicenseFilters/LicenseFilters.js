@@ -165,8 +165,16 @@ export default class LicenseFilters extends React.Component {
   renderStartDateFilter = () => {
     return <DateFilter
       activeFilters={this.props.activeFilters}
-      name="startDate"
       filterHandlers={this.props.filterHandlers}
+      name="startDate"
+    />;
+  }
+
+  renderEndDateFilter = () => {
+    return <DateFilter
+      activeFilters={this.props.activeFilters}
+      filterHandlers={this.props.filterHandlers}
+      name="endDate"
     />;
   }
 
@@ -188,6 +196,7 @@ export default class LicenseFilters extends React.Component {
         {this.renderOrganizationRoleFilter()}
         {this.renderTagsFilter()}
         {this.renderStartDateFilter()}
+        {this.renderEndDateFilter()}
         {this.renderCustomPropertyFilters()}
       </AccordionSet>
     );
