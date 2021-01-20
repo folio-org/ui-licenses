@@ -7,6 +7,8 @@ import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
+
 import DuplicateAmendmentModal from '../components/DuplicateAmendmentModal';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -166,6 +168,9 @@ class ViewAmendmentsRoute extends React.Component {
           }}
           handlers={{
             ...handlers,
+            checkScope,
+            collapseAllSections,
+            expandAllSections,
             onClose: this.handleClose,
             onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete && this.showDeleteConfirmationModal,
             onClone: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleClone && this.showDuplicateModal

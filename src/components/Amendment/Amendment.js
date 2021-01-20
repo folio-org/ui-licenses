@@ -8,6 +8,7 @@ import {
   Button,
   Col,
   ExpandAllButton,
+  HasCommand,
   Icon,
   LoadingPane,
   Pane,
@@ -39,6 +40,9 @@ export default class Amendment extends React.Component {
       terms: PropTypes.arrayOf(PropTypes.object),
     }),
     handlers: PropTypes.shape({
+      checkScope: PropTypes.func.isRequired,
+      collapseAllSections: PropTypes.func.isRequired,
+      expandAllSections: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func,
       onClone: PropTypes.func,
@@ -47,6 +51,11 @@ export default class Amendment extends React.Component {
     urls: PropTypes.shape({
       editAmendment: PropTypes.func,
     }),
+  }
+
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
   }
 
   getSectionProps = (id) => {
@@ -147,8 +156,9 @@ export default class Amendment extends React.Component {
   render() {
     const {
       data: { amendment },
-      handlers: { onClose },
+      handlers: { checkScope, collapseAllSections, expandAllSections, onClone, onClose },
       isLoading,
+      urls: { editAmendment },
     } = this.props;
 
     const paneProps = {
@@ -160,31 +170,59 @@ export default class Amendment extends React.Component {
 
     if (isLoading) return <LoadingPane {...paneProps} />;
 
+    const shortcuts = [
+      {
+        name: 'edit',
+        handler: editAmendment(amendment.id),
+      },
+      {
+        name: 'expandAllSections',
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'collapseAllSections',
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'duplicateRecord',
+        handler: onClone(),
+        /* handler: () => {
+          onClone();
+        } */
+      }
+    ];
+
     return (
-      <Pane
-        actionMenu={this.renderActionMenu}
-        appIcon={<AppIcon app="licenses" iconKey="amendment" />}
-        lastMenu={this.renderEditAmendmentPaneMenu()}
-        paneTitle={<FormattedMessage id="ui-licenses.amendments.view.paneTitle" values={{ name: amendment.name }} />}
-        {...paneProps}
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
       >
-        <TitleManager record={amendment.name}>
-          <AmendmentInfo {...this.getSectionProps()} />
-          <AmendmentLicense {...this.getSectionProps()} />
-          <AccordionStatus>
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton />
-              </Col>
-            </Row>
-            <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-              <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
-              <Terms {...this.getSectionProps('amendmentTerms')} />
-              <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
-            </AccordionSet>
-          </AccordionStatus>
-        </TitleManager>
-      </Pane>
+        <Pane
+          actionMenu={this.renderActionMenu}
+          appIcon={<AppIcon app="licenses" iconKey="amendment" />}
+          lastMenu={this.renderEditAmendmentPaneMenu()}
+          paneTitle={<FormattedMessage id="ui-licenses.amendments.view.paneTitle" values={{ name: amendment.name }} />}
+          {...paneProps}
+        >
+          <TitleManager record={amendment.name}>
+            <AmendmentInfo {...this.getSectionProps()} />
+            <AmendmentLicense {...this.getSectionProps()} />
+            <AccordionStatus ref={this.accordionStatusRef}>
+              <Row end="xs">
+                <Col xs>
+                  <ExpandAllButton />
+                </Col>
+              </Row>
+              <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
+                <Terms {...this.getSectionProps('amendmentTerms')} />
+                <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
+              </AccordionSet>
+            </AccordionStatus>
+          </TitleManager>
+        </Pane>
+      </HasCommand>
     );
   }
 }
