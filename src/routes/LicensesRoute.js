@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
-import { generateQueryParams } from '@folio/stripes-erm-components';
+import { checkScope, generateQueryParams } from '@folio/stripes-erm-components';
 
 import View from '../components/Licenses';
 import NoPermissions from '../components/NoPermissions';
@@ -192,6 +192,8 @@ class LicensesRoute extends React.Component {
           tags: resources?.tags?.records ?? [],
           terms: resources?.terms?.records ?? [],
         }}
+        handlers={{ checkScope }}
+        history={this.props.history}
         onCompareLicenseTerms={this.handleCompareLicenseTerms}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}

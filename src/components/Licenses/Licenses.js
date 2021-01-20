@@ -7,6 +7,7 @@ import {
   Button,
   Checkbox,
   FormattedUTCDate,
+  HasCommand,
   Icon,
   MultiColumnList,
   Pane,
@@ -35,6 +36,8 @@ import css from './Licenses.css';
 const propTypes = {
   children: PropTypes.node,
   data: PropTypes.object,
+  handlers: PropTypes.object,
+  history: PropTypes.object,
   onCompareLicenseTerms: PropTypes.func,
   onNeedMoreData: PropTypes.func,
   queryGetter: PropTypes.func,
@@ -49,6 +52,8 @@ const filterPaneVisibilityKey = '@folio/licenses/licensesFilterPaneVisibility';
 const Licenses = ({
   children,
   data,
+  handlers,
+  history,
   onCompareLicenseTerms,
   onNeedMoreData,
   queryGetter,
@@ -76,16 +81,32 @@ const Licenses = ({
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
 
+  const goToNew = () => {
+    history.push('/licenses/create');
+  };
+
+  const shortcuts = [
+    {
+      name: 'new',
+      handler: goToNew,
+    },
+  ];
+
   return (
-    <div data-test-licenses>
-      <SearchAndSortQuery
-        initialFilterState={{ status: ['active'] }}
-        initialSearchState={{ query: '' }}
-        initialSortState={{ sort: 'name' }}
-        queryGetter={queryGetter}
-        querySetter={querySetter}
-      >
-        {
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={handlers.checkScope}
+      scope={document.body}
+    >
+      <div data-test-licenses>
+        <SearchAndSortQuery
+          initialFilterState={{ status: ['active'] }}
+          initialSearchState={{ query: '' }}
+          initialSortState={{ sort: 'name' }}
+          queryGetter={queryGetter}
+          querySetter={querySetter}
+        >
+          {
           ({
             searchValue,
             getSearchHandlers,
@@ -320,8 +341,9 @@ const Licenses = ({
             );
           }
         }
-      </SearchAndSortQuery>
-    </div>
+        </SearchAndSortQuery>
+      </div>
+    </HasCommand>
   );
 };
 

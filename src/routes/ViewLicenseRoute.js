@@ -5,7 +5,7 @@ import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
+import { checkScope, collapseAllSections, expandAllSections, preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -278,6 +278,9 @@ class ViewLicenseRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
+          checkScope,
+          collapseAllSections,
+          expandAllSections,
           onClone: this.handleClone,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
