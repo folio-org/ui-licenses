@@ -16,6 +16,9 @@ class LicenseFilters extends React.Component {
     activeFilters: PropTypes.object,
     data: PropTypes.object.isRequired,
     filterHandlers: PropTypes.object,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired
+    }),
   };
 
   static defaultProps = {
@@ -176,7 +179,7 @@ class LicenseFilters extends React.Component {
       allowNull
       filterHandlers={this.props.filterHandlers}
       name="endDate"
-      resourceName={this.props.intl.formatMessage({id: 'ui-licenses.licenses.lowerCase'})}
+      resourceName={this.props.intl.formatMessage({ id: 'ui-licenses.licenses.lowerCase' })}
     />;
   }
 
@@ -187,7 +190,7 @@ class LicenseFilters extends React.Component {
       customProperties={this.props.data.terms}
       custPropName="term"
       filterHandlers={this.props.filterHandlers}
-      resourceName={this.props.intl.formatMessage({id: 'ui-licenses.licenses.lowerCase'})}
+      resourceName={this.props.intl.formatMessage({ id: 'ui-licenses.licenses.lowerCase' })}
     />;
   }
 
