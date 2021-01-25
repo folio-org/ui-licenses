@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
@@ -11,7 +11,7 @@ const FILTERS = [
   'type',
 ];
 
-export default class LicenseFilters extends React.Component {
+class LicenseFilters extends React.Component {
   static propTypes = {
     activeFilters: PropTypes.object,
     data: PropTypes.object.isRequired,
@@ -173,17 +173,21 @@ export default class LicenseFilters extends React.Component {
   renderEndDateFilter = () => {
     return <DateFilter
       activeFilters={this.props.activeFilters}
+      allowNull
       filterHandlers={this.props.filterHandlers}
       name="endDate"
+      resourceName={this.props.intl.formatMessage({id: 'ui-licenses.licenses.lowerCase'})}
     />;
   }
 
   renderCustomPropertyFilters = () => {
     return <CustomPropertyFilters
       activeFilters={this.props.activeFilters}
+      allowNull
       customProperties={this.props.data.terms}
       custPropName="term"
       filterHandlers={this.props.filterHandlers}
+      resourceName={this.props.intl.formatMessage({id: 'ui-licenses.licenses.lowerCase'})}
     />;
   }
 
@@ -202,3 +206,5 @@ export default class LicenseFilters extends React.Component {
     );
   }
 }
+
+export default injectIntl(LicenseFilters);

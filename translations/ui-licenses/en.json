@@ -1,5 +1,6 @@
 {
   "meta.title": "Licenses",
+  "licenses.lowerCase": "licenses",
 
   "loading": "Loading...",
   "searchInputLabel": "Search Licenses",
