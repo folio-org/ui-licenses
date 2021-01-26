@@ -170,27 +170,27 @@ class LicenseFilters extends React.Component {
       activeFilters={this.props.activeFilters}
       filterHandlers={this.props.filterHandlers}
       name="startDate"
+      resourceName={this.props.intl.formatMessage({ id: 'ui-licenses.licenses.lowerCase' })}
+      showNoDateCheckbox
     />;
   }
 
   renderEndDateFilter = () => {
     return <DateFilter
       activeFilters={this.props.activeFilters}
-      allowNull
       filterHandlers={this.props.filterHandlers}
       name="endDate"
       resourceName={this.props.intl.formatMessage({ id: 'ui-licenses.licenses.lowerCase' })}
+      showNoDateCheckbox
     />;
   }
 
   renderCustomPropertyFilters = () => {
     return <CustomPropertyFilters
       activeFilters={this.props.activeFilters}
-      allowNull
       customProperties={this.props.data.terms}
       custPropName="term"
       filterHandlers={this.props.filterHandlers}
-      resourceName={this.props.intl.formatMessage({ id: 'ui-licenses.licenses.lowerCase' })}
     />;
   }
 
