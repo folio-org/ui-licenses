@@ -171,7 +171,6 @@ class LicenseFilters extends React.Component {
       filterHandlers={this.props.filterHandlers}
       name="startDate"
       resourceName={this.props.intl.formatMessage({ id: 'ui-licenses.licenses.lowerCase' })}
-      showNoDateCheckbox
     />;
   }
 
@@ -181,7 +180,6 @@ class LicenseFilters extends React.Component {
       filterHandlers={this.props.filterHandlers}
       name="endDate"
       resourceName={this.props.intl.formatMessage({ id: 'ui-licenses.licenses.lowerCase' })}
-      showNoDateCheckbox
     />;
   }
 
