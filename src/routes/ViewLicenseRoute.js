@@ -261,6 +261,10 @@ class ViewLicenseRoute extends React.Component {
     this.props.history.push(this.urls.viewAmendment(id));
   }
 
+  editLicense = (id) => {
+    this.props.history.push(this.urls.edit(id));
+  }
+
   urls = {
     edit: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (() => `${this.props.location.pathname}/edit${this.props.location.search}`),
     addAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (() => `${this.props.location.pathname}/amendments/create${this.props.location.search}`),
@@ -284,6 +288,7 @@ class ViewLicenseRoute extends React.Component {
           onClone: this.handleClone,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
+          onEdit: this.editLicense,
           onFetchCredentials: this.handleFetchCredentials,
           onAmendmentClick: this.viewAmendment,
           onToggleHelper: this.handleToggleHelper,

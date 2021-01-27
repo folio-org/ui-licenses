@@ -48,6 +48,7 @@ class License extends React.Component {
       onClone: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func.isRequired,
+      onEdit: PropTypes.func.isRequired,
       onToggleTags: PropTypes.func,
     }).isRequired,
     helperApp: PropTypes.node,
@@ -208,7 +209,7 @@ class License extends React.Component {
   }
 
   render() {
-    const { data, isLoading, handlers, helperApp, urls } = this.props;
+    const { data, isLoading, handlers, helperApp } = this.props;
 
     const paneProps = {
       defaultWidth: '45%',
@@ -222,7 +223,7 @@ class License extends React.Component {
     const shortcuts = [
       {
         name: 'edit',
-        handler: urls.edit(),
+        handler: handlers.onEdit,
       },
       {
         name: 'expandAllSections',
