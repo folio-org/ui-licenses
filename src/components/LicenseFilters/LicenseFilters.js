@@ -17,7 +17,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
   const [filterState, changeFilter] = useReducer(
     (state, filterProps) => {
       return (
-        {...state, [filterProps.filter]: filterProps.values}
+        { ...state, [filterProps.filter]: filterProps.values }
       );
     },
     {
@@ -25,16 +25,15 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
       type: [],
       tags: [],
     }
-  )
+  );
 
   useEffect(() => {
-    const newState = {};
     FILTERS.forEach(filter => {
       const values = data[`${filter}Values`];
       if (values.length !== filterState[filter]?.length) {
         changeFilter({
-          filter: filter,
-          values: values
+          filter,
+          values
         });
       }
     });
@@ -44,9 +43,6 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
         filter: 'tags',
         values: data.tags.map(({ label }) => ({ value: label, label }))
       });
-    }
-    if (Object.keys(newState).length) {
-      setFilterState(newState);
     }
   }, [data, filterState]);
 
