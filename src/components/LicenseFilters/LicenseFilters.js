@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -13,23 +13,37 @@ const FILTERS = [
 
 export default function LicenseFilters({ activeFilters, data, filterHandlers }) {
   const intl = useIntl();
-  const [filterState, setFilterState] = useState({
-    status: [],
-    type: [],
-    tags: [],
-  });
+
+  const [filterState, changeFilter] = useReducer(
+    (state, filterProps) => {
+      return (
+        {...state, [filterProps.filter]: filterProps.values}
+      );
+    },
+    {
+      status: [],
+      type: [],
+      tags: [],
+    }
+  )
 
   useEffect(() => {
     const newState = {};
     FILTERS.forEach(filter => {
       const values = data[`${filter}Values`];
       if (values.length !== filterState[filter]?.length) {
-        newState[filter] = values;
+        changeFilter({
+          filter: filter,
+          values: values
+        });
       }
     });
 
     if ((data?.tags?.length ?? 0) !== filterState.tags?.length) {
-      newState.tags = data.tags.map(({ label }) => ({ value: label, label }));
+      changeFilter({
+        filter: 'tags',
+        values: data.tags.map(({ label }) => ({ value: label, label }))
+      });
     }
     if (Object.keys(newState).length) {
       setFilterState(newState);
