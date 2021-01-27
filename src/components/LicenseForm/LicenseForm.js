@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { isEqual } from 'lodash';
 import setFieldData from 'final-form-set-field-data';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
+  AccordionStatus,
   Button,
   Col,
   ExpandAllButton,
+  HasCommand,
   IconButton,
   LoadingView,
   Pane,
@@ -45,14 +48,19 @@ class LicenseForm extends React.Component {
     values: PropTypes.object,
   }
 
-  state = {
-    sections: {
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
+  }
+
+  getInitialAccordionsState = () => {
+    return {
       licenseFormInternalContacts: true,
       licenseFormOrganizations: true,
       licenseFormDocs: true,
       licenseFormTerms: true,
       licenseFormSupplementaryDocs: true
-    }
+    };
   }
 
   getSectionProps(id) {
@@ -63,23 +71,22 @@ class LicenseForm extends React.Component {
       handlers,
       id,
       mutators,
-      onToggle: this.handleSectionToggle,
-      open: this.state.sections[id],
       values,
     };
   }
 
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
+  handleSaveKeyCommand = (e) => {
+    const {
+      handleSubmit,
+      pristine,
+      submitting,
+    } = this.props;
 
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
+    e.preventDefault();
+
+    if (!pristine && !submitting) {
+      handleSubmit();
+    }
   }
 
   renderPaneFooter() {
@@ -136,6 +143,21 @@ class LicenseForm extends React.Component {
     );
   }
 
+  shortcuts = [
+    {
+      name: 'save',
+      handler: this.handleSaveKeyCommand,
+    },
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, this.accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+    }
+  ];
+
   render() {
     const { isLoading, values: { id, name } } = this.props;
 
@@ -147,41 +169,45 @@ class LicenseForm extends React.Component {
     if (isLoading) return <LoadingView {...paneProps} />;
 
     return (
-      <Paneset>
-        <FormattedMessage id="ui-licenses.create">
-          {create => (
-            <Pane
-              appIcon={<AppIcon app="licenses" />}
-              centerContent
-              firstMenu={this.renderFirstMenu()}
-              footer={this.renderPaneFooter()}
-              paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
-            >
-              <TitleManager record={id ? name : create}>
-                <form id="form-license">
-                  <Row end="xs">
-                    <Col xs>
-                      <ExpandAllButton
-                        accordionStatus={this.state.sections}
-                        id="clickable-expand-all"
-                        onToggle={this.handleAllSectionsToggle}
-                      />
-                    </Col>
-                  </Row>
-                  <AccordionSet>
-                    <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
-                    <LicenseFormInternalContacts {...this.getSectionProps('licenseFormInternalContacts')} />
-                    <LicenseFormOrganizations {...this.getSectionProps('licenseFormOrganizations')} />
-                    <FormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
-                    <FormTerms {...this.getSectionProps('licenseFormTerms')} />
-                    <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />
-                  </AccordionSet>
-                </form>
-              </TitleManager>
-            </Pane>
-          )}
-        </FormattedMessage>
-      </Paneset>
+      <HasCommand
+        commands={this.shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <Paneset>
+          <FormattedMessage id="ui-licenses.create">
+            {create => (
+              <Pane
+                appIcon={<AppIcon app="licenses" />}
+                centerContent
+                firstMenu={this.renderFirstMenu()}
+                footer={this.renderPaneFooter()}
+                paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
+              >
+                <TitleManager record={id ? name : create}>
+                  <form id="form-license">
+                    <AccordionStatus ref={this.accordionStatusRef}>
+                      <Row end="xs">
+                        <Col xs>
+                          <ExpandAllButton />
+                        </Col>
+                      </Row>
+                      <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                        <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
+                        <LicenseFormInternalContacts {...this.getSectionProps('licenseFormInternalContacts')} />
+                        <LicenseFormOrganizations {...this.getSectionProps('licenseFormOrganizations')} />
+                        <FormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
+                        <FormTerms {...this.getSectionProps('licenseFormTerms')} />
+                        <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />
+                      </AccordionSet>
+                    </AccordionStatus>
+                  </form>
+                </TitleManager>
+              </Pane>
+            )}
+          </FormattedMessage>
+        </Paneset>
+      </HasCommand>
     );
   }
 }
