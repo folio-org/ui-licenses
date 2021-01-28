@@ -151,7 +151,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
       activeFilters={activeFilters}
       filterHandlers={filterHandlers}
       name="startDate"
-      resourceName={intl.formatMessage({ id: 'ui-licenses.licenses.lowerCase' })}
+      resourceName={intl.formatMessage({ id: 'ui-licenses.licenses' }).toLowerCase()}
     />;
   };
 
@@ -160,7 +160,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
       activeFilters={activeFilters}
       filterHandlers={filterHandlers}
       name="endDate"
-      resourceName={intl.formatMessage({ id: 'ui-licenses.licenses.lowerCase' })}
+      resourceName={intl.formatMessage({ id: 'ui-licenses.licenses' }).toLowerCase()}
     />;
   };
 
