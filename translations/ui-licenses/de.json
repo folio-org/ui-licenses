@@ -83,7 +83,7 @@
     "terms.count": "{count, number} gespeichert {count, plural, one {Bedingung} other {Bedingungen}}",
     "terms.callout.delete.error": "Fehler beim Löschen der Bedingung {name}: {error}",
     "terms.callout.delete.success": "<strong>Bedingung gelöscht:</strong> {name}",
-    "terms.callout.delete.termInUse": "Bedingung <strong>{name}</strong> wurde nicht gelöscht, da dieser für einen oder mehrere Lizenzverträge verwendet wird.",
+    "terms.callout.delete.termInUse": "<strong>Fehler:</strong> Bedingung <strong>{name}</strong> wurde nicht gelöscht, da dieser für einen oder mehrere Lizenzverträge verwendet wird.",
     "terms.callout.save.error": "Fehler beim Speichern der Bedingung {name}: {error}",
     "terms.callout.save.success": "<strong>Bedingung gespeichert:</strong> {name}",
     "create.callout": "<strong>Lizenzvertrag erstellt:</strong> {name}",
