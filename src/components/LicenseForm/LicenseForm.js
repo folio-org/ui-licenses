@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { isEqual } from 'lodash';
 import setFieldData from 'final-form-set-field-data';
-import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
+import { checkScope, collapseAllSections, expandAllSections, handleSaveKeyCommand } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -75,20 +75,6 @@ class LicenseForm extends React.Component {
     };
   }
 
-  handleSaveKeyCommand = (e) => {
-    const {
-      handleSubmit,
-      pristine,
-      submitting,
-    } = this.props;
-
-    e.preventDefault();
-
-    if (!pristine && !submitting) {
-      handleSubmit();
-    }
-  }
-
   renderPaneFooter() {
     const {
       handlers,
@@ -146,7 +132,7 @@ class LicenseForm extends React.Component {
   shortcuts = [
     {
       name: 'save',
-      handler: this.handleSaveKeyCommand,
+      handler: (e) => handleSaveKeyCommand(e, this.props),
     },
     {
       name: 'expandAllSections',
