@@ -17,6 +17,9 @@ import {
   Pane,
   PaneMenu,
   Row,
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager, withStripes } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -42,9 +45,6 @@ class License extends React.Component {
       users: PropTypes.arrayOf(PropTypes.object),
     }),
     handlers: PropTypes.shape({
-      checkScope: PropTypes.func.isRequired,
-      collapseAllSections: PropTypes.func.isRequired,
-      expandAllSections: PropTypes.func.isRequired,
       onClone: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func.isRequired,
@@ -227,11 +227,11 @@ class License extends React.Component {
       },
       {
         name: 'expandAllSections',
-        handler: (e) => handlers.expandAllSections(e, this.accordionStatusRef),
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: (e) => handlers.collapseAllSections(e, this.accordionStatusRef)
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
       },
       {
         name: 'duplicateRecord',
@@ -244,7 +244,7 @@ class License extends React.Component {
     return (
       <HasCommand
         commands={shortcuts}
-        isWithinScope={handlers.checkScope}
+        isWithinScope={checkScope}
         scope={document.body}
       >
         <>

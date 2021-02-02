@@ -13,6 +13,7 @@ import {
   Pane,
   PaneMenu,
   SearchField,
+  checkScope
 } from '@folio/stripes/components';
 
 import { AppIcon, IfPermission } from '@folio/stripes/core';
@@ -36,7 +37,6 @@ import css from './Licenses.css';
 const propTypes = {
   children: PropTypes.node,
   data: PropTypes.object,
-  handlers: PropTypes.object,
   history: PropTypes.object,
   onCompareLicenseTerms: PropTypes.func,
   onNeedMoreData: PropTypes.func,
@@ -52,7 +52,6 @@ const filterPaneVisibilityKey = '@folio/licenses/licensesFilterPaneVisibility';
 const Licenses = ({
   children,
   data,
-  handlers,
   history,
   onCompareLicenseTerms,
   onNeedMoreData,
@@ -95,7 +94,7 @@ const Licenses = ({
   return (
     <HasCommand
       commands={shortcuts}
-      isWithinScope={handlers.checkScope}
+      isWithinScope={checkScope}
       scope={document.body}
     >
       <div data-test-licenses>

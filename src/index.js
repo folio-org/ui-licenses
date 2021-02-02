@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
 import { Route } from '@folio/stripes/core';
-import { CommandList, HasCommand } from '@folio/stripes/components';
-
-import { keyboardCommands } from '@folio/stripes-erm-components';
+import {
+  CommandList,
+  HasCommand,
+  checkScope,
+  defaultKeyboardShortcuts,
+} from '@folio/stripes/components';
 
 import LicensesRoute from './routes/LicensesRoute';
 import CreateLicenseRoute from './routes/CreateLicenseRoute';
@@ -53,10 +56,6 @@ class App extends React.Component {
     },
   ];
 
-  checkScope = () => {
-    return document.body.contains(document.activeElement);
-  }
-
   render() {
     const { actAs, match: { path } } = this.props;
 
@@ -67,10 +66,10 @@ class App extends React.Component {
     }
 
     return (
-      <CommandList commands={keyboardCommands}>
+      <CommandList commands={defaultKeyboardShortcuts}>
         <HasCommand
           commands={this.shortcuts}
-          isWithinScope={this.checkScope}
+          isWithinScope={checkScope}
           scope={document.body}
         >
 
