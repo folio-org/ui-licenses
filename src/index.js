@@ -72,7 +72,6 @@ class App extends React.Component {
           isWithinScope={checkScope}
           scope={document.body}
         >
-
           <Switch>
             <Route component={NoteCreateRoute} exact path={`${path}/notes/create`} />
             <Route component={NoteViewRoute} exact path={`${path}/notes/:noteId`} />
