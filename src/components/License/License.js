@@ -10,12 +10,16 @@ import {
   Col,
   ConfirmationModal,
   ExpandAllButton,
+  HasCommand,
   Icon,
   IconButton,
   LoadingPane,
   Pane,
   PaneMenu,
   Row,
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager, withStripes } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -44,6 +48,7 @@ class License extends React.Component {
       onClone: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func.isRequired,
+      onEdit: PropTypes.func.isRequired,
       onToggleTags: PropTypes.func,
     }).isRequired,
     helperApp: PropTypes.node,
@@ -55,6 +60,11 @@ class License extends React.Component {
       hasPerm: PropTypes.func
     }),
   };
+
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
+  }
 
   state = {
     showDeleteConfirmationModal: false,
@@ -210,67 +220,94 @@ class License extends React.Component {
 
     if (isLoading) return <LoadingPane {...paneProps} />;
 
+    const shortcuts = [
+      {
+        name: 'edit',
+        handler: handlers.onEdit,
+      },
+      {
+        name: 'expandAllSections',
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'collapseAllSections',
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
+      },
+      {
+        name: 'duplicateRecord',
+        handler: () => {
+          this.openDuplicateLicenseModal();
+        }
+      }
+    ];
+
     return (
-      <>
-        <Pane
-          actionMenu={this.getActionMenu}
-          appIcon={<AppIcon app="licenses" />}
-          lastMenu={this.renderLastMenu()}
-          paneTitle={data.license.name}
-          {...paneProps}
-        >
-          <TitleManager record={data.license.name}>
-            <LicenseHeader {...this.getSectionProps()} />
-            <LicenseInfo {...this.getSectionProps('licenseInfo')} />
-            <AccordionStatus>
-              <Row end="xs">
-                <Col xs>
-                  <ExpandAllButton />
-                </Col>
-              </Row>
-              <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
-                <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
-                <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
-                <Terms {...this.getSectionProps('licenseTerms')} />
-                <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
-                <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
-                <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
-                <NotesSmartAccordion
-                  {...this.getSectionProps('licenseNotes')}
-                  domainName="licenses"
-                  entityId={data.license.id}
-                  entityName={data.license.name}
-                  entityType="license"
-                  pathToNoteCreate="notes/create"
-                  pathToNoteDetails="notes"
-                />
-              </AccordionSet>
-            </AccordionStatus>
-          </TitleManager>
-        </Pane>
-        {helperApp}
-        { this.state.showDuplicateLicenseModal &&
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <>
+          <Pane
+            actionMenu={this.getActionMenu}
+            appIcon={<AppIcon app="licenses" />}
+            lastMenu={this.renderLastMenu()}
+            paneTitle={data.license.name}
+            {...paneProps}
+          >
+            <TitleManager record={data.license.name}>
+              <LicenseHeader {...this.getSectionProps()} />
+              <LicenseInfo {...this.getSectionProps('licenseInfo')} />
+              <AccordionStatus ref={this.accordionStatusRef}>
+                <Row end="xs">
+                  <Col xs>
+                    <ExpandAllButton />
+                  </Col>
+                </Row>
+                <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                  <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
+                  <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
+                  <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
+                  <Terms {...this.getSectionProps('licenseTerms')} />
+                  <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
+                  <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
+                  <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
+                  <NotesSmartAccordion
+                    {...this.getSectionProps('licenseNotes')}
+                    domainName="licenses"
+                    entityId={data.license.id}
+                    entityName={data.license.name}
+                    entityType="license"
+                    pathToNoteCreate="notes/create"
+                    pathToNoteDetails="notes"
+                  />
+                </AccordionSet>
+              </AccordionStatus>
+            </TitleManager>
+          </Pane>
+          {helperApp}
+          { this.state.showDuplicateLicenseModal &&
           <DuplicateLicenseModal
             onClone={(obj) => handlers.onClone(obj)}
             onClose={this.closeDuplicateLicenseModal}
           />
         }
-        <ConfirmationModal
-          buttonStyle="danger"
-          confirmLabel={<FormattedMessage id="ui-licenses.delete" />}
-          data-test-delete-confirmation-modal
-          heading={<FormattedMessage id="ui-licenses.deleteLicense" />}
-          id="delete-agreement-confirmation"
-          message={<SafeHTMLMessage id="ui-licenses.delete.confirmMessage" values={{ name: data.license?.name }} />}
-          onCancel={this.closeDeleteConfirmationModal}
-          onConfirm={() => {
-            handlers.onDelete();
-            this.closeDeleteConfirmationModal();
-          }}
-          open={this.state.showDeleteConfirmationModal}
-        />
-      </>
+          <ConfirmationModal
+            buttonStyle="danger"
+            confirmLabel={<FormattedMessage id="ui-licenses.delete" />}
+            data-test-delete-confirmation-modal
+            heading={<FormattedMessage id="ui-licenses.deleteLicense" />}
+            id="delete-agreement-confirmation"
+            message={<SafeHTMLMessage id="ui-licenses.delete.confirmMessage" values={{ name: data.license?.name }} />}
+            onCancel={this.closeDeleteConfirmationModal}
+            onConfirm={() => {
+              handlers.onDelete();
+              this.closeDeleteConfirmationModal();
+            }}
+            open={this.state.showDeleteConfirmationModal}
+          />
+        </>
+      </HasCommand>
     );
   }
 }

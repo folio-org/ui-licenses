@@ -7,11 +7,13 @@ import {
   Button,
   Checkbox,
   FormattedUTCDate,
+  HasCommand,
   Icon,
   MultiColumnList,
   Pane,
   PaneMenu,
   SearchField,
+  checkScope
 } from '@folio/stripes/components';
 
 import { AppIcon, IfPermission } from '@folio/stripes/core';
@@ -35,6 +37,7 @@ import css from './Licenses.css';
 const propTypes = {
   children: PropTypes.node,
   data: PropTypes.object,
+  history: PropTypes.object,
   onCompareLicenseTerms: PropTypes.func,
   onNeedMoreData: PropTypes.func,
   queryGetter: PropTypes.func,
@@ -49,6 +52,7 @@ const filterPaneVisibilityKey = '@folio/licenses/licensesFilterPaneVisibility';
 const Licenses = ({
   children,
   data,
+  history,
   onCompareLicenseTerms,
   onNeedMoreData,
   queryGetter,
@@ -76,16 +80,32 @@ const Licenses = ({
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
 
+  const goToNew = () => {
+    history.push(`/licenses/create${searchString}`);
+  };
+
+  const shortcuts = [
+    {
+      name: 'new',
+      handler: goToNew,
+    },
+  ];
+
   return (
-    <div data-test-licenses>
-      <SearchAndSortQuery
-        initialFilterState={{ status: ['active'] }}
-        initialSearchState={{ query: '' }}
-        initialSortState={{ sort: 'name' }}
-        queryGetter={queryGetter}
-        querySetter={querySetter}
-      >
-        {
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <div data-test-licenses>
+        <SearchAndSortQuery
+          initialFilterState={{ status: ['active'] }}
+          initialSearchState={{ query: '' }}
+          initialSortState={{ sort: 'name' }}
+          queryGetter={queryGetter}
+          querySetter={querySetter}
+        >
+          {
           ({
             searchValue,
             getSearchHandlers,
@@ -320,8 +340,9 @@ const Licenses = ({
             );
           }
         }
-      </SearchAndSortQuery>
-    </div>
+        </SearchAndSortQuery>
+      </div>
+    </HasCommand>
   );
 };
 

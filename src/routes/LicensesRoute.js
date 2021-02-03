@@ -192,6 +192,7 @@ class LicensesRoute extends React.Component {
           tags: resources?.tags?.records ?? [],
           terms: resources?.terms?.records ?? [],
         }}
+        history={this.props.history}
         onCompareLicenseTerms={this.handleCompareLicenseTerms}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
