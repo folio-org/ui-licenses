@@ -81,7 +81,7 @@ const Licenses = ({
   };
 
   const goToNew = () => {
-    history.push('/licenses/create');
+    history.push(`/licenses/create${searchString}`);
   };
 
   const shortcuts = [
