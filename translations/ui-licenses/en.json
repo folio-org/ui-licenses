@@ -6,6 +6,7 @@
 
   "amendment": "Amendment",
   "license": "License",
+  "licenses": "Licenses",
   "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
   "licenses.duplicate": "Duplicate",
 
