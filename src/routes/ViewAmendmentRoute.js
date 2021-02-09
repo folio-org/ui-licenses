@@ -147,7 +147,7 @@ class ViewAmendmentsRoute extends React.Component {
       .some(r => r.isPending);
   }
 
-  editAmendment = (id) => {
+  handleEditAmendment = (id) => {
     this.props.history.push(this.urls.editAmendment(id));
   }
 
@@ -173,7 +173,7 @@ class ViewAmendmentsRoute extends React.Component {
             onClose: this.handleClose,
             onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete && this.showDeleteConfirmationModal,
             onClone: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleClone && this.showDuplicateModal,
-            onEditAmendment: this.editAmendment
+            onEditAmendment: this.handleEditAmendment
           }}
           isLoading={get(resources, 'license.isPending')}
           urls={this.urls}

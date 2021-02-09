@@ -5,7 +5,7 @@
 * Upgrade to Stripes 6.0
 * Refactored LicenseFilters to functional component. ERM-1532
 * Added keyboard shortcuts for licenses. ERM-1239
-* Added keyboard shortcuts for amendments. ERM 1538
+* Added keyboard shortcuts for amendments. ERM-1538
 
 ## 5.0.1 2020-11-05
 * Fixes bug where incorrect Dates are saved when tenant timezone is ahead of UTC. ERM-1202
