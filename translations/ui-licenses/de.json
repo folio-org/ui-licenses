@@ -160,5 +160,6 @@
     "amendments.view.startDate": "Vertragsänderungsstartdatum",
     "amendments.view.endDate": "Vertragsänderungsenddatum",
     "amendments.view.license.licensor": "Lizenzgeber",
-    "prop.licensor.notSet": "Nicht belegt"
+    "prop.licensor.notSet": "Nicht belegt",
+    "licenses": "Lizenzverträge"
 }

@@ -160,5 +160,6 @@
     "amendments.view.startDate": "修改开始日期",
     "amendments.view.endDate": "修改结束日期",
     "amendments.view.license.licensor": "许可方",
-    "prop.licensor.notSet": "未设置"
+    "prop.licensor.notSet": "未设置",
+    "licenses": "Licenses"
 }
