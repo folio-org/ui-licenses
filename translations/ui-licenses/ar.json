@@ -160,5 +160,6 @@
     "amendments.view.startDate": "تاريخ بدء التعديل",
     "amendments.view.endDate": "تاريخ انتهاء التعديل",
     "amendments.view.license.licensor": "المرخص",
-    "prop.licensor.notSet": "لم يتم تعيينه"
+    "prop.licensor.notSet": "لم يتم تعيينه",
+    "licenses": "تراخيص"
 }

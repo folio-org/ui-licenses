@@ -160,5 +160,6 @@
     "amendments.view.startDate": "Amendment start date",
     "amendments.view.endDate": "Amendment end date",
     "amendments.view.license.licensor": "Licensor",
-    "prop.licensor.notSet": "Not set"
+    "prop.licensor.notSet": "Not set",
+    "licenses": "Licenses"
 }
