@@ -12,7 +12,7 @@
     "prop.name": "名称",
     "prop.parentLicense": "上层许可证",
     "prop.terms": "许可证条款",
-    "prop.startDate": "开始日期",
+    "prop.startDate": "起始日期",
     "prop.type": "类型",
     "placeholder.licenseName": "输入许可证名称",
     "placeholder.licenseDescription": "输入许可证的说明",
@@ -20,7 +20,7 @@
     "section.organizations": "组织",
     "section.terms": "条款",
     "prop.openEnded": "开放式结束",
-    "warn.clearEndDate": "结束日期将清除，因为选中了“开放式结束”。",
+    "warn.clearEndDate": "终止日期将清除，因为选中了“开放式终止”。",
     "prop.termValue": "取值",
     "terms.add": "添加条款",
     "errors.multipleLicensors": "每个许可证只允许一个许可方。",
@@ -157,9 +157,9 @@
     "duplicateAmendmentModal.terms": "条款",
     "amendments.view.paneTitle": "修改： {name}",
     "amendments.view.status": "修改状态",
-    "amendments.view.startDate": "修改开始日期",
-    "amendments.view.endDate": "修改结束日期",
+    "amendments.view.startDate": "修改起始日期",
+    "amendments.view.endDate": "修改终止日期",
     "amendments.view.license.licensor": "许可方",
     "prop.licensor.notSet": "未设置",
-    "licenses": "Licenses"
+    "licenses": "许可证"
 }
