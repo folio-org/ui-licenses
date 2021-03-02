@@ -190,19 +190,6 @@ class License extends React.Component {
               )}
             </FormattedMessage>
           }
-          <FormattedMessage id="ui-licenses.editLicense">
-            {ariaLabel => (
-              <Button
-                aria-label={ariaLabel}
-                buttonStyle="primary"
-                id="clickable-edit-license"
-                marginBottom0
-                to={this.props.urls.edit()}
-              >
-                <FormattedMessage id="stripes-components.button.edit" />
-              </Button>
-            )}
-          </FormattedMessage>
         </PaneMenu>
       </IfPermission>
     );

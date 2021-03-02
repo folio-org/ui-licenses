@@ -64,8 +64,8 @@ module.exports.test = (uiTestCtx) => {
       it('should navigate to create license page', done => {
         nightmare
           .wait('#list-licenses')
-          .wait('#clickable-new-license')
-          .click('#clickable-new-license')
+          .wait('#clickable-new-license') // 'New' button removed, ERM-1149
+          .click('#clickable-new-license') // 'New' button removed, ERM-1149
 
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 

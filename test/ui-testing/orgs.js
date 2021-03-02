@@ -73,8 +73,8 @@ module.exports.test = (uiTestCtx) => {
 
         nightmare
           .wait('#licenses-module-display')
-          .wait('#clickable-new-license')
-          .click('#clickable-new-license')
+          .wait('#clickable-new-license') // 'New' button removed, ERM-1149
+          .click('#clickable-new-license') // 'New' button removed, ERM-1149
           .waitUntilNetworkIdle(2000)
           .wait('#edit-license-name')
           .insert('#edit-license-name', licenseName)
@@ -196,8 +196,8 @@ module.exports.test = (uiTestCtx) => {
 
         it('should open edit license', done => {
           nightmare
-            .wait('#clickable-edit-license')
-            .click('#clickable-edit-license')
+            .wait('#clickable-edit-license') // Edit button removed, ERM-1149
+            .click('#clickable-edit-license') // Edit button removed, ERM-1149
             .waitUntilNetworkIdle(2000)
             .then(done)
             .catch(done);
