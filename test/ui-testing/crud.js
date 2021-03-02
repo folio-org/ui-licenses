@@ -23,8 +23,8 @@ const createLicense = (nightmare, done, defaultValues) => {
 
   nightmare
     .wait('#list-licenses')
-    .wait('#clickable-new-license')
-    .click('#clickable-new-license')
+    .wait('#clickable-new-license') // 'New' button removed, ERM-1149
+    .click('#clickable-new-license') // 'New' button removed, ERM-1149
 
     .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
@@ -97,8 +97,8 @@ module.exports.test = (uiTestCtx) => {
         const name = `Default License #${generateNumber()}`;
         nightmare
           .wait('#list-licenses')
-          .wait('#clickable-new-license')
-          .click('#clickable-new-license')
+          .wait('#clickable-new-license') // 'New' button removed, ERM-1149
+          .click('#clickable-new-license') // 'New' button removed, ERM-1149
 
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
@@ -163,8 +163,8 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should edit license to: ${values.name}${values.editedName}`, done => {
         nightmare
-          .wait('#clickable-edit-license')
-          .click('#clickable-edit-license')
+          .wait('#clickable-edit-license') // Edit button removed, ERM-1149
+          .click('#clickable-edit-license') // Edit button removed, ERM-1149
           .wait('#edit-license-name')
           .insert('#edit-license-name', values.editedName)
 
@@ -201,7 +201,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should reject endDate <= startDate', done => {
         nightmare
-          .click('#clickable-new-license')
+          .click('#clickable-new-license') // 'New' button removed, ERM-1149
           .wait('#edit-license-name')
           .insert('#edit-license-name', 'Invalid Date')
 
@@ -225,8 +225,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should create open-ended license', done => {
         nightmare
-          .wait('#clickable-new-license')
-          .click('#clickable-new-license')
+          .wait('#clickable-new-license') // 'New' button removed, ERM-1149
+          .click('#clickable-new-license') // 'New' button removed, ERM-1149
           .wait('#edit-license-name')
           .insert('#edit-license-name', `Open Ended License #${generateNumber()}`)
           .type('#edit-license-end-date', '01/11/2020\u000d')

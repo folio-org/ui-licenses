@@ -188,17 +188,32 @@ const Licenses = ({
                   actionMenu={({ onToggle }) => {
                     const numSelectedLicenses = Object.values(selectedLicenses).filter(item => item === true).length;
                     return (
-                      <Button
-                        buttonStyle="dropdownItem"
-                        disabled={numSelectedLicenses === 0}
-                        id="export-licenses-csv"
-                        onClick={() => {
-                          setShowExportLicenseAsCSVModal(true);
-                          onToggle();
-                        }}
-                      >
-                        <FormattedMessage id="ui-licenses.export.csv.label" values={{ count: numSelectedLicenses }} />
-                      </Button>
+                      <>
+                        <IfPermission perm="ui-licenses.licenses.edit">
+                          <Button
+                            buttonStyle="dropdownItem"
+                            id="clickable-dropdown-create-license"
+                            onClick={goToNew}
+                          >
+                            <Icon icon="plus-sign">
+                              <FormattedMessage id="stripes-smart-components.new" />
+                            </Icon>
+                          </Button>
+                        </IfPermission>
+                        <Button
+                          buttonStyle="dropdownItem"
+                          disabled={numSelectedLicenses === 0}
+                          id="export-licenses-csv"
+                          onClick={() => {
+                            setShowExportLicenseAsCSVModal(true);
+                            onToggle();
+                          }}
+                        >
+                          <Icon icon="download">
+                            <FormattedMessage id="ui-licenses.export.csv.label" values={{ count: numSelectedLicenses }} />
+                          </Icon>
+                        </Button>
+                      </>
                     );
                   }}
                   appIcon={<AppIcon app="licenses" />}
@@ -217,25 +232,6 @@ const Licenses = ({
                       null
                   }
                   id="pane-license-list"
-                  lastMenu={(
-                    <IfPermission perm="ui-licenses.licenses.edit">
-                      <PaneMenu>
-                        <FormattedMessage id="ui-licenses.createLicense">
-                          {ariaLabel => (
-                            <Button
-                              aria-label={ariaLabel}
-                              buttonStyle="primary"
-                              id="clickable-new-license"
-                              marginBottom0
-                              to={`/licenses/create${searchString}`}
-                            >
-                              <FormattedMessage id="stripes-smart-components.new" />
-                            </Button>
-                          )}
-                        </FormattedMessage>
-                      </PaneMenu>
-                    </IfPermission>
-                  )}
                   noOverflow
                   padContent={false}
                   paneSub={

@@ -32,8 +32,8 @@ module.exports.test = (uiTestCtx,
 
         nightmare
           .wait('#list-licenses')
-          .wait('#clickable-new-license')
-          .click('#clickable-new-license')
+          .wait('#clickable-new-license') // 'New' button removed, ERM-1149
+          .click('#clickable-new-license') // 'New' button removed, ERM-1149
 
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
@@ -123,8 +123,8 @@ module.exports.test = (uiTestCtx,
 
       it('should open edit license', done => {
         nightmare
-          .wait('#clickable-edit-license')
-          .click('#clickable-edit-license')
+          .wait('#clickable-edit-license') // Edit button removed, ERM-1149
+          .click('#clickable-edit-license') // Edit button removed, ERM-1149
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(2000)
           .then(done)

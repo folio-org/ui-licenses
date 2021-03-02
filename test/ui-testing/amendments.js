@@ -49,8 +49,8 @@ module.exports.test = (uiTestCtx) => {
       it(`should create license ${LICENSE_NAME}`, done => {
         nightmare
           .wait('#list-licenses')
-          .wait('#clickable-new-license')
-          .click('#clickable-new-license')
+          .wait('#clickable-new-license') // 'New' button removed, ERM-1149
+          .click('#clickable-new-license') // 'New' button removed, ERM-1149
 
           .wait('#edit-license-name')
           .insert('#edit-license-name', LICENSE_NAME)

@@ -131,29 +131,6 @@ export default class Amendment extends React.Component {
     );
   }
 
-  renderEditAmendmentPaneMenu = () => {
-    const { data: { amendment: { id: amendmentId } } } = this.props;
-    return (
-      <IfPermission perm="ui-licenses.licenses.edit">
-        <PaneMenu>
-          <FormattedMessage id="ui-licenses.amendments.create">
-            {ariaLabel => (
-              <Button
-                aria-label={ariaLabel}
-                buttonStyle="primary"
-                id="clickable-edit-amendment"
-                marginBottom0
-                to={this.props.urls.editAmendment(amendmentId)}
-              >
-                <FormattedMessage id="stripes-components.button.edit" />
-              </Button>
-            )}
-          </FormattedMessage>
-        </PaneMenu>
-      </IfPermission>
-    );
-  }
-
   render() {
     const {
       data: { amendment },
@@ -198,7 +175,6 @@ export default class Amendment extends React.Component {
         <Pane
           actionMenu={this.renderActionMenu}
           appIcon={<AppIcon app="licenses" iconKey="amendment" />}
-          lastMenu={this.renderEditAmendmentPaneMenu()}
           paneTitle={<FormattedMessage id="ui-licenses.amendments.view.paneTitle" values={{ name: amendment.name }} />}
           {...paneProps}
         >
