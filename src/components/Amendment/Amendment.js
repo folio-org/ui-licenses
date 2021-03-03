@@ -12,14 +12,13 @@ import {
   Icon,
   LoadingPane,
   Pane,
-  PaneMenu,
   Row,
   checkScope,
   collapseAllSections,
   expandAllSections
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, TitleManager } from '@folio/stripes/core';
 
 import {
   AmendmentInfo,
@@ -188,9 +187,15 @@ export default class Amendment extends React.Component {
                 </Col>
               </Row>
               <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
+                { amendment?.docs?.length ?
+                  <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
+                  :
+                  null }
                 <Terms {...this.getSectionProps('amendmentTerms')} />
-                <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
+                { amendment?.supplementaryDocs?.length ?
+                  <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
+                  :
+                  null }
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>
