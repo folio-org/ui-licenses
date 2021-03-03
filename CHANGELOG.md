@@ -8,7 +8,7 @@
 * Added keyboard shortcuts for amendments. ERM-1538
 * Removed edit button in license detail view, moved "New" option in "Actions" dropdown, added icons. ERM-1149
 * Removed edit button in amendment detail view. ERM-1149
-
+* Added conditional rendering of accordions in license and amendment view. ERM-1581
 ## 5.0.1 2020-11-05
 * Fixes bug where incorrect Dates are saved when tenant timezone is ahead of UTC. ERM-1202
 * Fixes bug where a user with manage license terms permission should be able to edit the license terms. ERM-1196
