@@ -32,11 +32,13 @@ export default class Amendment extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       amendment: PropTypes.shape({
+        docs: PropTypes.arrayOf(PropTypes.object),
         id: PropTypes.string,
         name: PropTypes.string,
         status: PropTypes.shape({
           label: PropTypes.string,
         }),
+        supplementaryDocs: PropTypes.arrayOf(PropTypes.object),
       }).isRequired,
       license: PropTypes.object.isRequired,
       terms: PropTypes.arrayOf(PropTypes.object),
