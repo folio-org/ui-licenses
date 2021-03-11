@@ -132,6 +132,10 @@ export default class Amendment extends React.Component {
     );
   }
 
+  renderIfNotEmpty = (array, func) => {
+    return array?.length ? func : null;
+  }
+
   render() {
     const {
       data: { amendment },
@@ -189,15 +193,9 @@ export default class Amendment extends React.Component {
                 </Col>
               </Row>
               <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                { amendment?.docs?.length ?
-                  <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
-                  :
-                  null }
+                {this.renderIfNotEmpty(amendment.docs, <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />)}
                 <Terms {...this.getSectionProps('amendmentTerms')} />
-                { amendment?.supplementaryDocs?.length ?
-                  <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
-                  :
-                  null }
+                {this.renderIfNotEmpty(amendment.supplementaryDocs, <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />)}
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>

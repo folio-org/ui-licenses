@@ -195,6 +195,10 @@ class License extends React.Component {
     );
   }
 
+  renderIfNotEmpty = (array, func) => {
+    return array?.length ? func : null;
+  }
+
   render() {
     const { data, isLoading, handlers, helperApp } = this.props;
 
@@ -252,28 +256,13 @@ class License extends React.Component {
                   </Col>
                 </Row>
                 <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                  { data.license?.contacts?.length ?
-                    <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
-                    :
-                    null }
-                  { data.license?.orgs?.length ?
-                    <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
-                    :
-                    null }
-                  { data.license?.docs?.length ?
-                    <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
-                    :
-                    null }
+                  {this.renderIfNotEmpty(data.license?.contacts, <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />)}
+                  {this.renderIfNotEmpty(data.license?.orgs, <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />)}
+                  {this.renderIfNotEmpty(data.license?.docs, <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />)}
                   <Terms {...this.getSectionProps('licenseTerms')} />
                   <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
-                  { data.license?.supplementaryDocs?.length ?
-                    <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
-                    :
-                    null }
-                  { data.license?.linkedAgreements?.length ?
-                    <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
-                    :
-                    null }
+                  {this.renderIfNotEmpty(data.license?.supplementaryDocs, <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />)}
+                  {this.renderIfNotEmpty(data.license?.linkedAgreements, <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />)}
                   <NotesSmartAccordion
                     {...this.getSectionProps('licenseNotes')}
                     domainName="licenses"
