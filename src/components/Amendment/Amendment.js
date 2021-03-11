@@ -189,15 +189,9 @@ export default class Amendment extends React.Component {
                 </Col>
               </Row>
               <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                { amendment?.docs?.length ?
-                  <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
-                  :
-                  null }
+                { amendment?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} /> }
                 <Terms {...this.getSectionProps('amendmentTerms')} />
-                { amendment?.supplementaryDocs?.length ?
-                  <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
-                  :
-                  null }
+                { amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} /> }
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>
