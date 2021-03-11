@@ -252,13 +252,13 @@ class License extends React.Component {
                   </Col>
                 </Row>
                 <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                  <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
-                  <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
-                  <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
+                  { data.license?.contacts?.length > 0 && <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} /> }
+                  { data.license?.orgs?.length > 0 && <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} /> }
+                  { data.license?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('licenseCoreDocs')} /> }
                   <Terms {...this.getSectionProps('licenseTerms')} />
                   <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
-                  <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
-                  <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
+                  { data.license?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} /> }
+                  { data.license?.linkedAgreements?.length > 0 && <LicenseAgreements {...this.getSectionProps('licenseAgreements')} /> }
                   <NotesSmartAccordion
                     {...this.getSectionProps('licenseNotes')}
                     domainName="licenses"

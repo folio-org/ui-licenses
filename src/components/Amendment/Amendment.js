@@ -12,14 +12,13 @@ import {
   Icon,
   LoadingPane,
   Pane,
-  PaneMenu,
   Row,
   checkScope,
   collapseAllSections,
   expandAllSections
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, TitleManager } from '@folio/stripes/core';
 
 import {
   AmendmentInfo,
@@ -33,11 +32,13 @@ export default class Amendment extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       amendment: PropTypes.shape({
+        docs: PropTypes.arrayOf(PropTypes.object),
         id: PropTypes.string,
         name: PropTypes.string,
         status: PropTypes.shape({
           label: PropTypes.string,
         }),
+        supplementaryDocs: PropTypes.arrayOf(PropTypes.object),
       }).isRequired,
       license: PropTypes.object.isRequired,
       terms: PropTypes.arrayOf(PropTypes.object),
@@ -188,9 +189,9 @@ export default class Amendment extends React.Component {
                 </Col>
               </Row>
               <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
+                { amendment?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} /> }
                 <Terms {...this.getSectionProps('amendmentTerms')} />
-                <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
+                { amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} /> }
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>
