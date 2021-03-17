@@ -1,13 +1,20 @@
 # Change history for ui-licenses
 
-## 6.0.0 In Progress
-* Added optionalOkapiInterfaces to package.json. ERM-940
+## 6.0.0 2021-03-
 * Upgrade to Stripes 6.0
-* Refactored LicenseFilters to functional component. ERM-1532
-* Added keyboard shortcuts for licenses. ERM-1239
-* Added keyboard shortcuts for amendments. ERM-1538
+* Added optionalOkapiInterfaces to package.json. ERM-940
 * Removed edit button in license detail view, moved "New" option in "Actions" dropdown, added icons. ERM-1149
 * Removed edit button in amendment detail view. ERM-1149
+* Improvements to the Amendment preview pane presentation ERM-1176
+* On Platform view Action button should not show if user would see no options in Action dropdown ERM-1225
+* Duplicate amendment ability added ERM-1229
+* Added keyboard shortcuts for licenses. ERM-1239
+* Support searching on License start and end date ERM-1251
+* Refactored LicenseFilters to functional component. ERM-1532
+* Added keyboard shortcuts for amendments. ERM-1538
+* Update stripes-cli to v2. ERM-1550
+* Remove dependency on order-lines interface ERM-1552
+* When displaying Interfaces for an organisation in a License full details are only retrieved for 10 ERM-1560
 * Added conditional rendering of accordions in license and amendment view. ERM-1581
 ## 5.0.1 2020-11-05
 * Fixes bug where incorrect Dates are saved when tenant timezone is ahead of UTC. ERM-1202
