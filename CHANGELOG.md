@@ -1,6 +1,6 @@
 # Change history for ui-licenses
 
-## 6.0.0 2021-03-
+## 6.0.0 2021-03-17
 * Upgrade to Stripes 6.0
 * Added optionalOkapiInterfaces to package.json. ERM-940
 * Removed edit button in license detail view, moved "New" option in "Actions" dropdown, added icons. ERM-1149
