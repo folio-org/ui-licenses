@@ -1,5 +1,7 @@
 # Change history for ui-licenses
 
+## 6.1.0 In progress
+
 ## 6.0.0 2021-03-17
 * Upgrade to Stripes 6.0
 * Added optionalOkapiInterfaces to package.json. ERM-940
