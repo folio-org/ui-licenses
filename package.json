@@ -108,6 +108,7 @@
       {
         "permissionName": "ui-licenses.licenses.view",
         "displayName": "Licenses: Search & view licenses",
+        "description": "A user with this permission can search and view existing licenses and amendments. This includes the permission to see and access the License app in the Folio interface.",
         "visible": true,
         "subPermissions": [
           "module.licenses.enabled",
@@ -122,6 +123,7 @@
       {
         "permissionName": "ui-licenses.licenses.edit",
         "displayName": "Licenses: Edit licenses",
+        "description": "Grants all permissions included in \"Licenses: Search & view licenses\" plus the ability to edit licenses and amendments, including the ability to add and edit documents and view, add and edit tags on a license.",
         "visible": true,
         "subPermissions": [
           "ui-licenses.licenses.view",
@@ -132,6 +134,7 @@
       {
         "permissionName": "ui-licenses.licenses.delete",
         "displayName": "Licenses: Delete licenses",
+        "description": "Grants all permissions included in \"Licenses: Search & view licenses\" plus the ability to delete licenses and amendments.",
         "visible": true,
         "subPermissions": [
           "ui-licenses.licenses.view",
@@ -148,6 +151,7 @@
       {
         "permissionName": "ui-licenses.picklists.manage",
         "displayName": "Settings (Licenses): Manage pick lists and values",
+        "description": "Grants permissions to access the License settings and the ability to manage pick lists and pick list values.",
         "visible": true,
         "subPermissions": [
           "settings.licenses.enabled",
@@ -157,6 +161,7 @@
       {
         "permissionName": "ui-licenses.terms.manage",
         "displayName": "Settings (Licenses): Manage license terms",
+        "description": "Grants permissions to access the License settings and the ability to manage the available.",
         "visible": true,
         "subPermissions": [
           "settings.licenses.enabled",
