@@ -80,7 +80,7 @@
     "delete": "Eliminar",
     "edit": "Editar",
     "section.supplementaryDocuments": "Documentos suplementarios",
-    "terms.count": "{count, number} guardado {count, plural, one {term} otro {terms}}",
+    "terms.count": "{count, number} guardado {count, plural, one { término } other { términos }}",
     "terms.callout.delete.error": "Se produjo un error al eliminar el término {name}: {error}",
     "terms.callout.delete.success": "<strong>Término eliminado:</strong> {name}",
     "terms.callout.delete.termInUse": "El término <strong> {name} </strong> no se eliminó porque está en uso en una o más licencias.",
