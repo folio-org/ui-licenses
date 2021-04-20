@@ -14,7 +14,7 @@ import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 // This must return a function to render a link button
 
-const LicenseLookupComponent = ({id, input: { name, value }, onResourceSelected, resource }) => {
+const LicenseLookupComponent = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
   let triggerButton = useRef(null);
 
   const renderLicense = () => {
@@ -48,6 +48,7 @@ const LicenseLookupComponent = ({id, input: { name, value }, onResourceSelected,
         const buttonProps = {
           'buttonStyle': v ? 'default' : 'primary',
           'buttonRef': triggerButton,
+          'disabled': disabled,
           'id': `${id}-find-license-btn`,
           'marginBottom0': true,
           'name': name,
