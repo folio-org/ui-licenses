@@ -24,6 +24,11 @@ import NoteEditRoute from './routes/NoteEditRoute';
 
 import Settings from './settings';
 
+import setUpRegistry from './setUpRegistry';
+
+// DO THIS BEFORE APP
+setUpRegistry();
+
 class App extends React.Component {
   static propTypes = {
     actAs: PropTypes.string.isRequired,
