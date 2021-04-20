@@ -110,6 +110,7 @@ class License extends React.Component {
     if (stripes.hasPerm('ui-licenses.licenses.edit')) {
       buttons.push(
         <Button
+          key="clickable-dropdown-edit-license"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-edit-license"
           to={urls.edit()}
@@ -121,6 +122,7 @@ class License extends React.Component {
       );
       buttons.push(
         <Button
+          key="clickable-dropdown-duplicate-license"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-duplicate-license"
           onClick={() => {
@@ -138,6 +140,7 @@ class License extends React.Component {
     if (stripes.hasPerm('ui-licenses.licenses.delete')) {
       buttons.push(
         <Button
+          key="clickable-dropdown-delete-licenses"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-delete-licenses"
           onClick={() => {
@@ -171,28 +174,27 @@ class License extends React.Component {
   renderLastMenu = () => {
     const {
       data: { license },
-      handlers
+      handlers,
+      stripes
     } = this.props;
 
-    return (
-      <IfPermission perm="ui-licenses.licenses.edit">
-        <PaneMenu>
-          {handlers.onToggleTags &&
-            <FormattedMessage id="ui-licenses.showTags">
-              {ariaLabel => (
-                <IconButton
-                  ariaLabel={ariaLabel}
-                  badgeCount={license?.tags?.length ?? 0}
-                  icon="tag"
-                  id="clickable-show-tags"
-                  onClick={handlers.onToggleTags}
-                />
-              )}
-            </FormattedMessage>
-          }
-        </PaneMenu>
-      </IfPermission>
-    );
+    return stripes.hasPerm('ui-licenses.licenses.edit') ? (
+      <PaneMenu>
+        {handlers.onToggleTags &&
+          <FormattedMessage id="ui-licenses.showTags">
+            {ariaLabel => (
+              <IconButton
+                ariaLabel={ariaLabel}
+                badgeCount={license?.tags?.length ?? 0}
+                icon="tag"
+                id="clickable-show-tags"
+                onClick={handlers.onToggleTags}
+              />
+            )}
+          </FormattedMessage>
+        }
+      </PaneMenu>
+    ) : null;
   }
 
   render() {
