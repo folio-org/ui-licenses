@@ -104,7 +104,7 @@ class License extends React.Component {
 
   getActionMenu = ({ onToggle }) => {
     const { stripes, urls } = this.props;
-    if (!urls.edit) return null;
+    // if (!urls.edit) return null;
     const buttons = [];
 
     if (stripes.hasPerm('ui-licenses.licenses.edit')) {
