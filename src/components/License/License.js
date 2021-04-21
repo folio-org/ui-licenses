@@ -21,7 +21,7 @@ import {
   collapseAllSections,
   expandAllSections
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager, withStripes } from '@folio/stripes/core';
+import { AppIcon, TitleManager, withStripes } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateLicenseModal from '../DuplicateLicenseModal';
 
