@@ -91,6 +91,9 @@
       "organizations-storage.interfaces": "1.0 2.0",
       "users": "13.0 14.0 15.0"
     },
+    "resolutions": {
+      "@rehooks/local-storage": "2.4.0"
+    },
     "stripesDeps": [
       "@folio/stripes-erm-components"
     ],
