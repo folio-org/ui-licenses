@@ -1,5 +1,9 @@
 # Change history for ui-licenses
 
+## 6.0.1 2021-04-23
+* Actions menu doesn't display for Licenses even when there are valid actions for the user. ERM-1620
+* Add descriptions to visible permission set in ui-licenses. ERM-1594
+
 ## 6.0.0 2021-03-
 * Upgrade to Stripes 6.0
 * Added optionalOkapiInterfaces to package.json. ERM-940
