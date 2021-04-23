@@ -4,7 +4,7 @@
 * Actions menu doesn't display for Licenses even when there are valid actions for the user. ERM-1620
 * Add descriptions to visible permission set in ui-licenses. ERM-1594
 
-## 6.0.0 2021-03-
+## 6.0.0 2021-03-17
 * Upgrade to Stripes 6.0
 * Added optionalOkapiInterfaces to package.json. ERM-940
 * Removed edit button in license detail view, moved "New" option in "Actions" dropdown, added icons. ERM-1149
