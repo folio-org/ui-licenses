@@ -34,7 +34,7 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
-    "@folio/stripes": "^6.0.0",
+    "@folio/stripes": "^6.1.0",
     "@folio/stripes-cli": "^2.0.0",
     "babel-eslint": "^10.0.0",
     "chai": "^4.2.0",
@@ -56,7 +56,7 @@
   "dependencies": {
     "@folio/react-intl-safe-html": "^2.0.0",
     "@folio/stripes-erm-components": "^5.0.0",
-    "@rehooks/local-storage": "^2.3.0",
+    "@rehooks/local-storage": "2.4.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
@@ -68,7 +68,7 @@
     "react-router-prop-types": "^1.0.4"
   },
   "peerDependencies": {
-    "@folio/stripes": "^6.0.0",
+    "@folio/stripes": "^6.1.0",
     "moment": "^2.22.2",
     "react": "*",
     "react-dom": "*",
@@ -90,6 +90,9 @@
     "optionalOkapiInterfaces": {
       "organizations-storage.interfaces": "1.0 2.0",
       "users": "13.0 14.0 15.0"
+    },
+    "resolutions": {
+      "@rehooks/local-storage": "2.4.0"
     },
     "stripesDeps": [
       "@folio/stripes-erm-components"
