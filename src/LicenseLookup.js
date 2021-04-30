@@ -26,7 +26,7 @@ const propTypes = {
   resource: PropTypes.object
 };
 
-const LicenseLookupComponent = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
+const LicenseLookup = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
   let triggerButton = useRef(null);
 
   const renderLicense = () => {
@@ -119,6 +119,6 @@ const LicenseLookupComponent = ({ disabled, id, input: { name, value }, onResour
   );
 };
 
-LicenseLookupComponent.propTypes = propTypes;
+LicenseLookup.propTypes = propTypes;
 
-export default LicenseLookupComponent;
+export default LicenseLookup;

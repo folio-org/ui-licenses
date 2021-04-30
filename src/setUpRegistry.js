@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RegistryLookup from './RegistryLookup';
+import LicenseLookup from './LicenseLookup';
 
 const setUpRegistry = (registry) => {
   // License Resource
@@ -9,7 +9,7 @@ const setUpRegistry = (registry) => {
   licenseReg.addViewTemplate(license => `/licenses/${license.id}`);
 
   // Lookup plugin
-  licenseReg.addLookupComponent(RegistryLookup);
+  licenseReg.addLookupComponent(LicenseLookup);
 };
 
 export default setUpRegistry;
