@@ -78,8 +78,10 @@
   "stripes": {
     "actsAs": [
       "app",
+      "handler",
       "settings"
     ],
+    "handlerName": "eventHandler",
     "displayName": "ui-licenses.meta.title",
     "route": "/licenses",
     "home": "/licenses",

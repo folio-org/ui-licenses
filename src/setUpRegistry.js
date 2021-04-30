@@ -1,11 +1,8 @@
 import React from 'react';
 
-import Registry from '@folio/plugin-resource-registry';
-
 import RegistryLookup from './RegistryLookup';
 
-const setUpRegistry = () => {
-  const registry = Registry;
+const setUpRegistry = (registry) => {
   // License Resource
   const licenseReg = registry.registerResource('license');
   licenseReg.addViewAll('/licenses');

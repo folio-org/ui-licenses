@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -13,6 +14,17 @@ import { LicenseCard } from '@folio/stripes-erm-components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 // This must return a function to render a link button
+
+const propTypes = {
+  disabled: PropTypes.bool,
+  id: PropTypes.string,
+  input: PropTypes.shape({
+    name: PropTypes.string,
+    value: PropTypes.string
+  }),
+  onResourceSelected: PropTypes.func,
+  resource: PropTypes.object
+};
 
 const LicenseLookupComponent = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
   let triggerButton = useRef(null);
@@ -106,5 +118,7 @@ const LicenseLookupComponent = ({ disabled, id, input: { name, value }, onResour
     </Card>
   );
 };
+
+LicenseLookupComponent.propTypes = propTypes;
 
 export default LicenseLookupComponent;
