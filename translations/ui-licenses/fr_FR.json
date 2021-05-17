@@ -132,7 +132,7 @@
     "permission.picklists.manage": "Settings (Licenses): Manage pick lists and values",
     "permission.terms.manage": "Paramètres (licences): gérer les termes de licence",
     "licenses.duplicate": "Dupliquer",
-    "duplicateLicenseModal.cloneEndpointError": "Unable to duplicate the license. The clone endpoint could not be accessed.",
+    "duplicateLicenseModal.cloneEndpointError": "Impossible de dupliquer la licence. Impossible d'accéder au point de terminaison.",
     "duplicateLicenseModal.coreDocs": "Documents de base",
     "duplicateLicenseModal.duplicateLicense": "Dupliquer la licence",
     "duplicateLicenseModal.duplicateMessage": "Veuillez sélectionner les sections de la licence à dupliquer",
