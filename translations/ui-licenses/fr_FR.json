@@ -129,7 +129,7 @@
     "permission.licenses.view": "Licences: rechercher et afficher les licences",
     "permission.licenses.edit": "Licences: modifier les licences",
     "permission.licenses.delete": "Licences: supprimer les licences",
-    "permission.picklists.manage": "Settings (Licenses): Manage pick lists and values",
+    "permission.picklists.manage": "Paramètres (licences): gérer les listes de sélection et les valeurs",
     "permission.terms.manage": "Paramètres (licences): gérer les termes de licence",
     "licenses.duplicate": "Dupliquer",
     "duplicateLicenseModal.cloneEndpointError": "Impossible de dupliquer la licence. Impossible d'accéder au point de terminaison.",
