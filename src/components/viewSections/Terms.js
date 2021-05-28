@@ -14,12 +14,11 @@ export default class Terms extends React.Component {
   }
 
   renderBadge = () => {
-    const {license: { customProperties }} = this.props;
+    const { license: { customProperties } } = this.props;
     if (customProperties !== undefined) {
       const count = Object.keys(customProperties).length;
       return <Badge>{count}</Badge>;
-    }
-    else {
+    } else {
       return <Spinner />;
     }
   }
