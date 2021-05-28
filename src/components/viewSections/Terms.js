@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Accordion } from '@folio/stripes/components';
+import { Accordion, Badge, Spinner } from '@folio/stripes/components';
 import { CustomPropertiesList } from '@folio/stripes-erm-components';
 
 export default class Terms extends React.Component {
@@ -10,6 +10,18 @@ export default class Terms extends React.Component {
     record: PropTypes.shape({ customProperties: PropTypes.object }),
     recordType: PropTypes.string.isRequired,
     terms: PropTypes.arrayOf(PropTypes.object),
+    license: PropTypes.arrayOf(PropTypes.object),
+  }
+
+  renderBadge = () => {
+    const {license: { customProperties }} = this.props;
+    if (customProperties !== undefined) {
+      const count = Object.keys(customProperties).length;
+      return <Badge>{count}</Badge>;
+    }
+    else {
+      return <Spinner />;
+    }
   }
 
   render() {
@@ -19,6 +31,7 @@ export default class Terms extends React.Component {
       <FormattedMessage id={`ui-licenses.${recordType}`}>
         {([type]) => (
           <Accordion
+            displayWhenClosed={this.renderBadge()}
             id={id}
             label={<FormattedMessage id="ui-licenses.section.terms" />}
           >
