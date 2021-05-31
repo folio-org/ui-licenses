@@ -26,7 +26,7 @@ class LicensesRoute extends React.Component {
         searchKey: 'name,alternateNames.name,description',
         filterKeys: {
           org: 'orgs.org',
-          role: 'orgs.role',
+          role: 'orgs.roles.role',
           status: 'status.value',
           tags: 'tags.value',
           type: 'type.value'
