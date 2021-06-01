@@ -59,7 +59,7 @@
     "placeholder.amendmentDescription": "수정 사항에 대한 설명을 입력하십시오.",
     "section.amendmentInformation": "수정 정보",
     "license": "라이센스",
-    "licensePlural": "{카운트} {카운트, 복수, 하나의 {라이센스} 다른 {라이센스}}",
+    "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
     "organizations.addOrganizationToLicense": "공급사 추가",
     "errors.termVisibilityWithoutValue": "가시성을 변경하려면 이 조건에 대한 값을 설정해야합니다.",
     "prop.termVisibility": "가시성",
