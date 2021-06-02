@@ -11,11 +11,18 @@ export default class Terms extends React.Component {
     recordType: PropTypes.string.isRequired,
     terms: PropTypes.arrayOf(PropTypes.object),
     license: PropTypes.arrayOf(PropTypes.object),
+    amendment: PropTypes.arrayOf(PropTypes.object),
   }
 
   renderBadge = () => {
-    const { license: { customProperties } } = this.props;
-    if (customProperties !== undefined) {
+    const { recordType } = this.props;
+    let customProperties = false;
+    if (recordType === 'license') {
+      customProperties = this.props.license.customProperties;
+    } else if (recordType === 'amendment') {
+      customProperties = this.props.amendment.customProperties;
+    }
+    if (customProperties) {
       const count = Object.keys(customProperties).length;
       return <Badge>{count}</Badge>;
     } else {
