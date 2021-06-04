@@ -1,6 +1,7 @@
 # Change history for ui-licenses
 
 ## 6.1.0 In progress
+* Set up ui-licenses Registry entry. ERM-1683
 
 ## 6.0.0 2021-03-17
 * Upgrade to Stripes 6.0
