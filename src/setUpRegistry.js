@@ -10,7 +10,7 @@ const setUpRegistry = (registry) => {
   licenseReg.addViewTemplate(license => `/licenses/${license.id}`);
 
   licenseReg.setRenderFunction('internalContacts', record => {
-    return <InternalContactsArrayDisplay contacts={record.contacts}/>;
+    return <InternalContactsArrayDisplay contacts={record.contacts} />;
   });
 
   // Lookup plugin
