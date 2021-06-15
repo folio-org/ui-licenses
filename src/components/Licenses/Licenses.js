@@ -63,7 +63,29 @@ const Licenses = ({
 }) => {
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
-  const sortOrder = query.sort ?? '';
+
+  const [sortOrder, setSortOrder] = useState(['name', 'type', 'status', 'startDate', 'endDate']);
+  const [sortDirection, setSortDirection] = useState(['asc', 'desc']);
+
+  const sortMap = {
+    name: l => l.name,
+    type: l => l?.type?.label,
+    status: l => l?.status?.label,
+    startDate: l => l?.startDate,
+    endDate: l => l?.endDate,
+  };
+
+  const onSort = (e, meta) => {
+    if (!sortMap[meta.name]) return;
+
+    if (sortOrder[0] !== meta.name) {
+      setSortOrder([meta.name, sortOrder[0]]);
+      setSortDirection(['asc', sortDirection[0]]);
+    } else {
+      const direction = (sortDirection[0] === 'desc') ? 'asc' : 'desc';
+      setSortDirection([direction, sortDirection[1]]);
+    }
+  };
 
   const searchField = useRef(null);
 
@@ -110,7 +132,6 @@ const Licenses = ({
             searchValue,
             getSearchHandlers,
             onSubmitSearch,
-            onSort,
             getFilterHandlers,
             activeFilters,
             filterChanged,
@@ -119,6 +140,11 @@ const Licenses = ({
           }) => {
             const disableReset = () => (!filterChanged && !searchChanged);
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
+
+            // eslint-disable-next-line no-undef
+            const contentData = _.orderBy(data.licenses,
+              [sortMap[sortOrder[0]], sortMap[sortOrder[1]]], sortDirection);
+
 
             return (
               <PersistedPaneset appId="@folio/licenses" id="licenses-paneset">
@@ -260,7 +286,7 @@ const Licenses = ({
                       startDate: 120,
                       endDate: 120
                     }}
-                    contentData={data.licenses}
+                    contentData={contentData}
                     formatter={{
                       selected: license => (
                         <Checkbox
@@ -316,8 +342,8 @@ const Licenses = ({
                       to: id => `/licenses/${id}${searchString}`,
                     }}
                     rowUpdater={license => selectedLicenses[license.id]}
-                    sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
-                    sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
+                    sortDirection={sortDirection}
+                    sortOrder={sortOrder}
                     totalCount={count}
                     virtualize
                     visibleColumns={['selected', 'name', 'type', 'status', 'startDate', 'endDate']}
