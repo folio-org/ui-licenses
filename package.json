@@ -34,8 +34,8 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
-    "@folio/stripes": "^6.1.0",
-    "@folio/stripes-cli": "^2.0.0",
+    "@folio/stripes": "^6.2.0",
+    "@folio/stripes-cli": "^2.3.0",
     "babel-eslint": "^10.0.0",
     "chai": "^4.2.0",
     "chai-spies": "^1.0.0",
@@ -68,7 +68,7 @@
     "react-router-prop-types": "^1.0.4"
   },
   "peerDependencies": {
-    "@folio/stripes": "^6.1.0",
+    "@folio/stripes": "^6.2.0",
     "moment": "^2.22.2",
     "react": "*",
     "react-dom": "*",

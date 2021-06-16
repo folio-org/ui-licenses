@@ -1,7 +1,11 @@
 # Change history for ui-licenses
 
-## 6.1.0 In progress
-* Set up ui-licenses Registry entry. ERM-1683
+## 6.1.0 2021-06-16
+* ERM-1683 Set up ui-licenses Registry entry
+* ERM-1640 Lock ui-licenses to @rehooks/local-storage 2.4.0
+* ERM-1620 Actions menu doesn't display for Licenses even when there are valid actions for the user
+* ERM-1608 Add count of populated terms in accordion header
+* ERM-1594 Add descriptions to visible permission set in ui-licenses
 
 ## 6.0.0 2021-03-17
 * Upgrade to Stripes 6.0
