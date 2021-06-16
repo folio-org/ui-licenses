@@ -1,5 +1,7 @@
 # Change history for ui-licenses
 
+## 6.2.0 (In Progress)
+
 ## 6.1.0 2021-06-16
 * ERM-1683 Set up ui-licenses Registry entry
 * ERM-1640 Lock ui-licenses to @rehooks/local-storage 2.4.0
