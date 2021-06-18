@@ -129,6 +129,7 @@
   "organizations.selectRole": "Select a role",
   "organizations.createNew": "Create new organization",
   "organizations.addOrganizationToLicense": "Add organization",
+  "organizations.primary": "Primary organization",
 
   "prop.agreementStatus": "Agreement status",
   "prop.description": "Description",
