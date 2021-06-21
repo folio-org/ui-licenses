@@ -1,6 +1,7 @@
 # Change history for ui-licenses
 
-## 6.2.0 (In Progress)
+## 7.0.0 (In Progress)
+* Included interface dependency for licenses 4.0
 
 ## 6.1.0 2021-06-16
 * ERM-1683 Set up ui-licenses Registry entry
