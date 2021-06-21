@@ -31,6 +31,10 @@ class LicensesRoute extends React.Component {
           tags: 'tags.value',
           type: 'type.value'
         },
+        sortKeys: {
+          status: 'status.label',
+          type: 'type.label',
+        },
       })
     },
     statusValues: {
