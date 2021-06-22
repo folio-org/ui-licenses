@@ -1,10 +1,15 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
-import { Route } from '@folio/stripes/core';
+import { AppContextMenu, Route } from '@folio/stripes/core';
 import {
   CommandList,
   HasCommand,
+  KeyboardShortcutsModal,
+  NavList,
+  NavListItem,
+  NavListSection,
   checkScope,
   defaultKeyboardShortcuts,
 } from '@folio/stripes/components';
@@ -44,6 +49,19 @@ class App extends React.Component {
     stripes: PropTypes.object.isRequired,
   }
 
+  state = {
+    showKeyboardShortcutsModal: false,
+  };
+
+  changeKeyboardShortcutsModal = (modalState) => {
+    this.setState({ showKeyboardShortcutsModal: modalState });
+  };
+
+  shortcutModalToggle(handleToggle) {
+    handleToggle();
+    this.changeKeyboardShortcutsModal(true);
+  }
+
   searchInput = () => {
     return this.props.location.pathname.search('/licenses') === 0 ?
       'input-license-search' :
@@ -65,6 +83,10 @@ class App extends React.Component {
       name: 'search',
       handler: this.focusSearchField
     },
+    {
+      name: 'openShortcutModal',
+      handler: this.changeKeyboardShortcutsModal
+    },
   ];
 
   render() {
@@ -77,29 +99,52 @@ class App extends React.Component {
     }
 
     return (
-      <CommandList commands={defaultKeyboardShortcuts}>
-        <HasCommand
-          commands={this.shortcuts}
-          isWithinScope={checkScope}
-          scope={document.body}
-        >
-          <Switch>
-            <Route component={NoteCreateRoute} exact path={`${path}/notes/create`} />
-            <Route component={NoteViewRoute} exact path={`${path}/notes/:noteId`} />
-            <Route component={NoteEditRoute} exact path={`${path}/notes/:noteId/edit`} />
-            <Route component={CreateLicenseRoute} path={`${path}/create`} />
-            <Route component={EditLicenseRoute} path={`${path}/:id/edit`} />
-            <Route component={CreateAmendmentRoute} path={`${path}/:id/amendments/create`} />
-            <Route component={EditAmendmentRoute} path={`${path}/:id/amendments/:amendmentId/edit`} />
-            <Route component={LicensesRoute} path={`${path}/:id?`}>
-              <Switch>
-                <Route component={ViewLicenseRoute} exact path={`${path}/:id`} />
-                <Route component={ViewAmendmentRoute} exact path={`${path}/:id/amendments/:amendmentId`} />
-              </Switch>
-            </Route>
-          </Switch>
-        </HasCommand>
-      </CommandList>
+      <>
+        <CommandList commands={defaultKeyboardShortcuts}>
+          <HasCommand
+            commands={this.shortcuts}
+            isWithinScope={checkScope}
+            scope={document.body}
+          >
+            <AppContextMenu>
+              {(handleToggle) => (
+                <NavList>
+                  <NavListSection>
+                    <NavListItem
+                      id="keyboard-shortcuts-item"
+                      onClick={() => { this.shortcutModalToggle(handleToggle); }}
+                    >
+                      <FormattedMessage id="ui-licenses.appMenu.keyboardShortcuts" />
+                    </NavListItem>
+                  </NavListSection>
+                </NavList>
+              )}
+            </AppContextMenu>
+            <Switch>
+              <Route component={NoteCreateRoute} exact path={`${path}/notes/create`} />
+              <Route component={NoteViewRoute} exact path={`${path}/notes/:noteId`} />
+              <Route component={NoteEditRoute} exact path={`${path}/notes/:noteId/edit`} />
+              <Route component={CreateLicenseRoute} path={`${path}/create`} />
+              <Route component={EditLicenseRoute} path={`${path}/:id/edit`} />
+              <Route component={CreateAmendmentRoute} path={`${path}/:id/amendments/create`} />
+              <Route component={EditAmendmentRoute} path={`${path}/:id/amendments/:amendmentId/edit`} />
+              <Route component={LicensesRoute} path={`${path}/:id?`}>
+                <Switch>
+                  <Route component={ViewLicenseRoute} exact path={`${path}/:id`} />
+                  <Route component={ViewAmendmentRoute} exact path={`${path}/:id/amendments/:amendmentId`} />
+                </Switch>
+              </Route>
+            </Switch>
+          </HasCommand>
+        </CommandList>
+        { this.state.showKeyboardShortcutsModal && (
+        <KeyboardShortcutsModal
+          allCommands={defaultKeyboardShortcuts}
+          onClose={() => { this.changeKeyboardShortcutsModal(false); }}
+          open
+        />
+        )}
+      </>
     );
   }
 }
