@@ -37,6 +37,7 @@ export default class LicenseAgreements extends React.Component {
         }).isRequired,
       })).isRequired,
     }).isRequired,
+    recordType: PropTypes.oneOf(['amendment', 'license']).isRequired,
   };
 
   state = {

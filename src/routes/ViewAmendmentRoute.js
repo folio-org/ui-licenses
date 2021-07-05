@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import compose from 'compose-function';
 import { FormattedMessage } from 'react-intl';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
+import { preventResourceRefresh } from '@folio/stripes-erm-components';
 import DuplicateAmendmentModal from '../components/DuplicateAmendmentModal';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -14,11 +14,25 @@ import View from '../components/Amendment';
 
 import { errorTypes } from '../constants';
 
+const RECORDS_PER_REQUEST = 100;
+
 class ViewAmendmentsRoute extends React.Component {
   static manifest = Object.freeze({
     license: {
       type: 'okapi',
       path: 'licenses/licenses/:{id}',
+    },
+    linkedAgreements: {
+      type: 'okapi',
+      path: 'licenses/licenses/:{id}/linkedAgreements',
+      params: {
+        sort: 'owner.startDate;desc'
+      },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
+      recordsRequired: '1000',
+      shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
+      throwErrors: false,
     },
     terms: {
       type: 'okapi',
@@ -48,6 +62,7 @@ class ViewAmendmentsRoute extends React.Component {
     }).isRequired,
     resources: PropTypes.shape({
       license: PropTypes.object,
+      linkedAgreements: PropTypes.array,
       terms: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -69,11 +84,25 @@ class ViewAmendmentsRoute extends React.Component {
   // and avoid parsing the license amendments for it.
   getAmendment = () => {
     const { match, resources } = this.props;
-    const amendments = get(resources, 'license.records[0].amendments', []);
-    const selectedAmendmentId = get(match, 'params.amendmentId');
+    const amendments = resources?.license?.records[0]?.amendments || [];
+    const selectedAmendmentId = match?.params?.amendmentId;
     const selectedAmendment = amendments.find(a => a.id === selectedAmendmentId) || {};
 
     return selectedAmendment;
+    // return {
+    //   ...selectedAmendment,
+    //   linkedAgreements: resources?.linkedAgreements?.records || [],
+    // };
+  }
+
+  getCompositeLicense = () => {
+    const { resources } = this.props;
+    const license = resources?.license?.records[0] || {};
+
+    return {
+      ...license,
+      linkedAgreements: resources?.linkedAgreements?.records || [],
+    };
   }
 
   handleClose = () => {
@@ -82,7 +111,7 @@ class ViewAmendmentsRoute extends React.Component {
   }
 
   handleDelete = () => {
-    const license = get(this.props.resources, 'license.records[0]', {});
+    const license = this.props.resources?.license?.records[0] || {};
     const { match: { params } } = this.props;
     const name = license?.amendments.filter(obj => obj.id === params?.amendmentId)[0]?.name;
 
@@ -165,8 +194,8 @@ class ViewAmendmentsRoute extends React.Component {
         <View
           data={{
             amendment,
-            license: get(resources, 'license.records[0]', {}),
-            terms: get(resources, 'terms.records', []),
+            license: this.getCompositeLicense(),
+            terms: resources?.terms?.records || [],
           }}
           handlers={{
             ...handlers,
@@ -175,7 +204,7 @@ class ViewAmendmentsRoute extends React.Component {
             onClone: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleClone && this.showDuplicateModal,
             onEditAmendment: this.handleEditAmendment
           }}
-          isLoading={get(resources, 'license.isPending')}
+          isLoading={resources?.license?.isPending}
           urls={this.urls}
         />
         { this.state.showDuplicate &&

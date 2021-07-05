@@ -24,6 +24,7 @@ import {
   AmendmentInfo,
   AmendmentLicense,
   CoreDocs,
+  LicenseAgreements,
   SupplementaryDocs,
   Terms,
 } from '../viewSections';
@@ -34,6 +35,7 @@ export default class Amendment extends React.Component {
       amendment: PropTypes.shape({
         docs: PropTypes.arrayOf(PropTypes.object),
         id: PropTypes.string,
+        linkedAgreements: PropTypes.array,
         name: PropTypes.string,
         status: PropTypes.shape({
           label: PropTypes.string,
@@ -80,6 +82,7 @@ export default class Amendment extends React.Component {
       amendmentCoreDocs: false,
       amendmentSupplementaryDocs: false,
       amendmentTerms: false,
+      licenseAgreements: false,
     };
   }
 
@@ -134,7 +137,7 @@ export default class Amendment extends React.Component {
 
   render() {
     const {
-      data: { amendment },
+      data: { amendment, license },
       handlers: { onClone, onClose, onEditAmendment },
       isLoading,
     } = this.props;
@@ -192,6 +195,7 @@ export default class Amendment extends React.Component {
                 { amendment?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} /> }
                 <Terms {...this.getSectionProps('amendmentTerms')} />
                 { amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} /> }
+                { license?.linkedAgreements?.length > 0 && <LicenseAgreements {...this.getSectionProps('licenseAgreements')} /> }
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>
