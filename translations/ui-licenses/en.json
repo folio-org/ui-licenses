@@ -136,7 +136,7 @@
   "prop.agreementStatus": "Agreement status",
   "prop.description": "Description",
   "prop.endDate": "End date",
-  "prop.linkStatus": "Link status",
+  "prop.linkStatus": "License link status",
   "prop.name": "Name",
   "prop.openEnded": "Open ended",
   "prop.orgName": "Name",
@@ -150,6 +150,8 @@
   "prop.status": "Status",
   "prop.type": "Type",
   "prop.licensor.notSet": "Not set",
+  "prop.amendmentLinkStatus": "Amendment link status",
+  "prop.unassigned": "Unassigned",
 
   "placeholder.documentCategory": "Enter a category",
   "placeholder.licenseName": "Enter the license name",

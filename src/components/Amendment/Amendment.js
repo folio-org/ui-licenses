@@ -170,6 +170,16 @@ export default class Amendment extends React.Component {
       }
     ];
 
+    const visibleColumns = [
+      'linkNote',
+      'name',
+      'startDate',
+      'endDate',
+      'agreementStatus',
+      'linkStatus',
+      'amendmentLinkStatus'
+    ];
+
     return (
       <HasCommand
         commands={shortcuts}
@@ -195,7 +205,7 @@ export default class Amendment extends React.Component {
                 { amendment?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} /> }
                 <Terms {...this.getSectionProps('amendmentTerms')} />
                 { amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} /> }
-                { license?.linkedAgreements?.length > 0 && <LicenseAgreements {...this.getSectionProps('licenseAgreements')} /> }
+                { license?.linkedAgreements?.length > 0 && <LicenseAgreements {...this.getSectionProps('licenseAgreements')} visibleColumns={visibleColumns} /> }
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>

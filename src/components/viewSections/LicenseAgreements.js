@@ -17,10 +17,20 @@ import {
 
 export default class LicenseAgreements extends React.Component {
   static propTypes = {
+    amendment:  PropTypes.shape({
+      id: PropTypes.string,
+    }),
     id: PropTypes.string,
     license: PropTypes.shape({
       id: PropTypes.string,
       linkedAgreements: PropTypes.arrayOf(PropTypes.shape({
+        amendments: PropTypes.arrayOf(PropTypes.shape({
+          amendmentId: PropTypes.string,
+          status: PropTypes.shape({
+            label: PropTypes.string,
+            value: PropTypes.string,
+          })
+        })),
         note: PropTypes.string,
         owner: PropTypes.shape({
           agreementStatus: PropTypes.shape({
@@ -37,8 +47,19 @@ export default class LicenseAgreements extends React.Component {
         }).isRequired,
       })).isRequired,
     }).isRequired,
-    recordType: PropTypes.oneOf(['amendment', 'license']).isRequired,
+    visibleColumns: PropTypes.arrayOf(PropTypes.string),
   };
+
+  static defaultProps = {
+    visibleColumns: [
+      'linkNote',
+      'name',
+      'startDate',
+      'endDate',
+      'agreementStatus',
+      'linkStatus',
+    ],
+  }
 
   state = {
     groupedLinkedAgreements: [],
@@ -63,6 +84,8 @@ export default class LicenseAgreements extends React.Component {
   }
 
   renderLinkedAgreements = () => {
+    const { visibleColumns } = this.props;
+    console.log('visibleColumns in renderLinke: ', visibleColumns);
     return (
       <MultiColumnList
         columnMapping={{
@@ -72,6 +95,7 @@ export default class LicenseAgreements extends React.Component {
           endDate: <FormattedMessage id="ui-licenses.prop.endDate" />,
           agreementStatus: <FormattedMessage id="ui-licenses.prop.agreementStatus" />,
           linkStatus: <FormattedMessage id="ui-licenses.prop.linkStatus" />,
+          amendmentLinkStatus:  <FormattedMessage id="ui-licenses.prop.amendmentLinkStatus" />,
         }}
         columnWidths={{
           linkNote: 30,
@@ -80,6 +104,7 @@ export default class LicenseAgreements extends React.Component {
           endDate: '15%',
           agreementStatus: '15%',
           linkStatus: '15%',
+          amendmentLinkStatus: '15%'
         }}
         contentData={this.state.groupedLinkedAgreements}
         formatter={{
@@ -89,17 +114,15 @@ export default class LicenseAgreements extends React.Component {
           endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : <NoValue />),
           agreementStatus: ({ owner:agreement = {} }) => agreement?.agreementStatus?.label ?? <NoValue />,
           linkStatus: link => (link.status?.label ?? <NoValue />),
+          amendmentLinkStatus: link => {
+            const ammendmentLinked = link?.amendments?.find(a => a.amendmentId === this.props.amendment?.id);
+            console.log('ammendmentLinked: ', ammendmentLinked || 'no amendment');
+            return (ammendmentLinked?.status?.label ?? <FormattedMessage id="ui-licenses.prop.unassigned" />);
+          },
         }}
         id="linked-agreements-table"
         interactive={false}
-        visibleColumns={[
-          'linkNote',
-          'name',
-          'startDate',
-          'endDate',
-          'agreementStatus',
-          'linkStatus',
-        ]}
+        visibleColumns={visibleColumns}
       />
     );
   }
