@@ -9,8 +9,9 @@ import {
   Spinner,
 } from '@folio/stripes/components';
 import { DocumentCard } from '@folio/stripes-erm-components';
+import { withStripes } from '@folio/stripes/core';
 
-export default class SupplementaryDocs extends React.Component {
+class SupplementaryDocs extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     handlers: PropTypes.shape({
@@ -29,12 +30,15 @@ export default class SupplementaryDocs extends React.Component {
       ),
     }).isRequired,
     recordType: PropTypes.string.isRequired,
+    stripes: PropTypes.object
   };
 
   renderDocs = (docs) => {
+    const { stripes } = this.props;
     return docs.map(doc => (
       <DocumentCard
         key={doc.id}
+        hasDownloadPerm={stripes.hasPerm('ui-licenses.licenses.file.download')}
         onDownloadFile={this.props.handlers.onDownloadFile}
         {...doc}
       />
@@ -68,3 +72,5 @@ export default class SupplementaryDocs extends React.Component {
     );
   }
 }
+
+export default withStripes(SupplementaryDocs);

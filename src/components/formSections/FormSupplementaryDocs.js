@@ -4,9 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion } from '@folio/stripes/components';
+import { withStripes } from '@folio/stripes/core';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
-export default class FormSupplementaryDocs extends React.Component {
+class FormSupplementaryDocs extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       documentCategories: PropTypes.arrayOf(PropTypes.object),
@@ -18,10 +19,11 @@ export default class FormSupplementaryDocs extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    stripes: PropTypes.object
   };
 
   render() {
-    const { data, handlers, id, onToggle, open } = this.props;
+    const { data, handlers, id, onToggle, open, stripes } = this.props;
 
     return (
       <Accordion
@@ -35,6 +37,7 @@ export default class FormSupplementaryDocs extends React.Component {
           component={DocumentsFieldArray}
           deleteBtnTooltipMsgId="ui-licenses.supplementaryDocs.remove"
           documentCategories={data.documentCategories}
+          hasDownloadPerm={stripes.hasPerm('ui-licenses.licenses.file.download')}
           isEmptyMessage={<FormattedMessage id="ui-licenses.supplementaryDocs.none" />}
           name="supplementaryDocs"
           onDownloadFile={handlers.onDownloadFile}
@@ -44,3 +47,5 @@ export default class FormSupplementaryDocs extends React.Component {
     );
   }
 }
+
+export default withStripes(FormSupplementaryDocs);
