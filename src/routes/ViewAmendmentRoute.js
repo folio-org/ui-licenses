@@ -89,10 +89,6 @@ class ViewAmendmentsRoute extends React.Component {
     const selectedAmendment = amendments.find(a => a.id === selectedAmendmentId) || {};
 
     return selectedAmendment;
-    // return {
-    //   ...selectedAmendment,
-    //   linkedAgreements: resources?.linkedAgreements?.records || [],
-    // };
   }
 
   getCompositeLicense = () => {
