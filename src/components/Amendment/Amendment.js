@@ -29,13 +29,21 @@ import {
   Terms,
 } from '../viewSections';
 
+const visibleColumns = [
+  'linkNote',
+  'name',
+  'startDate',
+  'endDate',
+  'agreementStatus',
+  'linkStatus',
+  'amendmentLinkStatus'
+];
 export default class Amendment extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       amendment: PropTypes.shape({
         docs: PropTypes.arrayOf(PropTypes.object),
         id: PropTypes.string,
-        linkedAgreements: PropTypes.array,
         name: PropTypes.string,
         status: PropTypes.shape({
           label: PropTypes.string,
@@ -168,16 +176,6 @@ export default class Amendment extends React.Component {
         name: 'duplicateRecord',
         handler: () => onClone(amendment.id)
       }
-    ];
-
-    const visibleColumns = [
-      'linkNote',
-      'name',
-      'startDate',
-      'endDate',
-      'agreementStatus',
-      'linkStatus',
-      'amendmentLinkStatus'
     ];
 
     return (

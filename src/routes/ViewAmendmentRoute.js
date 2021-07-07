@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
-import { preventResourceRefresh } from '@folio/stripes-erm-components';
 import DuplicateAmendmentModal from '../components/DuplicateAmendmentModal';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -31,7 +30,6 @@ class ViewAmendmentsRoute extends React.Component {
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST,
       recordsRequired: '1000',
-      shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
       throwErrors: false,
     },
     terms: {
