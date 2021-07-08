@@ -21,7 +21,7 @@ export default class AmendmentInfo extends React.Component {
       description: PropTypes.string,
       endDate: PropTypes.string,
       id: PropTypes.string,
-      lastupdated: PropTypes.string,
+      lastUpdated: PropTypes.string,
       name: PropTypes.string,
       startDate: PropTypes.string,
       status: PropTypes.shape({
