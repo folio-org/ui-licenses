@@ -39,7 +39,7 @@
     "section.amendments": "Amendments",
     "licenseAgreements.none": "No agreements currently linked to this license.",
     "prop.agreementStatus": "Agreement status",
-    "prop.linkStatus": "Link status",
+    "prop.linkStatus": "License link status",
     "section.licenseAgreements": "Agreements linked to this license",
     "placeholder.documentCategory": "Enter a category",
     "supplementaryDocs.add": "Add supplementary document",

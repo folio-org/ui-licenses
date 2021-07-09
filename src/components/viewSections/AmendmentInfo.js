@@ -7,6 +7,7 @@ import {
   FormattedUTCDate,
   Headline,
   KeyValue,
+  MetaSection,
   NoValue,
   Row,
 } from '@folio/stripes/components';
@@ -16,9 +17,11 @@ import { LicenseEndDate } from '@folio/stripes-erm-components';
 export default class AmendmentInfo extends React.Component {
   static propTypes = {
     amendment: PropTypes.shape({
+      dateCreated: PropTypes.string,
       description: PropTypes.string,
       endDate: PropTypes.string,
       id: PropTypes.string,
+      lastUpdated: PropTypes.string,
       name: PropTypes.string,
       startDate: PropTypes.string,
       status: PropTypes.shape({
@@ -43,6 +46,13 @@ export default class AmendmentInfo extends React.Component {
             </div>
           </Col>
         </Row>
+        <MetaSection
+          contentId="amendmentInfoRecordMetaContent"
+          createdDate={amendment.dateCreated}
+          hideSource
+          id="amendmentInfoRecordMeta"
+          lastUpdatedDate={amendment.lastUpdated}
+        />
         <Row>
           <Col md={3} xs={6}>
             <KeyValue label={<FormattedMessage id="ui-licenses.amendments.view.status" />}>

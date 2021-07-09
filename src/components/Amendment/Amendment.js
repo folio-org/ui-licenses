@@ -24,6 +24,7 @@ import {
   AmendmentInfo,
   AmendmentLicense,
   CoreDocs,
+  LicenseAgreements,
   SupplementaryDocs,
   Terms,
 } from '../viewSections';
@@ -80,8 +81,19 @@ export default class Amendment extends React.Component {
       amendmentCoreDocs: false,
       amendmentSupplementaryDocs: false,
       amendmentTerms: false,
+      licenseAgreements: false,
     };
   }
+
+  visibleColumns = [
+    'linkNote',
+    'name',
+    'startDate',
+    'endDate',
+    'agreementStatus',
+    'linkStatus',
+    'amendmentLinkStatus'
+  ];
 
   renderActionMenu = ({ onToggle }) => {
     const { data: { amendment: { id: amendmentId } }, handlers, urls } = this.props;
@@ -134,7 +146,7 @@ export default class Amendment extends React.Component {
 
   render() {
     const {
-      data: { amendment },
+      data: { amendment, license },
       handlers: { onClone, onClose, onEditAmendment },
       isLoading,
     } = this.props;
@@ -192,6 +204,7 @@ export default class Amendment extends React.Component {
                 { amendment?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} /> }
                 <Terms {...this.getSectionProps('amendmentTerms')} />
                 { amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} /> }
+                { license?.linkedAgreements?.length > 0 && <LicenseAgreements {...this.getSectionProps('licenseAgreements')} visibleColumns={this.visibleColumns} /> }
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>
