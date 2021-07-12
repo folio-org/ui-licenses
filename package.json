@@ -126,6 +126,15 @@
         ]
       },
       {
+        "permissionName": "ui-licenses.licenses.file.download",
+        "displayName": "Licenses: File download",
+        "description": "A user with this permission is able to download and view the content of License document files",
+        "visible": true,
+        "subPermissions": [
+          "licenses.files.item.download"
+        ]
+      },
+      {
         "permissionName": "ui-licenses.licenses.edit",
         "displayName": "Licenses: Edit licenses",
         "description": "Grants all permissions included in \"Licenses: Search & view licenses\" plus the ability to edit licenses and amendments, including the ability to add and edit documents and view, add and edit tags on a license.",
