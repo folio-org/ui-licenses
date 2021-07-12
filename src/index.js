@@ -33,7 +33,7 @@ import setUpRegistry from './setUpRegistry';
 
 class App extends React.Component {
   static eventHandler(event, _s, data) {
-    if (event === 'ui-dashboard-registry-load') {
+    if (event === 'ui-stripes-registry-load') {
       // Data should contain Registry singleton:
       setUpRegistry(data);
     }
