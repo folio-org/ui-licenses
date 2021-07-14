@@ -13,7 +13,7 @@ const setUpRegistry = (registry) => {
   });
 
   // Lookup plugin
-  licenseReg.addLookupComponent(LicenseLookup);
+  licenseReg.setLookupComponent(LicenseLookup);
 };
 
 export default setUpRegistry;
