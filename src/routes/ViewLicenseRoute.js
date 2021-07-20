@@ -52,11 +52,12 @@ class ViewLicenseRoute extends React.Component {
       type: 'okapi',
       path: 'licenses/licenses/:{id}/linkedAgreements',
       params: {
-        sort: 'owner.startDate;desc'
+        sort: 'owner.startDate;desc',
       },
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST,
       recordsRequired: '1000',
+      resourceShouldRefresh: true,
       shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
       throwErrors: false,
     },

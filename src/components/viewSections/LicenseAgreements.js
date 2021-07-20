@@ -67,10 +67,9 @@ export default class LicenseAgreements extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const { license: { id, linkedAgreements } } = props;
+    const { license: { linkedAgreements } } = props;
 
     if (
-      (id !== state.groupedLinkedAgreements.remoteId) ||
       (linkedAgreements.length !== state.groupedLinkedAgreements.length) ||
       (get(linkedAgreements, [0, 'owner', 'id']) !== get(state.groupedLinkedAgreements, [0, 'owner', 'id']))
     ) {
