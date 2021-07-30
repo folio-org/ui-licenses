@@ -119,7 +119,7 @@ class LicenseForm extends React.Component {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-licenses.closeEditLicense">
-          {ariaLabel => (
+          {([ariaLabel]) => (
             <IconButton
               aria-label={ariaLabel}
               icon="times"
@@ -169,6 +169,7 @@ class LicenseForm extends React.Component {
               <Pane
                 appIcon={<AppIcon app="licenses" />}
                 centerContent
+                defaultWidth="100%"
                 firstMenu={this.renderFirstMenu()}
                 footer={this.renderPaneFooter()}
                 paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}

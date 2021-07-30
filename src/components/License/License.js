@@ -182,7 +182,7 @@ class License extends React.Component {
       <PaneMenu>
         {handlers.onToggleTags &&
           <FormattedMessage id="ui-licenses.showTags">
-            {ariaLabel => (
+            {([ariaLabel]) => (
               <IconButton
                 ariaLabel={ariaLabel}
                 badgeCount={license?.tags?.length ?? 0}
@@ -254,33 +254,35 @@ class License extends React.Component {
                   </Col>
                 </Row>
                 <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                  { data.license?.contacts?.length > 0 && <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} /> }
-                  { data.license?.orgs?.length > 0 && <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} /> }
-                  { data.license?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('licenseCoreDocs')} /> }
+                  {data.license?.contacts?.length > 0 && <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />}
+                  {data.license?.orgs?.length > 0 && <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />}
+                  {data.license?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />}
                   <Terms {...this.getSectionProps('licenseTerms')} />
                   <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
-                  { data.license?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} /> }
-                  { data.license?.linkedAgreements?.length > 0 && <LicenseAgreements {...this.getSectionProps('licenseAgreements')} /> }
-                  <NotesSmartAccordion
-                    {...this.getSectionProps('licenseNotes')}
-                    domainName="licenses"
-                    entityId={data.license.id}
-                    entityName={data.license.name}
-                    entityType="license"
-                    pathToNoteCreate="notes/create"
-                    pathToNoteDetails="notes"
-                  />
+                  {data.license?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />}
+                  {data.license?.linkedAgreements?.length > 0 && <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />}
+                  {
+                    data.license?.id && <NotesSmartAccordion
+                      {...this.getSectionProps('licenseNotes')}
+                      domainName="licenses"
+                      entityId={data.license.id}
+                      entityName={data.license.name}
+                      entityType="license"
+                      pathToNoteCreate="notes/create"
+                      pathToNoteDetails="notes"
+                    />
+                  }
                 </AccordionSet>
               </AccordionStatus>
             </TitleManager>
           </Pane>
           {helperApp}
-          { this.state.showDuplicateLicenseModal &&
-          <DuplicateLicenseModal
-            onClone={(obj) => handlers.onClone(obj)}
-            onClose={this.closeDuplicateLicenseModal}
-          />
-        }
+          {this.state.showDuplicateLicenseModal &&
+            <DuplicateLicenseModal
+              onClone={(obj) => handlers.onClone(obj)}
+              onClose={this.closeDuplicateLicenseModal}
+            />
+          }
           <ConfirmationModal
             buttonStyle="danger"
             confirmLabel={<FormattedMessage id="ui-licenses.delete" />}
