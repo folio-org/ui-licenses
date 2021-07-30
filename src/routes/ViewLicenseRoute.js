@@ -235,7 +235,7 @@ class ViewLicenseRoute extends React.Component {
     mutator.license.DELETE(license)
       .then(() => {
         history.push(`${urls.licenses()}${location.search}`);
-        sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name : license.name }} /> });
+        sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name: license.name }} /> });
       })
       .catch(error => {
         sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteLicenseBackendError" values={{ message: error.message }} /> });
