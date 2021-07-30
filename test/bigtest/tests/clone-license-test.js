@@ -52,15 +52,21 @@ describe('Clone License test', () => {
         await licenseView.headerDropdownMenu.clickDuplicate();
         await licenseView.duplicateModal.checkBoxList(1).click();
         await licenseView.duplicateModal.clickSaveAndClose();
-        await licenseView.whenLoaded();
+        await licenseEdit.whenLoaded();
       });
 
-      it('should render the expected name on the edit page', () => {
-        expect(licenseEdit.name).to.equal(licenseData.name);
-      });
+      describe('should', () => {
+        beforeEach(async function () {
+          await licenseEdit.whenLoaded();
+        });
 
-      it('should not render an internalContact card', () => {
-        expect(licenseEdit.internalContacts(0)).to.be.empty;
+        it('render the expected name on the edit page', () => {
+          expect(licenseEdit.name).to.equal(licenseData.name);
+        });
+
+        it('not render an internalContact card', () => {
+          expect(licenseEdit.internalContacts(0)).to.be.empty;
+        });
       });
     });
 
