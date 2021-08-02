@@ -17,7 +17,7 @@ import DuplicateModalInteractor from '@folio/stripes-erm-components/lib/Duplicat
 
 export default @interactor class LicenseViewInteractor {
   isViewLicense = isPresent('#pane-view-license');
-  headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
+  headerDropdown = new HeaderDropdown('#pane-view-license [data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   duplicateModal = new DuplicateModalInteractor();
 

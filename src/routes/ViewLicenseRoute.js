@@ -52,11 +52,12 @@ class ViewLicenseRoute extends React.Component {
       type: 'okapi',
       path: 'licenses/licenses/:{id}/linkedAgreements',
       params: {
-        sort: 'owner.startDate;desc'
+        sort: 'owner.startDate;desc',
       },
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST,
       recordsRequired: '1000',
+      resourceShouldRefresh: true,
       shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
       throwErrors: false,
     },
@@ -234,7 +235,7 @@ class ViewLicenseRoute extends React.Component {
     mutator.license.DELETE(license)
       .then(() => {
         history.push(`${urls.licenses()}${location.search}`);
-        sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name : license.name }} /> });
+        sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name: license.name }} /> });
       })
       .catch(error => {
         sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteLicenseBackendError" values={{ message: error.message }} /> });

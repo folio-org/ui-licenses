@@ -10,7 +10,7 @@ export default class Terms extends React.Component {
     record: PropTypes.shape({ customProperties: PropTypes.object }),
     recordType: PropTypes.string.isRequired,
     terms: PropTypes.arrayOf(PropTypes.object),
-    license: PropTypes.arrayOf(PropTypes.object),
+    license: PropTypes.object,
     amendment: PropTypes.arrayOf(PropTypes.object),
   }
 

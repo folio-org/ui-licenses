@@ -109,7 +109,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
         separator={false}
       >
         <FormattedMessage id="ui-licenses.organizations.selectRole">
-          {placeholder => (
+          {([placeholder]) => (
             <Selection
               dataOptions={dataOptions}
               onChange={value => filterHandlers.state({ ...activeFilters, role: [value] })}
