@@ -150,7 +150,7 @@
     "duplicateAmendmentModal.duplicateAmendment": "Duplicate amendment",
     "duplicateAmendmentModal.duplicateMessage": "Please select which sections of the amendment to duplicate",
     "duplicateAmendmentModal.duplicateModalError": "Error: the amendment was not duplicated",
-    "duplicateAmendmentModal.invalidResponseError": "Unable to duplicate the amendment. The response received from the server was invalid.",
+    "duplicateAmendmentModal.invalidResponseError": "No se puede duplicar la enmienda. La respuesta recibida del servidor no es válida.",
     "duplicateAmendmentModal.amendmentDateInfo": "Amendment date information",
     "duplicateAmendmentModal.amendmentInfo": "Amendment information",
     "duplicateAmendmentModal.supplementaryDocs": "Supplementary documents",
