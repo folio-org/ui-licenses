@@ -22,11 +22,13 @@ export default class LicenseAmendments extends React.Component {
       onAmendmentClick: PropTypes.func,
     }),
     id: PropTypes.string,
+    label: PropTypes.string,
     urls: PropTypes.shape({
       addAmendment: PropTypes.func,
       viewAmendment: PropTypes.func.isRequired,
     }).isRequired
   };
+
 
   onRowClick = (_, row) => {
     const { handlers: { onAmendmentClick } } = this.props;
@@ -53,43 +55,48 @@ export default class LicenseAmendments extends React.Component {
     const { id, license } = this.props;
 
     return (
-      <Accordion
-        displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderAddAmendmentButton()}
-        id={id}
-        label={<FormattedMessage id="ui-licenses.section.amendments" />}
-      >
-        <MultiColumnList
-          columnMapping={{
-            name: <FormattedMessage id="ui-licenses.prop.name" />,
-            status: <FormattedMessage id="ui-licenses.prop.status" />,
-            startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
-            endDate: <FormattedMessage id="ui-licenses.prop.endDate" />,
-          }}
-          columnWidths={{
-            name: '50%',
-            status: '15%',
-            startDate: '15%',
-            endDate: '15%',
-          }}
-          contentData={license.amendments || []}
-          formatter={{
-            name: a => a.name,
-            status: a => a?.status?.label ?? <NoValue />,
-            startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : <NoValue />),
-            endDate: a => <LicenseEndDate license={a} />,
-          }}
-          id="amendments-table"
-          isEmptyMessage={<FormattedMessage id="ui-licenses.emptyAccordion.amendments" />}
-          onRowClick={this.onRowClick}
-          visibleColumns={[
-            'name',
-            'status',
-            'startDate',
-            'endDate'
-          ]}
-        />
-      </Accordion>
+      <>
+        <Accordion
+          displayWhenClosed={this.renderBadge()}
+          displayWhenOpen={this.renderAddAmendmentButton()}
+          id={id}
+          label={this.props.label}
+        >
+          <MultiColumnList
+            columnMapping={{
+              name: <FormattedMessage id="ui-licenses.prop.name" />,
+              status: <FormattedMessage id="ui-licenses.prop.status" />,
+              startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
+              endDate: <FormattedMessage id="ui-licenses.prop.endDate" />,
+            }}
+            columnWidths={{
+              name: '50%',
+              status: '15%',
+              startDate: '15%',
+              endDate: '15%',
+            }}
+            contentData={license.amendments || []}
+            formatter={{
+              name: a => a.name,
+              status: a => a?.status?.label ?? <NoValue />,
+              startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : <NoValue />),
+              endDate: a => <LicenseEndDate license={a} />,
+            }}
+            id="amendments-table"
+            isEmptyMessage={<FormattedMessage id="ui-licenses.emptyAccordion.amendments" />}
+            onRowClick={this.onRowClick}
+            visibleColumns={[
+              'name',
+              'status',
+              'startDate',
+              'endDate'
+            ]}
+          />
+        </Accordion>
+      </>
     );
   }
 }
+LicenseAmendments.defaultProps = {
+  label: <FormattedMessage id="ui-licenses.section.amendments" />,
+};

@@ -25,6 +25,7 @@ import {
   AmendmentLicense,
   CoreDocs,
   LicenseAgreements,
+  LicenseAmendments,
   SupplementaryDocs,
   Terms,
 } from '../viewSections';
@@ -94,6 +95,8 @@ export default class Amendment extends React.Component {
     'linkStatus',
     'amendmentLinkStatus'
   ];
+
+  label = (<FormattedMessage id="ui-licenses.section.amendmentsOnParentLicence" />)
 
   renderActionMenu = ({ onToggle }) => {
     const { data: { amendment: { id: amendmentId } }, handlers, urls } = this.props;
@@ -201,6 +204,7 @@ export default class Amendment extends React.Component {
                 </Col>
               </Row>
               <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                {license?.amendments?.length > 1 && <LicenseAmendments {...this.getSectionProps('licenseAmendments')} label={this.label} />}
                 { amendment?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} /> }
                 <Terms {...this.getSectionProps('amendmentTerms')} />
                 { amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} /> }
