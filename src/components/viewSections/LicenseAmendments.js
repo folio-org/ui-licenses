@@ -22,7 +22,7 @@ export default class LicenseAmendments extends React.Component {
       onAmendmentClick: PropTypes.func,
     }),
     id: PropTypes.string,
-    label: PropTypes.string,
+    licenseAmendmentsAccordionLabel: PropTypes.string,
     urls: PropTypes.shape({
       addAmendment: PropTypes.func,
       viewAmendment: PropTypes.func.isRequired,
@@ -52,14 +52,14 @@ export default class LicenseAmendments extends React.Component {
   }
 
   render() {
-    const { id, license } = this.props;
+    const { id, license, licenseAmendmentsAccordionLabel } = this.props;
 
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderAddAmendmentButton()}
         id={id}
-        label={this.props.label}
+        label={licenseAmendmentsAccordionLabel}
       >
         <MultiColumnList
           columnMapping={{
@@ -95,6 +95,7 @@ export default class LicenseAmendments extends React.Component {
     );
   }
 }
+
 LicenseAmendments.defaultProps = {
-  label: <FormattedMessage id="ui-licenses.section.amendments" />,
+  licenseAmendmentsAccordionLabel: <FormattedMessage id="ui-licenses.section.amendments" />,
 };

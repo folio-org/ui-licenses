@@ -96,7 +96,7 @@ export default class Amendment extends React.Component {
     'amendmentLinkStatus'
   ];
 
-  label = (<FormattedMessage id="ui-licenses.section.amendmentsOnParentLicence" />)
+  licenseAmendmentsAccordionLabel = (<FormattedMessage id="ui-licenses.section.amendmentsOnParentLicense" />)
 
   renderActionMenu = ({ onToggle }) => {
     const { data: { amendment: { id: amendmentId } }, handlers, urls } = this.props;
@@ -204,7 +204,7 @@ export default class Amendment extends React.Component {
                 </Col>
               </Row>
               <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                {license?.amendments?.length > 1 && <LicenseAmendments {...this.getSectionProps('licenseAmendments')} label={this.label} />}
+                {license?.amendments?.length > 1 && <LicenseAmendments {...this.getSectionProps('licenseAmendments')} licenseAmendmentsAccordionLabel={this.licenseAmendmentsAccordionLabel} />}
                 { amendment?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} /> }
                 <Terms {...this.getSectionProps('amendmentTerms')} />
                 { amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} /> }
