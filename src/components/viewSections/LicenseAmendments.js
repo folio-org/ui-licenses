@@ -32,6 +32,9 @@ export default class LicenseAmendments extends React.Component {
     }).isRequired
   };
 
+  static defaultProps = {
+    licenseAmendmentsAccordionLabel: <FormattedMessage id="ui-licenses.section.amendments" />
+  }
 
   onRowClick = (_, row) => {
     const { handlers: { onAmendmentClick } } = this.props;
@@ -99,6 +102,3 @@ export default class LicenseAmendments extends React.Component {
   }
 }
 
-LicenseAmendments.defaultProps = {
-  licenseAmendmentsAccordionLabel: <FormattedMessage id="ui-licenses.section.amendments" />,
-};
