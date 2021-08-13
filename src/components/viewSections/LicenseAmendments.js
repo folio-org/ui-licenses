@@ -22,7 +22,10 @@ export default class LicenseAmendments extends React.Component {
       onAmendmentClick: PropTypes.func,
     }),
     id: PropTypes.string,
-    licenseAmendmentsAccordionLabel: PropTypes.string,
+    licenseAmendmentsAccordionLabel: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+    ]),
     urls: PropTypes.shape({
       addAmendment: PropTypes.func,
       viewAmendment: PropTypes.func.isRequired,
