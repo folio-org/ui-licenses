@@ -160,6 +160,7 @@
   "placeholder.amendmentDescription": "Enter a description of the amendment",
 
   "section.amendments": "Amendments",
+  "section.amendmentsOnParentLicense": "Amendments on parent license",
   "section.amendmentInformation": "Amendment information",
   "section.coreDocs": "Core documents",
   "section.internalContacts": "Internal contacts",
