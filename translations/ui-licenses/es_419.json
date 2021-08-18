@@ -154,12 +154,12 @@
     "duplicateAmendmentModal.amendmentDateInfo": "Amendment date information",
     "duplicateAmendmentModal.amendmentInfo": "Amendment information",
     "duplicateAmendmentModal.supplementaryDocs": "Supplementary documents",
-    "duplicateAmendmentModal.terms": "Terms",
+    "duplicateAmendmentModal.terms": "Términos",
     "amendments.view.paneTitle": "Amendment: {name}",
     "amendments.view.status": "Amendment status",
     "amendments.view.startDate": "Amendment start date",
     "amendments.view.endDate": "Amendment end date",
     "amendments.view.license.licensor": "Licensor",
     "prop.licensor.notSet": "Not set",
-    "licenses": "Licenses"
+    "licenses": "Licencias"
 }
