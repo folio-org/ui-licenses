@@ -46,6 +46,7 @@ class ViewAmendmentsRoute extends React.Component {
     }).isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
     }).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -174,9 +175,14 @@ class ViewAmendmentsRoute extends React.Component {
     this.props.history.push(this.urls.editAmendment(id));
   }
 
+  handleViewAmendment = (id) => {
+    this.props.history.push(this.urls.viewAmendment(id));
+  }
+
   urls = {
     editAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (amendmentId => `/licenses/${this.props.match.params.id}/amendments/${amendmentId}/edit${this.props.location.search}`),
-    licenseView: id => `/licenses/${id}`
+    licenseView: id => `/licenses/${id}`,
+    viewAmendment: amendmentId => `/licenses/${this.props.match.params.id}/amendments/${amendmentId}${this.props.location.search}`,
   }
 
   render() {
@@ -196,7 +202,8 @@ class ViewAmendmentsRoute extends React.Component {
             onClose: this.handleClose,
             onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete && this.showDeleteConfirmationModal,
             onClone: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleClone && this.showDuplicateModal,
-            onEditAmendment: this.handleEditAmendment
+            onEditAmendment: this.handleEditAmendment,
+            onAmendmentClick: this.handleViewAmendment
           }}
           isLoading={resources?.license?.isPending}
           urls={this.urls}
