@@ -46,7 +46,6 @@ class ViewAmendmentsRoute extends React.Component {
     }).isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
-      pathname: PropTypes.string.isRequired,
     }).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
