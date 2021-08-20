@@ -204,9 +204,7 @@ export default class Amendment extends React.Component {
                 </Col>
               </Row>
               <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                {license?.amendments?.length > 1 && 
-                <LicenseAmendments {...this.getSectionProps('licenseAmendments')} 
-                licenseAmendmentsAccordionLabel={<FormattedMessage id="ui-licenses.section.amendmentsOnParentLicense" />} />}
+                {license?.amendments?.length > 1 && <LicenseAmendments {...this.getSectionProps('licenseAmendments')} licenseAmendmentsAccordionLabel={this.licenseAmendmentsAccordionLabel} />}
                 { amendment?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} /> }
                 <Terms {...this.getSectionProps('amendmentTerms')} />
                 { amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} /> }
