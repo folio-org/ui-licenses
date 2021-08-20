@@ -96,8 +96,6 @@ export default class Amendment extends React.Component {
     'amendmentLinkStatus'
   ];
 
-  licenseAmendmentsAccordionLabel = (<FormattedMessage id="ui-licenses.section.amendmentsOnParentLicense" />)
-
   renderActionMenu = ({ onToggle }) => {
     const { data: { amendment: { id: amendmentId } }, handlers, urls } = this.props;
 
