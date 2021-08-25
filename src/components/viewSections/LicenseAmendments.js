@@ -76,7 +76,7 @@ export default class LicenseAmendments extends React.Component {
             name: a => a.name,
             status: a => a?.status?.label,
             startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : null),
-            endDate: a => <LicenseEndDate license={a.endDate} renderNullIfEmpty />,
+            endDate: a => <LicenseEndDate license={a} renderNullIfEmpty/>,
           }}
           id="amendments-table"
           isEmptyMessage={<FormattedMessage id="ui-licenses.emptyAccordion.amendments" />}
