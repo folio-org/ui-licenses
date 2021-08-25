@@ -12,31 +12,13 @@ import {
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
-const propTypes = {
-  license: PropTypes.shape({
-    amendments: PropTypes.arrayOf(PropTypes.object),
-  }),
-  handlers: PropTypes.shape({
-    onAmendmentClick: PropTypes.func,
-  }),
-  id: PropTypes.string,
-  licenseAmendmentsAccordionLabel: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-  ]),
-  urls: PropTypes.shape({
-    addAmendment: PropTypes.func,
-    viewAmendment: PropTypes.func.isRequired,
-  }).isRequired
-};
-
-export default function LicenseAmendments({
+const LicenseAmendments = ({
   license,
   handlers: { onAmendmentClick },
   id,
   licenseAmendmentsAccordionLabel,
   urls
-}) {
+}) => {
   const onRowClick = (_, row) => {
     onAmendmentClick(row.id);
   };
@@ -81,7 +63,7 @@ export default function LicenseAmendments({
           name: a => a.name,
           status: a => a?.status?.label ?? <NoValue />,
           startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : <NoValue />),
-          endDate: a => <LicenseEndDate license={a} />,
+          endDate: a => <LicenseEndDate license={a} renderNullIfEmpty />,
         }}
         id="amendments-table"
         isEmptyMessage={<FormattedMessage id="ui-licenses.emptyAccordion.amendments" />}
@@ -95,9 +77,28 @@ export default function LicenseAmendments({
       />
     </Accordion>
   );
-}
+};
 
-LicenseAmendments.propTypes = propTypes;
+LicenseAmendments.propTypes = {
+  license: PropTypes.shape({
+    amendments: PropTypes.arrayOf(PropTypes.object),
+  }),
+  handlers: PropTypes.shape({
+    onAmendmentClick: PropTypes.func,
+  }),
+  id: PropTypes.string,
+  licenseAmendmentsAccordionLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
+  urls: PropTypes.shape({
+    addAmendment: PropTypes.func,
+    viewAmendment: PropTypes.func.isRequired,
+  }).isRequired
+};
+
 LicenseAmendments.defaultProps = {
   licenseAmendmentsAccordionLabel: <FormattedMessage id="ui-licenses.section.amendments" />
 };
+
+export default LicenseAmendments;
