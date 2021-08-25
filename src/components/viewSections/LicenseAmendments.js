@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
@@ -12,44 +11,49 @@ import {
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
-export default class LicenseAmendments extends React.Component {
-  static propTypes = {
-    license: PropTypes.shape({
-      amendments: PropTypes.arrayOf(PropTypes.object),
-    }),
-    handlers: PropTypes.shape({
-      onAmendmentClick: PropTypes.func,
-    }),
-    id: PropTypes.string,
-    urls: PropTypes.shape({
-      addAmendment: PropTypes.func,
-      viewAmendment: PropTypes.func.isRequired,
-    }).isRequired
+const propTypes = {
+  license: PropTypes.shape({
+    amendments: PropTypes.arrayOf(PropTypes.object),
+  }),
+  handlers: PropTypes.shape({
+    onAmendmentClick: PropTypes.func,
+  }),
+  id: PropTypes.string,
+  licenseAmendmentsAccordionLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
+  urls: PropTypes.shape({
+    addAmendment: PropTypes.func,
+    viewAmendment: PropTypes.func.isRequired,
+  }).isRequired
+};
+
+export default function LicenseAmendments({
+  license,
+  handlers: { onAmendmentClick },
+  id,
+  licenseAmendmentsAccordionLabel,
+  urls
+}) {
+  const onRowClick = (_, row) => {
+    onAmendmentClick(row.id);
   };
 
-  onRowClick = (_, row) => {
-    const { handlers: { onAmendmentClick } } = this.props;
-    onAmendmentClick(row.id);
-  }
+  const renderBadge = () => {
+    const count = license?.amendments?.length;
+    return <Badge>{count}</Badge>;
+  };
 
-  renderAddAmendmentButton = () => {
-    const { urls } = this.props;
-    if (!urls.addAmendment) return null;
+  const renderAddAmendmentButton = () => {
+    if (!urls.addAmendment) return renderBadge();
 
     return (
       <Button id="add-amendment-button" to={urls.addAmendment()}>
         <FormattedMessage id="ui-licenses.amendments.add" />
       </Button>
     );
-  }
-
-  renderBadge = () => {
-    const count = get(this.props.license, 'amendments.length', 0);
-    return <Badge>{count}</Badge>;
-  }
-
-  render() {
-    const { id, license } = this.props;
+  };
 
     return (
       <Accordion
@@ -92,3 +96,8 @@ export default class LicenseAmendments extends React.Component {
     );
   }
 }
+
+LicenseAmendments.propTypes = propTypes;
+LicenseAmendments.defaultProps = {
+  licenseAmendmentsAccordionLabel: <FormattedMessage id="ui-licenses.section.amendments" />
+};
