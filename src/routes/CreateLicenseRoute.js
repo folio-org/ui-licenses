@@ -122,11 +122,22 @@ class CreateLicenseRoute extends React.Component {
   }
 
   handleSubmit = (license) => {
+    const licenseToSubmit = { ...license };
+
     const { history, location, mutator } = this.props;
     const name = license?.name;
 
+    /*
+     * Handle endDateSemantics as part of frontend submit handling
+     * See https://issues.folio.org/browse/ERM-1849?focusedCommentId=110773&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-110773
+     * for details.
+     */
+    if (!license.openEnded) {
+      licenseToSubmit.endDateSemantics = { value: 'implicit' };
+    }
+
     return mutator.licenses
-      .POST(license)
+      .POST(licenseToSubmit)
       .then(({ id }) => {
         this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.create.callout" values={{ name }} /> });
         history.push(`/licenses/${id}${location.search}`);
