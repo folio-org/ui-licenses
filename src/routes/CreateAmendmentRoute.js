@@ -102,15 +102,6 @@ class CreateAmendmentRoute extends React.Component {
     (license.amendments || []).forEach(a => { originalAmendmentIds[a.id] = 1; });
     const name = amendment?.name;
 
-    /*
-     * Handle endDateSemantics as part of frontend submit handling
-     * See https://issues.folio.org/browse/ERM-1849?focusedCommentId=110773&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-110773
-     * for details.
-     */
-    if (!amendment.openEnded) {
-      amendmentToSubmit.endDateSemantics = { value: 'implicit' };
-    }
-
     return this.props.mutator.license
       .PUT({
         ...license,
