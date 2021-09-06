@@ -95,7 +95,6 @@ class CreateAmendmentRoute extends React.Component {
   }
 
   handleSubmit = (amendment) => {
-    const amendmentToSubmit = { ...amendment };
     const { location, match } = this.props;
     const license = get(this.props.resources, 'license.records[0]', {});
     const originalAmendmentIds = {};
@@ -105,7 +104,7 @@ class CreateAmendmentRoute extends React.Component {
     return this.props.mutator.license
       .PUT({
         ...license,
-        amendments: [amendmentToSubmit]
+        amendments: [amendment]
       })
       .then(updatedLicense => {
         let newAmendmentId;

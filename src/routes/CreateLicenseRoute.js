@@ -122,13 +122,11 @@ class CreateLicenseRoute extends React.Component {
   }
 
   handleSubmit = (license) => {
-    const licenseToSubmit = { ...license };
-
     const { history, location, mutator } = this.props;
     const name = license?.name;
 
     return mutator.licenses
-      .POST(licenseToSubmit)
+      .POST(license)
       .then(({ id }) => {
         this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.create.callout" values={{ name }} /> });
         history.push(`/licenses/${id}${location.search}`);
