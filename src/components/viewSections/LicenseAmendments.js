@@ -61,8 +61,8 @@ const LicenseAmendments = ({
         contentData={license.amendments || []}
         formatter={{
           name: a => a.name,
-          status: a => a?.status?.label ?? <NoValue />,
-          startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : <NoValue />),
+          status: a => a.status?.label,
+          startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : null),
           endDate: a => <LicenseEndDate license={a} renderNullIfEmpty />,
         }}
         id="amendments-table"
