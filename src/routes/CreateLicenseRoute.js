@@ -113,6 +113,7 @@ class CreateLicenseRoute extends React.Component {
       status: status.value,
       type: type.value,
       customProperties,
+      openEnded: false
     };
   }
 

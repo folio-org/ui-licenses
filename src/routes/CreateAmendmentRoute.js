@@ -86,6 +86,7 @@ class CreateAmendmentRoute extends React.Component {
     return {
       status: status.value,
       customProperties,
+      openEnded: false
     };
   }
 

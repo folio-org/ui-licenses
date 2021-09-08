@@ -101,7 +101,6 @@ class AmendmentFormInfo extends React.Component {
           </Col>
           <Col style={{ paddingTop: 20 }} xs={2}>
             <Field
-              defaultValue={false}
               name="openEnded"
               type="checkbox"
             >
