@@ -109,7 +109,10 @@ export default class LicenseFormInfo extends React.Component {
             />
           </Col>
           <Col style={{ paddingTop: 20 }} xs={2}>
-            <Field name="openEnded" type="checkbox">
+            <Field
+              name="openEnded"
+              type="checkbox"
+            >
               {props => {
                 return (<Checkbox
                   checked={props.input.checked}
