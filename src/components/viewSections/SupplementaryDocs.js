@@ -49,8 +49,7 @@ const SupplementaryDocs = ({
             { docs?.length ?
               renderDocs() :
               <FormattedMessage
-                id="ui-licenses.emptyAccordion.supplementaryDocuments"
-                values={{ type: type.toLowerCase() }}
+                id={`ui-licenses.emptyAccordion.supplementaryDocuments.${type}`}
               />
             }
           </Layout>

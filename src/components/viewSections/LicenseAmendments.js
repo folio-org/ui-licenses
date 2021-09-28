@@ -7,7 +7,6 @@ import {
   Button,
   FormattedUTCDate,
   MultiColumnList,
-  NoValue,
 } from '@folio/stripes/components';
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';

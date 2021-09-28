@@ -43,7 +43,7 @@ export default class Terms extends React.Component {
           >
             <CustomPropertiesList
               customProperties={terms}
-              isEmptyMessage={<FormattedMessage id="ui-licenses.emptyAccordion.terms" values={{ type: type.toLowerCase() }} />}
+              isEmptyMessage={<FormattedMessage id={`ui-licenses.emptyAccordion.terms.${type}`} />}
               resource={record}
             />
           </Accordion>
