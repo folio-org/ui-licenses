@@ -49,8 +49,7 @@ const CoreDocs = ({
             { docs?.length ?
               renderDocs() :
               <FormattedMessage
-                id="ui-licenses.emptyAccordion.coreDocuments"
-                values={{ type: type.toLowerCase() }}
+                id={`ui-licenses.emptyAccordion.coreDocuments.${type}`}
               />
             }
           </Layout>
