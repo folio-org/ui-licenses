@@ -81,7 +81,9 @@ class CreateAmendmentRoute extends React.Component {
     const customProperties = {};
     get(resources, 'terms.records', [])
       .filter(term => term.primary)
-      .forEach(term => { customProperties[term.name] = ''; });
+      // Change default to be an ignored customProperty.
+      // This means any changes without setting the value will be ignored
+      .forEach(term => { customProperties[term.name] = { _delete: true }; });
 
     return {
       status: status.value,

@@ -107,7 +107,7 @@ class CreateLicenseRoute extends React.Component {
     const customProperties = {};
     get(resources, 'terms.records', [])
       .filter(term => term.primary)
-      .forEach(term => { customProperties[term.name] = ''; });
+      .forEach(term => { customProperties[term.name] = { _delete: true }; });
 
     return {
       status: status.value,
