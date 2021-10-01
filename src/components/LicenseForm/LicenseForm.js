@@ -172,7 +172,7 @@ class LicenseForm extends React.Component {
                 defaultWidth="100%"
                 firstMenu={this.renderFirstMenu()}
                 footer={this.renderPaneFooter()}
-                paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
+                paneTitle={id ? <FormattedMessage id="ui-licenses.editLicense.name" values={{ name }} /> : <FormattedMessage id="ui-licenses.createLicense" />}
               >
                 <TitleManager record={id ? name : create}>
                   <form id="form-license">

@@ -184,7 +184,7 @@ class AmendmentForm extends React.Component {
                 centerContent
                 firstMenu={this.renderFirstMenu()}
                 footer={this.renderPaneFooter()}
-                paneTitle={id ? name : <FormattedMessage id="ui-licenses.amendments.create" />}
+                paneTitle={id ? <FormattedMessage id="ui-licenses.amendments.edit" values={{ name }} /> : <FormattedMessage id="ui-licenses.amendments.create" />}
                 {...paneProps}
               >
                 <TitleManager record={id ? name : create}>
