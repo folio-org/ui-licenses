@@ -38,7 +38,7 @@ const CoreDocs = ({
 
   return (
     <FormattedMessage id={`ui-licenses.${recordType}`}>
-      {([type]) => (
+      {() => (
         <Accordion
           displayWhenClosed={renderBadge()}
           displayWhenOpen={renderBadge()}
@@ -49,7 +49,7 @@ const CoreDocs = ({
             { docs?.length ?
               renderDocs() :
               <FormattedMessage
-                id={`ui-licenses.emptyAccordion.coreDocuments.${type}`}
+                id={`ui-licenses.emptyAccordion.coreDocuments.${recordType}`}
               />
             }
           </Layout>

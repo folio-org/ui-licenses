@@ -35,7 +35,7 @@ export default class Terms extends React.Component {
 
     return (
       <FormattedMessage id={`ui-licenses.${recordType}`}>
-        {([type]) => (
+        {() => (
           <Accordion
             displayWhenClosed={this.renderBadge()}
             id={id}
@@ -43,7 +43,7 @@ export default class Terms extends React.Component {
           >
             <CustomPropertiesList
               customProperties={terms}
-              isEmptyMessage={<FormattedMessage id={`ui-licenses.emptyAccordion.terms.${type}`} />}
+              isEmptyMessage={<FormattedMessage id={`ui-licenses.emptyAccordion.terms.${recordType}`} />}
               resource={record}
             />
           </Accordion>
