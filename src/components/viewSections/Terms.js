@@ -34,21 +34,17 @@ export default class Terms extends React.Component {
     const { id, record, recordType, terms } = this.props;
 
     return (
-      <FormattedMessage id={`ui-licenses.${recordType}`}>
-        {([type]) => (
-          <Accordion
-            displayWhenClosed={this.renderBadge()}
-            id={id}
-            label={<FormattedMessage id="ui-licenses.section.terms" />}
-          >
-            <CustomPropertiesList
-              customProperties={terms}
-              isEmptyMessage={<FormattedMessage id={`ui-licenses.emptyAccordion.terms.${type}`} />}
-              resource={record}
-            />
-          </Accordion>
-        )}
-      </FormattedMessage>
+      <Accordion
+        displayWhenClosed={this.renderBadge()}
+        id={id}
+        label={<FormattedMessage id="ui-licenses.section.terms" />}
+      >
+        <CustomPropertiesList
+          customProperties={terms}
+          isEmptyMessage={<FormattedMessage id={`ui-licenses.emptyAccordion.terms.${recordType}`} />}
+          resource={record}
+        />
+      </Accordion>
     );
   }
 }
