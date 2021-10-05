@@ -37,25 +37,21 @@ const SupplementaryDocs = ({
   };
 
   return (
-    <FormattedMessage id={`ui-licenses.${recordType}`}>
-      {() => (
-        <Accordion
-          displayWhenClosed={renderBadge()}
-          displayWhenOpen={renderBadge()}
-          id={id}
-          label={<FormattedMessage id="ui-licenses.section.supplementaryDocuments" />}
-        >
-          <Layout className="padding-bottom-gutter">
-            { docs?.length ?
-              renderDocs() :
-              <FormattedMessage
-                id={`ui-licenses.emptyAccordion.supplementaryDocuments.${recordType}`}
-              />
-            }
-          </Layout>
-        </Accordion>
-      )}
-    </FormattedMessage>
+    <Accordion
+      displayWhenClosed={renderBadge()}
+      displayWhenOpen={renderBadge()}
+      id={id}
+      label={<FormattedMessage id="ui-licenses.section.supplementaryDocuments" />}
+    >
+      <Layout className="padding-bottom-gutter">
+        { docs?.length ?
+          renderDocs() :
+          <FormattedMessage
+            id={`ui-licenses.emptyAccordion.supplementaryDocuments.${recordType}`}
+          />
+        }
+      </Layout>
+    </Accordion>
   );
 };
 
