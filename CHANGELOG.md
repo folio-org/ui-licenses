@@ -1,8 +1,15 @@
 # Change history for ui-licenses
 
-## 7.0.0 (In Progress)
+## 8.0.0 2021-10-07
+* Fixed bug with error on saving license if a change is made to the visibility (internal) flag of a primary property without populating it. ERM-1770
+* UX improvements for the Edit record pane title. ERM-1854
+* Upgrade to Stripes 7.0
+* Display emoty accordion cell when startDate is not set. ERM-1787
+* Displays list of other amendments on the parent license. ERM-1786
 * Included interface dependency for licenses 4.0
 
+## 6.1.1 2021-07-30
+* Fixed bug with Incorrect "status in agreement" displaying for a license when there are multiple licenses for a single agreement. ERM-1767 
 ## 6.1.0 2021-06-16
 * ERM-1683 Set up ui-licenses Registry entry
 * ERM-1640 Lock ui-licenses to @rehooks/local-storage 2.4.0
