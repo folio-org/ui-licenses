@@ -1,5 +1,9 @@
 # Change history for ui-licenses
 
+## 8.1.0 IN PROGRESS
+
+* Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`. ERM-1898
+
 ## 8.0.0 2021-10-07
 * Fixed bug with error on saving license if a change is made to the visibility (internal) flag of a primary property without populating it. ERM-1770
 * UX improvements for the Edit record pane title. ERM-1854
