@@ -1,6 +1,6 @@
 # Change history for ui-licenses
 
-## IN PROGRESS
+## 8.1.0 IN PROGRESS
 
 * Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`. ERM-1898
 
