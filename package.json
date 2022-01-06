@@ -12,6 +12,7 @@
     "start": "stripes serve",
     "build": "stripes build --output ./output",
     "test": "stripes test karma",
+    "test:jest": "jest --ci --coverage",
     "test-bigtest-once": "stripes test karma --karma.singleRun",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-licenses ./translations/ui-licenses/compiled",
     "lint": "eslint src test"
@@ -44,7 +45,9 @@
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.1.0",
     "@folio/stripes-erm-components": "^6.0.0",
+    "@folio/stripes-testing": "^4.0.0",
     "@rehooks/local-storage": "2.4.0",
+    "@testing-library/react": "^12.1.2",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
