@@ -2,10 +2,14 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@testing-library/react';
 import LicenseForm from './LicenseForm';
 import { data, initialValues, form } from './testResources';
 import translationsProperties from '../../../test/helpers';
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  LoadingView: () => <div>LoadingView</div>,
+}));
 
 jest.mock('../formSections/LicenseFormInfo', () => () => <div>LicenseFormInfo</div>);
 jest.mock('../formSections/LicenseFormInternalContacts', () => () => <div>LicenseFormInternalContacts</div>);
@@ -119,6 +123,31 @@ describe('LicenseForm', () => {
     it('renders the FormTerms component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormTerms')).toBeInTheDocument();
+    });
+  });
+
+  describe('LoadingView', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <LicenseForm
+            data={data}
+            form={form}
+            handlers={{
+              onClose: onCloseMock,
+              onDownloadFile: onDownloadFileMock,
+              onUploadFile: onUploadFileMock
+            }}
+            isLoading
+            onSubmit={onSubmitMock}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+    it('renders the LoadingView component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('LoadingView')).toBeInTheDocument();
     });
   });
 });
