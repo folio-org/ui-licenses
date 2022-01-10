@@ -64,3 +64,6 @@ typings/
 # Eclipse project files.
 .settings
 .project
+
+/artifacts
+junit.xml

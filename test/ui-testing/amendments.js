@@ -1,4 +1,4 @@
-/* global describe, it, before, after, Nightmare */
+/* global before, after, Nightmare */
 
 const NUMBER = Math.round(Math.random() * 100000);
 const LICENSE_NAME = `Amendments License #${NUMBER}`;
