@@ -14,6 +14,7 @@ import { urls } from '../components/utils';
 import { errorTypes } from '../constants';
 
 const RECORDS_PER_REQUEST = 100;
+const credentialsArray = [];
 
 class ViewLicenseRoute extends React.Component {
   static manifest = Object.freeze({
@@ -148,12 +149,19 @@ class ViewLicenseRoute extends React.Component {
 
     const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
 
+    if (interfacesCredentials[0]) {
+      const index = credentialsArray.findIndex(object => object.id === interfacesCredentials[0].id);
+      if (index === -1) {
+        credentialsArray.push(interfacesCredentials[0]);
+      }
+    }
+
     const orgs = license.orgs.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
         .map(id => ({
           ...this.getRecord(id, 'interfaces') || {},
-          credentials: interfacesCredentials.find(cred => cred.interfaceId === id)
+          credentials: credentialsArray.find(cred => cred.interfaceId === id)
         })),
     }));
 
