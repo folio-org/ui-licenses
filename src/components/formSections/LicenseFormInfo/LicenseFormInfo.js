@@ -26,6 +26,7 @@ export default class LicenseFormInfo extends React.Component {
     values: PropTypes.object
   };
 
+  /* istanbul ignore next */
   validateEndDate = (value, allValues) => {
     if (value && allValues.startDate && (allValues.openEnded !== true)) {
       const startDate = new Date(allValues.startDate);
@@ -114,6 +115,7 @@ export default class LicenseFormInfo extends React.Component {
               type="checkbox"
             >
               {props => {
+                  /* istanbul ignore next */
                 return (<Checkbox
                   checked={props.input.checked}
                   id="edit-license-open-ended"
