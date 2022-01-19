@@ -1,7 +1,6 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
-import { screen } from '@testing-library/react';
 import { Accordion } from '@folio/stripes-testing';
 import { data, mutators, values, initialValues } from './testResources';
 import translationsProperties from '../../../../test/helpers';
@@ -74,7 +73,6 @@ describe('LicenseFormInternalContacts', () => {
     });
 
     test('renders the Internal contacts Accordion', async () => {
-        screen.debug();
         await Accordion('Internal contacts').exists();
     });
 
