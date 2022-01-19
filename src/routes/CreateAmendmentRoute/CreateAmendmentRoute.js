@@ -6,8 +6,8 @@ import compose from 'compose-function';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
-import withFileHandlers from './components/withFileHandlers';
-import Form from '../components/AmendmentForm';
+import withFileHandlers from '../components/withFileHandlers';
+import Form from '../../components/AmendmentForm';
 
 const RECORDS_PER_REQUEST = 100;
 
@@ -97,6 +97,7 @@ class CreateAmendmentRoute extends React.Component {
     this.props.history.push(`/licenses/${match.params.id}${location.search}`);
   }
 
+  /* istanbul ignore next */
   handleSubmit = (amendment) => {
     const { location, match } = this.props;
     const license = get(this.props.resources, 'license.records[0]', {});
