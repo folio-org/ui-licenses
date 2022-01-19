@@ -1,3 +1,5 @@
+export { default as AmendmentFormInfo } from './AmendmentFormInfo';
+
 export { default as LicenseFormInfo } from './LicenseFormInfo';
 export { default as LicenseFormInternalContacts } from './LicenseFormInternalContacts';
 export { default as LicenseFormOrganizations } from './LicenseFormOrganizations';
