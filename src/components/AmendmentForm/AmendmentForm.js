@@ -25,9 +25,9 @@ import {
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
+import AmendmentFormInfo from '../formSections/AmendmentFormInfo';
 
 import {
-  AmendmentFormInfo,
   FormCoreDocs,
   FormSupplementaryDocs,
   FormTerms,
