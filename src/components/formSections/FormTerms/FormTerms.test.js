@@ -1,7 +1,6 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
-import { screen } from '@testing-library/react';
 import { Accordion } from '@folio/stripes-testing';
 import { data, initialValues } from './testResources';
 import translationsProperties from '../../../../test/helpers';
@@ -70,7 +69,6 @@ describe('FormTerms', () => {
     });
 
     test('renders the Terms Accordion', async () => {
-        screen.debug();
         await Accordion('Terms').exists();
     });
 
