@@ -4,7 +4,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 
 import { NoteViewPage } from '@folio/stripes/smart-components';
 
-import { formatNoteReferrer, urls } from '../components/utils';
+import { formatNoteReferrer, urls } from '../../../components/utils';
 
 class NoteViewRoute extends Component {
   static propTypes = {
@@ -17,6 +17,7 @@ class NoteViewRoute extends Component {
     }).isRequired,
   };
 
+  /* istanbul ignore next */
   onEdit = () => {
     const { history, location, match } = this.props;
 
@@ -26,6 +27,7 @@ class NoteViewRoute extends Component {
     });
   };
 
+  /* istanbul ignore next */
   navigateBack = () => {
     const { history, location } = this.props;
 
