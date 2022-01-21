@@ -4,7 +4,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 
 import { NoteViewPage } from '@folio/stripes/smart-components';
 
-import { formatNoteReferrer, urls } from '../../../components/utils';
+import { formatNoteReferrer, urls } from '../../components/utils';
 
 class NoteViewRoute extends Component {
   static propTypes = {
