@@ -122,7 +122,7 @@
     "delete.confirmMessage": "Lizenzvertrag <strong>{name}</strong> und alle verknüpften Vertragsänderungen werden <strong>gelöscht</strong>.",
     "errors.noDeleteHasLinkedAgreements": "<strong>Lizenzvertrag wurde nicht gelöscht</strong>, da dieser im Rahmen einer oder mehrerer Vereinbarungen verwendet wird.",
     "errors.noDeleteLicenseBackendError": "<strong>Lizenzvertrag wurde nicht gelöscht:</strong> {message}",
-    "settings.label": "Label",
+    "settings.label": "Anzeigename",
     "permission.licenses.view": "Einstellungen (Lizenzverträge): Lizenzverträge suchen und anzeigen",
     "permission.licenses.edit": "Einstellungen (Lizenzverträge): Lizenzverträge bearbeiten",
     "permission.licenses.delete": "Einstellungen (Lizenzverträge): Lizenzverträge löschen",
