@@ -1,4 +1,4 @@
-import { InternalContactsArrayDisplay } from '@folio/stripes-erm-components';
+import { InternalContactsArrayDisplay, OrganizationsArrayDisplay } from '@folio/stripes-erm-components';
 
 import LicenseLookup from './LicenseLookup';
 
@@ -10,6 +10,10 @@ const setUpRegistry = (registry) => {
 
   licenseReg.setRenderFunction('internalContacts', record => {
     return <InternalContactsArrayDisplay contacts={record.contacts} />;
+  });
+
+  licenseReg.setRenderFunction('orgs', record => {
+    return <OrganizationsArrayDisplay orgs={record.orgs} />;
   });
 
   // Lookup plugin
