@@ -2,14 +2,29 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 
+import { useSettings } from '@k-int/stripes-kint-components';
+
 import {
   TermsConfigRoute,
   PickListSettings,
   PickListValueSettings,
 } from './routes';
 
-export default class LicenseSettings extends React.Component {
-  sections = [
+import {
+  REFDATA_ENDPOINT,
+  SETTINGS_ENDPOINT
+} from '../constants/endpoints';
+
+const LicenseSettings = (props) => {
+  const { isLoading, pageList, SettingsContextProvider } = useSettings({
+    dynamicPageExclusions: ['registry'], // Registry AppSettings hold StringTemplating details etc -- not for user editing
+    intlKey: 'ui-licenses',
+    persistentPages: [],
+    refdataEndpoint: REFDATA_ENDPOINT,
+    settingEndpoint: SETTINGS_ENDPOINT
+  });
+
+  const sections = [
     {
       label: <FormattedMessage id="ui-licenses.settings.general" />,
       pages: [
@@ -37,17 +52,26 @@ export default class LicenseSettings extends React.Component {
           route: 'pick-list-values',
         },
       ]
+    },
+    {
+      label: <FormattedMessage id="ui-agreements.settings.appSettings" />,
+      pages: pageList
     }
-  ]
+  ];
 
-  render() {
-    return (
-      <Settings
-        {...this.props}
-        navPaneWidth="20%"
-        paneTitle={<FormattedMessage id="ui-licenses.meta.title" />}
-        sections={this.sections}
-      />
-    );
+  if (isLoading) {
+    return null;
   }
-}
+
+  return (
+    <SettingsContextProvider>
+      <Settings
+        paneTitle={<FormattedMessage id="ui-licenses.meta.title" />}
+        sections={sections}
+        {...props}
+      />
+    </SettingsContextProvider>
+  );
+};
+
+export default LicenseSettings;
