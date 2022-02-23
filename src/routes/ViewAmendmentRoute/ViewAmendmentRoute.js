@@ -6,16 +6,16 @@ import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
-import DuplicateAmendmentModal from '../components/DuplicateAmendmentModal';
+import DuplicateAmendmentModal from '../../components/DuplicateAmendmentModal';
 
-import withFileHandlers from './components/withFileHandlers';
-import View from '../components/Amendment';
+import withFileHandlers from '../components/withFileHandlers';
+import View from '../../components/Amendment';
 
-import { errorTypes } from '../constants';
+import { errorTypes } from '../../constants';
 
 const RECORDS_PER_REQUEST = 100;
 
-class ViewAmendmentsRoute extends React.Component {
+class ViewAmendmentRoute extends React.Component {
   static manifest = Object.freeze({
     license: {
       type: 'okapi',
@@ -104,6 +104,7 @@ class ViewAmendmentsRoute extends React.Component {
     this.props.history.push(`/licenses/${match.params.id}${location.search}`);
   }
 
+  /* istanbul ignore next */
   handleDelete = () => {
     const license = this.props.resources?.license?.records[0] || {};
     const { match: { params } } = this.props;
@@ -123,6 +124,7 @@ class ViewAmendmentsRoute extends React.Component {
       });
   }
 
+  /* istanbul ignore next */
   handleClone = (cloneableProperties) => {
     const { history, match, stripes: { okapi } } = this.props;
 
@@ -233,4 +235,4 @@ class ViewAmendmentsRoute extends React.Component {
 export default compose(
   withFileHandlers,
   stripesConnect
-)(ViewAmendmentsRoute);
+)(ViewAmendmentRoute);
