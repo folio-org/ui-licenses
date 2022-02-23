@@ -8,10 +8,10 @@ import { withTags } from '@folio/stripes/smart-components';
 import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import withFileHandlers from './components/withFileHandlers';
-import View from '../components/License';
-import { urls } from '../components/utils';
-import { errorTypes } from '../constants';
+import withFileHandlers from '../components/withFileHandlers';
+import View from '../../components/License';
+import { urls } from '../../components/utils';
+import { errorTypes } from '../../constants';
 
 const RECORDS_PER_REQUEST = 100;
 const credentialsArray = [];
@@ -142,7 +142,7 @@ class ViewLicenseRoute extends React.Component {
       orgs: [],
     });
 
-    const contacts = license.contacts.map(c => ({
+    const contacts = license.contacts?.map(c => ({
       ...c,
       user: this.getRecord(c.user, 'users') || c.user,
     }));
@@ -156,7 +156,7 @@ class ViewLicenseRoute extends React.Component {
       }
     }
 
-    const orgs = license.orgs.map(o => ({
+    const orgs = license.orgs?.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
         .map(id => ({
@@ -197,6 +197,7 @@ class ViewLicenseRoute extends React.Component {
       .find(i => i.id === id);
   }
 
+    /* istanbul ignore next */
   handleClone = (cloneableProperties) => {
     const { history, location, match, stripes: { okapi } } = this.props;
 
@@ -230,6 +231,7 @@ class ViewLicenseRoute extends React.Component {
     this.props.history.push(`/licenses${this.props.location.search}`);
   }
 
+    /* istanbul ignore next */
   handleDelete = () => {
     const { sendCallout } = this.context;
     const { history, location, mutator } = this.props;
