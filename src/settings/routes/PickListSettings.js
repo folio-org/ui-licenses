@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import { IntlConsumer, stripesConnect } from '@folio/stripes/core';
 import { NoValue } from '@folio/stripes/components';
 
-export default class PickListSettings extends React.Component {
+class PickListSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -55,3 +55,5 @@ export default class PickListSettings extends React.Component {
     );
   }
 }
+
+export default stripesConnect(PickListSettings);
