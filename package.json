@@ -194,6 +194,26 @@
           "licenses.custprops.manage",
           "licenses.refdata.view"
         ]
+      },
+      {
+        "permissionName": "ui-licenses.appSettings.view",
+        "displayName": "Settings (Licenses): Can view app settings",
+        "description": "Grants permission to view the Licenses application settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.licenses.enabled",
+          "licenses.settings.read"
+        ]
+      },
+      {
+        "permissionName": "ui-licenses.appSettings.manage",
+        "displayName": "Settings (Licenses): Can view and edit app settings",
+        "description": "Grants permission to view and edit the Licenses application settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.licenses.enabled",
+          "licenses.settings.manage"
+        ]
       }
     ],
     "icons": [
