@@ -13,11 +13,6 @@ jest.mock('@folio/stripes-erm-components', () => ({
   CustomPropertiesConfigListFieldArray: (props) => <div><div>CustomPropertiesConfigListFieldArray</div><SaveButton {...props} /><DeleteButton {...props} /></div>
 }));
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  Callout: () => <div>Callout</div>,
-}));
-
 const onSubmit = jest.fn();
 const mockDelete = jest.fn().mockImplementation(() => Promise.resolve());
 const mockSave = jest.fn().mockImplementation(() => Promise.resolve());
@@ -159,11 +154,6 @@ describe('TermsConfigForm', () => {
   test('renders the CustomPropertiesConfigListFieldArray component', () => {
     const { getByText } = renderComponent;
     expect(getByText('CustomPropertiesConfigListFieldArray')).toBeInTheDocument();
-  });
-
-  test('renders the Callout component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Callout')).toBeInTheDocument();
   });
 
   test('triggers the DeleteButton callback', async () => {
