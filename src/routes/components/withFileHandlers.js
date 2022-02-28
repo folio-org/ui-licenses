@@ -39,18 +39,6 @@ export default function withFileHandlers(WrappedComponent) {
       });
     }
 
-    handleDeleteFile = (file) => {
-      const { stripes: { okapi } } = this.props;
-
-      return fetch(`${okapi.url}/licenses/files/${file.id}`, {
-        method: 'DELETE',
-        headers: {
-          'X-Okapi-Tenant': okapi.tenant,
-          'X-Okapi-Token': okapi.token,
-        },
-      });
-    }
-
     handleDownloadFile = (file) => {
       const { stripes: { okapi } } = this.props;
 
