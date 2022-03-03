@@ -1,5 +1,7 @@
 # Change history for ui-licenses
 
+## 8.2.0 In progress
+
 ## 8.1.0 2022-03-03
 * ERM-1982 Licenses: Organization interface credentials malfunction
 * ERM-1945 Add AppSettings panel to Licenses
