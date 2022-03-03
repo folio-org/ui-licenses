@@ -60,7 +60,7 @@ class ViewAmendmentRoute extends React.Component {
     }).isRequired,
     resources: PropTypes.shape({
       license: PropTypes.object,
-      linkedAgreements: PropTypes.array,
+      linkedAgreements: PropTypes.arrayOf(PropTypes.object),
       terms: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
