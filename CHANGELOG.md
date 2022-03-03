@@ -1,8 +1,31 @@
 # Change history for ui-licenses
 
-## 8.1.0 IN PROGRESS
+## 8.1.0 2022-03-03
+* ERM-1982 Licenses: Organization interface credentials malfunction
+* ERM-1945 Add AppSettings panel to Licenses
+* ERM-1898 Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`.
+* ERM-1758 Licenses: Apply keyboard shortcuts modal guidelines
+* ERM-1745 Add Organisations to Licenses simple search widget definition
+* ERM-1628 Expand emptyAccordion.* {type} for correct translations
+* FAT-82
+  * ERM-1508 PickListValueSettings
+  * ERM-1506 withFileHandlers
+  * ERM-1505 ViewLicenseRoute
+  * ERM-1504 ViewAmendmentRoute
+  * ERM-1503 NoteViewRoute
+  * ERM-1496 CreateAmendmentRoute
+  * ERM-1344 formSections
+    * ERM-1454 LicenseFormOrganizations
+    * ERM-1453 LicenseFormInternalContacts
+    * ERM-1452 LicenseFormInfo
+    * ERM-1451 FormTerms
+    * ERM-1450 FormSupplementaryDocs
+    * ERM-1449 FormCoreDocs
+    * ERM-1448 AmendmentFormInfo
+  * ERM-1301 NoPermissions
+  * ERM-1300 LicenseForm
+  * ERM-1293 Amendment
 
-* Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`. ERM-1898
 
 ## 8.0.0 2021-10-07
 * Fixed bug with error on saving license if a change is made to the visibility (internal) flag of a primary property without populating it. ERM-1770
