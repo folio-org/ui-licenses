@@ -5,10 +5,13 @@ import { Settings } from '@folio/stripes/smart-components';
 import { useSettings } from '@k-int/stripes-kint-components';
 
 import {
-  TermsConfigRoute,
   PickListSettings,
   PickListValueSettings,
 } from './routes';
+
+import {
+  LicensesCustomProperties
+} from './components';
 
 import {
   REFDATA_ENDPOINT,
@@ -29,11 +32,11 @@ const LicenseSettings = (props) => {
       label: <FormattedMessage id="ui-licenses.settings.general" />,
       pages: [
         {
-          component: TermsConfigRoute,
+          component: LicensesCustomProperties,
           label: <FormattedMessage id="ui-licenses.section.terms" />,
           perm: 'ui-licenses.terms.manage',
           route: 'terms',
-        }
+        },
       ]
     },
     {
