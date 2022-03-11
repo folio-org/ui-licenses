@@ -64,7 +64,7 @@
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.1.0",
     "@folio/stripes-erm-components": "^6.1.0",
-    "@k-int/stripes-kint-components": "^2.1.0",
+    "@k-int/stripes-kint-components": "^2.2.0",
     "@folio/stripes-testing": "^4.2.0",
     "@rehooks/local-storage": "2.4.0",
     "@testing-library/react": "^12.1.2",

@@ -38,7 +38,9 @@ const LicensesCustomProperties = () => {
 
   const labelOverrides = {
     paneTitle: <FormattedMessage id="ui-licenses.terms" />,
-    primary: <FormattedMessage id="ui-licenses.terms.primary" />
+    primary: <FormattedMessage id="ui-licenses.terms.primary" />,
+    retired: <FormattedMessage id="ui-licenses.terms.retired" />,
+    primaryRetired: <FormattedMessage id="ui-licenses.terms.primaryRetired" />
   };
 
   const helpPopovers = {
