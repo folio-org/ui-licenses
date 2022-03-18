@@ -172,5 +172,22 @@
     "prop.amendmentLinkStatus": "Status do link para aditivo",
     "prop.unassigned": "Não atribuído",
     "section.amendmentsOnParentLicense": "Aditivos na licença pai",
-    "section.parentLicenseAgreements": "Acordos vinculados à licença pai"
+    "section.parentLicenseAgreements": "Acordos vinculados à licença pai",
+    "terms.all": "All",
+    "terms.none": "None",
+    "terms": "Terms",
+    "terms.help.label": "A license term 'label' is used when displaying the term to users within Folio and in any other systems that display license terms to users. It should be a short text string that clearly communicates what information is recorded in the term. The Description should be used where further explanation of the term is required for display to users.",
+    "terms.help.name": "A license term 'name' is used when outputting the term data in a machine readable format. It is not intended to be displayed to users (staff or patrons). It should be a short Latin alphabet string that can be used by any external systems or programs that access the license term data. Use of camelCase is suggested but not required. Changes to the license term name would affect any external systems using license term data and changes should not be made without consulting those responsible for relevant external systems and software.",
+    "terms.primary": "Primary term",
+    "terms.retired": "Deprecated",
+    "terms.primaryRetired": "A term cannot be both primary and deprecated",
+    "settings.settingsSection.fileStorage": "File storage",
+    "settings.fileStorage.s3AccessKey": "S3 access key",
+    "settings.fileStorage.s3BucketName": "S3 bucket name",
+    "settings.fileStorage.s3Endpoint": "S3 endpoint",
+    "settings.fileStorage.s3ObjectPrefix": "S3 object prefix",
+    "settings.fileStorage.s3SecretKey": "S3 secret key",
+    "settings.fileStorage.storageEngine": "Storage engine",
+    "settings.customProperties.all": "All",
+    "settings.customProperties.none": "None"
 }
