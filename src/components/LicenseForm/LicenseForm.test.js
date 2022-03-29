@@ -11,11 +11,15 @@ jest.mock('@folio/stripes/components', () => ({
   LoadingView: () => <div>LoadingView</div>,
 }));
 
+jest.mock('@k-int/stripes-kint-components', () => ({
+  ...jest.requireActual('@k-int/stripes-kint-components'),
+  CustomPropertiesEdit: () => <div>CustomPropertiesEdit</div>,
+}));
+
 jest.mock('../formSections/LicenseFormInfo', () => () => <div>LicenseFormInfo</div>);
 jest.mock('../formSections/LicenseFormInternalContacts', () => () => <div>LicenseFormInternalContacts</div>);
 jest.mock('../formSections/LicenseFormOrganizations', () => () => <div>LicenseFormOrganizations</div>);
 jest.mock('../formSections/FormSupplementaryDocs', () => () => <div>FormSupplementaryDocs</div>);
-jest.mock('../formSections/FormTerms', () => () => <div>FormTerms</div>);
 jest.mock('../formSections/FormCoreDocs', () => () => <div>FormCoreDocs</div>);
 
 const onSubmitMock = jest.fn();
@@ -70,9 +74,9 @@ describe('LicenseForm', () => {
       expect(getByText('FormSupplementaryDocs')).toBeInTheDocument();
     });
 
-    it('renders the FormTerms component', () => {
+    it('renders the CustomPropertiesEdit component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('FormTerms')).toBeInTheDocument();
+      expect(getByText('CustomPropertiesEdit')).toBeInTheDocument();
     });
   });
 
@@ -120,9 +124,9 @@ describe('LicenseForm', () => {
       expect(getByText('FormSupplementaryDocs')).toBeInTheDocument();
     });
 
-    it('renders the FormTerms component', () => {
+    it('renders the CustomPropertiesEdit component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('FormTerms')).toBeInTheDocument();
+      expect(getByText('CustomPropertiesEdit')).toBeInTheDocument();
     });
   });
 
