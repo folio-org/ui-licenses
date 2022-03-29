@@ -4,7 +4,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { CustomPropertyFilters, DateFilter, OrganizationSelection } from '@folio/stripes-erm-components';
+import { DateFilter, OrganizationSelection } from '@folio/stripes-erm-components';
+
+import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
+
+import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
 const FILTERS = [
   'status',
@@ -165,11 +169,20 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
   };
 
   const renderCustomPropertyFilters = () => {
-    return <CustomPropertyFilters
+    return <CustomPropertiesFilter
       activeFilters={activeFilters}
-      customProperties={data.terms}
-      custPropName="term"
+      customPropertiesEndpoint={CUSTPROP_ENDPOINT}
       filterHandlers={filterHandlers}
+      labelOverrides={{
+        customProperty: <FormattedMessage id="ui-licenses.term" />,
+        customProperties: <FormattedMessage id="ui-licenses.terms" />,
+        filtersApplied: (count) => <FormattedMessage id="ui-licenses.terms.filtersApplied" values={{ count }} />,
+        editCustomPropertyFilters: <FormattedMessage id="ui-licenses.terms.editCustomPropertyFilters" />,
+        filterBuilder: <FormattedMessage id="ui-licenses.terms.filterBuilder" />,
+        customPropertyFilter: (index) => <FormattedMessage id="ui-licenses.terms.filterIndex" values={{ index: index + 1 }} />,
+        removeFilter: (index) => <FormattedMessage id="ui-licenses.terms.removeFilter" values={{ index: index + 1 }} />,
+        retiredName: (name) => intl.formatMessage({ id: 'ui-licenses.terms.deprecated' }, { name }),
+      }}
     />;
   };
 
