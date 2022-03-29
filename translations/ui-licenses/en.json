@@ -221,5 +221,12 @@
   "settings.fileStorage.s3SecretKey": "S3 secret key",
   "settings.fileStorage.storageEngine": "Storage engine",
   "settings.customProperties.all": "All",
-  "settings.customProperties.none": "None"
+  "settings.customProperties.none": "None",
+
+  "terms.filtersApplied": "{count} term filters applied",
+  "terms.editCustomPropertyFilters": "Edit term filters",
+  "terms.filterBuilder": "Term filter builder",
+  "terms.filterIndex": "Term filter {index}",
+  "terms.removeFilter": "Remove Term filter {index}",
+  "terms.deprecated": "DEPRECATED: {name}"
 }

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { isEqual } from 'lodash';
 import setFieldData from 'final-form-set-field-data';
+import { CustomPropertiesEdit } from '@k-int/stripes-kint-components';
 import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 
 import {
@@ -12,6 +13,7 @@ import {
   Col,
   ExpandAllButton,
   HasCommand,
+  Headline,
   IconButton,
   LoadingView,
   Pane,
@@ -32,31 +34,27 @@ import {
   LicenseFormOrganizations,
   FormCoreDocs,
   FormSupplementaryDocs,
-  FormTerms,
 } from '../formSections';
 
-class LicenseForm extends React.Component {
-  static propTypes = {
-    data: PropTypes.object,
-    dispatch: PropTypes.func,
-    handlers: PropTypes.PropTypes.shape({
-      onClose: PropTypes.func.isRequired,
-    }),
-    handleSubmit: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool,
-    form: PropTypes.object,
-    onSubmit: PropTypes.func.isRequired,
-    pristine: PropTypes.bool,
-    submitting: PropTypes.bool,
-    values: PropTypes.object,
-  }
+import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import useLicensesContexts from '../../hooks/useLicensesContexts';
 
-  constructor(props) {
-    super(props);
-    this.accordionStatusRef = React.createRef();
-  }
+const LicenseForm = ({
+  data = {},
+  handlers,
+  handleSubmit,
+  isLoading,
+  form,
+  pristine,
+  submitting,
+  values = {},
+}) => {
+  const accordionStatusRef = useRef();
+  const { data: custpropContexts = [] } = useLicensesContexts();
+  // Ensure the custprops with no contexts get rendered
+  const contexts = ['isNull', ...custpropContexts];
 
-  getInitialAccordionsState = () => {
+  const getInitialAccordionsState = () => {
     return {
       licenseFormInternalContacts: true,
       licenseFormOrganizations: true,
@@ -64,29 +62,19 @@ class LicenseForm extends React.Component {
       licenseFormTerms: true,
       licenseFormSupplementaryDocs: true
     };
-  }
+  };
 
-  getSectionProps(id) {
-    const { data, handlers, form: { mutators }, values = {} } = this.props;
-
+  const getSectionProps = (id) => {
     return {
       data,
       handlers,
       id,
-      mutators,
+      mutators: form.mutators,
       values,
     };
-  }
+  };
 
-  renderPaneFooter() {
-    const {
-      handlers,
-      handleSubmit,
-      pristine,
-      submitting,
-      values,
-    } = this.props;
-
+  const renderPaneFooter = () => {
     return (
       <PaneFooter
         renderEnd={(
@@ -113,9 +101,9 @@ class LicenseForm extends React.Component {
         )}
       />
     );
-  }
+  };
 
-  renderFirstMenu() {
+  const renderFirstMenu = () => {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-licenses.closeEditLicense">
@@ -124,83 +112,115 @@ class LicenseForm extends React.Component {
               aria-label={ariaLabel}
               icon="times"
               id="close-license-form-button"
-              onClick={this.props.handlers.onClose}
+              onClick={handlers.onClose}
             />
           )}
         </FormattedMessage>
       </PaneMenu>
     );
-  }
+  };
 
-  shortcuts = [
+  /* istanbul ignore next */
+  const shortcuts = [
     {
       name: 'save',
-      handler: (e) => handleSaveKeyCommand(e, this.props),
+      handler: (e) => handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }),
     },
     {
       name: 'expandAllSections',
-      handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      handler: (e) => expandAllSections(e, accordionStatusRef),
     },
     {
       name: 'collapseAllSections',
-      handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+      handler: (e) => collapseAllSections(e, accordionStatusRef),
     }
   ];
 
-  render() {
-    const { isLoading, values: { id, name } } = this.props;
+  const { id, name } = values;
 
-    const paneProps = {
-      defaultWidth: '100%',
-      id: 'pane-license-form',
-    };
+  const paneProps = {
+    defaultWidth: '100%',
+    id: 'pane-license-form',
+  };
 
-    if (isLoading) return <LoadingView {...paneProps} />;
+  if (isLoading) return <LoadingView {...paneProps} />;
 
-    return (
-      <HasCommand
-        commands={this.shortcuts}
-        isWithinScope={checkScope}
-        scope={document.body}
-      >
-        <Paneset>
-          <FormattedMessage id="ui-licenses.create">
-            {create => (
-              <Pane
-                appIcon={<AppIcon app="licenses" />}
-                centerContent
-                defaultWidth="100%"
-                firstMenu={this.renderFirstMenu()}
-                footer={this.renderPaneFooter()}
-                paneTitle={id ? <FormattedMessage id="ui-licenses.editLicense.name" values={{ name }} /> : <FormattedMessage id="ui-licenses.createLicense" />}
-              >
-                <TitleManager record={id ? name : create}>
-                  <form id="form-license">
-                    <AccordionStatus ref={this.accordionStatusRef}>
-                      <Row end="xs">
-                        <Col xs>
-                          <ExpandAllButton />
-                        </Col>
-                      </Row>
-                      <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                        <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
-                        <LicenseFormInternalContacts {...this.getSectionProps('licenseFormInternalContacts')} />
-                        <LicenseFormOrganizations {...this.getSectionProps('licenseFormOrganizations')} />
-                        <FormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
-                        <FormTerms {...this.getSectionProps('licenseFormTerms')} />
-                        <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />
-                      </AccordionSet>
-                    </AccordionStatus>
-                  </form>
-                </TitleManager>
-              </Pane>
-            )}
-          </FormattedMessage>
-        </Paneset>
-      </HasCommand>
-    );
-  }
-}
+  return (
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <Paneset>
+        <FormattedMessage id="ui-licenses.create">
+          {create => (
+            <Pane
+              appIcon={<AppIcon app="licenses" />}
+              centerContent
+              defaultWidth="100%"
+              firstMenu={renderFirstMenu()}
+              footer={renderPaneFooter()}
+              paneTitle={id ? <FormattedMessage id="ui-licenses.editLicense.name" values={{ name }} /> : <FormattedMessage id="ui-licenses.createLicense" />}
+            >
+              <TitleManager record={id ? name : create}>
+                <form id="form-license">
+                  <AccordionStatus ref={accordionStatusRef}>
+                    <Row end="xs">
+                      <Col xs>
+                        <ExpandAllButton />
+                      </Col>
+                    </Row>
+                    <AccordionSet initialStatus={getInitialAccordionsState()}>
+                      <LicenseFormInfo {...getSectionProps('licenseFormInfo')} />
+                      <LicenseFormInternalContacts {...getSectionProps('licenseFormInternalContacts')} />
+                      <LicenseFormOrganizations {...getSectionProps('licenseFormOrganizations')} />
+                      <FormCoreDocs {...getSectionProps('licenseFormDocs')} />
+                      <CustomPropertiesEdit
+                        contexts={contexts}
+                        customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+                        id="supplementaryProperties"
+                        labelOverrides={{
+                          defaultTitle: (ctx) => <FormattedMessage id="ui-licenses.terms.defaultTitle" values={{ ctx }} />,
+                          noContext: <FormattedMessage id="ui-licenses.terms" />,
+                          primaryProperties: (
+                            <Headline margin="x-small" size="large" tag="h4">
+                              <FormattedMessage id="ui-licenses.terms.primaryTerms" />
+                            </Headline>
+                          ),
+                          optionalProperties: (
+                            <Headline margin="x-small" size="large" tag="h4">
+                              <FormattedMessage id="ui-licenses.terms.optionalTerms" />
+                            </Headline>
+                          )
+                        }}
+                      />
+                      <FormSupplementaryDocs {...getSectionProps('licenseFormSupplementaryDocs')} />
+                    </AccordionSet>
+                  </AccordionStatus>
+                </form>
+              </TitleManager>
+            </Pane>
+          )}
+        </FormattedMessage>
+      </Paneset>
+    </HasCommand>
+  );
+};
+
+LicenseForm.propTypes = {
+  data: PropTypes.object,
+  dispatch: PropTypes.func,
+  handlers: PropTypes.PropTypes.shape({
+    onClose: PropTypes.func.isRequired,
+  }),
+  handleSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  form: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool,
+  submitting: PropTypes.bool,
+  values: PropTypes.object,
+};
 
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),

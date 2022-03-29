@@ -1,24 +1,19 @@
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useQuery, useQueryClient } from 'react-query';
-
-import { useOkapiKy } from '@folio/stripes/core';
+import { useQueryClient } from 'react-query';
 
 import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
 import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import useLicensesContexts from '../../hooks/useLicensesContexts';
 
 const LicensesCustomProperties = () => {
   const intl = useIntl();
-  const ky = useOkapiKy();
 
   const queryClient = useQueryClient();
 
-  const { data: custpropContexts = [] } = useQuery(
-    ['ui-licenses', 'settings', 'custpropContexts'],
-    () => ky('licenses/custprops/contexts').json()
-  );
+  const { data: custpropContexts = [] } = useLicensesContexts();
 
   const contexts = [
     {
@@ -51,9 +46,9 @@ const LicensesCustomProperties = () => {
   return (
     <CustomPropertiesSettings
       afterQueryCalls={{
-        put: () => queryClient.invalidateQueries(['ui-licenses', 'settings', 'custpropContexts']),
-        post: () => queryClient.invalidateQueries(['ui-licenses', 'settings', 'custpropContexts']),
-        delete: () => queryClient.invalidateQueries(['ui-licenses', 'settings', 'custpropContexts'])
+        put: () => queryClient.invalidateQueries([`${CUSTPROP_ENDPOINT}/contexts`]),
+        post: () => queryClient.invalidateQueries([`${CUSTPROP_ENDPOINT}/contexts`]),
+        delete: () => queryClient.invalidateQueries([`${CUSTPROP_ENDPOINT}/contexts`])
       }}
       contextFilterOptions={contexts}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
