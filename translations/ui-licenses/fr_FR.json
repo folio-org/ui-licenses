@@ -173,7 +173,7 @@
     "prop.unassigned": "Unassigned",
     "section.amendmentsOnParentLicense": "Amendments on parent license",
     "section.parentLicenseAgreements": "Agreements linked to the parent license",
-    "terms.all": "All",
+    "terms.all": "Tout",
     "terms.none": "None",
     "terms": "Terms",
     "terms.help.label": "A license term 'label' is used when displaying the term to users within Folio and in any other systems that display license terms to users. It should be a short text string that clearly communicates what information is recorded in the term. The Description should be used where further explanation of the term is required for display to users.",
@@ -188,6 +188,6 @@
     "settings.fileStorage.s3ObjectPrefix": "S3 object prefix",
     "settings.fileStorage.s3SecretKey": "S3 secret key",
     "settings.fileStorage.storageEngine": "Storage engine",
-    "settings.customProperties.all": "All",
-    "settings.customProperties.none": "None"
+    "settings.customProperties.all": "Tout",
+    "settings.customProperties.none": "Aucun"
 }
