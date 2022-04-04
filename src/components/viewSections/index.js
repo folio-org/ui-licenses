@@ -10,4 +10,3 @@ export { default as LicenseOrganizations } from './LicenseOrganizations';
 
 export { default as CoreDocs } from './CoreDocs';
 export { default as SupplementaryDocs } from './SupplementaryDocs';
-export { default as Terms } from './Terms';

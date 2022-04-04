@@ -12,13 +12,17 @@ jest.mock('@folio/stripes/components', () => ({
   LoadingPane: () => <div>LoadingPane</div>,
 }));
 
+jest.mock('@k-int/stripes-kint-components', () => ({
+  ...jest.requireActual('@k-int/stripes-kint-components'),
+  CustomPropertiesView: () => <div>CustomPropertiesView</div>,
+}));
+
 jest.mock('../viewSections/AmendmentInfo', () => () => <div>AmendmentInfo</div>);
 jest.mock('../viewSections/AmendmentLicense', () => () => <div>AmendmentLicense</div>);
 jest.mock('../viewSections/CoreDocs', () => () => <div>CoreDocs</div>);
 jest.mock('../viewSections/LicenseAgreements', () => () => <div>LicenseAgreements</div>);
 jest.mock('../viewSections/LicenseAmendments', () => () => <div>LicenseAmendments</div>);
 jest.mock('../viewSections/SupplementaryDocs', () => () => <div>SupplementaryDocs</div>);
-jest.mock('../viewSections/Terms', () => () => <div>Terms</div>);
 
 describe('Amendment', () => {
   let renderComponent;
@@ -66,9 +70,9 @@ describe('Amendment', () => {
       expect(getByText('SupplementaryDocs')).toBeInTheDocument();
     });
 
-    it('renders the Terms component', () => {
+    it('renders the CustomPropertiesView component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('Terms')).toBeInTheDocument();
+      expect(getByText('CustomPropertiesView')).toBeInTheDocument();
     });
 
     test('clicking and calling the delete button under the Actions dropdown', async () => {

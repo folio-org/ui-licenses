@@ -202,7 +202,7 @@ const Amendment = ({
 Amendment.propTypes = {
   data: PropTypes.shape({
     amendment: PropTypes.shape({
-      customProperties: PropTypes.arrayOf(PropTypes.object),
+      customProperties: PropTypes.object,
       docs: PropTypes.arrayOf(PropTypes.object),
       id: PropTypes.string,
       name: PropTypes.string,
