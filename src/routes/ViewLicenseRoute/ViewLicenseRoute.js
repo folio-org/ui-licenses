@@ -62,11 +62,6 @@ class ViewLicenseRoute extends React.Component {
       shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
       throwErrors: false,
     },
-    terms: {
-      type: 'okapi',
-      path: 'licenses/custprops',
-      shouldRefresh: () => false,
-    },
     users: {
       type: 'okapi',
       path: 'users',
@@ -119,7 +114,6 @@ class ViewLicenseRoute extends React.Component {
       query: PropTypes.shape({
         helper: PropTypes.string,
       }),
-      terms: PropTypes.object,
       users: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -197,7 +191,7 @@ class ViewLicenseRoute extends React.Component {
       .find(i => i.id === id);
   }
 
-    /* istanbul ignore next */
+  /* istanbul ignore next */
   handleClone = (cloneableProperties) => {
     const { history, location, match, stripes: { okapi } } = this.props;
 
@@ -231,7 +225,7 @@ class ViewLicenseRoute extends React.Component {
     this.props.history.push(`/licenses${this.props.location.search}`);
   }
 
-    /* istanbul ignore next */
+  /* istanbul ignore next */
   handleDelete = () => {
     const { sendCallout } = this.context;
     const { history, location, mutator } = this.props;
@@ -290,7 +284,6 @@ class ViewLicenseRoute extends React.Component {
       <View
         data={{
           license: this.getCompositeLicense(),
-          terms: get(resources, 'terms.records', []),
         }}
         handlers={{
           ...handlers,
