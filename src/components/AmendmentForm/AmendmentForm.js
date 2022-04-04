@@ -184,7 +184,7 @@ const AmendmentForm = ({
                       <CustomPropertiesEdit
                         contexts={contexts}
                         customPropertiesEndpoint={CUSTPROP_ENDPOINT}
-                        id="supplementaryProperties"
+                        id="terms"
                         labelOverrides={{
                           defaultTitle: (ctx) => <FormattedMessage id="ui-licenses.terms.defaultTitle" values={{ ctx }} />,
                           noContext: <FormattedMessage id="ui-licenses.terms" />,

@@ -223,6 +223,7 @@
   "settings.customProperties.all": "All",
   "settings.customProperties.none": "None",
 
+  "terms.defaultTitle": "Terms ({ctx})",
   "terms.filtersApplied": "{count} term filters applied",
   "terms.editCustomPropertyFilters": "Edit term filters",
   "terms.filterBuilder": "Term filter builder",

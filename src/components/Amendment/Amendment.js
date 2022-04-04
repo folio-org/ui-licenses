@@ -180,9 +180,9 @@ const Amendment = ({
               {data.amendment?.docs?.length > 0 && <CoreDocs {...getSectionProps('amendmentCoreDocs')} />}
               <CustomPropertiesView
                 contexts={contexts}
-                customProperties={data.license.customProperties}
+                customProperties={data.amendment.customProperties}
                 customPropertiesEndpoint={CUSTPROP_ENDPOINT}
-                id="supplementaryProperties"
+                id="terms"
                 labelOverrides={{
                   defaultTitle: (ctx) => <FormattedMessage id="ui-licenses.terms.defaultTitle" values={{ ctx }} />,
                   noContext: <FormattedMessage id="ui-licenses.terms" />,
@@ -202,6 +202,7 @@ const Amendment = ({
 Amendment.propTypes = {
   data: PropTypes.shape({
     amendment: PropTypes.shape({
+      customProperties: PropTypes.arrayOf(PropTypes.object),
       docs: PropTypes.arrayOf(PropTypes.object),
       id: PropTypes.string,
       name: PropTypes.string,
