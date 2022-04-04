@@ -32,6 +32,8 @@ class EditAmendmentRoute extends React.Component {
       shouldRefresh: () => false,
     },
     terms: {
+      limitParam: 'perPage',
+      perRequest: 100,
       type: 'okapi',
       path: 'licenses/custprops',
       shouldRefresh: () => false,

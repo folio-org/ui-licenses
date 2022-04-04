@@ -63,6 +63,8 @@ class ViewLicenseRoute extends React.Component {
       throwErrors: false,
     },
     terms: {
+      limitParam: 'perPage',
+      perRequest: 100,
       type: 'okapi',
       path: 'licenses/custprops',
       shouldRefresh: () => false,
