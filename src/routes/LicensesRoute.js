@@ -64,6 +64,8 @@ class LicensesRoute extends React.Component {
       records: 'tags',
     },
     terms: {
+      limitParam: 'perPage',
+      perRequest: 100,
       type: 'okapi',
       path: 'licenses/custprops',
       shouldRefresh: () => false,
