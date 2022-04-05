@@ -12,6 +12,7 @@ class TermsConfigRoute extends React.Component {
       type: 'okapi',
       path: 'licenses/custprops',
       params: {
+        perPage: '100',
         sort: 'id;desc'
       },
       clientGeneratePk: false,
