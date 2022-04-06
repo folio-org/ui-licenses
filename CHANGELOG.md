@@ -1,5 +1,7 @@
 # Change history for ui-licenses
 
+## 8.1.1 2022-04-06
+* ERM-2072 A maximum of 10 custom properties are retrieved for agreements and licenses
 ## 8.1.0 2022-03-03
 * ERM-1982 Licenses: Organization interface credentials malfunction
 * ERM-1945 Add AppSettings panel to Licenses
