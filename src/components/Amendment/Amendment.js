@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
+import { CustomPropertiesView } from '@k-int/stripes-kint-components';
 
 import {
   AccordionSet,
@@ -27,44 +29,24 @@ import {
   LicenseAgreements,
   LicenseAmendments,
   SupplementaryDocs,
-  Terms,
 } from '../viewSections';
 
-export default class Amendment extends React.Component {
-  static propTypes = {
-    data: PropTypes.shape({
-      amendment: PropTypes.shape({
-        docs: PropTypes.arrayOf(PropTypes.object),
-        id: PropTypes.string,
-        name: PropTypes.string,
-        status: PropTypes.shape({
-          label: PropTypes.string,
-        }),
-        supplementaryDocs: PropTypes.arrayOf(PropTypes.object),
-      }).isRequired,
-      license: PropTypes.object.isRequired,
-      terms: PropTypes.arrayOf(PropTypes.object),
-    }),
-    handlers: PropTypes.shape({
-      onClone: PropTypes.func,
-      onClose: PropTypes.func.isRequired,
-      onDelete: PropTypes.func,
-      onEditAmendment: PropTypes.func.isRequired
-    }),
-    isLoading: PropTypes.bool,
-    urls: PropTypes.shape({
-      editAmendment: PropTypes.func,
-    }),
-  }
+import useLicensesContexts from '../../hooks/useLicensesContexts';
+import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
-  constructor(props) {
-    super(props);
-    this.accordionStatusRef = React.createRef();
-  }
+const Amendment = ({
+  data,
+  handlers,
+  isLoading,
+  urls,
+}) => {
+  const accordionStatusRef = useRef();
 
-  getSectionProps = (id) => {
-    const { data, handlers, urls } = this.props;
+  const { data: custpropContexts = [] } = useLicensesContexts();
+  // Ensure the custprops with no contexts get rendered
+  const contexts = ['isNull', ...custpropContexts];
 
+  const getSectionProps = (id) => {
     return {
       amendment: data.amendment,
       id,
@@ -75,18 +57,18 @@ export default class Amendment extends React.Component {
       terms: data.terms,
       urls,
     };
-  }
+  };
 
-  getInitialAccordionsState = () => {
+  const getInitialAccordionsState = () => {
     return {
       amendmentCoreDocs: false,
       amendmentSupplementaryDocs: false,
       amendmentTerms: false,
       licenseAgreements: false,
     };
-  }
+  };
 
-  visibleColumns = [
+  const visibleColumns = [
     'linkNote',
     'name',
     'startDate',
@@ -96,9 +78,8 @@ export default class Amendment extends React.Component {
     'amendmentLinkStatus'
   ];
 
-  renderActionMenu = ({ onToggle }) => {
-    const { data: { amendment: { id: amendmentId } }, handlers, urls } = this.props;
-
+  const renderActionMenu = ({ onToggle }) => {
+    const amendmentId = data.amendment.id;
     if (!urls.editAmendment && !handlers.onDelete) return null;
 
     return (
@@ -143,75 +124,106 @@ export default class Amendment extends React.Component {
         }
       </>
     );
-  }
+  };
 
-  render() {
-    const {
-      data: { amendment, license },
-      handlers: { onClone, onClose, onEditAmendment },
-      isLoading,
-    } = this.props;
+  const paneProps = {
+    defaultWidth: '45%',
+    dismissible: true,
+    id: 'pane-view-amendment',
+    onClose: handlers.onClose,
+  };
 
-    const paneProps = {
-      defaultWidth: '45%',
-      dismissible: true,
-      id: 'pane-view-amendment',
-      onClose,
-    };
+  if (isLoading) return <LoadingPane {...paneProps} />;
 
-    if (isLoading) return <LoadingPane {...paneProps} />;
+  const shortcuts = [
+    {
+      name: 'edit',
+      handler: () => handlers.onEditAmendment(data.amendment.id),
+    },
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, accordionStatusRef)
+    },
+    {
+      name: 'duplicateRecord',
+      handler: () => handlers.onClone(data.amendment.id)
+    }
+  ];
 
-    const shortcuts = [
-      {
-        name: 'edit',
-        handler: () => onEditAmendment(amendment.id),
-      },
-      {
-        name: 'expandAllSections',
-        handler: (e) => expandAllSections(e, this.accordionStatusRef),
-      },
-      {
-        name: 'collapseAllSections',
-        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
-      },
-      {
-        name: 'duplicateRecord',
-        handler: () => onClone(amendment.id)
-      }
-    ];
-
-    return (
-      <HasCommand
-        commands={shortcuts}
-        isWithinScope={checkScope}
-        scope={document.body}
+  return (
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <Pane
+        actionMenu={renderActionMenu}
+        appIcon={<AppIcon app="licenses" iconKey="amendment" />}
+        paneTitle={<FormattedMessage id="ui-licenses.amendments.view.paneTitle" values={{ name: data.amendment.name }} />}
+        {...paneProps}
       >
-        <Pane
-          actionMenu={this.renderActionMenu}
-          appIcon={<AppIcon app="licenses" iconKey="amendment" />}
-          paneTitle={<FormattedMessage id="ui-licenses.amendments.view.paneTitle" values={{ name: amendment.name }} />}
-          {...paneProps}
-        >
-          <TitleManager record={amendment.name}>
-            <AmendmentInfo {...this.getSectionProps()} />
-            <AmendmentLicense {...this.getSectionProps()} />
-            <AccordionStatus ref={this.accordionStatusRef}>
-              <Row end="xs">
-                <Col xs>
-                  <ExpandAllButton />
-                </Col>
-              </Row>
-              <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                {license?.amendments?.length > 1 && <LicenseAmendments {...this.getSectionProps('licenseAmendments')} licenseAmendmentsAccordionLabel={<FormattedMessage id="ui-licenses.section.amendmentsOnParentLicense" />} />}
-                { amendment?.docs?.length > 0 && <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} /> }
-                <Terms {...this.getSectionProps('amendmentTerms')} />
-                { amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} /> }
-                { license?.linkedAgreements?.length > 0 && <LicenseAgreements {...this.getSectionProps('licenseAgreements')} visibleColumns={this.visibleColumns} /> }
-              </AccordionSet>
-            </AccordionStatus>
-          </TitleManager>
-        </Pane>
-      </HasCommand>
-    );
-  }
-}
+        <TitleManager record={data.amendment.name}>
+          <AmendmentInfo {...getSectionProps()} />
+          <AmendmentLicense {...getSectionProps()} />
+          <AccordionStatus ref={accordionStatusRef}>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton />
+              </Col>
+            </Row>
+            <AccordionSet initialStatus={getInitialAccordionsState()}>
+              {data.license?.amendments?.length > 1 && <LicenseAmendments {...getSectionProps('licenseAmendments')} licenseAmendmentsAccordionLabel={<FormattedMessage id="ui-licenses.section.amendmentsOnParentLicense" />} />}
+              {data.amendment?.docs?.length > 0 && <CoreDocs {...getSectionProps('amendmentCoreDocs')} />}
+              <CustomPropertiesView
+                contexts={contexts}
+                customProperties={data.amendment.customProperties}
+                customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+                id="terms"
+                labelOverrides={{
+                  defaultTitle: (ctx) => <FormattedMessage id="ui-licenses.terms.defaultTitle" values={{ ctx }} />,
+                  noContext: <FormattedMessage id="ui-licenses.terms" />,
+                  retiredName: (name) => <FormattedMessage id="ui-licenses.terms.deprecated" values={{ name }} />,
+                }}
+              />
+              {data.amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('amendmentSupplementaryDocs')} />}
+              {data.license?.linkedAgreements?.length > 0 && <LicenseAgreements {...getSectionProps('licenseAgreements')} visibleColumns={visibleColumns} />}
+            </AccordionSet>
+          </AccordionStatus>
+        </TitleManager>
+      </Pane>
+    </HasCommand>
+  );
+};
+
+Amendment.propTypes = {
+  data: PropTypes.shape({
+    amendment: PropTypes.shape({
+      customProperties: PropTypes.object,
+      docs: PropTypes.arrayOf(PropTypes.object),
+      id: PropTypes.string,
+      name: PropTypes.string,
+      status: PropTypes.shape({
+        label: PropTypes.string,
+      }),
+      supplementaryDocs: PropTypes.arrayOf(PropTypes.object),
+    }).isRequired,
+    license: PropTypes.object.isRequired,
+    terms: PropTypes.arrayOf(PropTypes.object),
+  }),
+  handlers: PropTypes.shape({
+    onClone: PropTypes.func,
+    onClose: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
+    onEditAmendment: PropTypes.func.isRequired
+  }),
+  isLoading: PropTypes.bool,
+  urls: PropTypes.shape({
+    editAmendment: PropTypes.func,
+  }),
+};
+
+export default Amendment;

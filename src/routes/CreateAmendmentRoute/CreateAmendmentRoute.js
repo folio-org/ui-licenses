@@ -30,13 +30,6 @@ class CreateAmendmentRoute extends React.Component {
       path: 'licenses/refdata/License/status',
       shouldRefresh: () => false,
     },
-    terms: {
-      limitParam: 'perPage',
-      perRequest: 100,
-      type: 'okapi',
-      path: 'licenses/custprops',
-      shouldRefresh: () => false,
-    },
   });
 
   static propTypes = {
@@ -61,7 +54,6 @@ class CreateAmendmentRoute extends React.Component {
       documentCategories: PropTypes.object,
       license: PropTypes.object,
       statusValues: PropTypes.object,
-      terms: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
@@ -81,11 +73,6 @@ class CreateAmendmentRoute extends React.Component {
     const status = get(resources, 'statusValues.records', []).find(v => v.value === 'active') || {};
 
     const customProperties = {};
-    get(resources, 'terms.records', [])
-      .filter(term => term.primary)
-      // Change default to be an ignored customProperty.
-      // This means any changes without setting the value will be ignored
-      .forEach(term => { customProperties[term.name] = [{ _delete: true }]; });
 
     return {
       status: status.value,
@@ -139,7 +126,6 @@ class CreateAmendmentRoute extends React.Component {
           license: get(resources, 'license.records[0]', {}),
           documentCategories: get(resources, 'documentCategories.records', []),
           statusValues: get(resources, 'statusValues.records', []),
-          terms: get(resources, 'terms.records', []),
         }}
         handlers={{
           ...handlers,

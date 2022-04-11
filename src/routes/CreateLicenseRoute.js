@@ -20,13 +20,6 @@ class CreateLicenseRoute extends React.Component {
       fetch: false,
       shouldRefresh: () => false,
     },
-    terms: {
-      limitParam: 'perPage',
-      perRequest: 100,
-      type: 'okapi',
-      path: 'licenses/custprops',
-      shouldRefresh: () => false,
-    },
     statusValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/status',
@@ -77,7 +70,6 @@ class CreateLicenseRoute extends React.Component {
       license: PropTypes.object,
       orgRoleValues: PropTypes.object,
       statusValues: PropTypes.object,
-      terms: PropTypes.object,
       typeValues: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -107,9 +99,6 @@ class CreateLicenseRoute extends React.Component {
     const type = get(resources, 'typeValues.records', []).find(v => v.value === 'local') || {};
 
     const customProperties = {};
-    get(resources, 'terms.records', [])
-      .filter(term => term.primary)
-      .forEach(term => { customProperties[term.name] = [{ _delete: true }]; });
 
     return {
       status: status.value,
@@ -154,7 +143,6 @@ class CreateLicenseRoute extends React.Component {
           documentCategories: get(resources, 'documentCategories.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           statusValues: get(resources, 'statusValues.records', []),
-          terms: get(resources, 'terms.records', []),
           typeValues: get(resources, 'typeValues.records', []),
           users: get(resources, 'users.records', []),
         }}

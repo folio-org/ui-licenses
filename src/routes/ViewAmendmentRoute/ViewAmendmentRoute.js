@@ -32,13 +32,6 @@ class ViewAmendmentRoute extends React.Component {
       recordsRequired: '1000',
       throwErrors: false,
     },
-    terms: {
-      limitParam: 'perPage',
-      perRequest: 100,
-      type: 'okapi',
-      path: 'licenses/custprops',
-      shouldRefresh: () => false,
-    },
   });
 
   static propTypes = {
@@ -63,7 +56,6 @@ class ViewAmendmentRoute extends React.Component {
     resources: PropTypes.shape({
       license: PropTypes.object,
       linkedAgreements: PropTypes.arrayOf(PropTypes.object),
-      terms: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
@@ -198,7 +190,6 @@ class ViewAmendmentRoute extends React.Component {
           data={{
             amendment,
             license: this.getCompositeLicense(),
-            terms: resources?.terms?.records || [],
           }}
           handlers={{
             ...handlers,
@@ -211,7 +202,7 @@ class ViewAmendmentRoute extends React.Component {
           isLoading={resources?.license?.isPending}
           urls={this.urls}
         />
-        { this.state.showDuplicate &&
+        {this.state.showDuplicate &&
           <DuplicateAmendmentModal
             onClone={this.handleClone}
             onClose={this.closeDuplicateModal}
