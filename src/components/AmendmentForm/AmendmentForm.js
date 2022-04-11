@@ -62,22 +62,22 @@ const AmendmentForm = ({
     };
   };
 
-  const getSectionProps = (id) => {
+  const getSectionProps = (sectionId) => {
     return {
       data,
       handlers,
-      id,
+      id: sectionId,
       mutators: form.mutators,
       values,
     };
   };
 
   const renderPaneFooter = () => {
-    let id;
+    let buttonId;
     if (initialValues && initialValues.id) {
-      id = 'clickable-update-amendment';
+      buttonId = 'clickable-update-amendment';
     } else {
-      id = 'clickable-create-amendment';
+      buttonId = 'clickable-create-amendment';
     }
 
     const startButton = (
@@ -95,7 +95,7 @@ const AmendmentForm = ({
       <Button
         buttonStyle="primary mega"
         disabled={pristine || submitting}
-        id={id}
+        id={buttonId}
         marginBottom0
         onClick={handleSubmit}
         type="submit"

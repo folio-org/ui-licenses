@@ -64,11 +64,11 @@ const LicenseForm = ({
     };
   };
 
-  const getSectionProps = (id) => {
+  const getSectionProps = (sectionId) => {
     return {
       data,
       handlers,
-      id,
+      id: sectionId,
       mutators: form.mutators,
       values,
     };
