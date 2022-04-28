@@ -26,31 +26,31 @@ describe('AmendmentFormInfo', () => {
     });
 
     test('renders the Name field', () => {
-        const { getByRole } = renderComponent;
-        expect(getByRole('textbox', { name: 'Name' }));
-      });
+      const { getByRole } = renderComponent;
+      expect(getByRole('textbox', { name: 'Name' }));
+    });
 
-      test('renders the Status dropdown', () => {
-        const { getByRole } = renderComponent;
-        expect(getByRole('combobox', { name: 'Status' }));
-      });
+    test('renders the Status dropdown', () => {
+      const { getByRole } = renderComponent;
+      expect(getByRole('combobox', { name: 'Status' }));
+    });
 
-      test('renders start date DatePicker', async () => {
-        await Datepicker('Start date').exists();
-      });
+    test('renders start date DatePicker', async () => {
+      await Datepicker('Start date').exists();
+    });
 
-      test('renders end date DatePicker', async () => {
-        await Datepicker('End date').exists();
-      });
+    test('renders end date DatePicker', async () => {
+      await Datepicker('End date').exists();
+    });
 
-      test('renders open ended checkbox', async () => {
-        await Checkbox({ id: 'edit-amendment-open-ended' }).exists();
-      });
+    test('renders open ended checkbox', async () => {
+      await Checkbox({ id: 'edit-amendment-open-ended' }).exists();
+    });
 
-      test('renders the Description field', () => {
-        const { getByRole } = renderComponent;
-        expect(getByRole('textbox', { name: 'Description' }));
-      });
+    test('renders the Description field', () => {
+      const { getByRole } = renderComponent;
+      expect(getByRole('textbox', { name: 'Description' }));
+    });
   });
 
   describe('with initial values', () => {
@@ -91,7 +91,7 @@ describe('AmendmentFormInfo', () => {
 
     test('renders the open ended checkbox ', () => {
       expect(('checkbox', { name: 'Open ended' })).toBeTruthy();
-   });
+    });
 
     test('renders the expected value in the Description field', () => {
       const { getByRole } = renderComponent;

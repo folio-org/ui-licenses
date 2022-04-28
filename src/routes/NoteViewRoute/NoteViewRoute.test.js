@@ -6,50 +6,50 @@ import translationsProperties from '../../../test/helpers';
 import NoteViewRoute from './NoteViewRoute';
 
 const history = {
-    'length': 17,
-    'action': 'PUSH',
-    'location': {
+  'length': 17,
+  'action': 'PUSH',
+  'location': {
     'pathname': '/licenses/notes/f53f5493-fed1-4d59-809d-6a6eae2df131',
     'state': {
-        'entityName': 'MR Licenses',
-        'entityType': 'license',
-        'entityId': '1491d1d5-09ba-4f56-8bdf-e053425b8ba3',
-        'referredRecordData': '{}'
+      'entityName': 'MR Licenses',
+      'entityType': 'license',
+      'entityId': '1491d1d5-09ba-4f56-8bdf-e053425b8ba3',
+      'referredRecordData': '{}'
     },
     'search': '',
     'hash': '',
     'key': '5iv04i'
-    },
-    'createHref': () => {},
-    'push': () => {},
-    'replace': () => {},
-    'go': () => {},
-    'goBack': () => {},
-    'goForward': () => {},
-    'block': () => {},
-    'listen': () => {},
+  },
+  'createHref': () => {},
+  'push': () => {},
+  'replace': () => {},
+  'go': () => {},
+  'goBack': () => {},
+  'goForward': () => {},
+  'block': () => {},
+  'listen': () => {},
 };
 
 const location = {
-    'pathname': '/licenses/notes/f53f5493-fed1-4d59-809d-6a6eae2df131',
-    'state': {
+  'pathname': '/licenses/notes/f53f5493-fed1-4d59-809d-6a6eae2df131',
+  'state': {
     'entityName': 'MR Licenses',
     'entityType': 'license',
     'entityId': '1491d1d5-09ba-4f56-8bdf-e053425b8ba3',
     'referredRecordData': {}
-    },
-    'search': '',
-    'hash': '',
-    'key': '5iv04i'
+  },
+  'search': '',
+  'hash': '',
+  'key': '5iv04i'
 };
 
 const match = {
-    'path': '/licenses/notes/:noteId',
-    'url': '/licenses/notes/f53f5493-fed1-4d59-809d-6a6eae2df131',
-    'isExact': true,
-    'params': {
+  'path': '/licenses/notes/:noteId',
+  'url': '/licenses/notes/f53f5493-fed1-4d59-809d-6a6eae2df131',
+  'isExact': true,
+  'params': {
     'noteId': 'f53f5493-fed1-4d59-809d-6a6eae2df131'
-    }
+  }
 };
 
 describe('NoteViewRoute', () => {
