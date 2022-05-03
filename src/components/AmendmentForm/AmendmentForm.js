@@ -35,7 +35,7 @@ import {
 } from '../formSections';
 
 import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
-import useLicensesContexts from '../../hooks/useLicensesContexts';
+import { useLicensesContexts } from '../../hooks';
 
 const AmendmentForm = ({
   data = {},

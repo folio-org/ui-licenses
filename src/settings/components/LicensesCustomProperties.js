@@ -6,7 +6,7 @@ import { useQueryClient } from 'react-query';
 import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
 import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants/endpoints';
-import useLicensesContexts from '../../hooks/useLicensesContexts';
+import { useLicensesContexts } from '../../hooks';
 
 const LicensesCustomProperties = () => {
   const intl = useIntl();

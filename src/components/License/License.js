@@ -38,13 +38,16 @@ import {
   SupplementaryDocs,
 } from '../viewSections';
 
-import useLicensesContexts from '../../hooks/useLicensesContexts';
+import { useLicensesContexts } from '../../hooks';
 import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
 const License = ({
+  components: {
+    HelperComponent,
+    TagButton,
+  },
   data,
   handlers,
-  helperApp,
   isLoading,
   urls,
 }) => {
@@ -145,17 +148,9 @@ const License = ({
     return stripes.hasPerm('ui-licenses.licenses.edit') ? (
       <PaneMenu>
         {handlers.onToggleTags &&
-          <FormattedMessage id="ui-licenses.showTags">
-            {([ariaLabel]) => (
-              <IconButton
-                ariaLabel={ariaLabel}
-                badgeCount={license?.tags?.length ?? 0}
-                icon="tag"
-                id="clickable-show-tags"
-                onClick={handlers.onToggleTags}
-              />
-            )}
-          </FormattedMessage>
+          <TagButton
+            entity={license}
+          />
         }
       </PaneMenu>
     ) : null;
@@ -248,7 +243,10 @@ const License = ({
             </AccordionStatus>
           </TitleManager>
         </Pane>
-        {helperApp}
+        <HelperComponent
+          link={data.tagsLink}
+          onToggle={handlers.onToggleTags}
+        />
         {showDuplicateLicenseModal &&
           <DuplicateLicenseModal
             onClone={(obj) => handlers.onClone(obj)}

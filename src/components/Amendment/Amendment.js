@@ -31,7 +31,7 @@ import {
   SupplementaryDocs,
 } from '../viewSections';
 
-import useLicensesContexts from '../../hooks/useLicensesContexts';
+import { useLicensesContexts } from '../../hooks';
 import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
 const Amendment = ({
