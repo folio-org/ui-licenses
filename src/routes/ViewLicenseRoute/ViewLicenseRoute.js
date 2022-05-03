@@ -65,7 +65,7 @@ const ViewLicenseRoute = ({
   // License delete
   const { mutateAsync: deleteLicense } = useMutation(
     [licensePath, 'ui-licenses', 'LicenseViewRoute', 'deleteLicense'],
-    () => ky.delete(licensePath).then(() => queryClient.invalidateQueries(licensePath))
+    () => ky.delete(licensePath).then(() => queryClient.invalidateQueries(licensesPath))
   );
 
   const linkedAgreementsPath = `licenses/licenses/${licenseId}/linkedAgreements`;
@@ -147,7 +147,7 @@ const ViewLicenseRoute = ({
 
     deleteLicense().then(() => {
       history.push(`${appUrls.licenses()}${location.search}`);
-      callout.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name: compLic.name }} /> });
+      callout.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name: compositeLicense.name }} /> });
     }).catch(error => {
       callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteLicenseBackendError" values={{ message: error.message }} /> });
     });
