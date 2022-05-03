@@ -7,8 +7,8 @@ import { get, flatten, uniqBy } from 'lodash';
 import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
 import { withTags } from '@folio/stripes/smart-components';
-import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from '../components/withFileHandlers';
@@ -33,8 +33,10 @@ const ViewLicenseRoute = ({
 }) => {
   const callout = useContext(CalloutContext);
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
-  const licensePath = `licenses/licenses/${licenseId}`;
+  const licensesPath = 'licenses/licenses';
+  const licensePath = `${licensesPath}/${licenseId}`;
 
   const {
     handleToggleTags,
@@ -42,6 +44,7 @@ const ViewLicenseRoute = ({
     TagButton,
   } = useLicensesHelperApp(tagsEnabled);
 
+  // License fetch
   const {
     data: license = {
       contacts: [],
@@ -50,11 +53,29 @@ const ViewLicenseRoute = ({
     isLoading: isLicenseLoading
   } = useQuery(
     [licensePath, 'ui-licenses', 'LicenseViewRoute', 'getLicense'],
-    () => ky.get(licensePath).json()
+    () => ky.get(licensePath).json(),
+    {
+      enabled: !!licenseId
+    }
   );
 
-  console.log("LICENSE: %o", license)
+  // Users fetch
+  const { data: { users = [] } = {} } = useUsers(license?.contacts.filter(c => c.user)?.map(c => c.user));
 
+  // License delete
+  const { mutateAsync: deleteLicense } = useMutation(
+    [licensePath, 'ui-licenses', 'LicenseViewRoute', 'deleteLicense'],
+    () => ky.delete(licensePath).then(() => queryClient.invalidateQueries(licensePath))
+  );
+
+  const linkedAgreementsPath = `licenses/licenses/${licenseId}/linkedAgreements`;
+  // LinkedAgreements BATCH FETCH
+  const {
+    results: linkedAgreements,
+  } = useBatchedFetch({
+    batchSize: RECORDS_PER_REQUEST,
+    path: linkedAgreementsPath,
+  });
 
   const getRecord = (id, resourceType) => {
     return get(resources, `${resourceType}.records`, [])
@@ -64,7 +85,7 @@ const ViewLicenseRoute = ({
   const getCompositeLicense = () => {
     const contacts = license.contacts?.map(c => ({
       ...c,
-      user: getRecord(c.user, 'users') || c.user,
+      user: users?.find(user => user?.id === c.user) || c.user,
     }));
 
     const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
@@ -88,23 +109,14 @@ const ViewLicenseRoute = ({
     return {
       ...license,
       contacts,
-      linkedAgreements: get(resources, 'linkedAgreements.records', []),
+      linkedAgreements,
       orgs,
     };
   };
 
-  /* istanbul ignore next */ //TODO this can be a useMutate
-  const handleClone = (cloneableProperties) => {
-    const { okapi } = stripes;
-    return fetch(`${okapi.url}/licenses/licenses/${licenseId}/clone`, {
-      method: 'POST',
-      headers: {
-        'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(cloneableProperties),
-    }).then(response => {
+  const { mutateAsync: cloneLicense } = useMutation(
+    [licensePath, 'ui-licenses', 'ViewLicenseRoute', 'cloneLicense'],
+    (cloneableProperties) => ky.post(`${licensePath}/clone`, { json: cloneableProperties }).then(response => {
       if (response.ok) {
         return response.text(); // Parse it as text
       } else {
@@ -119,30 +131,26 @@ const ViewLicenseRoute = ({
       }
     }).catch(error => {
       throw error;
-    });
-  };
+    })
+  );
 
   const handleClose = () => {
     history.push(`/licenses${location.search}`);
   };
 
-  /* istanbul ignore next */
   const handleDelete = () => {
-    const compLic = getCompositeLicense();
-
-    if (compLic.linkedAgreements.length) {
+    const compositeLicense = getCompositeLicense();
+    if (compositeLicense.linkedAgreements?.length) {
       callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteHasLinkedAgreements" /> });
       return;
     }
 
-    mutator.license.DELETE(compLic)
-      .then(() => {
-        history.push(`${appUrls.licenses()}${location.search}`);
-        callout.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name: compLic.name }} /> });
-      })
-      .catch(error => {
-        callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteLicenseBackendError" values={{ message: error.message }} /> });
-      });
+    deleteLicense().then(() => {
+      history.push(`${appUrls.licenses()}${location.search}`);
+      callout.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name: compLic.name }} /> });
+    }).catch(error => {
+      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteLicenseBackendError" values={{ message: error.message }} /> });
+    });
   };
 
   const handleFetchCredentials = (id) => {
@@ -175,7 +183,7 @@ const ViewLicenseRoute = ({
       }}
       handlers={{
         ...handlers,
-        onClone: handleClone,
+        onClone: cloneLicense,
         onClose: handleClose,
         onDelete: handleDelete,
         onEdit: editLicense,
@@ -188,12 +196,6 @@ const ViewLicenseRoute = ({
     />
   );
 };
-
-export default compose(
-  withFileHandlers,
-  stripesConnect,
-  withTags,
-)(ViewLicenseRoute);
 
 ViewLicenseRoute.propTypes = {
   handlers: PropTypes.object,
@@ -213,18 +215,13 @@ ViewLicenseRoute.propTypes = {
     interfaceRecord: PropTypes.shape({
       replace: PropTypes.func,
     }),
-    license: PropTypes.shape({
-      DELETE: PropTypes.func.isRequired,
-    }),
   }).isRequired,
   resources: PropTypes.shape({
     interfaces: PropTypes.object,
-    linkedAgreements: PropTypes.object,
     license: PropTypes.object,
     query: PropTypes.shape({
       helper: PropTypes.string,
     }),
-    users: PropTypes.object,
   }).isRequired,
   stripes: PropTypes.shape({
     hasPerm: PropTypes.func.isRequired,
@@ -260,333 +257,11 @@ ViewLicenseRoute.manifest = Object.freeze({
     permissionsRequired: 'organizations-storage.interfaces.credentials.item.get',
     fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
   },
-  license: {
-    type: 'okapi',
-    path: 'licenses/licenses/:{id}',
-    shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
-  },
-  linkedAgreements: {
-    type: 'okapi',
-    path: 'licenses/licenses/:{id}/linkedAgreements',
-    params: {
-      sort: 'owner.startDate;desc',
-    },
-    limitParam: 'perPage',
-    perRequest: RECORDS_PER_REQUEST,
-    recordsRequired: '1000',
-    resourceShouldRefresh: true,
-    shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
-    throwErrors: false,
-  },
-  users: {
-    type: 'okapi',
-    path: 'users',
-    perRequest: RECORDS_PER_REQUEST,
-    params: (_q, _p, _r, _l, props) => {
-      const query = get(props.resources, 'license.records[0].contacts', [])
-        .filter(contact => contact.user)
-        .map(contact => `id==${contact.user}`)
-        .join(' or ');
-
-      return query ? { query } : {};
-    },
-    fetch: props => !!props.stripes.hasInterface('users', '15.0'),
-    permissionsRequired: 'users.collection.get',
-    records: 'users',
-  },
   interfaceRecord: {},
 });
 
-
-/*   class ViewLicenseRoute extends React.Component {
-    static manifest = Object.freeze({
-      interfaces: {
-        type: 'okapi',
-        path: 'organizations-storage/interfaces',
-        perRequest: RECORDS_PER_REQUEST,
-        params: (_q, _p, _r, _l, props) => {
-          const orgs = get(props.resources, 'license.records[0].orgs', []);
-          const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
-          const query = [
-            ...new Set(interfaces.map(i => `id==${i}`))
-          ].join(' or ');
-
-          return query ? { query } : {};
-        },
-        fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
-        permissionsRequired: 'organizations-storage.interfaces.collection.get',
-        records: 'interfaces',
-      },
-      interfacesCredentials: {
-        clientGeneratePk: false,
-        throwErrors: false,
-        path: 'organizations-storage/interfaces/%{interfaceRecord.id}/credentials',
-        type: 'okapi',
-        pk: 'FAKE_PK',  // it's done to fool stripes-connect not to add cred id to the path's end.
-        permissionsRequired: 'organizations-storage.interfaces.credentials.item.get',
-        fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
-      },
-      license: {
-        type: 'okapi',
-        path: 'licenses/licenses/:{id}',
-        shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
-      },
-      linkedAgreements: {
-        type: 'okapi',
-        path: 'licenses/licenses/:{id}/linkedAgreements',
-        params: {
-          sort: 'owner.startDate;desc',
-        },
-        limitParam: 'perPage',
-        perRequest: RECORDS_PER_REQUEST,
-        recordsRequired: '1000',
-        resourceShouldRefresh: true,
-        shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
-        throwErrors: false,
-      },
-      users: {
-        type: 'okapi',
-        path: 'users',
-        perRequest: RECORDS_PER_REQUEST,
-        params: (_q, _p, _r, _l, props) => {
-          const query = get(props.resources, 'license.records[0].contacts', [])
-            .filter(contact => contact.user)
-            .map(contact => `id==${contact.user}`)
-            .join(' or ');
-
-          return query ? { query } : {};
-        },
-        fetch: props => !!props.stripes.hasInterface('users', '15.0'),
-        permissionsRequired: 'users.collection.get',
-        records: 'users',
-      },
-      interfaceRecord: {},
-      query: {},
-    });
-
-    static propTypes = {
-      handlers: PropTypes.object,
-      history: PropTypes.shape({
-        push: PropTypes.func.isRequired,
-      }).isRequired,
-      location: PropTypes.shape({
-        pathname: PropTypes.string.isRequired,
-        search: PropTypes.string.isRequired,
-      }).isRequired,
-      match: PropTypes.shape({
-        params: PropTypes.shape({
-          id: PropTypes.string.isRequired,
-        }).isRequired
-      }).isRequired,
-      mutator: PropTypes.shape({
-        interfaceRecord: PropTypes.shape({
-          replace: PropTypes.func,
-        }),
-        license: PropTypes.shape({
-          DELETE: PropTypes.func.isRequired,
-        }),
-        query: PropTypes.shape({
-          update: PropTypes.func.isRequired,
-        }).isRequired,
-      }).isRequired,
-      resources: PropTypes.shape({
-        interfaces: PropTypes.object,
-        linkedAgreements: PropTypes.object,
-        license: PropTypes.object,
-        query: PropTypes.shape({
-          helper: PropTypes.string,
-        }),
-        users: PropTypes.object,
-      }).isRequired,
-      stripes: PropTypes.shape({
-        hasPerm: PropTypes.func.isRequired,
-        okapi: PropTypes.object.isRequired,
-      }).isRequired,
-      tagsEnabled: PropTypes.bool,
-    };
-
-    static defaultProps = {
-      handlers: {},
-    }
-
-    static contextType = CalloutContext;
-
-    getCompositeLicense = () => {
-      const { resources } = this.props;
-      const license = get(resources, 'license.records[0]', {
-        contacts: [],
-        orgs: [],
-      });
-
-      const contacts = license.contacts?.map(c => ({
-        ...c,
-        user: this.getRecord(c.user, 'users') || c.user,
-      }));
-
-      const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
-
-      if (interfacesCredentials[0]) {
-        const index = credentialsArray.findIndex(object => object.id === interfacesCredentials[0].id);
-        if (index === -1) {
-          credentialsArray.push(interfacesCredentials[0]);
-        }
-      }
-
-      const orgs = license.orgs?.map(o => ({
-        ...o,
-        interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
-          .map(id => ({
-            ...this.getRecord(id, 'interfaces') || {},
-            credentials: credentialsArray.find(cred => cred.interfaceId === id)
-          })),
-      }));
-
-      return {
-        ...license,
-        contacts,
-        linkedAgreements: get(resources, 'linkedAgreements.records', []),
-        orgs,
-      };
-    }
-
-    getHelperApp = () => {
-      const { match, resources } = this.props;
-      const helper = resources.query.helper;
-      if (!helper) return null;
-
-      let HelperComponent = null;
-
-      if (helper === 'tags') HelperComponent = Tags;
-
-      if (!HelperComponent) return null;
-
-      return (
-        <HelperComponent
-          link={`licenses/licenses/${match.params.id}`}
-          onToggle={() => this.handleToggleHelper(helper)}
-        />
-      );
-    }
-
-    getRecord = (id, resourceType) => {
-      return get(this.props.resources, `${resourceType}.records`, [])
-        .find(i => i.id === id);
-    }
-
-    handleClone = (cloneableProperties) => {
-      const { history, location, match, stripes: { okapi } } = this.props;
-
-      return fetch(`${okapi.url}/licenses/licenses/${match.params.id}/clone`, {
-        method: 'POST',
-        headers: {
-          'X-Okapi-Tenant': okapi.tenant,
-          'X-Okapi-Token': okapi.token,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(cloneableProperties),
-      }).then(response => {
-        if (response.ok) {
-          return response.text(); // Parse it as text
-        } else {
-          throw new Error(errorTypes.JSON_ERROR);
-        }
-      }).then(text => {
-        const data = JSON.parse(text); // Try to parse it as json
-        if (data.id) {
-          return Promise.resolve(history.push(`${urls.licensesEdit(data.id)}${location.search}`));
-        } else {
-          throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
-        }
-      }).catch(error => {
-        throw error;
-      });
-    }
-
-    handleClose = () => {
-      this.props.history.push(`/licenses${this.props.location.search}`);
-    }
-
-    handleDelete = () => {
-      const { sendCallout } = this.context;
-      const { history, location, mutator } = this.props;
-      const license = this.getCompositeLicense();
-
-      if (license.linkedAgreements.length) {
-        sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteHasLinkedAgreements" /> });
-        return;
-      }
-
-      mutator.license.DELETE(license)
-        .then(() => {
-          history.push(`${urls.licenses()}${location.search}`);
-          sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name: license.name }} /> });
-        })
-        .catch(error => {
-          sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteLicenseBackendError" values={{ message: error.message }} /> });
-        });
-    }
-
-    handleFetchCredentials = (id) => {
-      const { mutator } = this.props;
-      mutator.interfaceRecord.replace({ id });
-    }
-
-    handleToggleHelper = (helper) => {
-      const { mutator, resources } = this.props;
-      const currentHelper = resources.query.helper;
-      const nextHelper = currentHelper !== helper ? helper : null;
-
-      mutator.query.update({ helper: nextHelper });
-    }
-
-    handleToggleTags = () => {
-      this.handleToggleHelper('tags');
-    }
-
-    viewAmendment = (id) => {
-      this.props.history.push(this.urls.viewAmendment(id));
-    }
-
-    editLicense = (id) => {
-      this.props.history.push(this.urls.edit(id));
-    }
-
-    urls = {
-      edit: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (() => `${this.props.location.pathname}/edit${this.props.location.search}`),
-      addAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (() => `${this.props.location.pathname}/amendments/create${this.props.location.search}`),
-      viewAmendment: amendmentId => `${this.props.location.pathname}/amendments/${amendmentId}${this.props.location.search}`,
-    }
-
-    render() {
-      const { handlers, resources, tagsEnabled } = this.props;
-
-      return (
-        <View
-          data={{
-            license: this.getCompositeLicense(),
-          }}
-          handlers={{
-            ...handlers,
-            onClone: this.handleClone,
-            onClose: this.handleClose,
-            onDelete: this.handleDelete,
-            onEdit: this.editLicense,
-            onFetchCredentials: this.handleFetchCredentials,
-            onAmendmentClick: this.viewAmendment,
-            onToggleHelper: this.handleToggleHelper,
-            onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
-          }}
-          helperApp={this.getHelperApp()}
-          isLoading={get(resources, 'license.isPending', true)}
-          urls={this.urls}
-        />
-      );
-    }
-  }
-
-  export default compose(
-    withFileHandlers,
-    stripesConnect,
-    withTags,
-  )(ViewLicenseRoute);
- */
+export default compose(
+  withFileHandlers,
+  stripesConnect,
+  withTags,
+)(ViewLicenseRoute);
