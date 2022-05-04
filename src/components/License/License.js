@@ -271,8 +271,10 @@ const License = ({
 };
 
 License.propTypes = {
+  components: PropTypes.object,
   data: PropTypes.shape({
     license: PropTypes.object,
+    tagsLink: PropTypes.string,
     terms: PropTypes.arrayOf(PropTypes.object),
     users: PropTypes.arrayOf(PropTypes.object),
   }),

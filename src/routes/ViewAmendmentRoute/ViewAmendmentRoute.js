@@ -40,7 +40,7 @@ const ViewAmendmentRoute = ({
   handlers = {},
   history,
   location,
-  match: { params: { id: licenseId, amendmentId }}
+  match: { params: { id: licenseId, amendmentId } }
 }) => {
   const stripes = useStripes();
   const callout = useContext(CalloutContext);
@@ -103,7 +103,7 @@ const ViewAmendmentRoute = ({
     }).then(() => {
       queryClient.invalidateQueries(licensePath);
 
-      callout.sendCallout({ message: <FormattedMessage id="ui-licenses.amendments.delete.callout" values={{ name }} /> });
+      callout.sendCallout({ message: <FormattedMessage id="ui-licenses.amendments.delete.callout" values={{ name: amendment.name }} /> });
       handleClose();
     })
   );

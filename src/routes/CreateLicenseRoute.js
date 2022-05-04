@@ -62,8 +62,8 @@ const CreateLicenseRoute = ({
   );
 
   const getInitialValues = () => {
-    const activeStatus = getRefdataValuesByDesc(refdata, LICENSE_STATUS)?.find(v => v.value === 'active') || {}
-    const localType = getRefdataValuesByDesc(refdata, LICENSE_TYPE)?.find(v => v.value === 'local') || {}
+    const activeStatus = getRefdataValuesByDesc(refdata, LICENSE_STATUS)?.find(v => v.value === 'active') || {};
+    const localType = getRefdataValuesByDesc(refdata, LICENSE_TYPE)?.find(v => v.value === 'local') || {};
     const customProperties = {};
 
     return {
