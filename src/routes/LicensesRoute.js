@@ -13,8 +13,6 @@ import { getRefdataValuesByDesc } from '../components/utils';
 import NoPermissions from '../components/NoPermissions';
 import { LICENSES_ENDPOINT, REFDATA_ENDPOINT } from '../constants/endpoints';
 
-const INITIAL_RESULT_COUNT = 100;
-const RESULT_COUNT_INCREMENT = 100;
 const RECORDS_PER_REQUEST = 100;
 
 const [
@@ -40,12 +38,12 @@ const LicensesRoute = ({
   const hasPerms = stripes.hasPerm('ui-licenses.licenses.view');
   const searchField = useRef();
 
-
   useEffect(() => {
     if (searchField.current) {
       searchField.current.focus();
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
+
 
   const refdata = useRefdata({
     desc: [
@@ -73,7 +71,7 @@ const LicensesRoute = ({
         status: 'status.label',
         type: 'type.label',
       },
-      perPage: INITIAL_RESULT_COUNT
+      perPage: RECORDS_PER_REQUEST
     }, (resources?.query ?? {}))
   ), [resources?.query]);
 
