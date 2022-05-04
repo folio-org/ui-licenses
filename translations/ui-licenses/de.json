@@ -173,12 +173,12 @@
     "prop.unassigned": "Nicht zugewiesen",
     "section.amendmentsOnParentLicense": "Vertragsänderungen bei übergeordnetem Lizenzvertrag",
     "section.parentLicenseAgreements": "Verknüpfte Vereinbarungen für den übergeordneten Lizenzvertrag",
-    "terms.all": "All",
-    "terms.none": "None",
-    "terms": "Terms",
-    "terms.help.label": "A license term 'label' is used when displaying the term to users within Folio and in any other systems that display license terms to users. It should be a short text string that clearly communicates what information is recorded in the term. The Description should be used where further explanation of the term is required for display to users.",
-    "terms.help.name": "A license term 'name' is used when outputting the term data in a machine readable format. It is not intended to be displayed to users (staff or patrons). It should be a short Latin alphabet string that can be used by any external systems or programs that access the license term data. Use of camelCase is suggested but not required. Changes to the license term name would affect any external systems using license term data and changes should not be made without consulting those responsible for relevant external systems and software.",
-    "terms.primary": "Primary term",
+    "terms.all": "Alle",
+    "terms.none": "Keine",
+    "terms": "Bedingungen",
+    "terms.help.label": "'Anzeigename' der Lizenzbedingung wird verwendet, wenn der Begriff den Benutzern innerhalb von FOLIO und in allen anderen Systemen, die den Benutzern Lizenzbedingungen anzeigen, angezeigt wird. Es sollte eine kurze Textzeichenfolge sein, die klar kommuniziert, welche Informationen in der Bedingung aufgezeichnet sind. Die Beschreibung sollte verwendet werden, wenn eine weitere Erklärung der Lizenzbedingung für die Anzeige an die Benutzer erforderlich ist.",
+    "terms.help.name": "Ein 'Name' der Lizenzbedingung wird verwendet, wenn die Bedingungsdaten in einem maschinenlesbaren Format ausgegeben werden. Er ist nicht dafür vorgesehen, den Personen (Mitarbeitenden oder Benutzenden) angezeigt zu werden. Es sollte eine kurze Zeichenfolge des lateinischen Alphabets sein, die von allen externen Systemen oder Programmen verwendet werden kann, die auf die Daten der Lizenzbedingung zugreifen. Die Verwendung von \"camelCase\" wird empfohlen, ist aber nicht erforderlich. Änderungen des Namens der Lizenzbedingung würden sich auf alle externen Systeme auswirken, die die Daten der Lizenzbedingung verwenden, und Änderungen sollten nicht ohne Rücksprache mit den Verantwortlichen für die entsprechenden externen Systeme und Software vorgenommen werden.",
+    "terms.primary": "Primäre Bedingung",
     "terms.retired": "Deprecated",
     "terms.primaryRetired": "A term cannot be both primary and deprecated",
     "settings.settingsSection.fileStorage": "File storage",
@@ -188,6 +188,6 @@
     "settings.fileStorage.s3ObjectPrefix": "S3 object prefix",
     "settings.fileStorage.s3SecretKey": "S3 secret key",
     "settings.fileStorage.storageEngine": "Storage engine",
-    "settings.customProperties.all": "All",
-    "settings.customProperties.none": "None"
+    "settings.customProperties.all": "Alle",
+    "settings.customProperties.none": "Keine"
 }
