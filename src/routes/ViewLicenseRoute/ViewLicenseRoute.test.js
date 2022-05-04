@@ -156,7 +156,7 @@ const data = {
     users,
     interfaceRecord,
     query:{
-        helper: '',
+      helper: '',
     },
     tagSettings,
   },
@@ -230,11 +230,6 @@ describe('ViewLicenseRoute', () => {
     test('renders the ViewAmendmentButton ', () => {
       const { getByText } = renderComponent;
       expect(getByText('ViewAmendmentButton')).toBeInTheDocument();
-    });
-
-    test('triggers the HandleToggleTagsButton callback', async () => {
-        await ButtonInteractor('HandleToggleTagsButton').click();
-        expect(mutatorQueryMock).toHaveBeenCalled();
     });
 
     test('renders the HandleToggleTagsButton ', () => {
