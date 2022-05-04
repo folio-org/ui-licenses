@@ -14,7 +14,6 @@ import {
   ExpandAllButton,
   HasCommand,
   Icon,
-  IconButton,
   LoadingPane,
   Pane,
   PaneMenu,
@@ -24,7 +23,6 @@ import {
   expandAllSections
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, useStripes } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateLicenseModal from '../DuplicateLicenseModal';
 
 import {
@@ -259,7 +257,7 @@ const License = ({
           data-test-delete-confirmation-modal
           heading={<FormattedMessage id="ui-licenses.deleteLicense" />}
           id="delete-agreement-confirmation"
-          message={<SafeHTMLMessage id="ui-licenses.delete.confirmMessage" values={{ name: data.license?.name }} />}
+          message={<FormattedMessage id="ui-licenses.delete.confirmMessage" values={{ name: data.license?.name }} />}
           onCancel={() => setShowDeleteConfirmationModal(false)}
           onConfirm={() => {
             handlers.onDelete();

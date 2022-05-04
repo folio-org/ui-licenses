@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
@@ -9,7 +10,6 @@ import compose from 'compose-function';
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
 import { useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
 import { withTags } from '@folio/stripes/smart-components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from '../components/withFileHandlers';
 import View from '../../components/License';
@@ -140,15 +140,15 @@ const ViewLicenseRoute = ({
   const handleDelete = () => {
     const compositeLicense = getCompositeLicense();
     if (compositeLicense.linkedAgreements?.length) {
-      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteHasLinkedAgreements" /> });
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-licenses.errors.noDeleteHasLinkedAgreements" /> });
       return;
     }
 
     deleteLicense().then(() => {
       history.push(`${appUrls.licenses()}${location.search}`);
-      callout.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name: compositeLicense.name }} /> });
+      callout.sendCallout({ message: <FormattedMessage id="ui-licenses.deletedLicense" values={{ name: compositeLicense.name }} /> });
     }).catch(error => {
-      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteLicenseBackendError" values={{ message: error.message }} /> });
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-licenses.errors.noDeleteLicenseBackendError" values={{ message: error.message }} /> });
     });
   };
 

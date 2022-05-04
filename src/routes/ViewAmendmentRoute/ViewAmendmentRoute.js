@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
-
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
 import { useBatchedFetch } from '@folio/stripes-erm-components';
@@ -105,7 +103,7 @@ const ViewAmendmentRoute = ({
     }).then(() => {
       queryClient.invalidateQueries(licensePath);
 
-      callout.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.amendments.delete.callout" values={{ name }} /> });
+      callout.sendCallout({ message: <FormattedMessage id="ui-licenses.amendments.delete.callout" values={{ name }} /> });
       handleClose();
     })
   );
@@ -181,7 +179,7 @@ const ViewAmendmentRoute = ({
           confirmLabel={<FormattedMessage id="ui-licenses.amendments.delete.confirmLabel" />}
           heading={<FormattedMessage id="ui-licenses.amendments.delete.confirmHeading" />}
           id="delete-job-confirmation"
-          message={<SafeHTMLMessage id="ui-licenses.amendments.delete.confirmMessage" values={{ name: amendment.name }} />}
+          message={<FormattedMessage id="ui-licenses.amendments.delete.confirmMessage" values={{ name: amendment.name }} />}
           onCancel={hideDeleteConfirmationModal}
           onConfirm={deleteAmendment}
           open

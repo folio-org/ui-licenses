@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import PropTypes from 'prop-types';
 
 import { useMutation } from 'react-query';
 
 import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -55,7 +56,7 @@ const CreateLicenseRoute = ({
     [LICENSES_ENDPOINT, 'ui-licenses', 'CreateLicenseRoute', 'createLicense'],
     (payload) => ky.post(LICENSES_ENDPOINT, { json: payload }).json()
       .then(({ id, name }) => {
-        callout.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.create.callout" values={{ name }} /> });
+        callout.sendCallout({ message: <FormattedMessage id="ui-licenses.create.callout" values={{ name }} /> });
         history.push(`/licenses/${id}${location.search}`);
       })
   );
