@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { keyBy, mapValues, pickBy, sortBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -10,95 +10,121 @@ import {
   ModalFooter,
 } from '@folio/stripes/components';
 
+import { useCustomProperties } from '@k-int/stripes-kint-components';
+
 import css from './ExportLicenseAsCSVModal.css';
+import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
-export default class ExportLicenseAsCSVModal extends React.Component {
-  static propTypes = {
-    onClose: PropTypes.func,
-    onCompareLicenseTerms: PropTypes.func,
-    selectedLicenses: PropTypes.arrayOf(PropTypes.string),
-    terms: PropTypes.arrayOf(PropTypes.object),
-  };
+const propTypes = {
+  onClose: PropTypes.func,
+  onCompareLicenseTerms: PropTypes.func,
+  selectedLicenses: PropTypes.arrayOf(PropTypes.string),
+};
 
-  constructor(props) {
-    super(props);
+const keys = {
+  licenseInformation: [
+    { key: 'name', value: <FormattedMessage id="ui-licenses.exportLicensesModal.name" /> },
+    { key: 'startDate', value: <FormattedMessage id="ui-licenses.exportLicensesModal.startDate" /> },
+    { key: 'endDate', value : <FormattedMessage id="ui-licenses.exportLicensesModal.endDate" /> },
+    { key: 'status', value: <FormattedMessage id="ui-licenses.exportLicensesModal.status" /> },
+    { key: 'type', value: <FormattedMessage id="ui-licenses.exportLicensesModal.type" /> },
+  ],
+  terms: [
+    { key: 'value', value: <FormattedMessage id="ui-licenses.exportLicensesModal.value" /> },
+    { key: 'note', value: <FormattedMessage id="ui-licenses.exportLicensesModal.note" /> },
+    { key: 'publicNote', value : <FormattedMessage id="ui-licenses.exportLicensesModal.publicNote" /> },
+    { key: 'internal', value: <FormattedMessage id="ui-licenses.exportLicensesModal.internal" /> },
+  ]
+};
 
-    this.licenseInformation = [
-      { key: 'name', value: <FormattedMessage id="ui-licenses.exportLicensesModal.name" /> },
-      { key: 'startDate', value: <FormattedMessage id="ui-licenses.exportLicensesModal.startDate" /> },
-      { key: 'endDate', value : <FormattedMessage id="ui-licenses.exportLicensesModal.endDate" /> },
-      { key: 'status', value: <FormattedMessage id="ui-licenses.exportLicensesModal.status" /> },
-      { key: 'type', value: <FormattedMessage id="ui-licenses.exportLicensesModal.type" /> },
-    ];
+const ExportLicenseAsCSVModal = ({
+  onCompareLicenseTerms,
+  onClose,
+  selectedLicenses
+}) => {
+  const { data: fetchedTerms = [], isLoading } = useCustomProperties({
+    endpoint: CUSTPROP_ENDPOINT,
+    returnQueryObject: true,
+    options: {
+      sort: [
+        { path: 'retired' }, // Place retired custprops at the end
+        { path: 'primary', direction: 'desc' }, // Primary properties should display before optional
+        { path: 'label' } // Within those groups, sort by label
+      ]
+    }
+  });
 
-    this.terms = [
-      { key: 'value', value: <FormattedMessage id="ui-licenses.exportLicensesModal.value" /> },
-      { key: 'note', value: <FormattedMessage id="ui-licenses.exportLicensesModal.note" /> },
-      { key: 'publicNote', value : <FormattedMessage id="ui-licenses.exportLicensesModal.publicNote" /> },
-      { key: 'internal', value: <FormattedMessage id="ui-licenses.exportLicensesModal.internal" /> },
-    ];
-
-    this.termNames = sortBy(props.terms, (term) => {
-      return term?.label?.toLowerCase();
-    }).map(item => {
-      return {
-        'key': item.name,
-        'value': item.label
-      };
-    });
-
-    // Default state for all the checkboxes initialized to false (unchecked)
-    this.state = {
-      licenseInformation: mapValues(keyBy(this.licenseInformation, 'key'), () => false),
-      terms: mapValues(keyBy(this.terms, 'key'), () => false),
-      termNames: mapValues(keyBy(this.termNames, 'key'), () => false)
+  keys.termNames = sortBy(fetchedTerms, (term) => {
+    return term?.label?.toLowerCase();
+  }).map(item => {
+    return {
+      'key': item.name,
+      'value': item.label
     };
-  }
+  });
 
-  toggleSelectAll = (e) => {
+  const [checkedState, setCheckedState] = useState({
+    licenseInformation: mapValues(keyBy(keys.licenseInformation, 'key'), () => false),
+    terms: mapValues(keyBy(keys.terms, 'key'), () => false),
+    termNames: mapValues(keyBy(keys.termNames, 'key'), () => false)
+  });
+
+  useEffect(() => {
+    // Once terms are loaded, make sure state is sufficiently set up
+    if (!isLoading) {
+      setCheckedState(prevState => ({
+        ...prevState,
+        termNames: mapValues(keyBy(keys.termNames, 'key'), () => false)
+      }));
+    }
+  }, [isLoading]);
+
+  const toggleSelectAll = (e) => {
     const { checked } = e.target;
 
-    this.setState(prevState => ({
+    setCheckedState(prevState => ({
       licenseInformation: mapValues(prevState.licenseInformation, () => checked),
       terms: mapValues(prevState.terms, () => checked),
       termNames: mapValues(prevState.termNames, () => checked),
     }));
-  }
+  };
 
-  toggleSelectSection = (e, section) => {
+  const toggleSelectSection = (e, section) => {
     const { checked } = e.target;
 
-    this.setState(prevState => ({
+    setCheckedState(prevState => ({
+      ...prevState,
       [section]: mapValues(prevState[section], () => checked),
     }));
-  }
+  };
 
-  updateSelection = (e, section) => {
+  const updateSelection = (e, section) => {
     const { checked, name } = e.target;
-    this.setState(prevState => ({
+    setCheckedState(prevState => ({
+      ...prevState,
       [section]: { ...prevState[section], [name]: checked }
     }));
   };
 
-  renderCheckboxesList = (section) => {
+  const renderCheckboxesList = (section) => {
     return (
       <>
         <Checkbox
-          checked={Object.values(this.state[section]).includes(false) !== true}
+          checked={Object.values(checkedState[section]).includes(false) !== true}
           label={<strong><FormattedMessage id={`ui-licenses.exportLicensesModal.${section}`} /></strong>}
-          onChange={(e) => this.toggleSelectSection(e, section)}
+          onChange={(e) => toggleSelectSection(e, section)}
           value={section}
         />
         <Layout className="padding-start-gutter">
           {
-          this[section].map(({ key, value }, index) => (
+          keys[section].map(({ key, value }, index) => (
             <Checkbox
               key={index}
-              checked={this.state[section][key]}
+              checked={checkedState[section][key]}
               label={value}
               labelClass={css.labelClass}
               name={key}
-              onChange={(e) => this.updateSelection(e, section)}
+              onChange={(e) => updateSelection(e, section)}
               value={key}
             />
           ))
@@ -106,10 +132,11 @@ export default class ExportLicenseAsCSVModal extends React.Component {
         </Layout>
       </>
     );
-  }
+  };
 
-  renderExportLicenseAsCSVModal = () => {
-    const { licenseInformation, terms, termNames } = this.state;
+  const renderExportLicenseAsCSVModal = () => {
+    const { licenseInformation, terms, termNames } = checkedState;
+
     const footer = (
       <ModalFooter>
         <Button
@@ -118,13 +145,13 @@ export default class ExportLicenseAsCSVModal extends React.Component {
           id="export-licenses-modal-save-button"
           onClick={() => {
             const payload = {
-              ids: this.props.selectedLicenses,
+              ids: selectedLicenses,
               include: { ...pickBy(licenseInformation), ...{ 'customProperties': pickBy(termNames) } },
               terms: pickBy(terms)
             };
 
-            this.props.onCompareLicenseTerms(payload)
-              .then(() => this.props.onClose());
+            onCompareLicenseTerms(payload)
+              .then(() => onClose());
           }}
         >
           <FormattedMessage id="stripes-components.saveAndClose" />
@@ -132,7 +159,7 @@ export default class ExportLicenseAsCSVModal extends React.Component {
         <Button
           buttonStyle="default"
           id="export-licenses-modal-cancel-button"
-          onClick={this.props.onClose}
+          onClick={onClose}
         >
           <FormattedMessage id="stripes-components.cancel" />
         </Button>
@@ -145,7 +172,7 @@ export default class ExportLicenseAsCSVModal extends React.Component {
         footer={footer}
         id="export-licenses-modal"
         label={<FormattedMessage id="ui-licenses.exportLicenses" />}
-        onClose={this.props.onClose}
+        onClose={onClose}
         open
         size="medium"
       >
@@ -156,25 +183,27 @@ export default class ExportLicenseAsCSVModal extends React.Component {
           <Checkbox
             checked={Object.values({ ...licenseInformation, ...terms, ...termNames }).includes(false) !== true}
             label={<strong><FormattedMessage id="ui-licenses.exportLicensesModal.selectAll" /></strong>}
-            onChange={this.toggleSelectAll}
+            onChange={toggleSelectAll}
             value="selectAll"
           />
         </Layout>
         <div className={css.separator} />
-        {this.renderCheckboxesList('licenseInformation')}
-        {this.renderCheckboxesList('terms')}
+        {renderCheckboxesList('licenseInformation')}
+        {renderCheckboxesList('terms')}
         <Layout className="padding-start-gutter">
-          {this.renderCheckboxesList('termNames')}
+          {renderCheckboxesList('termNames')}
         </Layout>
       </Modal>
     );
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        {this.renderExportLicenseAsCSVModal()}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {renderExportLicenseAsCSVModal()}
+    </div>
+  );
+};
+
+ExportLicenseAsCSVModal.propTypes = propTypes;
+
+export default ExportLicenseAsCSVModal;
