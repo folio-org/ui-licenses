@@ -15,6 +15,7 @@ import withFileHandlers from '../components/withFileHandlers';
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
 import { errorTypes } from '../../constants';
+import { LICENSES_ENDPOINT, LICENSE_ENDPOINT } from '../../constants/endpoints';
 
 import { useLicensesHelperApp } from '../../hooks';
 
@@ -35,8 +36,7 @@ const ViewLicenseRoute = ({
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
 
-  const licensesPath = 'licenses/licenses';
-  const licensePath = `${licensesPath}/${licenseId}`;
+  const licensePath = LICENSE_ENDPOINT(licenseId);
 
   const {
     handleToggleTags,
@@ -65,10 +65,10 @@ const ViewLicenseRoute = ({
   // License delete
   const { mutateAsync: deleteLicense } = useMutation(
     [licensePath, 'ui-licenses', 'LicenseViewRoute', 'deleteLicense'],
-    () => ky.delete(licensePath).then(() => queryClient.invalidateQueries(licensesPath))
+    () => ky.delete(licensePath).then(() => queryClient.invalidateQueries(LICENSES_ENDPOINT))
   );
 
-  const linkedAgreementsPath = `licenses/licenses/${licenseId}/linkedAgreements`;
+  const linkedAgreementsPath = `${licensePath}/linkedAgreements`;
   // LinkedAgreements BATCH FETCH
   const {
     results: linkedAgreements,

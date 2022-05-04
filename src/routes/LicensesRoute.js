@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import { useMutation } from 'react-query';
+
 import { generateKiwtQueryParams, refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
 
 import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
@@ -9,7 +11,7 @@ import { useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
 import View from '../components/Licenses';
 import { getRefdataValuesByDesc } from '../components/utils';
 import NoPermissions from '../components/NoPermissions';
-import { REFDATA_ENDPOINT } from '../constants/endpoints';
+import { LICENSES_ENDPOINT, REFDATA_ENDPOINT } from '../constants/endpoints';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -25,7 +27,6 @@ const [
   'LicenseOrg.Role',
 ];
 
-// FIXME me next
 const LicensesRoute = ({
   children,
   history,
@@ -39,7 +40,6 @@ const LicensesRoute = ({
   const hasPerms = stripes.hasPerm('ui-licenses.licenses.view');
   const searchField = useRef();
 
-  const licensesPath = 'licenses/licenses'; //FIXME we should probably move all these to the constants
 
   useEffect(() => {
     if (searchField.current) {
@@ -88,10 +88,10 @@ const LicensesRoute = ({
     results: licenses = [],
     total: licensesCount = 0
   } = useInfiniteFetch(
-    [licensesPath, licensesQueryParams, 'ui-licenses', 'LicensesRoute', 'getLicenses'],
+    [LICENSES_ENDPOINT, licensesQueryParams, 'ui-licenses', 'LicensesRoute', 'getLicenses'],
     ({ pageParam = 0 }) => {
       const params = [...licensesQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${licensesPath}?${params?.join('&')}`)).json();
+      return ky.get(encodeURI(`${LICENSES_ENDPOINT}?${params?.join('&')}`)).json();
     }
   );
 
@@ -107,20 +107,11 @@ const LicensesRoute = ({
     }
   );
 
-  const handleCompareLicenseTerms = (payload) => { //FIXME should be a useMutation
-    const { okapi } = stripes;
-
-    return fetch(`${okapi.url}/licenses/licenses/compareTerms`, {
-      method: 'POST',
-      headers: {
-        'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload),
-    }).then(response => response.blob())
-      .then(downloadBlob());
-  };
+  const { mutateAsync: handleCompareLicenseTerms } = useMutation(
+    [`${LICENSES_ENDPOINT}/compareTerms`, 'ui-licenses', 'LicensesRoute', 'compareTerms'],
+    (payload) => ky.post(`${LICENSES_ENDPOINT}/compareTerms`, { json: payload }).blob()
+      .then(downloadBlob())
+  );
 
   const querySetter = ({ nsValues }) => {
     mutator.query.update(nsValues);
