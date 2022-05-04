@@ -15,7 +15,7 @@ import withFileHandlers from '../components/withFileHandlers';
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
 import { errorTypes } from '../../constants';
-import { LICENSES_ENDPOINT, LICENSE_ENDPOINT } from '../../constants/endpoints';
+import { LICENSES_ENDPOINT, LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
 
 import { useLicensesHelperApp } from '../../hooks';
 
@@ -68,13 +68,12 @@ const ViewLicenseRoute = ({
     () => ky.delete(licensePath).then(() => queryClient.invalidateQueries(LICENSES_ENDPOINT))
   );
 
-  const linkedAgreementsPath = `${licensePath}/linkedAgreements`;
   // LinkedAgreements BATCH FETCH
   const {
     results: linkedAgreements,
   } = useBatchedFetch({
     batchSize: RECORDS_PER_REQUEST,
-    path: linkedAgreementsPath,
+    path: LINKED_AGREEMENTS_ENDPOINT(licenseId),
   });
 
   const getRecord = (id, resourceType) => {

@@ -1,136 +1,125 @@
-import React from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import compose from 'compose-function';
+
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import { ConfirmationModal } from '@folio/stripes/components';
-import DuplicateAmendmentModal from '../../components/DuplicateAmendmentModal';
 
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { ConfirmationModal } from '@folio/stripes/components';
+import { useBatchedFetch } from '@folio/stripes-erm-components';
+
+import DuplicateAmendmentModal from '../../components/DuplicateAmendmentModal';
 import withFileHandlers from '../components/withFileHandlers';
 import View from '../../components/Amendment';
 
 import { errorTypes } from '../../constants';
+import { AMENDMENT_ENDPOINT, LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
 
 const RECORDS_PER_REQUEST = 100;
+const propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      amendmentId: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func.isRequired,
+    okapi: PropTypes.object.isRequired,
+  }).isRequired,
+};
 
-class ViewAmendmentRoute extends React.Component {
-  static manifest = Object.freeze({
-    license: {
-      type: 'okapi',
-      path: 'licenses/licenses/:{id}',
-    },
-    linkedAgreements: {
-      type: 'okapi',
-      path: 'licenses/licenses/:{id}/linkedAgreements',
-      params: {
-        sort: 'owner.startDate;desc'
-      },
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
-      recordsRequired: '1000',
-      throwErrors: false,
-    },
+const ViewAmendmentRoute = ({
+  handlers = {},
+  history,
+  location,
+  match: { params: { id: licenseId, amendmentId }}
+}) => {
+  const stripes = useStripes();
+  const callout = useContext(CalloutContext);
+  const ky = useOkapiKy();
+  const queryClient = useQueryClient();
+
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [showDuplicate, setShowDuplicate] = useState(false);
+
+  const amendmentPath = AMENDMENT_ENDPOINT(amendmentId);
+
+  const { data: amendment = {} } = useQuery(
+    [amendmentPath, 'ui-licenses', 'ViewAmendmentRoute', 'getAmendment'],
+    () => ky.get(amendmentPath).json()
+  );
+
+  const licensePath = LICENSE_ENDPOINT(licenseId);
+  // License fetch
+  const {
+    data: license = {},
+    isLoading: isLicenseLoading
+  } = useQuery(
+    [licensePath, 'ui-licenses', 'ViewAmendmentRoute', 'getLicense'],
+    () => ky.get(licensePath).json(),
+    {
+      enabled: !!licenseId
+    }
+  );
+
+  // LinkedAgreements BATCH FETCH
+  const {
+    results: linkedAgreements = [],
+  } = useBatchedFetch({
+    batchSize: RECORDS_PER_REQUEST,
+    path: LINKED_AGREEMENTS_ENDPOINT(licenseId),
   });
 
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        amendmentId: PropTypes.string.isRequired,
-        id: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      license: PropTypes.shape({
-        PUT: PropTypes.func.isRequired,
-      }).isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      license: PropTypes.object,
-      linkedAgreements: PropTypes.arrayOf(PropTypes.object),
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasPerm: PropTypes.func.isRequired,
-      okapi: PropTypes.object.isRequired,
-    }).isRequired,
-  };
-
-  static defaultProps = {
-    handlers: {},
-  }
-
-  static contextType = CalloutContext;
-
-  state = { showConfirmDelete: false, showDuplicate: false };
-
-  // We now have /licenses/amendments/{amendmentId} available as an endpoint,
-  // meaning we could theoretically switch the amendment views over to that in future
-  // and avoid parsing the license amendments for it.
-  getAmendment = () => {
-    const { match, resources } = this.props;
-    const amendments = resources?.license?.records[0]?.amendments || [];
-    const selectedAmendmentId = match?.params?.amendmentId;
-    const selectedAmendment = amendments.find(a => a.id === selectedAmendmentId) || {};
-
-    return selectedAmendment;
-  }
-
-  getCompositeLicense = () => {
-    const { resources } = this.props;
-    const license = resources?.license?.records[0] || {};
-
+  const getCompositeLicense = () => {
     return {
       ...license,
-      linkedAgreements: resources?.linkedAgreements?.records || [],
+      linkedAgreements,
     };
-  }
+  };
 
-  handleClose = () => {
-    const { location, match } = this.props;
-    this.props.history.push(`/licenses/${match.params.id}${location.search}`);
-  }
+  const handleClose = () => {
+    history.push(`/licenses/${licenseId}${location.search}`);
+  };
 
-  /* istanbul ignore next */
-  handleDelete = () => {
-    const license = this.props.resources?.license?.records[0] || {};
-    const { match: { params } } = this.props;
-    const name = license?.amendments.filter(obj => obj.id === params?.amendmentId)[0]?.name;
-
-    this.props.mutator.license
-      .PUT({
+  // AMENDMENT delete
+  const { mutateAsync: deleteAmendment } = useMutation(
+    [licensePath, 'ui-licenses', 'ViewAmendmentRoute', 'deleteAmendment'],
+    () => ky.put(licensePath, {
+      json: {
         ...license,
         amendments: [{
-          id: params.amendmentId,
+          id: amendmentId,
           _delete: true,
         }],
-      })
-      .then(() => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.amendments.delete.callout" values={{ name }} /> });
-        this.handleClose();
-      });
-  }
+      }
+    }).then(() => {
+      queryClient.invalidateQueries(licensePath);
 
-  /* istanbul ignore next */
-  handleClone = (cloneableProperties) => {
-    const { history, match, stripes: { okapi } } = this.props;
+      callout.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.amendments.delete.callout" values={{ name }} /> });
+      handleClose();
+    })
+  );
 
-    return fetch(`${okapi.url}/licenses/amendments/${match.params.amendmentId}/clone`, {
-      method: 'POST',
-      headers: {
-        'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(cloneableProperties),
-    }).then(response => {
+  const urls = {
+    editAmendment: stripes.hasPerm('ui-licenses.licenses.edit') && (aID => `/licenses/${licenseId}/amendments/${aID}/edit${location.search}`),
+    licenseView: id => `/licenses/${id}`,
+    viewAmendment: aID => `/licenses/${licenseId}/amendments/${aID}${location.search}`,
+  };
+
+  // AMENDMENT clone
+  const { mutateAsync: cloneAmendment } = useMutation(
+    [`${amendmentPath}/clone`, 'ui-licenses', 'ViewAmendmentRoute', 'cloneAmendment'],
+    (cloneableProperties) => ky.post(`${amendmentPath}/clone`, { json: cloneableProperties }).then(response => {
       if (response.ok) {
         return response.text(); // Parse it as text
       } else {
@@ -139,93 +128,69 @@ class ViewAmendmentRoute extends React.Component {
     }).then(text => {
       const data = JSON.parse(text); // Try to parse it as json
       if (data.id) {
-        return Promise.resolve(history.push(`${this.urls.editAmendment(data.id)}`)); // Location search is already a part of urls.editAmendment
+        return Promise.resolve(history.push(`${urls.editAmendment(data.id)}`)); // Location search is already a part of urls.editAmendment
       } else {
         throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
       }
     }).catch(error => {
       throw error;
-    });
-  }
+    })
+  );
 
-  showDeleteConfirmationModal = () => this.setState({ showConfirmDelete: true });
+  const showDeleteConfirmationModal = () => setShowConfirmDelete(true);
+  const hideDeleteConfirmationModal = () => setShowConfirmDelete(false);
 
-  hideDeleteConfirmationModal = () => this.setState({ showConfirmDelete: false });
+  const showDuplicateModal = () => setShowDuplicate(true);
+  const closeDuplicateModal = () => setShowDuplicate(false);
 
-  showDuplicateModal = () => {
-    this.setState({ showDuplicate: true });
-  }
+  const handleEditAmendment = (id) => {
+    history.push(urls.editAmendment(id));
+  };
 
-  closeDuplicateModal = () => {
-    this.setState({ showDuplicate: false });
-  }
+  const handleViewAmendment = (id) => {
+    history.push(urls.viewAmendment(id));
+  };
 
-  fetchIsPending = () => {
-    return Object.values(this.props.resources)
-      .filter(r => r && r.resource !== 'licenses')
-      .some(r => r.isPending);
-  }
-
-  handleEditAmendment = (id) => {
-    this.props.history.push(this.urls.editAmendment(id));
-  }
-
-  handleViewAmendment = (id) => {
-    this.props.history.push(this.urls.viewAmendment(id));
-  }
-
-  urls = {
-    editAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (amendmentId => `/licenses/${this.props.match.params.id}/amendments/${amendmentId}/edit${this.props.location.search}`),
-    licenseView: id => `/licenses/${id}`,
-    viewAmendment: amendmentId => `/licenses/${this.props.match.params.id}/amendments/${amendmentId}${this.props.location.search}`,
-  }
-
-  render() {
-    const { handlers, resources } = this.props;
-    const amendment = this.getAmendment();
-    const name = amendment?.name;
-    return (
-      <>
-        <View
-          data={{
-            amendment,
-            license: this.getCompositeLicense(),
-          }}
-          handlers={{
-            ...handlers,
-            onClose: this.handleClose,
-            onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete && this.showDeleteConfirmationModal,
-            onClone: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleClone && this.showDuplicateModal,
-            onEditAmendment: this.handleEditAmendment,
-            onAmendmentClick: this.handleViewAmendment
-          }}
-          isLoading={resources?.license?.isPending}
-          urls={this.urls}
+  return (
+    <>
+      <View
+        data={{
+          amendment,
+          license: getCompositeLicense(),
+        }}
+        handlers={{
+          ...handlers,
+          onClose: handleClose,
+          onDelete: stripes.hasPerm('ui-licenses.licenses.edit') && deleteAmendment && showDeleteConfirmationModal,
+          onClone: stripes.hasPerm('ui-licenses.licenses.edit') && cloneAmendment && showDuplicateModal,
+          onEditAmendment: handleEditAmendment,
+          onAmendmentClick: handleViewAmendment
+        }}
+        isLoading={isLicenseLoading}
+        urls={urls}
+      />
+      {showDuplicate &&
+        <DuplicateAmendmentModal
+          onClone={cloneAmendment}
+          onClose={closeDuplicateModal}
         />
-        {this.state.showDuplicate &&
-          <DuplicateAmendmentModal
-            onClone={this.handleClone}
-            onClose={this.closeDuplicateModal}
-          />
-        }
-        {this.state.showConfirmDelete && (
-          <ConfirmationModal
-            buttonStyle="danger"
-            confirmLabel={<FormattedMessage id="ui-licenses.amendments.delete.confirmLabel" />}
-            heading={<FormattedMessage id="ui-licenses.amendments.delete.confirmHeading" />}
-            id="delete-job-confirmation"
-            message={<SafeHTMLMessage id="ui-licenses.amendments.delete.confirmMessage" values={{ name }} />}
-            onCancel={this.hideDeleteConfirmationModal}
-            onConfirm={this.handleDelete}
-            open
-          />
-        )}
-      </>
-    );
-  }
-}
+      }
+      {showConfirmDelete && (
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-licenses.amendments.delete.confirmLabel" />}
+          heading={<FormattedMessage id="ui-licenses.amendments.delete.confirmHeading" />}
+          id="delete-job-confirmation"
+          message={<SafeHTMLMessage id="ui-licenses.amendments.delete.confirmMessage" values={{ name: amendment.name }} />}
+          onCancel={hideDeleteConfirmationModal}
+          onConfirm={deleteAmendment}
+          open
+        />
+      )}
+    </>
+  );
+};
 
-export default compose(
-  withFileHandlers,
-  stripesConnect
-)(ViewAmendmentRoute);
+ViewAmendmentRoute.propTypes = propTypes;
+
+export default withFileHandlers(ViewAmendmentRoute);
