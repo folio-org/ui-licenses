@@ -84,5 +84,5 @@ const mutator = {
 };
 
 export {
-    handlers, history, location, match, stripes, resources, okapi, mutator
+  handlers, history, location, match, stripes, resources, okapi, mutator
 };

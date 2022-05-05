@@ -1,6 +1,7 @@
 # Change history for ui-licenses
 
 ## 8.2.0 In progress
+* ERM-2099 Replace babel-eslint with @babel/eslint-parser
 
 ## 8.1.0 2022-03-03
 * ERM-1982 Licenses: Organization interface credentials malfunction

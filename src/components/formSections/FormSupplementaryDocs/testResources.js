@@ -1,34 +1,34 @@
 const data = {
   'documentCategories': [{
-      'id': '2c91809d7e6adbbf017e6ae2dc370007',
-      'value': 'consortium_authorization_statement',
-      'label': 'Consortium authorization statement',
-      'owner': {
-        'id': '2c91809d7e6adbbf017e6ae2dc320006',
-        'desc': 'DocumentAttachment.AtType',
-        'internal': false
-      }
-    },
-    {
-      'id': '2c91809d7e6adbbf017e6ae2dc3f0008',
-      'value': 'product_data_sheet',
-      'label': 'Product data sheet',
-      'owner': {
-        'id': '2c91809d7e6adbbf017e6ae2dc320006',
-        'desc': 'DocumentAttachment.AtType',
-        'internal': false
-      }
-    },
-    {
-      'id': '2c91809d7e6adbbf017e6ae2dc460009',
-      'value': 'vendor_terms_and_conditions',
-      'label': 'Vendor terms and conditions',
-      'owner': {
-        'id': '2c91809d7e6adbbf017e6ae2dc320006',
-        'desc': 'DocumentAttachment.AtType',
-        'internal': false
-      }
+    'id': '2c91809d7e6adbbf017e6ae2dc370007',
+    'value': 'consortium_authorization_statement',
+    'label': 'Consortium authorization statement',
+    'owner': {
+      'id': '2c91809d7e6adbbf017e6ae2dc320006',
+      'desc': 'DocumentAttachment.AtType',
+      'internal': false
     }
+  },
+  {
+    'id': '2c91809d7e6adbbf017e6ae2dc3f0008',
+    'value': 'product_data_sheet',
+    'label': 'Product data sheet',
+    'owner': {
+      'id': '2c91809d7e6adbbf017e6ae2dc320006',
+      'desc': 'DocumentAttachment.AtType',
+      'internal': false
+    }
+  },
+  {
+    'id': '2c91809d7e6adbbf017e6ae2dc460009',
+    'value': 'vendor_terms_and_conditions',
+    'label': 'Vendor terms and conditions',
+    'owner': {
+      'id': '2c91809d7e6adbbf017e6ae2dc320006',
+      'desc': 'DocumentAttachment.AtType',
+      'internal': false
+    }
+  }
   ],
 };
 

@@ -7,53 +7,53 @@ import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import {
-    tagsEnabled,
-    handlers,
-    match,
-    okapi,
-    interfaces,
-    interfacesCredentials,
-    license,
-    linkedAgreements,
-    terms,
-    users,
-    interfaceRecord,
-    tagSettings
+  tagsEnabled,
+  handlers,
+  match,
+  okapi,
+  interfaces,
+  interfacesCredentials,
+  license,
+  linkedAgreements,
+  terms,
+  users,
+  interfaceRecord,
+  tagSettings
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import ViewLicenseRoute from './ViewLicenseRoute';
 
 
 const CloneButton = (props) => {
-    return <Button onClick={() => props.handlers.onClone}>CloneButton</Button>;
-  };
+  return <Button onClick={() => props.handlers.onClone}>CloneButton</Button>;
+};
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
 };
 
 const DeleteButton = (props) => {
-    return <Button onClick={props.handlers.onDelete}>DeleteButton</Button>;
+  return <Button onClick={props.handlers.onDelete}>DeleteButton</Button>;
 };
 
 const EditButton = (props) => {
-    return <Button onClick={props.handlers.onEdit}>EditButton</Button>;
+  return <Button onClick={props.handlers.onEdit}>EditButton</Button>;
 };
 
 const HandleFetchCredentialsButton = (props) => {
-    return <Button onClick={props.handlers.onFetchCredentials}>HandleFetchCredentialsButton</Button>;
+  return <Button onClick={props.handlers.onFetchCredentials}>HandleFetchCredentialsButton</Button>;
 };
 
 const ViewAmendmentButton = (props) => {
-    return <Button onClick={props.handlers.onAmendmentClick}>ViewAmendmentButton</Button>;
+  return <Button onClick={props.handlers.onAmendmentClick}>ViewAmendmentButton</Button>;
 };
 
 const HandleToggleHelperButton = (props) => {
-    return <Button onClick={props.handlers.onToggleHelper}>HandleToggleHelperButton</Button>;
+  return <Button onClick={props.handlers.onToggleHelper}>HandleToggleHelperButton</Button>;
 };
 
 const HandleToggleTagsButton = (props) => {
-    return <Button onClick={props.handlers.onToggleTags}>HandleToggleTagsButton</Button>;
+  return <Button onClick={props.handlers.onToggleTags}>HandleToggleTagsButton</Button>;
 };
 
 CloneButton.propTypes = {
@@ -126,8 +126,8 @@ jest.mock('../../components/License', () => {
 });
 
 const data = {
-    tagsEnabled,
-    handlers,
+  tagsEnabled,
+  handlers,
   history: {
     push: historyPushMock
   },
@@ -156,7 +156,7 @@ const data = {
     users,
     interfaceRecord,
     query:{
-        helper: '',
+      helper: '',
     },
     tagSettings,
   },
@@ -233,18 +233,18 @@ describe('ViewLicenseRoute', () => {
     });
 
     test('triggers the HandleToggleTagsButton callback', async () => {
-        await ButtonInteractor('HandleToggleTagsButton').click();
-        expect(mutatorQueryMock).toHaveBeenCalled();
+      await ButtonInteractor('HandleToggleTagsButton').click();
+      expect(mutatorQueryMock).toHaveBeenCalled();
     });
 
     test('renders the HandleToggleTagsButton ', () => {
-       const { getByText } = renderComponent;
-       expect(getByText('HandleToggleTagsButton')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('HandleToggleTagsButton')).toBeInTheDocument();
     });
 
     test('renders the HandleToggleHelperButton ', () => {
-       const { getByText } = renderComponent;
-       expect(getByText('HandleToggleHelperButton')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('HandleToggleHelperButton')).toBeInTheDocument();
     });
   });
 });

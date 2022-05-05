@@ -7,9 +7,9 @@ import translationsProperties from '../../../../test/helpers';
 import LicenseFormOrganizations from './LicenseFormOrganizations';
 
 jest.mock('@folio/stripes-erm-components', () => ({
-    ...jest.requireActual('@folio/stripes-erm-components'),
-    OrganizationsFieldArray: () => <div>OrganizationsFieldArray</div>,
-  }));
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  OrganizationsFieldArray: () => <div>OrganizationsFieldArray</div>,
+}));
 
 
 const onSubmitMock = jest.fn();
@@ -41,7 +41,7 @@ describe('LicenseFormOrganizations', () => {
     });
 
     test('renders the Organizations Accordion', async () => {
-        await Accordion('Organizations').exists();
+      await Accordion('Organizations').exists();
     });
 
     it('renders the OrganizationsFieldArray component', () => {
@@ -70,7 +70,7 @@ describe('LicenseFormOrganizations', () => {
     });
 
     test('renders the Organizations Accordion', async () => {
-        await Accordion('Organizations').exists();
+      await Accordion('Organizations').exists();
     });
 
     it('renders the OrganizationsFieldArray component', () => {
