@@ -115,7 +115,7 @@ export default class LicenseFormInfo extends React.Component {
               type="checkbox"
             >
               {props => {
-                  /* istanbul ignore next */
+                /* istanbul ignore next */
                 return (<Checkbox
                   checked={props.input.checked}
                   id="edit-license-open-ended"

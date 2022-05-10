@@ -7,9 +7,9 @@ import translationsProperties from '../../../../test/helpers';
 import LicenseFormInternalContacts from './LicenseFormInternalContacts';
 
 jest.mock('@folio/stripes-erm-components', () => ({
-    ...jest.requireActual('@folio/stripes-erm-components'),
-    InternalContactsFieldArray: () => <div>InternalContactsFieldArray</div>,
-  }));
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  InternalContactsFieldArray: () => <div>InternalContactsFieldArray</div>,
+}));
 
 const onSubmitMock = jest.fn();
 const onDownloadFileMock = jest.fn();
@@ -42,7 +42,7 @@ describe('LicenseFormInternalContacts', () => {
     });
 
     test('renders the Internal contacts Accordion', async () => {
-        await Accordion('Internal contacts').exists();
+      await Accordion('Internal contacts').exists();
     });
 
     it('renders the InternalContactsFieldArray component', () => {
@@ -73,7 +73,7 @@ describe('LicenseFormInternalContacts', () => {
     });
 
     test('renders the Internal contacts Accordion', async () => {
-        await Accordion('Internal contacts').exists();
+      await Accordion('Internal contacts').exists();
     });
 
     it('renders the InternalContactsFieldArray component', () => {

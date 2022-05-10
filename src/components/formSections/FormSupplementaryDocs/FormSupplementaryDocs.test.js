@@ -7,9 +7,9 @@ import translationsProperties from '../../../../test/helpers';
 import FormSupplementaryDocs from './FormSupplementaryDocs';
 
 jest.mock('@folio/stripes-erm-components', () => ({
-    ...jest.requireActual('@folio/stripes-erm-components'),
-    DocumentsFieldArray: () => <div>DocumentsFieldArray</div>,
-  }));
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  DocumentsFieldArray: () => <div>DocumentsFieldArray</div>,
+}));
 
 const onSubmitMock = jest.fn();
 const onDownloadFileMock = jest.fn();
@@ -38,7 +38,7 @@ describe('FormSupplementaryDocs', () => {
     });
 
     test('renders the Supplementary documents Accordion', async () => {
-        await Accordion('Supplementary documents').exists();
+      await Accordion('Supplementary documents').exists();
     });
 
     it('renders the DocumentsFieldArray component', () => {
@@ -66,7 +66,7 @@ describe('FormSupplementaryDocs', () => {
     });
 
     test('renders the Supplementary documents Accordion', async () => {
-        await Accordion('Supplementary documents').exists();
+      await Accordion('Supplementary documents').exists();
     });
 
     it('renders the DocumentsFieldArray component', () => {

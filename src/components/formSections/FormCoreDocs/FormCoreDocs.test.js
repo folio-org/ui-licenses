@@ -7,9 +7,9 @@ import initialValues from './testResources';
 import FormCoreDocs from './FormCoreDocs';
 
 jest.mock('@folio/stripes-erm-components', () => ({
-    ...jest.requireActual('@folio/stripes-erm-components'),
-    DocumentsFieldArray: () => <div>DocumentsFieldArray</div>,
-  }));
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  DocumentsFieldArray: () => <div>DocumentsFieldArray</div>,
+}));
 
 const onSubmitMock = jest.fn();
 const onDownloadFileMock = jest.fn();
@@ -37,7 +37,7 @@ describe('FormCoreDocs', () => {
     });
 
     test('renders the Core documents Accordion', async () => {
-        await Accordion('Core documents').exists();
+      await Accordion('Core documents').exists();
     });
 
     it('renders the DocumentsFieldArray component', () => {
@@ -48,28 +48,28 @@ describe('FormCoreDocs', () => {
 
   describe('with no initial values', () => {
     beforeEach(() => {
-     renderComponent = renderWithIntl(
-       <TestForm onSubmit={onSubmitMock}>
-         <FormCoreDocs
-           handlers={{
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmitMock}>
+          <FormCoreDocs
+            handlers={{
               onClose: onCloseMock,
               onDownloadFile: onDownloadFileMock,
               onUploadFile: onUploadFileMock
-              }}
-           id="licenseFormDocs"
-         />
-       </TestForm>,
+            }}
+            id="licenseFormDocs"
+          />
+        </TestForm>,
         translationsProperties
-     );
+      );
     });
 
     test('renders the Core documents Accordion', async () => {
-        await Accordion('Core documents').exists();
+      await Accordion('Core documents').exists();
     });
 
     it('renders the DocumentsFieldArray component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('DocumentsFieldArray')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('DocumentsFieldArray')).toBeInTheDocument();
     });
   });
 });

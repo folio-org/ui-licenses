@@ -15,35 +15,35 @@ const data = {
     '{id: "2c91809d7e6adbbf017e6ae2dcc6001a", label: "Li…}'
   ],
   'statusValues': [{
-      'id': '2c91809d7e6adbbf017e6ae2dc6d000f',
-      'value': 'in_negotiation',
-      'label': 'In negotiation',
-      'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
-    },
-    {
-      'id': '2c91809d7e6adbbf017e6ae2dc740010',
-      'value': 'not_yet_active',
-      'label': 'Not yet active',
-      'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
-    },
-    {
-      'id': '2c91809d7e6adbbf017e6ae2dc7c0011',
-      'value': 'active',
-      'label': 'Active',
-      'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
-    },
-    {
-      'id': '2c91809d7e6adbbf017e6ae2dc840012',
-      'value': 'rejected',
-      'label': 'Rejected',
-      'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
-    },
-    {
-      'id': '2c91809d7e6adbbf017e6ae2dc8f0013',
-      'value': 'expired',
-      'label': 'Expired',
-      'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
-    }
+    'id': '2c91809d7e6adbbf017e6ae2dc6d000f',
+    'value': 'in_negotiation',
+    'label': 'In negotiation',
+    'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
+  },
+  {
+    'id': '2c91809d7e6adbbf017e6ae2dc740010',
+    'value': 'not_yet_active',
+    'label': 'Not yet active',
+    'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
+  },
+  {
+    'id': '2c91809d7e6adbbf017e6ae2dc7c0011',
+    'value': 'active',
+    'label': 'Active',
+    'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
+  },
+  {
+    'id': '2c91809d7e6adbbf017e6ae2dc840012',
+    'value': 'rejected',
+    'label': 'Rejected',
+    'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
+  },
+  {
+    'id': '2c91809d7e6adbbf017e6ae2dc8f0013',
+    'value': 'expired',
+    'label': 'Expired',
+    'owner': '{desc: "License.Status", id: "2c91809d7e6adbbf017e6…}'
+  }
   ],
   'terms': [
     '{defaultInternal: true, description: "The definitio…}',
@@ -70,29 +70,29 @@ const data = {
     '{category: {…}, defaultInternal: true, description:…}'
   ],
   'typeValues': [{
-      'id': '2c91809d7e6adbbf017e6ae2dc9c0015',
-      'value': 'local',
-      'label': 'Local',
-      'owner': '{desc: "License.Type", id: "2c91809d7e6adbbf017e6ae…}'
-    },
-    {
-      'id': '2c91809d7e6adbbf017e6ae2dca40016',
-      'value': 'consortial',
-      'label': 'Consortial',
-      'owner': '{desc: "License.Type", id: "2c91809d7e6adbbf017e6ae…}'
-    },
-    {
-      'id': '2c91809d7e6adbbf017e6ae2dcab0017',
-      'value': 'national',
-      'label': 'National',
-      'owner': '{desc: "License.Type", id: "2c91809d7e6adbbf017e6ae…}'
-    },
-    {
-      'id': '2c91809d7e6adbbf017e6ae2dcb80018',
-      'value': 'alliance',
-      'label': 'Alliance',
-      'owner': '{desc: "License.Type", id: "2c91809d7e6adbbf017e6ae…}'
-    }
+    'id': '2c91809d7e6adbbf017e6ae2dc9c0015',
+    'value': 'local',
+    'label': 'Local',
+    'owner': '{desc: "License.Type", id: "2c91809d7e6adbbf017e6ae…}'
+  },
+  {
+    'id': '2c91809d7e6adbbf017e6ae2dca40016',
+    'value': 'consortial',
+    'label': 'Consortial',
+    'owner': '{desc: "License.Type", id: "2c91809d7e6adbbf017e6ae…}'
+  },
+  {
+    'id': '2c91809d7e6adbbf017e6ae2dcab0017',
+    'value': 'national',
+    'label': 'National',
+    'owner': '{desc: "License.Type", id: "2c91809d7e6adbbf017e6ae…}'
+  },
+  {
+    'id': '2c91809d7e6adbbf017e6ae2dcb80018',
+    'value': 'alliance',
+    'label': 'Alliance',
+    'owner': '{desc: "License.Type", id: "2c91809d7e6adbbf017e6ae…}'
+  }
   ],
   'users': [
     '{active: false, barcode: "787181529957397", created…}',
