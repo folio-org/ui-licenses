@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { cloneDeep, get } from 'lodash';
 import compose from 'compose-function';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -160,7 +161,7 @@ class EditLicenseRoute extends React.Component {
     return this.props.mutator.license
       .PUT(license)
       .then(() => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.update.callout" values={{ name }} /> });
+        this.context.sendCallout({ message: <FormattedMessage id="ui-licenses.update.callout" values={{ name }} /> });
         this.handleClose();
       });
   }

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { FormattedMessage } from 'react-intl';
+
 import { cloneDeep, get } from 'lodash';
 import compose from 'compose-function';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -128,7 +130,7 @@ class EditAmendmentRoute extends React.Component {
         amendments: [amendment]
       })
       .then(() => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.amendments.update.callout" values={{ name }} /> });
+        this.context.sendCallout({ message: <FormattedMessage id="ui-licenses.amendments.update.callout" values={{ name }} /> });
         this.handleClose();
       });
   }

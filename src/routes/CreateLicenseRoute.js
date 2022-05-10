@@ -1,164 +1,114 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { get } from 'lodash';
-import compose from 'compose-function';
+import React, { useContext } from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+import PropTypes from 'prop-types';
+
+import { useMutation } from 'react-query';
+
+import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
+import { LICENSES_ENDPOINT, REFDATA_ENDPOINT } from '../constants/endpoints';
 
-const RECORDS_PER_REQUEST = 100;
+import { getRefdataValuesByDesc } from '../components/utils';
 
-class CreateLicenseRoute extends React.Component {
-  static manifest = Object.freeze({
-    licenses: {
-      type: 'okapi',
-      path: 'licenses/licenses',
-      fetch: false,
-      shouldRefresh: () => false,
-    },
-    statusValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/status',
-      shouldRefresh: () => false,
-    },
-    typeValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/type',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
-      shouldRefresh: () => false,
-    },
-    orgRoleValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/LicenseOrg/role',
-      shouldRefresh: () => false,
-    },
-    documentCategories: {
-      type: 'okapi',
-      path: 'licenses/refdata/DocumentAttachment/atType',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
-      shouldRefresh: () => false,
-    },
-    contactRoleValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/InternalContact/role',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
-      shouldRefresh: () => false,
-    },
+const [
+  LICENSE_STATUS,
+  LICENSE_TYPE,
+  LICENSE_ORG_ROLE,
+  DOCUMENT_ATTACHMENT_TYPE,
+  CONTACT_ROLE
+] = [
+  'License.Status',
+  'License.Type',
+  'LicenseOrg.Role',
+  'DocumentAttachment.AtType',
+  'InternalContact.Role'
+];
+
+const CreateLicenseRoute = ({
+  handlers = {},
+  history,
+  location,
+}) => {
+  const callout = useContext(CalloutContext);
+  const stripes = useStripes();
+  const ky = useOkapiKy();
+
+  const hasPerms = stripes.hasPerm('ui-licenses.licenses.edit');
+
+  const refdata = useRefdata({
+    desc: [
+      LICENSE_STATUS,
+      LICENSE_TYPE,
+      LICENSE_ORG_ROLE,
+      DOCUMENT_ATTACHMENT_TYPE,
+      CONTACT_ROLE
+    ],
+    endpoint: REFDATA_ENDPOINT,
+    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
   });
 
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      licenses: PropTypes.shape({
-        POST: PropTypes.func.isRequired,
-      }).isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      license: PropTypes.object,
-      orgRoleValues: PropTypes.object,
-      statusValues: PropTypes.object,
-      typeValues: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasPerm: PropTypes.func.isRequired,
-      okapi: PropTypes.object.isRequired,
-    }).isRequired,
-  };
+  const { mutateAsync: createLicense } = useMutation(
+    [LICENSES_ENDPOINT, 'ui-licenses', 'CreateLicenseRoute', 'createLicense'],
+    (payload) => ky.post(LICENSES_ENDPOINT, { json: payload }).json()
+      .then(({ id, name }) => {
+        callout.sendCallout({ message: <FormattedMessage id="ui-licenses.create.callout" values={{ name }} /> });
+        history.push(`/licenses/${id}${location.search}`);
+      })
+  );
 
-  static defaultProps = {
-    handlers: {},
-  }
-
-  static contextType = CalloutContext;
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hasPerms: props.stripes.hasPerm('ui-licenses.licenses.edit'),
-    };
-  }
-
-  getInitialValues = () => {
-    const { resources } = this.props;
-
-    const status = get(resources, 'statusValues.records', []).find(v => v.value === 'active') || {};
-    const type = get(resources, 'typeValues.records', []).find(v => v.value === 'local') || {};
-
+  const getInitialValues = () => {
+    const activeStatus = getRefdataValuesByDesc(refdata, LICENSE_STATUS)?.find(v => v.value === 'active') || {};
+    const localType = getRefdataValuesByDesc(refdata, LICENSE_TYPE)?.find(v => v.value === 'local') || {};
     const customProperties = {};
 
     return {
-      status: status.value,
-      type: type.value,
+      status: activeStatus.value,
+      type: localType.value,
       customProperties,
       openEnded: false
     };
-  }
+  };
 
-  handleClose = () => {
-    const { location } = this.props;
-    this.props.history.push(`/licenses${location.search}`);
-  }
+  const handleClose = () => {
+    history.push(`/licenses${location.search}`);
+  };
 
-  handleSubmit = (license) => {
-    const { history, location, mutator } = this.props;
-    const name = license?.name;
+  if (!hasPerms) return <NoPermissions />;
 
-    return mutator.licenses
-      .POST(license)
-      .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.create.callout" values={{ name }} /> });
-        history.push(`/licenses/${id}${location.search}`);
-      });
-  }
+  return (
+    <View
+      data={{
+        contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
+        documentCategories: getRefdataValuesByDesc(refdata, DOCUMENT_ATTACHMENT_TYPE),
+        orgRoleValues: getRefdataValuesByDesc(refdata, LICENSE_ORG_ROLE),
+        statusValues: getRefdataValuesByDesc(refdata, LICENSE_STATUS),
+        typeValues: getRefdataValuesByDesc(refdata, LICENSE_TYPE),
+        users: []
+      }}
+      handlers={{
+        ...handlers,
+        onClose: handleClose,
+      }}
+      initialValues={getInitialValues()}
+      isLoading={false} // I don't think this will ever need to be "loading"
+      onSubmit={createLicense}
+    />
+  );
+};
 
-  fetchIsPending = () => {
-    return Object.values(this.props.resources)
-      .filter(r => r && r.resource !== 'licenses')
-      .some(r => r.isPending);
-  }
+CreateLicenseRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
-  render() {
-    const { handlers, resources } = this.props;
-
-    if (!this.state.hasPerms) return <NoPermissions />;
-
-    return (
-      <View
-        data={{
-          contactRoleValues: get(resources, 'contactRoleValues.records', []),
-          documentCategories: get(resources, 'documentCategories.records', []),
-          orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          statusValues: get(resources, 'statusValues.records', []),
-          typeValues: get(resources, 'typeValues.records', []),
-          users: get(resources, 'users.records', []),
-        }}
-        handlers={{
-          ...handlers,
-          onClose: this.handleClose,
-        }}
-        initialValues={this.getInitialValues()}
-        isLoading={this.fetchIsPending()}
-        onSubmit={this.handleSubmit}
-      />
-    );
-  }
-}
-
-export default compose(
-  withFileHandlers,
-  stripesConnect
-)(CreateLicenseRoute);
+export default withFileHandlers(CreateLicenseRoute);

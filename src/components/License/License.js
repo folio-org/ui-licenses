@@ -14,7 +14,6 @@ import {
   ExpandAllButton,
   HasCommand,
   Icon,
-  IconButton,
   LoadingPane,
   Pane,
   PaneMenu,
@@ -24,7 +23,6 @@ import {
   expandAllSections
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, useStripes } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateLicenseModal from '../DuplicateLicenseModal';
 
 import {
@@ -38,13 +36,16 @@ import {
   SupplementaryDocs,
 } from '../viewSections';
 
-import useLicensesContexts from '../../hooks/useLicensesContexts';
+import { useLicensesContexts } from '../../hooks';
 import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
 const License = ({
+  components: {
+    HelperComponent,
+    TagButton,
+  },
   data,
   handlers,
-  helperApp,
   isLoading,
   urls,
 }) => {
@@ -145,17 +146,9 @@ const License = ({
     return stripes.hasPerm('ui-licenses.licenses.edit') ? (
       <PaneMenu>
         {handlers.onToggleTags &&
-          <FormattedMessage id="ui-licenses.showTags">
-            {([ariaLabel]) => (
-              <IconButton
-                ariaLabel={ariaLabel}
-                badgeCount={license?.tags?.length ?? 0}
-                icon="tag"
-                id="clickable-show-tags"
-                onClick={handlers.onToggleTags}
-              />
-            )}
-          </FormattedMessage>
+          <TagButton
+            entity={license}
+          />
         }
       </PaneMenu>
     ) : null;
@@ -248,7 +241,10 @@ const License = ({
             </AccordionStatus>
           </TitleManager>
         </Pane>
-        {helperApp}
+        <HelperComponent
+          link={data.tagsLink}
+          onToggle={handlers.onToggleTags}
+        />
         {showDuplicateLicenseModal &&
           <DuplicateLicenseModal
             onClone={(obj) => handlers.onClone(obj)}
@@ -261,7 +257,7 @@ const License = ({
           data-test-delete-confirmation-modal
           heading={<FormattedMessage id="ui-licenses.deleteLicense" />}
           id="delete-agreement-confirmation"
-          message={<SafeHTMLMessage id="ui-licenses.delete.confirmMessage" values={{ name: data.license?.name }} />}
+          message={<FormattedMessage id="ui-licenses.delete.confirmMessage" values={{ name: data.license?.name }} />}
           onCancel={() => setShowDeleteConfirmationModal(false)}
           onConfirm={() => {
             handlers.onDelete();
@@ -275,8 +271,10 @@ const License = ({
 };
 
 License.propTypes = {
+  components: PropTypes.object,
   data: PropTypes.shape({
     license: PropTypes.object,
+    tagsLink: PropTypes.string,
     terms: PropTypes.arrayOf(PropTypes.object),
     users: PropTypes.arrayOf(PropTypes.object),
   }),

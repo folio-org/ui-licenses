@@ -329,7 +329,6 @@ const Licenses = ({
                     onClose={() => setShowExportLicenseAsCSVModal(false)}
                     onCompareLicenseTerms={onCompareLicenseTerms}
                     selectedLicenses={Object.keys(selectedLicenses).filter(item => selectedLicenses[item] === true)}
-                    terms={data.terms}
                   />
                 }
               </PersistedPaneset>
