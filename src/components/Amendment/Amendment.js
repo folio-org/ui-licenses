@@ -54,7 +54,6 @@ const Amendment = ({
       license: data.license,
       record: data.amendment,
       recordType: 'amendment',
-      terms: data.terms,
       urls,
     };
   };

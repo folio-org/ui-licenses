@@ -1,129 +1,84 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { cloneDeep, get } from 'lodash';
-import compose from 'compose-function';
 
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import withFileHandlers from './components/withFileHandlers';
+import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
+
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useUsers } from '@folio/stripes-erm-components';
+
 import Form from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
+import { LICENSES_ENDPOINT, LICENSE_ENDPOINT, REFDATA_ENDPOINT } from '../constants/endpoints';
+import { getRefdataValuesByDesc } from '../components/utils';
 
-const RECORDS_PER_REQUEST = 100;
+const [
+  LICENSE_STATUS,
+  LICENSE_TYPE,
+  LICENSE_ORG_ROLE,
+  DOCUMENT_ATTACHMENT_TYPE,
+  CONTACT_ROLE
+] = [
+  'License.Status',
+  'License.Type',
+  'LicenseOrg.Role',
+  'DocumentAttachment.AtType',
+  'InternalContact.Role'
+];
 
-class EditLicenseRoute extends React.Component {
-  static manifest = Object.freeze({
-    license: {
-      type: 'okapi',
-      path: 'licenses/licenses/:{id}',
-      shouldRefresh: () => false,
-    },
-    terms: {
-      limitParam: 'perPage',
-      perRequest: 100,
-      type: 'okapi',
-      path: 'licenses/custprops',
-      shouldRefresh: () => false,
-    },
-    statusValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/status',
-      shouldRefresh: () => false,
-    },
-    typeValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/type',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
-      shouldRefresh: () => false,
-    },
-    orgRoleValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/LicenseOrg/role',
-      shouldRefresh: () => false,
-    },
-    documentCategories: {
-      type: 'okapi',
-      path: 'licenses/refdata/DocumentAttachment/atType',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
-      shouldRefresh: () => false,
-    },
-    contactRoleValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/InternalContact/role',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
-      shouldRefresh: () => false,
-    },
-    users: {
-      type: 'okapi',
-      path: 'users',
-      perRequest: RECORDS_PER_REQUEST,
-      params: (_q, _p, _r, _l, props) => {
-        const query = get(props.resources, 'license.records[0].contacts', [])
-          .filter(contact => contact.user)
-          .map(contact => `id==${contact.user}`)
-          .join(' or ');
+const EditLicenseRoute = ({
+  handlers = {},
+  history,
+  location,
+  match: { params: { id: licenseId } },
+}) => {
+  const callout = useContext(CalloutContext);
+  const stripes = useStripes();
+  const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
-        return query ? { query } : {};
-      },
-      fetch: props => !!props.stripes.hasInterface('users', '15.0'),
-      permissionsRequired: 'users.collection.get',
-      records: 'users',
-    },
+  const refdata = useRefdata({
+    desc: [
+      LICENSE_STATUS,
+      LICENSE_TYPE,
+      LICENSE_ORG_ROLE,
+      DOCUMENT_ATTACHMENT_TYPE,
+      CONTACT_ROLE
+    ],
+    endpoint: REFDATA_ENDPOINT,
+    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
   });
 
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      license: PropTypes.shape({
-        PUT: PropTypes.func.isRequired,
-      }).isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      license: PropTypes.object,
-      orgRoleValues: PropTypes.object,
-      statusValues: PropTypes.object,
-      terms: PropTypes.object,
-      typeValues: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasPerm: PropTypes.func.isRequired,
-      okapi: PropTypes.object.isRequired,
-    }).isRequired,
+  const handleClose = () => {
+    history.push(`/licenses/${licenseId}${location.search}`);
   };
 
-  static defaultProps = {
-    handlers: {},
-  }
+  const { data: license = {}, isLoading: isLicenseLoading } = useQuery(
+    [LICENSE_ENDPOINT(licenseId), 'getLicense'],
+    () => ky.get(LICENSE_ENDPOINT(licenseId)).json()
+  );
 
-  static contextType = CalloutContext;
+  const { mutateAsync: putLicense } = useMutation(
+    [LICENSE_ENDPOINT(licenseId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
+    (payload) => ky.put(LICENSE_ENDPOINT(licenseId), { json: payload }).json()
+      .then(({ name }) => {
+        /* Invalidate cached queries */
+        queryClient.invalidateQueries(LICENSES_ENDPOINT);
+        queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
 
-  constructor(props) {
-    super(props);
+        callout.sendCallout({ message: <FormattedMessage id="ui-licenses.update.callout" values={{ name }} /> });
+        handleClose();
+      })
+  );
 
-    this.state = {
-      hasPerms: props.stripes.hasPerm('ui-licenses.licenses.edit'),
-    };
-  }
+  // Users
+  const { data: { users = [] } = {} } = useUsers(license?.contacts?.filter(c => c.user)?.map(c => c.user));
 
-  getInitialValues = () => {
-    const { resources } = this.props;
-    const license = get(resources, 'license.records[0]', {});
+  const getInitialValues = () => {
     const initialValues = cloneDeep(license);
     const {
       contacts = [],
@@ -140,67 +95,49 @@ class EditLicenseRoute extends React.Component {
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role ? o.role.value : undefined }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: get(o, 'atType.value') }));
 
-    // Add the default terms to the already-set terms.
-    initialValues.customProperties = initialValues.customProperties || {};
-    const terms = get(resources, 'terms.records', []);
-    terms
-      .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
-      .forEach(t => { initialValues.customProperties[t.name] = [{ _delete: true }]; });
-
     return initialValues;
-  }
+  };
 
-  handleClose = () => {
-    const { location, match } = this.props;
-    this.props.history.push(`/licenses/${match.params.id}${location.search}`);
-  }
+  const handleSubmit = (values) => {
+    return putLicense(values);
+  };
 
-  handleSubmit = (license) => {
-    const name = license?.name;
+  if (!stripes.hasPerm('ui-licenses.licenses.edit')) return <NoPermissions />;
 
-    return this.props.mutator.license
-      .PUT(license)
-      .then(() => {
-        this.context.sendCallout({ message: <FormattedMessage id="ui-licenses.update.callout" values={{ name }} /> });
-        this.handleClose();
-      });
-  }
+  return (
+    <Form
+      data={{
+        contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
+        documentCategories: getRefdataValuesByDesc(refdata, DOCUMENT_ATTACHMENT_TYPE),
+        orgRoleValues: getRefdataValuesByDesc(refdata, LICENSE_ORG_ROLE),
+        statusValues: getRefdataValuesByDesc(refdata, LICENSE_STATUS),
+        typeValues: getRefdataValuesByDesc(refdata, LICENSE_TYPE),
+        users,
+      }}
+      handlers={{
+        ...handlers,
+        onClose: handleClose,
+      }}
+      initialValues={getInitialValues()}
+      isLoading={isLicenseLoading}
+      onSubmit={handleSubmit}
+    />
+  );
+};
 
-  fetchIsPending = () => {
-    return Object.values(this.props.resources)
-      .filter(resource => resource)
-      .some(resource => resource.isPending);
-  }
+export default EditLicenseRoute;
 
-  render() {
-    const { handlers, resources } = this.props;
-
-    if (!this.state.hasPerms) return <NoPermissions />;
-
-    return (
-      <Form
-        data={{
-          contactRoleValues: get(resources, 'contactRoleValues.records', []),
-          documentCategories: get(resources, 'documentCategories.records', []),
-          orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          statusValues: get(resources, 'statusValues.records', []),
-          terms: get(resources, 'terms.records', []),
-          typeValues: get(resources, 'typeValues.records', []),
-          users: get(resources, 'users.records', []),
-        }}
-        handlers={{
-          ...handlers,
-          onClose: this.handleClose,
-        }}
-        initialValues={this.getInitialValues()}
-        isLoading={this.fetchIsPending()}
-        onSubmit={this.handleSubmit}
-      />
-    );
-  }
-}
-
-export default compose(
-  withFileHandlers,
-  stripesConnect
-)(EditLicenseRoute);
+EditLicenseRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};

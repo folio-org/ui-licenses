@@ -37,10 +37,6 @@ FormSupplementaryDocs.propTypes = {
   data: PropTypes.shape({
     documentCategories: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
-  handlers: PropTypes.shape({
-    onDownloadFile: PropTypes.func.isRequired,
-    onUploadFile: PropTypes.func.isRequired,
-  }).isRequired,
   id: PropTypes.string,
   onToggle: PropTypes.func,
   open: PropTypes.bool
