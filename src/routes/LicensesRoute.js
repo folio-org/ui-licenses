@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { useMutation } from 'react-query';
 
-import { generateKiwtQueryParams, refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, refdataOptions, useKiwtSASQuery, useRefdata } from '@k-int/stripes-kint-components';
 
-import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
 
 import View from '../components/Licenses';
@@ -30,13 +30,13 @@ const LicensesRoute = ({
   history,
   location,
   match,
-  mutator,
-  resources,
-  stripes
 }) => {
   const ky = useOkapiKy();
+  const stripes = useStripes();
   const hasPerms = stripes.hasPerm('ui-licenses.licenses.view');
   const searchField = useRef();
+
+  const { query, queryGetter, querySetter } = useKiwtSASQuery();
 
   useEffect(() => {
     if (searchField.current) {
@@ -72,8 +72,8 @@ const LicensesRoute = ({
         type: 'type.label',
       },
       perPage: RECORDS_PER_REQUEST
-    }, (resources?.query ?? {}))
-  ), [resources?.query]);
+    }, (query ?? {}))
+  ), [query]);
 
 
   const {
@@ -111,14 +111,6 @@ const LicensesRoute = ({
       .then(downloadBlob())
   );
 
-  const querySetter = ({ nsValues }) => {
-    mutator.query.update(nsValues);
-  };
-
-  const queryGetter = () => {
-    return resources?.query ?? {};
-  };
-
   if (!hasPerms) return <NoPermissions />;
 
   return (
@@ -150,10 +142,6 @@ const LicensesRoute = ({
   );
 };
 
-LicensesRoute.manifest = Object.freeze({
-  query: { initialValue: {} },
-});
-
 LicensesRoute.propTypes = {
   children: PropTypes.node,
   history: PropTypes.shape({
@@ -163,17 +151,6 @@ LicensesRoute.propTypes = {
     pathname: PropTypes.string,
     search: PropTypes.string,
   }).isRequired,
-  mutator: PropTypes.object,
-  resources: PropTypes.object,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-    logger: PropTypes.object,
-    okapi: PropTypes.shape({
-      tenant: PropTypes.string.isRequired,
-      token: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    }).isRequired,
-  }),
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -181,4 +158,4 @@ LicensesRoute.propTypes = {
   }),
 };
 
-export default stripesConnect(LicensesRoute);
+export default LicensesRoute;

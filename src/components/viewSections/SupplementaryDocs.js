@@ -7,11 +7,10 @@ import {
   Layout,
   Spinner,
 } from '@folio/stripes/components';
-import { DocumentCard } from '@folio/stripes-erm-components';
+import { DocumentCard, useFileHandlers } from '@folio/stripes-erm-components';
 import { useStripes } from '@folio/stripes/core';
 
 const SupplementaryDocs = ({
-  handlers,
   id,
   record: {
     supplementaryDocs: docs
@@ -19,13 +18,14 @@ const SupplementaryDocs = ({
   recordType
 }) => {
   const stripes = useStripes();
+  const { handleDownloadFile } = useFileHandlers('licenses/files');
 
   const renderDocs = () => {
     return docs?.map(doc => (
       <DocumentCard
         key={doc.id}
         hasDownloadPerm={stripes.hasPerm('ui-licenses.licenses.file.download')}
-        onDownloadFile={handlers.onDownloadFile}
+        onDownloadFile={handleDownloadFile}
         {...doc}
       />
     ));
@@ -57,9 +57,6 @@ const SupplementaryDocs = ({
 
 SupplementaryDocs.propTypes = {
   id: PropTypes.string,
-  handlers: PropTypes.shape({
-    onDownloadFile: PropTypes.func,
-  }),
   record: PropTypes.shape({
     supplementaryDocs: PropTypes.arrayOf(
       PropTypes.shape({

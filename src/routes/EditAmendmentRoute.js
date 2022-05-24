@@ -4,11 +4,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { cloneDeep, get } from 'lodash';
-import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-
-import withFileHandlers from './components/withFileHandlers';
 
 import Form from '../components/AmendmentForm';
 
@@ -164,7 +161,4 @@ class EditAmendmentRoute extends React.Component {
   }
 }
 
-export default compose(
-  withFileHandlers,
-  stripesConnect
-)(EditAmendmentRoute);
+export default stripesConnect(EditAmendmentRoute);

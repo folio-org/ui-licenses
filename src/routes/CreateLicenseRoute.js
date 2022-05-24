@@ -8,7 +8,6 @@ import { useMutation } from 'react-query';
 import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 
-import withFileHandlers from './components/withFileHandlers';
 import View from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
 import { LICENSES_ENDPOINT, REFDATA_ENDPOINT } from '../constants/endpoints';
@@ -111,4 +110,4 @@ CreateLicenseRoute.propTypes = {
   }).isRequired,
 };
 
-export default withFileHandlers(CreateLicenseRoute);
+export default CreateLicenseRoute;

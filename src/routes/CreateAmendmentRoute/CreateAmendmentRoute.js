@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { get } from 'lodash';
-import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
-import withFileHandlers from '../components/withFileHandlers';
 import Form from '../../components/AmendmentForm';
 
 const RECORDS_PER_REQUEST = 100;
@@ -140,7 +138,4 @@ class CreateAmendmentRoute extends React.Component {
   }
 }
 
-export default compose(
-  withFileHandlers,
-  stripesConnect
-)(CreateAmendmentRoute);
+export default stripesConnect(CreateAmendmentRoute);

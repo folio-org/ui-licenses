@@ -5,13 +5,10 @@ import { FormattedMessage } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { get, flatten, uniqBy } from 'lodash';
-import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
 import { useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
-import { withTags } from '@folio/stripes/smart-components';
 
-import withFileHandlers from '../components/withFileHandlers';
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
 import { errorTypes } from '../../constants';
@@ -29,8 +26,7 @@ const ViewLicenseRoute = ({
   match: { params: { id: licenseId } },
   mutator,
   resources,
-  stripes,
-  tagsEnabled
+  stripes
 }) => {
   const callout = useContext(CalloutContext);
   const ky = useOkapiKy();
@@ -42,7 +38,7 @@ const ViewLicenseRoute = ({
     handleToggleTags,
     HelperComponent,
     TagButton,
-  } = useLicensesHelperApp(tagsEnabled);
+  } = useLicensesHelperApp();
 
   // License fetch
   const {
@@ -52,7 +48,7 @@ const ViewLicenseRoute = ({
     },
     isLoading: isLicenseLoading
   } = useQuery(
-    [licensePath, 'ui-licenses', 'LicenseViewRoute', 'getLicense'],
+    [licensePath, 'getLicense'],
     () => ky.get(licensePath).json(),
     {
       enabled: !!licenseId
@@ -226,7 +222,6 @@ ViewLicenseRoute.propTypes = {
     hasPerm: PropTypes.func.isRequired,
     okapi: PropTypes.object.isRequired,
   }).isRequired,
-  tagsEnabled: PropTypes.bool,
 };
 
 ViewLicenseRoute.manifest = Object.freeze({
@@ -259,8 +254,4 @@ ViewLicenseRoute.manifest = Object.freeze({
   interfaceRecord: {},
 });
 
-export default compose(
-  withFileHandlers,
-  stripesConnect,
-  withTags,
-)(ViewLicenseRoute);
+export default stripesConnect(ViewLicenseRoute);

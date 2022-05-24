@@ -9,7 +9,6 @@ import { ConfirmationModal } from '@folio/stripes/components';
 import { useBatchedFetch } from '@folio/stripes-erm-components';
 
 import DuplicateAmendmentModal from '../../components/DuplicateAmendmentModal';
-import withFileHandlers from '../components/withFileHandlers';
 import View from '../../components/Amendment';
 
 import { errorTypes } from '../../constants';
@@ -191,4 +190,4 @@ const ViewAmendmentRoute = ({
 
 ViewAmendmentRoute.propTypes = propTypes;
 
-export default withFileHandlers(ViewAmendmentRoute);
+export default ViewAmendmentRoute;

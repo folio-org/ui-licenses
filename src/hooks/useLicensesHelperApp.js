@@ -4,9 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import { useHelperApp } from '@k-int/stripes-kint-components';
 
 import { IconButton } from '@folio/stripes/components';
-import { Tags } from '@folio/stripes-erm-components';
+import { Tags, useTagsEnabled } from '@folio/stripes-erm-components';
 
-const useLicensesHelperApp = (tagsEnabled) => {
+const useLicensesHelperApp = () => {
+  const tagsEnabled = useTagsEnabled();
+
   const { HelperComponent, helperToggleFunctions, isOpen } = useHelperApp({
     tags: Tags,
   });
