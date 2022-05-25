@@ -56,7 +56,7 @@ const ViewLicenseRoute = ({
   );
 
   // Users fetch
-  const { data: { users = [] } = {} } = useUsers(license?.contacts.filter(c => c.user)?.map(c => c.user));
+  const { data: { users = [] } = {} } = useUsers(license?.contacts?.filter(c => c.user)?.map(c => c.user));
 
   // License delete
   const { mutateAsync: deleteLicense } = useMutation(

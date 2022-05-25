@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
@@ -23,6 +23,11 @@ import {
 import translationsProperties from '../../../test/helpers';
 import ViewLicenseRoute from './ViewLicenseRoute';
 
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
 
 const CloneButton = (props) => {
   return <Button onClick={() => props.handlers.onClone}>CloneButton</Button>;
