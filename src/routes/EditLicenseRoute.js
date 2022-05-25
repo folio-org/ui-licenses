@@ -6,15 +6,14 @@ import { cloneDeep, get } from 'lodash';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
-
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useUsers } from '@folio/stripes-erm-components';
 
 import Form from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
-import { LICENSES_ENDPOINT, LICENSE_ENDPOINT, REFDATA_ENDPOINT } from '../constants/endpoints';
+import { LICENSES_ENDPOINT, LICENSE_ENDPOINT } from '../constants/endpoints';
 import { getRefdataValuesByDesc } from '../components/utils';
+import { useLicenseRefdata } from '../hooks';
 
 const [
   LICENSE_STATUS,
@@ -41,16 +40,14 @@ const EditLicenseRoute = ({
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
 
-  const refdata = useRefdata({
+  const refdata = useLicenseRefdata({
     desc: [
       LICENSE_STATUS,
       LICENSE_TYPE,
       LICENSE_ORG_ROLE,
       DOCUMENT_ATTACHMENT_TYPE,
       CONTACT_ROLE
-    ],
-    endpoint: REFDATA_ENDPOINT,
-    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
+    ]
   });
 
   const handleClose = () => {
@@ -63,7 +60,7 @@ const EditLicenseRoute = ({
   );
 
   const { mutateAsync: putLicense } = useMutation(
-    [LICENSE_ENDPOINT(licenseId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
+    [LICENSE_ENDPOINT(licenseId), 'putLicense'],
     (payload) => ky.put(LICENSE_ENDPOINT(licenseId), { json: payload }).json()
       .then(({ name }) => {
         /* Invalidate cached queries */

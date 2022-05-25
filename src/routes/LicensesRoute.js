@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useMutation } from 'react-query';
 
-import { generateKiwtQueryParams, refdataOptions, useKiwtSASQuery, useRefdata } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
@@ -11,7 +11,8 @@ import { useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
 import View from '../components/Licenses';
 import { getRefdataValuesByDesc } from '../components/utils';
 import NoPermissions from '../components/NoPermissions';
-import { LICENSES_ENDPOINT, REFDATA_ENDPOINT } from '../constants/endpoints';
+import { LICENSES_ENDPOINT } from '../constants/endpoints';
+import { useLicenseRefdata } from '../hooks';
 
 const RECORDS_PER_REQUEST = 100;
 
@@ -44,15 +45,12 @@ const LicensesRoute = ({
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
-
-  const refdata = useRefdata({
+  const refdata = useLicenseRefdata({
     desc: [
       LICENSE_STATUS,
       LICENSE_TYPE,
       LICENSE_ORG_ROLE,
-    ],
-    endpoint: REFDATA_ENDPOINT,
-    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
+    ]
   });
 
   const { data: { tags = [] } = {} } = useTags();

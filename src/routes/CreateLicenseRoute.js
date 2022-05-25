@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 
 import { useMutation } from 'react-query';
 
-import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 
 import View from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
-import { LICENSES_ENDPOINT, REFDATA_ENDPOINT } from '../constants/endpoints';
+import { LICENSES_ENDPOINT } from '../constants/endpoints';
 
 import { getRefdataValuesByDesc } from '../components/utils';
+import { useLicenseRefdata } from '../hooks';
 
 const [
   LICENSE_STATUS,
@@ -39,16 +39,14 @@ const CreateLicenseRoute = ({
 
   const hasPerms = stripes.hasPerm('ui-licenses.licenses.edit');
 
-  const refdata = useRefdata({
+  const refdata = useLicenseRefdata({
     desc: [
       LICENSE_STATUS,
       LICENSE_TYPE,
       LICENSE_ORG_ROLE,
       DOCUMENT_ATTACHMENT_TYPE,
       CONTACT_ROLE
-    ],
-    endpoint: REFDATA_ENDPOINT,
-    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
+    ]
   });
 
   const { mutateAsync: createLicense } = useMutation(
