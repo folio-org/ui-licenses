@@ -5,10 +5,11 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
-import { DocumentsFieldArray } from '@folio/stripes-erm-components';
+import { DocumentsFieldArray, useFileHandlers } from '@folio/stripes-erm-components';
 
-const FormSupplementaryDocs = ({ data, handlers, id, onToggle, open }) => {
+const FormSupplementaryDocs = ({ data, id, onToggle, open }) => {
   const stripes = useStripes();
+  const { handleDownloadFile, handleUploadFile } = useFileHandlers('licenses/files');
 
   return (
     <Accordion
@@ -25,8 +26,8 @@ const FormSupplementaryDocs = ({ data, handlers, id, onToggle, open }) => {
         hasDownloadPerm={stripes.hasPerm('ui-licenses.licenses.file.download')}
         isEmptyMessage={<FormattedMessage id="ui-licenses.supplementaryDocs.none" />}
         name="supplementaryDocs"
-        onDownloadFile={handlers.onDownloadFile}
-        onUploadFile={handlers.onUploadFile}
+        onDownloadFile={handleDownloadFile}
+        onUploadFile={handleUploadFile}
       />
     </Accordion>
   );
@@ -35,10 +36,6 @@ const FormSupplementaryDocs = ({ data, handlers, id, onToggle, open }) => {
 FormSupplementaryDocs.propTypes = {
   data: PropTypes.shape({
     documentCategories: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  handlers: PropTypes.shape({
-    onDownloadFile: PropTypes.func.isRequired,
-    onUploadFile: PropTypes.func.isRequired,
   }).isRequired,
   id: PropTypes.string,
   onToggle: PropTypes.func,

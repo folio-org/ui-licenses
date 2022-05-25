@@ -6,10 +6,11 @@ import { FieldArray } from 'react-final-form-arrays';
 import { Accordion } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 
-import { DocumentsFieldArray } from '@folio/stripes-erm-components';
+import { DocumentsFieldArray, useFileHandlers } from '@folio/stripes-erm-components';
 
-const FormCoreDocs = ({ handlers, id, onToggle, open }) => {
+const FormCoreDocs = ({ id, onToggle, open }) => {
   const stripes = useStripes();
+  const { handleDownloadFile, handleUploadFile } = useFileHandlers('licenses/files');
 
   return (
     <Accordion
@@ -25,18 +26,14 @@ const FormCoreDocs = ({ handlers, id, onToggle, open }) => {
         hasDownloadPerm={stripes.hasPerm('ui-licenses.licenses.file.download')}
         isEmptyMessage={<FormattedMessage id="ui-licenses.coreDocs.none" />}
         name="docs"
-        onDownloadFile={handlers.onDownloadFile}
-        onUploadFile={handlers.onUploadFile}
+        onDownloadFile={handleDownloadFile}
+        onUploadFile={handleUploadFile}
       />
     </Accordion>
   );
 };
 
 FormCoreDocs.propTypes = {
-  handlers: PropTypes.shape({
-    onDownloadFile: PropTypes.func.isRequired,
-    onUploadFile: PropTypes.func.isRequired,
-  }),
   id: PropTypes.string,
   onToggle: PropTypes.func,
   open: PropTypes.bool

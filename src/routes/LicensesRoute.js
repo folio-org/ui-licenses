@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 
 import { useMutation } from 'react-query';
 
-import { generateKiwtQueryParams, refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
-import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
 
 import View from '../components/Licenses';
 import { getRefdataValuesByDesc } from '../components/utils';
 import NoPermissions from '../components/NoPermissions';
-import { LICENSES_ENDPOINT, REFDATA_ENDPOINT } from '../constants/endpoints';
+import { LICENSES_ENDPOINT } from '../constants/endpoints';
+import { useLicenseRefdata } from '../hooks';
 
 const RECORDS_PER_REQUEST = 100;
 
@@ -30,13 +31,13 @@ const LicensesRoute = ({
   history,
   location,
   match,
-  mutator,
-  resources,
-  stripes
 }) => {
   const ky = useOkapiKy();
+  const stripes = useStripes();
   const hasPerms = stripes.hasPerm('ui-licenses.licenses.view');
   const searchField = useRef();
+
+  const { query, queryGetter, querySetter } = useKiwtSASQuery();
 
   useEffect(() => {
     if (searchField.current) {
@@ -44,15 +45,12 @@ const LicensesRoute = ({
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
-
-  const refdata = useRefdata({
+  const refdata = useLicenseRefdata({
     desc: [
       LICENSE_STATUS,
       LICENSE_TYPE,
       LICENSE_ORG_ROLE,
-    ],
-    endpoint: REFDATA_ENDPOINT,
-    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
+    ]
   });
 
   const { data: { tags = [] } = {} } = useTags();
@@ -72,8 +70,8 @@ const LicensesRoute = ({
         type: 'type.label',
       },
       perPage: RECORDS_PER_REQUEST
-    }, (resources?.query ?? {}))
-  ), [resources?.query]);
+    }, (query ?? {}))
+  ), [query]);
 
 
   const {
@@ -111,14 +109,6 @@ const LicensesRoute = ({
       .then(downloadBlob())
   );
 
-  const querySetter = ({ nsValues }) => {
-    mutator.query.update(nsValues);
-  };
-
-  const queryGetter = () => {
-    return resources?.query ?? {};
-  };
-
   if (!hasPerms) return <NoPermissions />;
 
   return (
@@ -150,10 +140,6 @@ const LicensesRoute = ({
   );
 };
 
-LicensesRoute.manifest = Object.freeze({
-  query: { initialValue: {} },
-});
-
 LicensesRoute.propTypes = {
   children: PropTypes.node,
   history: PropTypes.shape({
@@ -163,17 +149,6 @@ LicensesRoute.propTypes = {
     pathname: PropTypes.string,
     search: PropTypes.string,
   }).isRequired,
-  mutator: PropTypes.object,
-  resources: PropTypes.object,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-    logger: PropTypes.object,
-    okapi: PropTypes.shape({
-      tenant: PropTypes.string.isRequired,
-      token: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    }).isRequired,
-  }),
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -181,4 +156,4 @@ LicensesRoute.propTypes = {
   }),
 };
 
-export default stripesConnect(LicensesRoute);
+export default LicensesRoute;

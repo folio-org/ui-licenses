@@ -11,9 +11,9 @@ jest.mock('@folio/stripes/components', () => ({
   LoadingView: () => <div>LoadingView</div>,
 }));
 
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  CustomPropertiesEdit: () => <div>CustomPropertiesEdit</div>,
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useLicensesContexts: jest.fn(() => ({ data: [] }))
 }));
 
 jest.mock('../formSections/LicenseFormInfo', () => () => <div>LicenseFormInfo</div>);

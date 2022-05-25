@@ -67,7 +67,6 @@ const License = ({
       license: data.license,
       record: data.license,
       recordType: 'license',
-      terms: data.terms,
       users: data.users,
     };
   };
