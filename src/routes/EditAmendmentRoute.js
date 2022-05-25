@@ -49,8 +49,8 @@ const EditAmendmentRoute = ({
     () => ky.get(LICENSE_ENDPOINT(licenseId)).json()
   );
 
-  const { mutateAsync: putLicense } = useMutation(
-    [LICENSE_ENDPOINT(licenseId), 'putLicense'],
+  const { mutateAsync: editAmendment } = useMutation(
+    [LICENSE_ENDPOINT(licenseId), 'editAmendment'],
     (amendmentPayload) => ky.put(LICENSE_ENDPOINT(licenseId), { json: {
       ...license,
       amendments: [amendmentPayload]
@@ -89,7 +89,7 @@ const EditAmendmentRoute = ({
   const handleSubmit = (values) => {
     const name = values?.name;
 
-    return putLicense(values)
+    return editAmendment(values)
       .then(() => {
         callout.sendCallout({ message: <FormattedMessage id="ui-licenses.amendments.update.callout" values={{ name }} /> });
         handleClose();

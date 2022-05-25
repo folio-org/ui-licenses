@@ -1,141 +1,120 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { get } from 'lodash';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
 import Form from '../../components/AmendmentForm';
+import { getRefdataValuesByDesc } from '../../components/utils';
+import { LICENSES_ENDPOINT, LICENSE_ENDPOINT } from '../../constants/endpoints';
+import { useLicenseRefdata } from '../../hooks';
 
-const RECORDS_PER_REQUEST = 100;
+const [
+  LICENSE_STATUS,
+  DOCUMENT_ATTACHMENT_TYPE,
+] = [
+  'License.Status',
+  'DocumentAttachment.AtType',
+];
 
-class CreateAmendmentRoute extends React.Component {
-  static manifest = Object.freeze({
-    license: {
-      type: 'okapi',
-      path: 'licenses/licenses/:{id}',
-      shouldRefresh: () => false,
-    },
-    documentCategories: {
-      type: 'okapi',
-      path: 'licenses/refdata/DocumentAttachment/atType',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
-      shouldRefresh: () => false,
-    },
-    statusValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/status',
-      shouldRefresh: () => false,
-    },
+const CreateAmendmentRoute = ({
+  handlers = {},
+  history,
+  location,
+  match: { params: { id: licenseId } },
+}) => {
+  const callout = useContext(CalloutContext);
+  const ky = useOkapiKy();
+  const queryClient = useQueryClient();
+
+  const refdata = useLicenseRefdata({
+    desc: [
+      LICENSE_STATUS,
+      DOCUMENT_ATTACHMENT_TYPE,
+    ]
   });
 
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      license: PropTypes.shape({
-        PUT: PropTypes.func.isRequired,
-      }).isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      documentCategories: PropTypes.object,
-      license: PropTypes.object,
-      statusValues: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasPerm: PropTypes.func.isRequired,
-      okapi: PropTypes.object.isRequired,
-    }).isRequired,
-  };
-
-  static defaultProps = {
-    handlers: {},
-  }
-
-  static contextType = CalloutContext;
-
-  getInitialValues = () => {
-    const { resources } = this.props;
-
-    const status = get(resources, 'statusValues.records', []).find(v => v.value === 'active') || {};
-
-    const customProperties = {};
+  const getInitialValues = () => {
+    const status = getRefdataValuesByDesc(refdata, LICENSE_STATUS)?.find(v => v.value === 'active') ?? {};
 
     return {
       status: status.value,
-      customProperties,
       openEnded: false
     };
-  }
+  };
 
-  handleClose = () => {
-    const { location, match } = this.props;
-    this.props.history.push(`/licenses/${match.params.id}${location.search}`);
-  }
+  const { data: license = {}, isLoading: isLicenseLoading } = useQuery(
+    [LICENSE_ENDPOINT(licenseId), 'getLicense'],
+    () => ky.get(LICENSE_ENDPOINT(licenseId)).json()
+  );
 
-  /* istanbul ignore next */
-  handleSubmit = (amendment) => {
-    const { location, match } = this.props;
-    const license = get(this.props.resources, 'license.records[0]', {});
-    const originalAmendmentIds = {};
-    (license.amendments || []).forEach(a => { originalAmendmentIds[a.id] = 1; });
-    const name = amendment?.name;
+  const handleClose = () => {
+    history.push(`/licenses/${licenseId}${location.search}`);
+  };
 
-    return this.props.mutator.license
-      .PUT({
-        ...license,
-        amendments: [amendment]
-      })
+  const { mutateAsync: createAmendment } = useMutation(
+    [LICENSE_ENDPOINT(licenseId), 'createAmendment'],
+    (amendmentPayload) => ky.put(LICENSE_ENDPOINT(licenseId), { json: {
+      ...license,
+      amendments: [amendmentPayload]
+    } }).json()
       .then(updatedLicense => {
+        /* Invalidate cached queries */
+        queryClient.invalidateQueries(LICENSES_ENDPOINT);
+        queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
+
+        const originalAmendmentIds = {};
+        (license.amendments || []).forEach(a => { originalAmendmentIds[a.id] = 1; });
+
+        // We have to figure out which the new amendment is from the list...
         let newAmendmentId;
         (updatedLicense.amendments || []).forEach(a => {
           if (originalAmendmentIds[a.id] === undefined) {
             newAmendmentId = a.id;
           }
         });
-        this.context.sendCallout({ message: <FormattedMessage id="ui-licenses.amendments.create.callout" values={{ name }} /> });
-        this.props.history.push(`/licenses/${match.params.id}/amendments/${newAmendmentId}${location.search}`);
-      });
-  }
+        callout.sendCallout({ message: <FormattedMessage id="ui-licenses.amendments.create.callout" values={{ name: amendmentPayload?.name }} /> });
+        history.push(`/licenses/${licenseId}/amendments/${newAmendmentId}${location.search}`);
+      })
+  );
 
-  fetchIsPending = () => {
-    return Object.values(this.props.resources)
-      .filter(r => r && r.resource !== 'licenses')
-      .some(r => r.isPending);
-  }
+  const handleSubmit = (values) => {
+    return createAmendment(values);
+  };
 
-  render() {
-    const { handlers, resources } = this.props;
+  return (
+    <Form
+      data={{
+        license,
+        documentCategories: getRefdataValuesByDesc(refdata, DOCUMENT_ATTACHMENT_TYPE),
+        statusValues: getRefdataValuesByDesc(refdata, LICENSE_STATUS),
+      }}
+      handlers={{
+        ...handlers,
+        onClose: handleClose,
+      }}
+      initialValues={getInitialValues()}
+      isLoading={isLicenseLoading}
+      onSubmit={handleSubmit}
+    />
+  );
+};
 
-    return (
-      <Form
-        data={{
-          license: get(resources, 'license.records[0]', {}),
-          documentCategories: get(resources, 'documentCategories.records', []),
-          statusValues: get(resources, 'statusValues.records', []),
-        }}
-        handlers={{
-          ...handlers,
-          onClose: this.handleClose,
-        }}
-        initialValues={this.getInitialValues()}
-        isLoading={this.fetchIsPending()}
-        onSubmit={this.handleSubmit}
-      />
-    );
-  }
-}
+CreateAmendmentRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
-export default stripesConnect(CreateAmendmentRoute);
+export default CreateAmendmentRoute;
