@@ -11,8 +11,9 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "yarn run test:jest && stripes test karma",
+    "test": "yarn run test:jest && yarn run test:bigtest",
     "test:jest": "jest --ci --coverage",
+    "test:bigtest": "stripes test karma --bundle",
     "test-bigtest-once": "stripes test karma --karma.singleRun",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-licenses ./translations/ui-licenses/compiled",
     "lint": "eslint src test"
