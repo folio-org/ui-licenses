@@ -6,10 +6,10 @@ import { useMutation } from 'react-query';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
+import { useInfiniteFetch, useSingleResultRedirect, useTags } from '@folio/stripes-erm-components';
 
 import View from '../components/Licenses';
-import { getRefdataValuesByDesc } from '../components/utils';
+import { getRefdataValuesByDesc, urls } from '../components/utils';
 import NoPermissions from '../components/NoPermissions';
 import { LICENSES_ENDPOINT } from '../constants/endpoints';
 import { useLicenseRefdata } from '../hooks';
@@ -108,6 +108,8 @@ const LicensesRoute = ({
     (payload) => ky.post(`${LICENSES_ENDPOINT}/compareTerms`, { json: payload }).blob()
       .then(downloadBlob())
   );
+
+  useSingleResultRedirect(licensesCount, licenses?.[0]?.id, urls.license);
 
   if (!hasPerms) return <NoPermissions />;
 
