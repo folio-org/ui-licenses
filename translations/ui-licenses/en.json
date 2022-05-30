@@ -211,6 +211,9 @@
   "terms.retired": "Deprecated",
   "terms.primaryRetired": "A term cannot be both primary and deprecated",
 
+  "term.editModal": "Edit term",
+  "term.newModal": "New term",
+
   "warn.clearEndDate": "End date will be cleared because \"Open ended\" is checked.",
 
   "settings.settingsSection.fileStorage": "File storage",

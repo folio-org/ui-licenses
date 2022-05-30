@@ -32,6 +32,8 @@ const LicensesCustomProperties = () => {
   ];
 
   const labelOverrides = {
+    modalTitleEdit: <FormattedMessage id="ui-licenses.term.editModal" />,
+    modalTitleNew: <FormattedMessage id="ui-licenses.term.newModal" />,
     paneTitle: <FormattedMessage id="ui-licenses.terms" />,
     primary: <FormattedMessage id="ui-licenses.terms.primary" />,
     retired: <FormattedMessage id="ui-licenses.terms.retired" />,
