@@ -42,7 +42,8 @@ const LicensesCustomProperties = () => {
 
   const helpPopovers = {
     name: <FormattedMessage id="ui-licenses.terms.help.name" />,
-    label: <FormattedMessage id="ui-licenses.terms.help.label" />
+    label: <FormattedMessage id="ui-licenses.terms.help.label" />,
+    category: <FormattedMessage id="ui-licenses.terms.help.category" />
   };
 
   return (
