@@ -211,6 +211,8 @@
   "terms.primary": "Primary term",
   "terms.retired": "Deprecated",
   "terms.primaryRetired": "A term cannot be both primary and deprecated",
+  "terms.category": "Category",
+  "terms.pickList": "Pick list",
 
   "term.editModal": "Edit term",
   "term.newModal": "New term",
