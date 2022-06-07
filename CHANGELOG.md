@@ -1,5 +1,6 @@
 # Change history for ui-licenses
-
+## 8.1.2 2022-06-07
+* ERM-2188. Backport recent zh_TW translations
 ## 8.1.1 2022-04-06
 * ERM-2072 A maximum of 10 custom properties are retrieved for agreements and licenses
 ## 8.1.0 2022-03-03
