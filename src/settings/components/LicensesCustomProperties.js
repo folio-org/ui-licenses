@@ -32,15 +32,20 @@ const LicensesCustomProperties = () => {
   ];
 
   const labelOverrides = {
+    modalTitleEdit: <FormattedMessage id="ui-licenses.term.editModal" />,
+    modalTitleNew: <FormattedMessage id="ui-licenses.term.newModal" />,
     paneTitle: <FormattedMessage id="ui-licenses.terms" />,
     primary: <FormattedMessage id="ui-licenses.terms.primary" />,
     retired: <FormattedMessage id="ui-licenses.terms.retired" />,
-    primaryRetired: <FormattedMessage id="ui-licenses.terms.primaryRetired" />
+    primaryRetired: <FormattedMessage id="ui-licenses.terms.primaryRetired" />,
+    ctx: <FormattedMessage id="ui-licenses.terms.category" />,
+    category: <FormattedMessage id="ui-licenses.terms.pickList" />
   };
 
   const helpPopovers = {
     name: <FormattedMessage id="ui-licenses.terms.help.name" />,
-    label: <FormattedMessage id="ui-licenses.terms.help.label" />
+    label: <FormattedMessage id="ui-licenses.terms.help.label" />,
+    ctx: <FormattedMessage id="ui-licenses.terms.help.category" />
   };
 
   return (
