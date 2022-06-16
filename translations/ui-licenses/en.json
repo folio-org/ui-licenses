@@ -213,6 +213,7 @@
   "terms.primaryRetired": "A term cannot be both primary and deprecated",
   "terms.category": "Category",
   "terms.pickList": "Pick list",
+  "terms.deleteError": "There was an error deleting term: <strong>{label}</strong>. {error}",
 
   "term.editModal": "Edit term",
   "term.newModal": "New term",
