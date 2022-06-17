@@ -39,7 +39,8 @@ const LicensesCustomProperties = () => {
     retired: <FormattedMessage id="ui-licenses.terms.retired" />,
     primaryRetired: <FormattedMessage id="ui-licenses.terms.primaryRetired" />,
     ctx: <FormattedMessage id="ui-licenses.terms.category" />,
-    category: <FormattedMessage id="ui-licenses.terms.pickList" />
+    category: <FormattedMessage id="ui-licenses.terms.pickList" />,
+    deleteError: (error, custProp) => (<FormattedMessage id="ui-licenses.terms.deleteError" values={{ label: custProp?.label, error }} />)
   };
 
   const helpPopovers = {
