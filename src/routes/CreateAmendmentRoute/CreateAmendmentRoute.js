@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
+import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import Form from '../../components/AmendmentForm';
-import { getRefdataValuesByDesc } from '../../components/utils';
 import { LICENSES_ENDPOINT, LICENSE_ENDPOINT } from '../../constants/endpoints';
 import { useLicenseRefdata } from '../../hooks';
 

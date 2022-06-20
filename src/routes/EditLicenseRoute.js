@@ -7,12 +7,11 @@ import { cloneDeep, get } from 'lodash';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useUsers } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useUsers } from '@folio/stripes-erm-components';
 
 import Form from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
 import { LICENSES_ENDPOINT, LICENSE_ENDPOINT } from '../constants/endpoints';
-import { getRefdataValuesByDesc } from '../components/utils';
 import { useLicenseRefdata } from '../hooks';
 
 const [
