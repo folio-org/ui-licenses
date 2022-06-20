@@ -8,11 +8,11 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { cloneDeep, get } from 'lodash';
 
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
+import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import Form from '../components/AmendmentForm';
 import { LICENSES_ENDPOINT, LICENSE_ENDPOINT } from '../constants/endpoints';
 import useLicenseRefdata from '../hooks/useLicenseRefdata';
-import { getRefdataValuesByDesc } from '../components/utils';
 
 const [
   LICENSE_STATUS,

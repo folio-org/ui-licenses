@@ -6,10 +6,9 @@ import { useMutation } from 'react-query';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
 
 import View from '../components/Licenses';
-import { getRefdataValuesByDesc } from '../components/utils';
 import NoPermissions from '../components/NoPermissions';
 import { LICENSES_ENDPOINT } from '../constants/endpoints';
 import { useLicenseRefdata } from '../hooks';
