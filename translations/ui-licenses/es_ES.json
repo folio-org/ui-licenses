@@ -150,7 +150,7 @@
     "duplicateAmendmentModal.invalidResponseError": "Unable to duplicate the amendment. The response received from the server was invalid.",
     "duplicateAmendmentModal.amendmentDateInfo": "Amendment date information",
     "duplicateAmendmentModal.amendmentInfo": "Amendment information",
-    "duplicateAmendmentModal.supplementaryDocs": "Supplementary documents",
+    "duplicateAmendmentModal.supplementaryDocs": "Documentos suplementarios",
     "duplicateAmendmentModal.terms": "Terms",
     "amendments.view.paneTitle": "Amendment: {name}",
     "amendments.view.status": "Amendment status",
