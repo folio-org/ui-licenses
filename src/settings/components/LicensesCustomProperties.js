@@ -3,10 +3,12 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useQueryClient } from 'react-query';
 
-import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
+import { customPropertyContants, CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
 import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 import { useLicensesContexts } from '../../hooks';
+
+const { REFDATA_CLASS_NAME, MULTI_REFDATA_CLASS_NAME } = customPropertyContants;
 
 const LicensesCustomProperties = () => {
   const intl = useIntl();
@@ -42,6 +44,10 @@ const LicensesCustomProperties = () => {
     category: <FormattedMessage id="ui-licenses.terms.pickList" />,
     deleteError: (error, custProp) => (<FormattedMessage id="ui-licenses.terms.deleteError" values={{ label: custProp?.label, error }} />)
   };
+
+  // These overrides need to be formatted as strings because they will be utilised in a select
+  labelOverrides[REFDATA_CLASS_NAME] = intl.formatMessage({ id: 'ui-licenses.terms.pickList' });
+  labelOverrides[MULTI_REFDATA_CLASS_NAME] = intl.formatMessage({ id: 'ui-licenses.terms.multiPickList' });
 
   const helpPopovers = {
     name: <FormattedMessage id="ui-licenses.terms.help.name" />,
