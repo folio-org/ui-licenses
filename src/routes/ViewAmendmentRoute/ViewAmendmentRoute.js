@@ -62,7 +62,7 @@ const ViewAmendmentRoute = ({
     data: license = {},
     isLoading: isLicenseLoading
   } = useQuery(
-    [licensePath, 'ui-licenses', 'ViewAmendmentRoute', 'getLicense'],
+    [licensePath, 'getLicense'],
     () => ky.get(licensePath).json(),
     {
       enabled: !!licenseId
@@ -117,6 +117,9 @@ const ViewAmendmentRoute = ({
   const { mutateAsync: cloneAmendment } = useMutation(
     [`${amendmentPath}/clone`, 'ui-licenses', 'ViewAmendmentRoute', 'cloneAmendment'],
     (cloneableProperties) => ky.post(`${amendmentPath}/clone`, { json: cloneableProperties }).then(response => {
+      // Make sure we refetch the license after we've added an amendment
+      queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
+
       if (response.ok) {
         return response.text(); // Parse it as text
       } else {
