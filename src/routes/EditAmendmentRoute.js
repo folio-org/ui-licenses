@@ -44,7 +44,7 @@ const EditAmendmentRoute = ({
     history.push(`/licenses/${licenseId}/amendments/${amendmentId}${location.search}`);
   };
 
-  const { data: license = {}, isLoading: isLicenseLoading } = useQuery(
+  const { data: license = {}, isFetching: isLicenseLoading } = useQuery(
     [LICENSE_ENDPOINT(licenseId), 'getLicense'],
     () => ky.get(LICENSE_ENDPOINT(licenseId)).json()
   );
@@ -71,6 +71,12 @@ const EditAmendmentRoute = ({
 
   const getInitialValues = () => {
     const initialValues = cloneDeep(selectedAmendment);
+    // After a cloned amendment we need to wait for the license to refetch to obtain its information
+    // Null safety this return while we wait for the license to refetch
+    if (!initialValues) {
+      return ({});
+    }
+
     const {
       status = {},
       supplementaryDocs = [],
@@ -95,6 +101,7 @@ const EditAmendmentRoute = ({
         handleClose();
       });
   };
+
 
   return (
     <Form
