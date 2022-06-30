@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+
+import isEqual from 'lodash/isEqual';
+
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { IfInterface } from '@folio/stripes/core';
@@ -15,77 +17,34 @@ import {
   Spinner,
 } from '@folio/stripes/components';
 
-export default class LicenseAgreements extends React.Component {
-  static propTypes = {
-    amendment:  PropTypes.shape({
-      id: PropTypes.string,
-    }),
-    id: PropTypes.string,
-    license: PropTypes.shape({
-      id: PropTypes.string,
-      linkedAgreements: PropTypes.arrayOf(PropTypes.shape({
-        amendments: PropTypes.arrayOf(PropTypes.shape({
-          amendmentId: PropTypes.string,
-          status: PropTypes.shape({
-            label: PropTypes.string,
-            value: PropTypes.string,
-          })
-        })),
-        note: PropTypes.string,
-        owner: PropTypes.shape({
-          agreementStatus: PropTypes.shape({
-            label: PropTypes.string,
-          }),
-          endDate: PropTypes.string,
-          id: PropTypes.string,
-          name: PropTypes.string,
-          startDate: PropTypes.string,
-        }),
-        status: PropTypes.shape({
-          value: PropTypes.string.isRequired,
-          label: PropTypes.string,
-        }).isRequired,
-      })).isRequired,
-    }).isRequired,
-    recordType: PropTypes.oneOf(['amendment', 'license']).isRequired,
-    visibleColumns: PropTypes.arrayOf(PropTypes.string),
-  };
+const LicenseAgreements = ({
+  amendment,
+  id,
+  license: { linkedAgreements },
+  recordType,
+  visibleColumns = [
+    'linkNote',
+    'name',
+    'startDate',
+    'endDate',
+    'agreementStatus',
+    'linkStatus',
+  ]
+}) => {
+  const [groupedLinkedAgreements, setGroupedLinkedAgreements] = useState([]);
 
-  static defaultProps = {
-    visibleColumns: [
-      'linkNote',
-      'name',
-      'startDate',
-      'endDate',
-      'agreementStatus',
-      'linkStatus',
-    ],
-  }
-
-  state = {
-    groupedLinkedAgreements: [],
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    const { license: { linkedAgreements } } = props;
-
+  useEffect(() => {
     if (
-      (linkedAgreements.length !== state.groupedLinkedAgreements.length) ||
-      (get(linkedAgreements, [0, 'owner', 'id']) !== get(state.groupedLinkedAgreements, [0, 'owner', 'id']))
+      !isEqual(new Set(linkedAgreements), new Set(groupedLinkedAgreements))
     ) {
-      return {
-        groupedLinkedAgreements: [
-          ...linkedAgreements.filter(a => a.status.value === 'controlling'),
-          ...linkedAgreements.filter(a => a.status.value !== 'controlling'),
-        ]
-      };
+      setGroupedLinkedAgreements([
+        ...linkedAgreements.filter(a => a.status.value === 'controlling'),
+        ...linkedAgreements.filter(a => a.status.value !== 'controlling'),
+      ]);
     }
+  }, [groupedLinkedAgreements, linkedAgreements]);
 
-    return null;
-  }
-
-  renderLinkedAgreements = () => {
-    const { visibleColumns } = this.props;
+  const renderLinkedAgreements = () => {
     return (
       <MultiColumnList
         columnMapping={{
@@ -106,16 +65,20 @@ export default class LicenseAgreements extends React.Component {
           linkStatus: '15%',
           amendmentLinkStatus: '15%'
         }}
-        contentData={this.state.groupedLinkedAgreements}
+        contentData={groupedLinkedAgreements}
         formatter={{
           linkNote: link => (link.note ? <InfoPopover content={link.note} /> : ''),
+          // eslint-disable-next-line react/prop-types
           name: ({ owner:agreement = {} }) => <Link to={`/erm/agreements/${agreement.id}`}>{agreement.name}</Link>,
+          // eslint-disable-next-line react/prop-types
           startDate: ({ owner:agreement = {} }) => (agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : <NoValue />),
+          // eslint-disable-next-line react/prop-types
           endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : <NoValue />),
+          // eslint-disable-next-line react/prop-types
           agreementStatus: ({ owner:agreement = {} }) => agreement?.agreementStatus?.label ?? <NoValue />,
           linkStatus: link => (link.status?.label ?? <NoValue />),
           amendmentLinkStatus: link => {
-            const ammendmentLinked = link?.amendments?.find(a => a.amendmentId === this.props.amendment?.id);
+            const ammendmentLinked = link?.amendments?.find(a => a.amendmentId === amendment?.id);
             return (ammendmentLinked?.status?.label ?? <FormattedMessage id="ui-licenses.prop.unassigned" />);
           },
         }}
@@ -124,29 +87,63 @@ export default class LicenseAgreements extends React.Component {
         visibleColumns={visibleColumns}
       />
     );
-  }
+  };
 
-  renderBadge = () => {
-    const count = this.props.license.linkedAgreements.length;
+  const renderBadge = () => {
+    const count = linkedAgreements.length;
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
-  }
+  };
 
-  render() {
-    const { id, recordType } = this.props;
+  return (
+    <IfInterface name="erm">
+      <Accordion
+        displayWhenClosed={renderBadge()}
+        displayWhenOpen={renderBadge()}
+        id={id}
+        label={recordType === 'license' ? <FormattedMessage id="ui-licenses.section.licenseAgreements" /> : <FormattedMessage id="ui-licenses.section.parentLicenseAgreements" />}
+      >
+        <Layout className="padding-bottom-gutter">
+          { groupedLinkedAgreements.length ? renderLinkedAgreements() : <FormattedMessage id="ui-licenses.emptyAccordion.linkedAgreements" /> }
+        </Layout>
+      </Accordion>
+    </IfInterface>
+  );
+};
 
-    return (
-      <IfInterface name="erm">
-        <Accordion
-          displayWhenClosed={this.renderBadge()}
-          displayWhenOpen={this.renderBadge()}
-          id={id}
-          label={recordType === 'license' ? <FormattedMessage id="ui-licenses.section.licenseAgreements" /> : <FormattedMessage id="ui-licenses.section.parentLicenseAgreements" />}
-        >
-          <Layout className="padding-bottom-gutter">
-            { this.state.groupedLinkedAgreements.length ? this.renderLinkedAgreements() : <FormattedMessage id="ui-licenses.emptyAccordion.linkedAgreements" /> }
-          </Layout>
-        </Accordion>
-      </IfInterface>
-    );
-  }
-}
+LicenseAgreements.propTypes = {
+  amendment:  PropTypes.shape({
+    id: PropTypes.string,
+  }),
+  id: PropTypes.string,
+  license: PropTypes.shape({
+    id: PropTypes.string,
+    linkedAgreements: PropTypes.arrayOf(PropTypes.shape({
+      amendments: PropTypes.arrayOf(PropTypes.shape({
+        amendmentId: PropTypes.string,
+        status: PropTypes.shape({
+          label: PropTypes.string,
+          value: PropTypes.string,
+        })
+      })),
+      note: PropTypes.string,
+      owner: PropTypes.shape({
+        agreementStatus: PropTypes.shape({
+          label: PropTypes.string,
+        }),
+        endDate: PropTypes.string,
+        id: PropTypes.string,
+        name: PropTypes.string,
+        startDate: PropTypes.string,
+      }),
+      status: PropTypes.shape({
+        value: PropTypes.string.isRequired,
+        label: PropTypes.string,
+      }).isRequired,
+    })).isRequired,
+  }).isRequired,
+  recordType: PropTypes.oneOf(['amendment', 'license']).isRequired,
+  visibleColumns: PropTypes.arrayOf(PropTypes.string),
+};
+
+
+export default LicenseAgreements;
