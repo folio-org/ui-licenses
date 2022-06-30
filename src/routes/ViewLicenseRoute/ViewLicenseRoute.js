@@ -69,6 +69,7 @@ const ViewLicenseRoute = ({
     results: linkedAgreements,
   } = useBatchedFetch({
     batchSize: RECORDS_PER_REQUEST,
+    nsArray: ['ERM', 'License', licenseId, 'LinkedAgreements'],
     path: LINKED_AGREEMENTS_ENDPOINT(licenseId),
   });
 
