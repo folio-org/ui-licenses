@@ -1,5 +1,7 @@
 # Change history for ui-licenses
 
+## 8.3.0 In progress
+
 ## 8.2.1 2022-07-04
 * ERM-2225 Amendment/License link status values do not update immediately after Agreement edit
 * ERM-2224 Error on duplicating amendment
