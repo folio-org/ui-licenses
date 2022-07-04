@@ -1,7 +1,27 @@
 # Change history for ui-licenses
 
-## 8.2.0 In progress
+## 8.2.1 2022-07-04
+* ERM-2225 Amendment/License link status values do not update immediately after Agreement edit
+* ERM-2224 Error on duplicating amendment
+* ERM-2217 In custom property Type dropdown Refdata and Refdata (multi-select) should be labelled "Pick list" and "Pick list (multi-select)"
+* ERM-2204 Toast error message not displayed on failure to delete custom property
+* ERM-2175 Migrate Edit/Create routes to react-query where we have regressions
+* ERM-2159 Bump frontend dependency on stripes-kint-components
+* ERM-2148 update outdated dependencies in ui-licenses
+* ERM-2109 Refactor away from react-intl-safe-html (ui-licenses)
 * ERM-2099 Replace babel-eslint with @babel/eslint-parser
+* ERM-2072 A maximum of 10 custom properties are retrieved for agreements and licenses
+* ERM-2068 Add support for Date across License filters
+* ERM-2066 Number of tags doesn't update on adding tags to agreement line (Refactor to react-query from stripes-connect)
+* ERM-2044 Ability to make custom properties deprecated
+* ERM-2043 Implement updated design for term management in license settings
+* ERM-1971 Bump eslint-config stripes version
+* ERM-778 Add Date type to customProperties
+* FAT-82 ui-licenses: UI tests replacement with RTL/Jest
+  * ERM-1510 TermsConfigForm
+  * ERM-1509 TermsConfigRoute
+  * ERM-1507 PickListSettings
+
 
 ## 8.1.0 2022-03-03
 * ERM-1982 Licenses: Organization interface credentials malfunction
