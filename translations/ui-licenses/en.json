@@ -182,6 +182,12 @@
   "settings.pickListSelect": "Select pick list",
   "settings.pickListValues": "Pick list values",
   "settings.termPickList": "License term pick list setup",
+  "settings.noOfValues": "# of values",
+  "settings.pickList.deletePickList": "Delete pick list",
+  "settings.pickList.deletePickListError": "There was an error deleting pick list: <strong>{label}</strong>. {error}",
+
+  "settings.pickListValues.deletePickListValue": "Delete pick list value",
+  "settings.pickListValues.deletePickListValueError": "There was an error deleting pick list value: <strong>{label}</strong>. {error}",
 
   "settings.actions": "Actions",
   "settings.label": "Label",

@@ -1,59 +1,38 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 
 import { FormattedMessage } from 'react-intl';
-import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer, stripesConnect } from '@folio/stripes/core';
-import { NoValue } from '@folio/stripes/components';
 
-class PickListSettings extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-    }).isRequired,
-  };
+import { Pane } from '@folio/stripes/components';
 
-  constructor(props) {
-    super(props);
-    this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
-  }
+import { EditableRefdataCategoryList } from '@k-int/stripes-kint-components';
+import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
-  suppressDelete = (category) => {
-    const { internal, values = [] } = category;
 
-    return internal || values.length;
-  }
+const PickListSettings = () => {
+  const history = useHistory();
 
-  render() {
-    const { stripes } = this.props;
+  return (
+    <Pane
+      defaultWidth="fill"
+      dismissible
+      id="edit-refdata-desc"
+      onClose={() => history.push('/settings/licenses')}
+      paneTitle={
+        <FormattedMessage id="ui-licenses.settings.pickLists" />
+      }
+    >
+      <EditableRefdataCategoryList
+        label={
+          <FormattedMessage id="ui-licenses.settings.pickLists" />
+        }
+        labelOverrides={{
+          deleteRefdataCategory: <FormattedMessage id="ui-licenses.settings.pickList.deletePickList" />,
+          deleteError: (err, category) => <FormattedMessage id="ui-licenses.settings.pickList.deletePickListError" values={{ name: category.desc, error: err }} />
+        }}
+        refdataEndpoint={REFDATA_ENDPOINT}
+      />
+    </Pane>
+  );
+};
 
-    return (
-      <IntlConsumer>
-        {intl => (
-          <this.connectedControlledVocab
-            actionSuppressor={{ edit: () => true, delete: this.suppressDelete }}
-            baseUrl="licenses/refdata"
-            columnMapping={{
-              desc: intl.formatMessage({ id: 'ui-licenses.settings.pickList' }),
-              actions: intl.formatMessage({ id: 'ui-licenses.settings.actions' }),
-            }}
-            formatter={{ numberOfObjects: (item) => item.values?.length ?? <NoValue /> }}
-            hiddenFields={['lastUpdated']}
-            id="pick-lists"
-            itemTemplate={{ desc: this.desc, values: [] }}
-            label={<FormattedMessage id="ui-licenses.settings.pickLists" />}
-            labelSingular={intl.formatMessage({ id: 'ui-licenses.settings.pickList' })}
-            limitParam="perPage"
-            nameKey="desc"
-            objectLabel={<FormattedMessage id="ui-licenses.settings.values" />}
-            sortby="desc"
-            stripes={stripes}
-            visibleFields={['desc']}
-          />
-        )}
-      </IntlConsumer>
-    );
-  }
-}
-
-export default stripesConnect(PickListSettings);
+export default PickListSettings;
