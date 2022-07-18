@@ -8,7 +8,7 @@ import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import Form from '../../components/AmendmentForm';
-import { LICENSES_ENDPOINT, LICENSE_ENDPOINT } from '../../constants/endpoints';
+import { LICENSE_ENDPOINT } from '../../constants/endpoints';
 import { useLicenseRefdata } from '../../hooks';
 
 const [
@@ -62,7 +62,7 @@ const CreateAmendmentRoute = ({
     } }).json()
       .then(updatedLicense => {
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(LICENSES_ENDPOINT);
+        queryClient.invalidateQueries(['ERM', 'Licenses']);
         queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
 
         const originalAmendmentIds = {};
