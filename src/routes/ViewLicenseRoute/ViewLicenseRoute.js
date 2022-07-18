@@ -12,7 +12,7 @@ import { useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
 import { errorTypes } from '../../constants';
-import { LICENSES_ENDPOINT, LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+import { LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
 
 import { useLicensesHelperApp } from '../../hooks';
 
@@ -61,7 +61,7 @@ const ViewLicenseRoute = ({
   // License delete
   const { mutateAsync: deleteLicense } = useMutation(
     [licensePath, 'ui-licenses', 'LicenseViewRoute', 'deleteLicense'],
-    () => ky.delete(licensePath).then(() => queryClient.invalidateQueries(LICENSES_ENDPOINT))
+    () => ky.delete(licensePath).then(() => queryClient.invalidateQueries(['ERM', 'Licenses']))
   );
 
   // LinkedAgreements BATCH FETCH
