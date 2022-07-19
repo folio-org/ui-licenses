@@ -11,7 +11,7 @@ import { getRefdataValuesByDesc, useUsers } from '@folio/stripes-erm-components'
 
 import Form from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
-import { LICENSES_ENDPOINT, LICENSE_ENDPOINT } from '../constants/endpoints';
+import { LICENSE_ENDPOINT } from '../constants/endpoints';
 import { useLicenseRefdata } from '../hooks';
 
 const [
@@ -63,7 +63,7 @@ const EditLicenseRoute = ({
     (payload) => ky.put(LICENSE_ENDPOINT(licenseId), { json: payload }).json()
       .then(({ name }) => {
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(LICENSES_ENDPOINT);
+        queryClient.invalidateQueries(['ERM', 'Licenses']);
         queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
 
         callout.sendCallout({ message: <FormattedMessage id="ui-licenses.update.callout" values={{ name }} /> });

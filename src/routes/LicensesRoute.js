@@ -83,7 +83,7 @@ const LicensesRoute = ({
     results: licenses = [],
     total: licensesCount = 0
   } = useInfiniteFetch(
-    [LICENSES_ENDPOINT, licensesQueryParams, 'ui-licenses', 'LicensesRoute', 'getLicenses'],
+    ['ERM', 'Licenses', licensesQueryParams, LICENSES_ENDPOINT],
     ({ pageParam = 0 }) => {
       const params = [...licensesQueryParams, `offset=${pageParam}`];
       return ky.get(encodeURI(`${LICENSES_ENDPOINT}?${params?.join('&')}`)).json();
