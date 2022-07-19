@@ -127,42 +127,6 @@ const initialValues = {
 const isLoading = false;
 const onSubmit = 'ƒ handleSubmit() {}';
 
-const form = {
-  'batch': 'ƒ batch() {}',
-  'blur': 'ƒ blur() {}',
-  'change': 'ƒ change() {}',
-  'destroyOnUnregister': false,
-  'focus': 'ƒ focus() {}',
-  'mutators': {
-    'setFieldData': 'ƒ () {}',
-    'insert': 'ƒ () {}',
-    'concat': 'ƒ () {}',
-    'move': 'ƒ () {}',
-    'pop': 'ƒ () {}',
-    'push': 'ƒ () {}',
-    'remove': 'ƒ () {}',
-    'removeBatch': 'ƒ () {}',
-    'shift': 'ƒ () {}',
-    'swap': 'ƒ () {}',
-    'unshift': 'ƒ () {}',
-    'update': 'ƒ () {}'
-  },
-  'getFieldState': 'ƒ getFieldState() {}',
-  'getRegisteredFields': 'ƒ getRegisteredFields() {}',
-  'getState': 'ƒ getState() {}',
-  'initialize': 'ƒ initialize() {}',
-  'isValidationPaused': 'ƒ isValidationPaused() {}',
-  'pauseValidation': 'ƒ pauseValidation() {}',
-  'registerField': 'ƒ registerField() {}',
-  'reset': 'ƒ reset() {}',
-  'resetFieldState': 'ƒ resetFieldState() {}',
-  'restart': 'ƒ restart() {}',
-  'resumeValidation': 'ƒ resumeValidation() {}',
-  'setConfig': 'ƒ setConfig() {}',
-  'submit': 'ƒ () {}',
-  'subscribe': 'ƒ subscribe() {}'
-};
-
 const handleSubmit = 'ƒ handleSubmit() {}';
 const pristine = false;
 const submitting = false;
@@ -199,7 +163,6 @@ export {
   initialValues,
   isLoading,
   onSubmit,
-  form,
   handleSubmit,
   pristine,
   submitting,
