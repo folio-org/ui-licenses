@@ -9,15 +9,9 @@ import {
   handlers,
   initialValues,
   isLoading,
-  handleSubmit,
-  pristine,
-  submitting,
-  values,
-  mutators,
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 
-const data1 = {};
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -43,14 +37,8 @@ describe('AmendmentForm', () => {
             <AmendmentForm
               data={data}
               handlers={handlers}
-              handleSubmit={handleSubmit}
               isLoading={isLoading}
-              mutators={mutators}
-              navigationCheck
               onSubmit={onSubmit}
-              pristine={pristine}
-              submitting={submitting}
-              values={values}
             />
           </TestForm>
         </MemoryRouter>,

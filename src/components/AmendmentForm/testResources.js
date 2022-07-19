@@ -125,48 +125,10 @@ const initialValues = {
 };
 
 const isLoading = false;
-const onSubmit = 'ƒ handleSubmit() {}';
-
-const handleSubmit = 'ƒ handleSubmit() {}';
-const pristine = false;
-const submitting = false;
-const values = {
-  'status': 'active',
-  'openEnded': false,
-  'customProperties': '{authorisedUsers: Array(1), concurrentAccess: Array…}',
-  'name': 'Test Amendment',
-  'startDate': '2022-07-01',
-  'endDate': '2022-07-31',
-  'description': 'This is test description'
-};
-
-const mutators = {
-  'setFieldData': 'ƒ () {}',
-  'insert': 'ƒ () {}',
-  'concat': 'ƒ () {}',
-  'move': 'ƒ () {}',
-  'pop': 'ƒ () {}',
-  'push': 'ƒ () {}',
-  'remove': 'ƒ () {}',
-  'removeBatch': 'ƒ () {}',
-  'shift': 'ƒ () {}',
-  'swap': 'ƒ () {}',
-  'unshift': 'ƒ () {}',
-  'update': 'ƒ () {}'
-};
-
-const navigationCheck = true;
 
 export {
   data,
   handlers,
   initialValues,
   isLoading,
-  onSubmit,
-  handleSubmit,
-  pristine,
-  submitting,
-  values,
-  mutators,
-  navigationCheck
 };
