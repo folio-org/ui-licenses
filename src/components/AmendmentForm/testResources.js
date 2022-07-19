@@ -78,7 +78,7 @@ const data = {
 };
 
 const handlers = {
-  onClose: () => {}
+  onClose: 'ƒ () {}',
 };
 
 const initialValues = {
