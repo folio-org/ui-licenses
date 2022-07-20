@@ -54,6 +54,7 @@ const ExportLicenseAsCSVModal = ({
     }
   });
 
+  /* istanbul ignore next */
   keys.termNames = sortBy(fetchedTerms, (term) => {
     return term?.label?.toLowerCase();
   }).map(item => {
@@ -79,6 +80,7 @@ const ExportLicenseAsCSVModal = ({
     }
   }, [isLoading]);
 
+  /* istanbul ignore next */
   const toggleSelectAll = (e) => {
     const { checked } = e.target;
 
@@ -89,6 +91,7 @@ const ExportLicenseAsCSVModal = ({
     }));
   };
 
+  /* istanbul ignore next */
   const toggleSelectSection = (e, section) => {
     const { checked } = e.target;
 
@@ -98,6 +101,7 @@ const ExportLicenseAsCSVModal = ({
     }));
   };
 
+  /* istanbul ignore next */
   const updateSelection = (e, section) => {
     const { checked, name } = e.target;
     setCheckedState(prevState => ({
