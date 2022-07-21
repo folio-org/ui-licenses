@@ -3,7 +3,6 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 import { useStripes } from '@folio/stripes/core';
-import { screen } from '@testing-library/react';
 import { Button, Pane } from '@folio/stripes-testing';
 import { data, isLoading, handlers, urls } from './testResources';
 import translationsProperties from '../../../test/helpers';
@@ -89,17 +88,6 @@ describe('License', () => {
         </MemoryRouter>,
         translationsProperties
       );
-    });
-
-    test('clicking the Edit/Duplicate button in Actions dropdown', async () => {
-      await Button('Actions').click();
-      await Button('Edit').click();
-      await Button('Duplicate').click();
-    });
-
-    it('renders the TagButton component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('TagButton')).toBeInTheDocument();
     });
 
     it('renders the LicenseHeader component', () => {

@@ -63,33 +63,32 @@ const data = {
     'openEnded': false,
     'amendments': [],
     'orgs': [{
-      'id': '162fd1da-9dfe-4ae7-973e-1a9f339f2958',
+      'id': 'f2197f56-6475-4601-b3e2-c39f12c028c8',
       'primaryOrg': false,
       'org': {
-        'id': '23ce8c64-a35e-480d-b395-672400ddc118',
+        'id': 'd74c1e27-70cd-45c1-b4d9-b0a9f392052d',
         'orgsUuid': 'e0fb5df2-cdf1-11e8-a8d5-f2801f1b9fd1',
         'name': 'Amazon.com',
         'orgsUuid_object': '{accessProvider: false, accounts: Array(1), acqUnit…}'
       },
       'owner': {
-        'id': '760de5b6-7252-4611-ad98-28f445b699c6'
+        'id': '8a172f49-3dcb-4103-80d3-105359097067'
       },
-      'roles': [
-        '{id: "ab327017-4c4d-407b-b71e-f47522f28bda", owner:…}'
-      ],
-      'interfaces': [{
-        'id': 'cd592659-77aa-4eb3-ac34-c9a4657bb20f',
-        'name': 'Amazon',
-        'uri': 'www.amazon.com',
-        'available': false,
-        'type': [
-          'Orders'
-        ],
-        'metadata': {
-          'createdDate': '2022-07-20T01:52:03.402+00:00',
-          'updatedDate': '2022-07-20T01:52:03.402+00:00'
+      'roles': [{
+        'id': 'b9b46a88-72f2-4136-8541-18e2f2771121',
+        'owner': {
+          'id': 'f2197f56-6475-4601-b3e2-c39f12c028c8'
+        },
+        'role': {
+          'id': '2c91809d821bd92801821bdfdd8a000b',
+          'value': 'licensor',
+          'label': 'Licensor',
+          'owner': '{desc: "LicenseOrg.Role", id: "2c91809d821bd9280182…}'
         }
-      }]
+      }],
+      'interfaces': [
+        '{available: false, credentials: undefined, id: "cd5…}'
+      ]
     }],
     'type': {
       'id': '2c91809d821947fa0182194e9c6b000b',
