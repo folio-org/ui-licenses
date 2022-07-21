@@ -2,7 +2,7 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { Accordion, Checkbox } from '@folio/stripes-testing';
+import { Accordion, Checkbox, Selection, SelectionList as SelectListInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import LicenseFilters from './LicenseFilters';
@@ -64,11 +64,6 @@ describe('LicenseFilters', () => {
     expect(getByText('OrganizationSelection')).toBeInTheDocument();
   });
 
-  test('renders the DateFilter component', () => {
-    const { queryAllByText } = renderComponent;
-    expect(queryAllByText('DateFilter')).toBeInTheDocument();
-  });
-
   test('clicking the active checkbox', async () => {
     await Checkbox({ id: 'clickable-filter-status-active' }).click();
     expect(stateMock).toHaveBeenCalled();
@@ -112,5 +107,11 @@ describe('LicenseFilters', () => {
   test('clicking the type national checkbox', async () => {
     await Checkbox({ id: 'clickable-filter-type-national' }).click();
     expect(stateMock).toHaveBeenCalled();
+  });
+
+  it('choosing an organization role option', async () => {
+    await Selection({ id: 'stripes-selection-95' }).exists();
+    await Selection().open();
+    await SelectListInteractor({ optionCount: 1 }).exists();
   });
 });
