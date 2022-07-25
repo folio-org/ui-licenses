@@ -118,6 +118,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
           {([placeholder]) => (
             <Selection
               dataOptions={dataOptions}
+              id="org-role-selector"
               onChange={value => filterHandlers.state({ ...activeFilters, role: [value] })}
               placeholder={placeholder}
               value={roleFilters[0] || ''}

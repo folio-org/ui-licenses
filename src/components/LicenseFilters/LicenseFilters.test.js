@@ -110,7 +110,7 @@ describe('LicenseFilters', () => {
   });
 
   it('choosing an organization role option', async () => {
-    await Selection({ id: 'stripes-selection-95' }).exists();
+    await Selection({ id: 'org-role-selector' }).exists();
     await Selection().open();
     await SelectListInteractor({ optionCount: 1 }).exists();
   });

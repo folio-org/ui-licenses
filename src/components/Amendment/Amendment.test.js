@@ -12,6 +12,11 @@ jest.mock('@folio/stripes/components', () => ({
   LoadingPane: () => <div>LoadingPane</div>,
 }));
 
+jest.mock('@k-int/stripes-kint-components', () => ({
+  ...jest.requireActual('@k-int/stripes-kint-components'),
+  CustomPropertiesView: () => <div>CustomPropertiesView</div>,
+}));
+
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useLicensesContexts: jest.fn(() => ({ data: [] }))

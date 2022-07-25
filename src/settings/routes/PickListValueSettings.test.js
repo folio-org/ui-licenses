@@ -14,6 +14,11 @@ jest.mock('../../hooks', () => ({
   useLicenseRefdata: () => mockRefdata,
 }));
 
+jest.mock('@k-int/stripes-kint-components', () => ({
+  ...jest.requireActual('@k-int/stripes-kint-components'),
+  EditableRefdataList: () => <div>EditableRefdataList</div>,
+}));
+
 describe('PickListValueSettings', () => {
   describe('rendering the PickListValueSettings', () => {
     let renderComponent;
