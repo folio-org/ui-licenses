@@ -12,6 +12,7 @@ import {
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import CreateAmendmentRoute from './CreateAmendmentRoute';
+import mockRefdata from '../../../test/jest/refdata';
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
@@ -24,6 +25,11 @@ CloseButton.propTypes = {
 };
 const historyPushMock = jest.fn();
 const hasPermMock = jest.fn();
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useLicenseRefdata: () => mockRefdata,
+}));
 
 jest.mock('../../components/AmendmentForm', () => {
   return (props) => (
