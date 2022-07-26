@@ -48,6 +48,7 @@ const ViewLicenseRoute = ({
     },
     isLoading: isLicenseLoading
   } = useQuery(
+    // NOTE Used as invalidate link for tags below!
     [licensePath, 'getLicense'],
     () => ky.get(licensePath).json(),
     {
