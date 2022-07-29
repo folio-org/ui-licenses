@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "8.2.1",
+  "version": "8.2.2",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -71,8 +71,8 @@
     "graphql": "^16.0.0"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^6.2.0",
-    "@k-int/stripes-kint-components": "^2.6.5",
+    "@folio/stripes-erm-components": "^6.2.1",
+    "@k-int/stripes-kint-components": "^2.8.2",
     "@folio/stripes-testing": "^4.2.0",
     "@rehooks/local-storage": "2.4.4",
     "@testing-library/react": "^12.1.2",

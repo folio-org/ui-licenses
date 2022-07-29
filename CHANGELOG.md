@@ -1,5 +1,9 @@
 # Change history for ui-licenses
 
+## 8.2.2 2022-07-29
+* ERM-2297 Number of tags doesn't update on adding tags to agreement or agreement line
+* ERM-2282 Toast message fails to display to user
+
 ## 8.2.1 2022-07-04
 * ERM-2225 Amendment/License link status values do not update immediately after Agreement edit
 * ERM-2224 Error on duplicating amendment
