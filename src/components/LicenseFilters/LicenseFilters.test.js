@@ -6,6 +6,8 @@ import { Accordion, Checkbox, Selection, SelectionList as SelectListInteractor }
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import LicenseFilters from './LicenseFilters';
+import { waitFor } from '@testing-library/dom';
+import { act } from '@testing-library/react';
 
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
@@ -24,6 +26,7 @@ const filterHandlers = {
   reset: () => {},
   stat: () => {},
 };
+
 describe('LicenseFilters', () => {
   let renderComponent;
   beforeEach(() => {
@@ -59,54 +62,101 @@ describe('LicenseFilters', () => {
     await Accordion('Tags').exists();
   });
 
-  test('renders the OrganizationSelection component', () => {
+  test('renders the OrganizationSelection component', async () => {
     const { getByText } = renderComponent;
-    expect(getByText('OrganizationSelection')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByText('OrganizationSelection')).toBeInTheDocument();
+    });
   });
 
   test('clicking the active checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-status-active' }).click();
-    expect(stateMock).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-active' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(1);
+    });
   });
 
   test('clicking the expired checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-status-expired' }).click();
-    expect(stateMock).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-expired' }).click();
+    });
+  
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(2);
+    });
   });
 
   test('clicking the negotiation checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-status-in-negotiation' }).click();
-    expect(stateMock).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-in-negotiation' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(3);
+    });
   });
 
   test('clicking the in not active yet checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-status-not-yet-active' }).click();
-    expect(stateMock).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-not-yet-active' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(4);
+    });
   });
 
   test('clicking the rejected checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-status-rejected' }).click();
-    expect(stateMock).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-rejected' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(5);
+    });
   });
 
   test('clicking the for type alliance checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-type-alliance' }).click();
-    expect(stateMock).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-type-alliance' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(6);
+    });
   });
 
   test('clicking the consortial checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-type-consortial' }).click();
-    expect(stateMock).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-type-consortial' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(7);
+    });
   });
 
   test('clicking the type local checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-type-local' }).click();
-    expect(stateMock).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-type-local' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(8);
+    });
   });
 
   test('clicking the type national checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-type-national' }).click();
-    expect(stateMock).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-type-national' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(9);
+    });
   });
 
   it('choosing an organization role option', async () => {
