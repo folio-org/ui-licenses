@@ -202,11 +202,11 @@
     "terms.deleteError": "There was an error deleting term: <strong>{label}</strong>. {error}",
     "term.editModal": "تحرير المصطلح",
     "term.newModal": "مصطلح جديد",
-    "terms.defaultTitle": "Terms ({ctx})",
+    "terms.defaultTitle": "مصطلحات ({ctx})",
     "terms.filtersApplied": "{count} term filters applied",
     "terms.editCustomPropertyFilters": "تحرير منقحات المصطلحات",
     "terms.filterBuilder": "Term filter builder",
-    "terms.filterIndex": "Term filter {index}",
+    "terms.filterIndex": "منقح المصطلحات {index}",
     "terms.removeFilter": "Remove Term filter {index}",
     "terms.deprecated": "DEPRECATED: {name}"
 }
