@@ -195,7 +195,7 @@
     "settings.pickList.deletePickListError": "Beim Löschen der Auswahlliste ist ein Fehler aufgetreten: <strong>{label}</strong>. {error}",
     "settings.pickListValues.deletePickListValue": "Auswahllistenwert löschen",
     "settings.pickListValues.deletePickListValueError": "Beim Löschen des Auswahllistenwerts ist ein Fehler aufgetreten: <strong>{label}</strong>. {error}",
-    "terms.help.category": "Terms can be categorised. Each category will appear as a separate accordion when viewing or editing the license.",
+    "terms.help.category": "Bedingungen können kategorisiert werden. Jede Kategorie wird beim Anzeigen oder Bearbeiten des Lizenzvertrags als separates Akkordeon angezeigt.",
     "terms.category": "Kategorie",
     "terms.pickList": "Auswahlliste",
     "terms.multiPickList": "Auswahlliste (Mehrfachauswahl)",
