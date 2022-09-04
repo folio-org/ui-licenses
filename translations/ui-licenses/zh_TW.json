@@ -155,7 +155,7 @@
     "amendments.view.paneTitle": "修改： {name}",
     "amendments.view.status": "修改狀態",
     "amendments.view.startDate": "修改起始日期",
-    "amendments.view.endDate": "修改终止日期",
+    "amendments.view.endDate": "修改終止日期",
     "amendments.view.license.licensor": "授權核發者",
     "prop.licensor.notSet": "未設定",
     "licenses": "授權",
