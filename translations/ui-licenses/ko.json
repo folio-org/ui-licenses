@@ -202,11 +202,11 @@
     "terms.deleteError": "<strong> {label} </strong> 조건을 삭제하는 동안 오류가 발생했습니다. {error}",
     "term.editModal": "조건 수정",
     "term.newModal": "새 조건",
-    "terms.defaultTitle": "계약 및 이용 조건 (Terms)",
+    "terms.defaultTitle": "계약 및 이용 조건 ({ctx})",
     "terms.filtersApplied": "{count} 조건 필터 적용됨",
     "terms.editCustomPropertyFilters": "조건 필터 편집",
     "terms.filterBuilder": "조건 필터 빌더",
     "terms.filterIndex": "조건 필터 {index}",
     "terms.removeFilter": "조건 필터 {index} 제거",
-    "terms.deprecated": "사용되지 않음: {이름}"
+    "terms.deprecated": "사용되지 않음: {name}"
 }
