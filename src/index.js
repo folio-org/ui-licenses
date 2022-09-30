@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
+
+import { useIntlKeyStore } from '@k-int/stripes-kint-components';
+
 import { AppContextMenu, Route } from '@folio/stripes/core';
 import {
   CommandList,
@@ -46,6 +49,10 @@ const App = (props) => {
     handleToggle();
     setShowKeyboardShortcutsModal(true);
   };
+
+
+  const addKey = useIntlKeyStore(state => state.addKey);
+  addKey('ui-licenses');
 
   const searchInput = () => {
     return location.pathname.search('/licenses') === 0 ?

@@ -33,22 +33,6 @@ const LicensesCustomProperties = () => {
     }
   ];
 
-  const labelOverrides = {
-    modalTitleEdit: <FormattedMessage id="ui-licenses.term.editModal" />,
-    modalTitleNew: <FormattedMessage id="ui-licenses.term.newModal" />,
-    paneTitle: <FormattedMessage id="ui-licenses.terms" />,
-    primary: <FormattedMessage id="ui-licenses.terms.primary" />,
-    retired: <FormattedMessage id="ui-licenses.terms.retired" />,
-    primaryRetired: <FormattedMessage id="ui-licenses.terms.primaryRetired" />,
-    ctx: <FormattedMessage id="ui-licenses.terms.category" />,
-    category: <FormattedMessage id="ui-licenses.terms.pickList" />,
-    deleteError: (error, custProp) => (<FormattedMessage id="ui-licenses.terms.deleteError" values={{ label: custProp?.label, error }} />)
-  };
-
-  // These overrides need to be formatted as strings because they will be utilised in a select
-  labelOverrides[REFDATA_CLASS_NAME] = intl.formatMessage({ id: 'ui-licenses.terms.pickList' });
-  labelOverrides[MULTI_REFDATA_CLASS_NAME] = intl.formatMessage({ id: 'ui-licenses.terms.multiPickList' });
-
   const helpPopovers = {
     name: <FormattedMessage id="ui-licenses.terms.help.name" />,
     label: <FormattedMessage id="ui-licenses.terms.help.label" />,
@@ -65,7 +49,6 @@ const LicensesCustomProperties = () => {
       contextFilterOptions={contexts}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
       helpPopovers={helpPopovers}
-      labelOverrides={labelOverrides}
       refdataEndpoint={REFDATA_ENDPOINT}
     />
   );

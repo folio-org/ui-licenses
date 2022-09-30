@@ -179,20 +179,6 @@ const LicenseForm = ({
                         contexts={contexts}
                         customPropertiesEndpoint={CUSTPROP_ENDPOINT}
                         id="terms"
-                        labelOverrides={{
-                          defaultTitle: (ctx) => <FormattedMessage id="ui-licenses.terms.defaultTitle" values={{ ctx }} />,
-                          noContext: <FormattedMessage id="ui-licenses.terms" />,
-                          primaryProperties: (
-                            <Headline margin="x-small" size="large" tag="h4">
-                              <FormattedMessage id="ui-licenses.terms.primaryTerms" />
-                            </Headline>
-                          ),
-                          optionalProperties: (
-                            <Headline margin="x-small" size="large" tag="h4">
-                              <FormattedMessage id="ui-licenses.terms.optionalTerms" />
-                            </Headline>
-                          )
-                        }}
                       />
                       <FormSupplementaryDocs {...getSectionProps('licenseFormSupplementaryDocs')} />
                     </AccordionSet>

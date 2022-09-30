@@ -216,11 +216,6 @@ const License = ({
                   customProperties={data.license.customProperties}
                   customPropertiesEndpoint={CUSTPROP_ENDPOINT}
                   id="terms"
-                  labelOverrides={{
-                    defaultTitle: (ctx) => <FormattedMessage id="ui-licenses.terms.defaultTitle" values={{ ctx }} />,
-                    noContext: <FormattedMessage id="ui-licenses.terms" />,
-                    retiredName: (name) => <FormattedMessage id="ui-licenses.terms.deprecated" values={{ name }} />,
-                  }}
                 />
                 <LicenseAmendments {...getSectionProps('licenseAmendments')} />
                 {data.license?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('licenseSupplement')} />}

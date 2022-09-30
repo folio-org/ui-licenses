@@ -176,16 +176,6 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
       activeFilters={activeFilters}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
       filterHandlers={filterHandlers}
-      labelOverrides={{
-        customProperty: <FormattedMessage id="ui-licenses.term" />,
-        customProperties: <FormattedMessage id="ui-licenses.terms" />,
-        filtersApplied: (count) => <FormattedMessage id="ui-licenses.terms.filtersApplied" values={{ count }} />,
-        editCustomPropertyFilters: <FormattedMessage id="ui-licenses.terms.editCustomPropertyFilters" />,
-        filterBuilder: <FormattedMessage id="ui-licenses.terms.filterBuilder" />,
-        customPropertyFilter: (index) => <FormattedMessage id="ui-licenses.terms.filterIndex" values={{ index: index + 1 }} />,
-        removeFilter: (index) => <FormattedMessage id="ui-licenses.terms.removeFilter" values={{ index: index + 1 }} />,
-        retiredName: (name) => intl.formatMessage({ id: 'ui-licenses.terms.deprecated' }, { name }),
-      }}
     />;
   };
 
