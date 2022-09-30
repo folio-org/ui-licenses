@@ -13,7 +13,6 @@ import {
   Col,
   ExpandAllButton,
   HasCommand,
-  Headline,
   IconButton,
   LoadingView,
   Pane,

@@ -3,12 +3,10 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useQueryClient } from 'react-query';
 
-import { customPropertyContants, CustomPropertiesSettings } from '@k-int/stripes-kint-components';
+import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
 import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 import { useLicensesContexts } from '../../hooks';
-
-const { REFDATA_CLASS_NAME, MULTI_REFDATA_CLASS_NAME } = customPropertyContants;
 
 const LicensesCustomProperties = () => {
   const intl = useIntl();
