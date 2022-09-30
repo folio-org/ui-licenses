@@ -182,11 +182,6 @@ const Amendment = ({
                 customProperties={data.amendment.customProperties}
                 customPropertiesEndpoint={CUSTPROP_ENDPOINT}
                 id="terms"
-                labelOverrides={{
-                  defaultTitle: (ctx) => <FormattedMessage id="ui-licenses.terms.defaultTitle" values={{ ctx }} />,
-                  noContext: <FormattedMessage id="ui-licenses.terms" />,
-                  retiredName: (name) => <FormattedMessage id="ui-licenses.terms.deprecated" values={{ name }} />,
-                }}
               />
               {data.amendment?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('amendmentSupplementaryDocs')} />}
               {data.license?.linkedAgreements?.length > 0 && <LicenseAgreements {...getSectionProps('licenseAgreements')} visibleColumns={visibleColumns} />}

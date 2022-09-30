@@ -3,11 +3,10 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 import { Accordion, Checkbox, Selection, SelectionList as SelectListInteractor } from '@folio/stripes-testing';
+import { waitFor } from '@testing-library/dom';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import LicenseFilters from './LicenseFilters';
-import { waitFor } from '@testing-library/dom';
-import { act } from '@testing-library/react';
 
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
@@ -83,7 +82,7 @@ describe('LicenseFilters', () => {
     await waitFor(async () => {
       await Checkbox({ id: 'clickable-filter-status-expired' }).click();
     });
-  
+
     await waitFor(() => {
       expect(stateMock.mock.calls.length).toEqual(2);
     });
