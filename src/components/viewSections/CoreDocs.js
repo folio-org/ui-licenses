@@ -25,6 +25,7 @@ const CoreDocs = ({
       <DocumentCard
         key={doc.id}
         hasDownloadPerm={stripes.hasPerm('ui-licenses.licenses.file.download')}
+        hideCategory
         onDownloadFile={handleDownloadFile}
         {...doc}
       />
