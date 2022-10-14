@@ -92,6 +92,8 @@
     "emptyAccordion.linkedAgreements": "No linked agreements for this license",
     "cancel": "Cancel",
     "term": "Term",
+    "terms.all": "All",
+    "terms.none": "None",
     "export.csv.label": "Export selected as CSV ({count, number} items)",
     "exportLicenses": "Export licenses as CSV",
     "exportLicensesModal.message": "Please select which license details to export",
