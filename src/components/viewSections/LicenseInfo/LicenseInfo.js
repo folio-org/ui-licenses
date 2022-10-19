@@ -55,6 +55,7 @@ class LicenseInfo extends React.Component {
           <MultiColumnList
             columnMapping={{ name: <FormattedMessage id="ui-licenses.alternativeNames" /> }}
             contentData={license.alternateNames}
+            id="alternate-names-list"
             visibleColumns={['name']}
           />
         }
