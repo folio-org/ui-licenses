@@ -97,7 +97,7 @@ const Licenses = ({
       isWithinScope={checkScope}
       scope={document.body}
     >
-      <div data-test-licenses>
+      <div data-test-licenses data-testid="licenses">
         <SearchAndSortQuery
           initialFilterState={{ status: ['active'] }}
           initialSearchState={{ query: '' }}
