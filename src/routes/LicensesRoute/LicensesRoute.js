@@ -8,10 +8,10 @@ import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-co
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc, useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
 
-import View from '../components/Licenses';
-import NoPermissions from '../components/NoPermissions';
-import { LICENSES_ENDPOINT } from '../constants/endpoints';
-import { useLicenseRefdata } from '../hooks';
+import View from '../../components/Licenses';
+import NoPermissions from '../../components/NoPermissions';
+import { LICENSES_ENDPOINT } from '../../constants/endpoints';
+import { useLicenseRefdata } from '../../hooks';
 
 const RECORDS_PER_REQUEST = 100;
 
