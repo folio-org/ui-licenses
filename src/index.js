@@ -24,7 +24,7 @@ import ViewLicenseRoute from './routes/ViewLicenseRoute';
 
 import ViewAmendmentRoute from './routes/ViewAmendmentRoute';
 import CreateAmendmentRoute from './routes/CreateAmendmentRoute';
-import EditAmendmentRoute from './routes/EditAmendmentRoute';
+import EditAmendmentRoute from './routes/EditAmendmentRoute/EditAmendmentRoute';
 
 import NoteCreateRoute from './routes/NoteCreateRoute';
 import NoteViewRoute from './routes/NoteViewRoute';
