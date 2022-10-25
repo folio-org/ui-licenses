@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { NoteEditPage } from '@folio/stripes/smart-components';
 
-import { formatNoteReferrer, urls } from '../components/utils';
+import { formatNoteReferrer, urls } from '../../components/utils';
 
 export default class NoteEditRoute extends Component {
   static propTypes = {
