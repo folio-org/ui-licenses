@@ -169,7 +169,7 @@ const AmendmentForm = ({
               paneTitle={id ? <FormattedMessage id="ui-licenses.amendments.edit" values={{ name }} /> : <FormattedMessage id="ui-licenses.amendments.create" />}
               {...paneProps}
             >
-              <TitleManager record={id ? name : create}>
+              <TitleManager record={id ? name : create?.[0]}>
                 <form id="form-amendment">
                   <AmendmentFormInfo {...getSectionProps()} />
                   <AccordionStatus ref={accordionStatusRef}>

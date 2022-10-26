@@ -161,7 +161,7 @@ const LicenseForm = ({
               footer={renderPaneFooter()}
               paneTitle={id ? <FormattedMessage id="ui-licenses.editLicense.name" values={{ name }} /> : <FormattedMessage id="ui-licenses.createLicense" />}
             >
-              <TitleManager record={id ? name : create}>
+              <TitleManager record={id ? name : create?.[0]}>
                 <form id="form-license">
                   <AccordionStatus ref={accordionStatusRef}>
                     <Row end="xs">
