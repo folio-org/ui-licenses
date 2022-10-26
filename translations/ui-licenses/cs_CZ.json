@@ -166,7 +166,7 @@
     "section.parentLicenseAgreements": "Smlouvy propojené s nadřazenou licencí",
     "settings.settingsSection.fileStorage": "Ukládání souborů",
     "settings.fileStorage.s3AccessKey": "Přístupový klíč S3",
-    "settings.fileStorage.s3BucketName": "Název kbelíku S3",
+    "settings.fileStorage.s3BucketName": "Název segmentu S3",
     "settings.fileStorage.s3Endpoint": "Koncový bod S3",
     "settings.fileStorage.s3ObjectPrefix": "Předpona objektu S3",
     "settings.fileStorage.s3SecretKey": "Tajný klíč S3",
@@ -255,7 +255,7 @@
     "apply": "Použít",
     "refdata.deleteRefdataValue": "Smazat hodnotu výběrového seznamu",
     "refdata.deleteRefdataValue.confirmMessage": "<strong>{name}</strong> bude smazáno.",
-    "refdata.deleteRefdataValue.errorMessage": "<strong>Chyba:</strong> Hodnota seznamu <strong>{label}</strong> nebyla smazána, protože se používá v jednom nebo více termínech na jedné nebo více licencích.",
+    "refdata.deleteRefdataValue.errorMessage": "<strong>Chyba:</strong> Hodnota výběrového seznamu <strong>{label}</strong> nebyla smazána, protože se používá v jednom nebo více termínech na jedné nebo více licencích.",
     "refdata.label": "Štítek",
     "refdata.value": "Hodnota",
     "refdata.editAriaLabel": "Upravit hodnotu {label}",
@@ -266,7 +266,7 @@
     "refdataCategory.deleteAriaLabel": "Smazat hodnotu {label}",
     "refdataCategory.deleteRefdataCategory": "Smazat kategorii výběrového seznamu",
     "refdataCategory.deleteRefdataCategory.confirmMessage": "<strong>{name}</strong> bude smazáno.",
-    "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Chyba: {label}</strong> nebyl smazán. {error}",
+    "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Chyba</strong>: Výběrový seznam <strong>{label}</strong> nebyl smazán. Je to pravděpodobně proto, že bylo použito na jeden nebo více výrazů. Chcete-li to opravit, odeberte výběrový seznam ze všech termínů a zkuste výběrový seznam smazat znovu.",
     "operator.isSet": "Je nastaveno",
     "operator.isNotSet": "Není nastaveno",
     "operator.equals": "Rovná se",
@@ -278,5 +278,7 @@
     "operator.is": "Je",
     "operator.isNot": "Není",
     "operator.contains": "Obsahuje",
-    "operator.doesNotContain": "Neobsahuje"
+    "operator.doesNotContain": "Neobsahuje",
+    "terms.all": "Všechny",
+    "terms.none": "Žádný"
 }
