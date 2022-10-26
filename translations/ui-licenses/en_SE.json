@@ -278,5 +278,7 @@
     "operator.is": "Is",
     "operator.isNot": "Is not",
     "operator.contains": "Contains",
-    "operator.doesNotContain": "Does not contain"
+    "operator.doesNotContain": "Does not contain",
+    "terms.all": "All",
+    "terms.none": "None"
 }
