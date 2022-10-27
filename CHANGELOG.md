@@ -1,6 +1,39 @@
 # Change history for ui-licenses
 
-## 8.3.0 In progress
+## 8.3.0 2022-10-26
+* ERM-2386 Show a user-friendly message when deleting a pick list with 0 values which is assigned to a License Term
+* ERM-2379 @folio/stripes-testing is incorrectly listed as a direct dependency
+* ERM-2371 In custom property Type dropdown Refdata and Refdata (multi-select) should be labelled "Pick list" and "Pick list (multi-select)"
+* ERM-2366 Core documents for a License shouldn't display a category
+* ERM-2321 stripes-erm-components should be a peer
+* ERM-2316 Update for stripes-kint-components translation handling changes
+* ERM-2283 Upgrade Users interface to 16.0
+* ERM-2279 Refactor ui-plugin-find-license to react-query
+* ERM-2216 Migrate ui-licenses Picklist Settings
+* ERM-2173 New / Edit supplementary property and Term modals: UX improvements (Settings app)
+* ERM-2157 Add multi-select support for custom properties
+* FAT-82 ui-licenses: UI tests replacement with RTL/Jest
+  * ERM-2275 Add test coverage for ui-licenses routes <NoteEditRoute>
+  * ERM-2274 Add test coverage for ui-licenses routes <NoteCreateRoute>
+  * ERM-2273 Add test coverage for ui-licenses routes <LicensesRoute>
+  * ERM-2271 Add test coverage for ui-licenses routes <EditAmendmentRoute>
+  * ERM-2270 Add test coverage for ui-licenses routes <CreateLicenseRoute>
+  * ERM-2269 Add test coverage for ui-licenses viewSections <SupplementaryDocs>
+  * ERM-2268 Add test coverage for ui-licenses viewSections <LicenseOrganizations>
+  * ERM-2267 Add test coverage for ui-licenses viewSections <LicenseInternalContacts>
+  * ERM-2266 Add test coverage for ui-licenses viewSections <LicenseInfo>
+  * ERM-2265 Add test coverage for ui-licenses viewSections <LicenseHeader>
+  * ERM-2264 Add test coverage for ui-licenses viewSections <LicenseAmendments>
+  * ERM-2263 Add test coverage for ui-licenses viewSections <LicenseAgreements>
+  * ERM-2262 Add test coverage for ui-licenses viewSections <CoreDocs>
+  * ERM-2260 Add test coverage for ui-licenses viewSections <AmendmentInfo>
+  * ERM-2257 Add test coverage for ui-licenses <Licenses>
+  * ERM-2256 Add test coverage for ui-licenses <LicenseFilters>
+  * ERM-2255 Add test coverage for ui-licenses <License>
+  * ERM-2254 Add test coverage for ui-licenses <ExportLicenseAsCSVModal>
+  * ERM-2253 Add test coverage for ui-licenses <DuplicateLicenseModal>
+  * ERM-2252 Add test coverage for ui-licenses <DuplicateAmendmentModal>
+  * ERM-2251 Add test coverage for ui-licenses <AmendmentForm>
 * Bump to stripes-erm-components ^7.0.0
 
 ## 8.2.2 2022-07-29
