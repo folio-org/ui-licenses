@@ -176,12 +176,12 @@ const Licenses = ({
                           </Icon>
                         </Button>
                       </div>
-                      <LicenseFilters
-                        activeFilters={activeFilters.state}
-                        data={data}
-                        filterHandlers={getFilterHandlers()}
-                      />
                     </form>
+                    <LicenseFilters
+                      activeFilters={activeFilters.state}
+                      data={data}
+                      filterHandlers={getFilterHandlers()}
+                    />
                   </Pane>
                 }
                 <Pane
