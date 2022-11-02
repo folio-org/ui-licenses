@@ -1,5 +1,5 @@
 export { default as AmendmentInfo } from './AmendmentInfo';
-export { default as AmendmentLicense } from './AmendmentLicense/AmendmentLicense';
+export { default as AmendmentLicense } from './AmendmentLicense';
 
 export { default as LicenseAgreements } from './LicenseAgreements';
 export { default as LicenseAmendments } from './LicenseAmendments';
