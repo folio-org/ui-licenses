@@ -7,11 +7,6 @@ import translationsProperties from '../../../../test/helpers';
 import {license, urls} from './testResources';
 import AmendmentLicense from './AmendmentLicense';
 
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  LicenseEndDate: () => <div>LicenseEndDate</div>,
-}));
-
 describe('AmendmentLicense', () => {
   let renderComponent;
   beforeEach(() => {
@@ -43,11 +38,6 @@ describe('AmendmentLicense', () => {
 
   test('renders the expected License end date value', async () => {
     await KeyValue('End date').has({ value: '11/30/2022' });
-  });
-
-  it('renders the LicenseEndDate component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('LicenseEndDate')).toBeInTheDocument();
   });
 
   test('renders the expected Licensor value', async () => {
