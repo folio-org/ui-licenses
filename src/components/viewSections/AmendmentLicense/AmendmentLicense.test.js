@@ -4,7 +4,7 @@ import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers'
 import { KeyValue } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
-import {license, urls} from './testResources';
+import { license, urls } from './testResources';
 import AmendmentLicense from './AmendmentLicense';
 
 describe('AmendmentLicense', () => {
@@ -12,7 +12,7 @@ describe('AmendmentLicense', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <MemoryRouter>
-        <AmendmentLicense license={license} urls={urls}/>
+        <AmendmentLicense license={license} urls={urls} />
       </MemoryRouter>,
       translationsProperties
     );
@@ -40,7 +40,7 @@ describe('AmendmentLicense', () => {
     await KeyValue('End date').has({ value: '11/30/2022' });
   });
 
-  test('renders the expected Licensor value', async () => {
-    await KeyValue('Licensor').has({ value: 'Not set' });
+  test('renders the expected Primary org value', async () => {
+    await KeyValue('Primary organization').has({ value: 'Alexander Street Press' });
   });
 });
