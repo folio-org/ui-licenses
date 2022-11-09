@@ -211,7 +211,7 @@
     "customProperties.value": "Valor(es)",
     "customProperties.visibility": "Visibilidade",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyBlob": "Bolha",
-    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyBoolean": "Boleano",
+    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyBoolean": "Booleano",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyContainer": "Contêiner",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyDecimal": "Decimal",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyInteger": "Inteiro",
