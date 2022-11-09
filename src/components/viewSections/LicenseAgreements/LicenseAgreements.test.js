@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { StaticRouter as Router } from 'react-router-dom';
 import { Accordion, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
 import {
@@ -57,7 +57,7 @@ describe('LicenseAgreements', () => {
   test('renders expected endDate in each row', async () => {
     Promise.all([
       await MultiColumnListCell({ row: 0, columnIndex: 3 }).has({ content: '10/31/2022' }),
-      await MultiColumnListCell({ row: 1, columnIndex: 3 }).has({ content: 'stripes-components.noValue.noValueSet-' })
+      await MultiColumnListCell({ row: 1, columnIndex: 3 }).has({ content: 'No value set-' })
     ]);
   });
 

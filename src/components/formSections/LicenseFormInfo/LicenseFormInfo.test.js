@@ -1,16 +1,10 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Datepicker, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import { data, values, mutators } from './testResources';
 import LicenseFormInfo from './LicenseFormInfo';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  AlternativeNamesFieldArray: () => <div>AlternativeNamesFieldArray</div>,
-}));
-
 
 const onSubmit = jest.fn();
 const onDownloadFileMock = jest.fn();

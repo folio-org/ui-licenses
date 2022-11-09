@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Button, Pane } from '@folio/stripes-testing';
 import AmendmentForm from './AmendmentForm';
@@ -12,23 +12,14 @@ import {
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-}));
-
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  CustomPropertiesEdit: () => <div>CustomPropertiesEdit</div>,
-}));
-
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useLicensesContexts: jest.fn(() => ({ data: [] }))
 }));
 
 jest.mock('../formSections/AmendmentFormInfo', () => () => <div>AmendmentFormInfo</div>);
+jest.mock('../formSections/FormSupplementaryDocs', () => () => <div>FormSupplementaryDocs</div>);
+jest.mock('../formSections/FormCoreDocs', () => () => <div>FormCoreDocs</div>);
 
 const onSubmit = jest.fn();
 
@@ -38,14 +29,13 @@ describe('AmendmentForm', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-            <AmendmentForm
-              data={data}
-              handlers={handlers}
-              isLoading={isLoading}
-              onSubmit={onSubmit}
-            />
-          </TestForm>
+          <AmendmentForm
+            data={data}
+            handlers={handlers}
+            initialValues={initialValues}
+            isLoading={isLoading}
+            onSubmit={onSubmit}
+          />
         </MemoryRouter>,
         translationsProperties
       );
@@ -64,18 +54,9 @@ describe('AmendmentForm', () => {
       await Button('Collapse all').exists();
     });
 
-    it('renders Core documents accordion', () => {
+    it('renders the FormCoreDocs component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('Core documents')).toBeInTheDocument();
-    });
-
-    it('renders empty core documents message', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('No core documents have been added.')).toBeInTheDocument();
-    });
-
-    test('renders Add core document button', async () => {
-      await Button('Add core document').exists();
+      expect(getByText('FormCoreDocs')).toBeInTheDocument();
     });
 
     it('renders CustomPropertiesEdit component', () => {
@@ -83,38 +64,30 @@ describe('AmendmentForm', () => {
       expect(getByText('CustomPropertiesEdit')).toBeInTheDocument();
     });
 
-    it('renders Supplementary documents accordion', () => {
+    it('renders the FormSupplementaryDocs component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('Supplementary documents')).toBeInTheDocument();
-    });
-
-    it('renders empty supplementary documents message', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('No supplementary documents have been added')).toBeInTheDocument();
-    });
-
-    test('renders Add supplementary document button', async () => {
-      await Button('Add supplementary document').exists();
+      expect(getByText('FormSupplementaryDocs')).toBeInTheDocument();
     });
 
     test('renders Cancel button', async () => {
       await Button('Cancel').exists();
     });
 
-    test('renders Submit button', async () => {
-      await Button('Submit').exists();
+    test('renders Save and close button', async () => {
+      // Will be disabled because no changes were made
+      await Button('Save and close').has({ disabled: true });
     });
   });
+
   describe('LoadingView', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-            <AmendmentForm
-              isLoading
-              onSubmit={onSubmit}
-            />
-          </TestForm>
+          <AmendmentForm
+            initialValues={initialValues}
+            isLoading
+            onSubmit={onSubmit}
+          />
         </MemoryRouter>,
         translationsProperties
       );

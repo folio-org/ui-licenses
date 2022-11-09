@@ -1,20 +1,10 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import LicenseForm from './LicenseForm';
 import { data, initialValues, form } from './testResources';
 import translationsProperties from '../../../test/helpers';
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-}));
-
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  CustomPropertiesEdit: () => <div>CustomPropertiesEdit</div>,
-}));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
