@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import DuplicateAmendmentModal from './DuplicateAmendmentModal';
