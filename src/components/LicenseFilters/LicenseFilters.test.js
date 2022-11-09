@@ -1,19 +1,12 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Accordion, Checkbox, Selection, SelectionList as SelectListInteractor } from '@folio/stripes-testing';
 import { waitFor } from '@testing-library/dom';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import LicenseFilters from './LicenseFilters';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents,
-  OrganizationSelection: () => <div>OrganizationSelection</div>,
-  DateFilter: () => <div>DateFilter</div>,
-}));
 
 const stateMock = jest.fn();
 

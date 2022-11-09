@@ -1,7 +1,8 @@
 
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
+
 import { MemoryRouter } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
@@ -9,15 +10,11 @@ import translationsProperties from '../../../test/helpers';
 import LicensesRoute from './LicensesRoute';
 import mockRefdata from '../../../test/jest/refdata';
 
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents,
-}));
+/* The below mock is not needed, but was previously present, and this represents the best currently
+ * known way of mocking a specific stripes-component within this manual-mock setup
 
-jest.mock('@folio/stripes-components', () => ({
-  ...jest.requireActual('@folio/stripes-components'),
-  Selection: () => <div>Selection</div>,
-}));
+ * jest.mock('@folio/stripes-components/lib/Selection', () => () => <div>Selection</div>);
+ */
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),

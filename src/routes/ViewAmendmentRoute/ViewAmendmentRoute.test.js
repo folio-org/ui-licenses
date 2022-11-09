@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
@@ -9,12 +9,6 @@ import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import { handlers, resources, okapi } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import ViewAmendmentRoute from './ViewAmendmentRoute';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents,
-  OrganizationSelection: () => <div>OrganizationSelection</div>,
-}));
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;

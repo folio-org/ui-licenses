@@ -117,7 +117,7 @@ const AmendmentForm = ({
         <FormattedMessage id="ui-licenses.amendments.closePane">
           {ariaLabel => (
             <IconButton
-              aria-label={ariaLabel}
+              aria-label={ariaLabel?.[0]}
               icon="times"
               id="close-amendment-form-button"
               onClick={handlers.onClose}
