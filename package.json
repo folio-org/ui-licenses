@@ -68,7 +68,7 @@
     "typescript": "^2.8.0"
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^3.0.2",
+    "@k-int/stripes-kint-components": "^4.0.0",
     "@rehooks/local-storage": "2.4.4",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -109,8 +109,7 @@
       "users": "13.0 14.0 15.0 16.0"
     },
     "stripesDeps": [
-      "@folio/stripes-erm-components",
-      "@k-int/stripes-kint-components"
+      "@folio/stripes-erm-components"
     ],
     "permissionSets": [
       {

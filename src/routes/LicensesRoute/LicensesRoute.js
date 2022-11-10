@@ -86,7 +86,7 @@ const LicensesRoute = ({
     ['ERM', 'Licenses', licensesQueryParams, LICENSES_ENDPOINT],
     ({ pageParam = 0 }) => {
       const params = [...licensesQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${LICENSES_ENDPOINT}?${params?.join('&')}`)).json();
+      return ky.get(`${LICENSES_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
 
