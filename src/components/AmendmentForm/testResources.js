@@ -78,7 +78,7 @@ const data = {
 };
 
 const handlers = {
-  onClose: 'ƒ () {}',
+  onClose: jest.fn(),
 };
 
 const initialValues = {

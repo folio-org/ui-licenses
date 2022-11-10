@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { useFileHandlers } from '@folio/stripes-erm-components';
 
@@ -10,10 +10,6 @@ import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import withFileHandlers from './withFileHandlers';
 
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
 
 const MockApp = (props) => {
   return (

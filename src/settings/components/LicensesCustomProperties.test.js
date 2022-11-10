@@ -3,28 +3,34 @@ import React from 'react';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
-import PickListSettings from './PickListSettings';
+
+import LicensesCustomProperties from './LicensesCustomProperties';
 
 jest.mock('@k-int/stripes-kint-components', () => ({
   ...jest.requireActual('@k-int/stripes-kint-components'),
-  EditableRefdataCategoryList: () => <div>EditableRefdataCategoryList</div>,
+  CustomPropertiesSettings: () => <div>CustomPropertiesSettings</div>,
 }));
 
-describe('PickListSettings', () => {
-  describe('rendering the PickListSettings', () => {
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useLicensesContexts: jest.fn(() => ({ data: [] }))
+}));
+
+describe('LicensesCustomProperties', () => {
+  describe('renders the LicensesCustomProperties', () => {
     let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <PickListSettings />
+          <LicensesCustomProperties />
         </MemoryRouter>,
         translationsProperties
       );
     });
 
-    test('renders the EditableRefdataCategoryList component', () => {
+    test('renders the CustomPropertiesSettings component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('EditableRefdataCategoryList')).toBeInTheDocument();
+      expect(getByText('CustomPropertiesSettings')).toBeInTheDocument();
     });
   });
 });

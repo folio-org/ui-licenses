@@ -6,7 +6,16 @@ import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
-import CreateLicenseRoute from './CreateLicenseRoute';
+import EditLicenseRoute from './EditLicenseRoute';
+
+const match = {
+  'path': '/licenses/:id/edit',
+  'url': '/licenses/f5362af1-abdf-4c0b-834a-2592b4af4ee9/edit',
+  'isExact': true,
+  'params': {
+    'id': 'f5362af1-abdf-4c0b-834a-2592b4af4ee9'
+  }
+};
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
@@ -34,15 +43,16 @@ const data = {
   },
   location: {
     search: ''
-  }
+  },
+  match
 };
 
-describe('CreateLicenseRoute', () => {
+describe('EditLicenseRoute', () => {
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <MemoryRouter>
-        <CreateLicenseRoute {...data} />
+        <EditLicenseRoute {...data} />
       </MemoryRouter>,
       translationsProperties
     );

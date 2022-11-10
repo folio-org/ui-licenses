@@ -9,10 +9,10 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc, useUsers } from '@folio/stripes-erm-components';
 
-import Form from '../components/LicenseForm';
-import NoPermissions from '../components/NoPermissions';
-import { LICENSE_ENDPOINT } from '../constants/endpoints';
-import { useLicenseRefdata } from '../hooks';
+import Form from '../../components/LicenseForm';
+import NoPermissions from '../../components/NoPermissions';
+import { LICENSE_ENDPOINT } from '../../constants/endpoints';
+import { useLicenseRefdata } from '../../hooks';
 
 const [
   LICENSE_STATUS,

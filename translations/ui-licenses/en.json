@@ -140,6 +140,12 @@
 
   "header.licensor": "Licensor",
 
+  "license.noLicenseLinked": "No license linked",
+  "license.linkLicense": "Link license",
+  "license.linkLicenseToStart": "Link a license to get started",
+  "license.replaceLicense": "Replace license",
+  "license.replaceLicenseSpecific": "Replace license {licenseName}",
+
   "licenseAgreements.none": "No agreements currently linked to this license.",
 
   "organizations.add": "Add organization",

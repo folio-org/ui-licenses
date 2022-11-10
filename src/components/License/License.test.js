@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { useStripes } from '@folio/stripes/core';
 import { Button, Pane } from '@folio/stripes-testing';
@@ -11,26 +11,6 @@ import License from './License';
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useLicensesContexts: jest.fn(() => ({ data: [] }))
-}));
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingPane: () => <div>LoadingPane</div>,
-}));
-
-jest.mock('@folio/stripes/smart-components', () => ({
-  ...jest.requireActual('@folio/stripes/smart-components'),
-  NotesSmartAccordion: () => <div>NotesSmartAccordion</div>,
-}));
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
-
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  CustomPropertiesView: () => <div>CustomPropertiesView</div>,
 }));
 
 jest.mock('../DuplicateLicenseModal', () => () => <div>DuplicateLicenseModal</div>);

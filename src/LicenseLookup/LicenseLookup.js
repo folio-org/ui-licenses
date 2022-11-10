@@ -41,11 +41,11 @@ const LicenseLookup = ({ disabled, id, input: { name, value }, onResourceSelecte
     <div>
       <Layout className="textCentered">
         <strong>
-          <FormattedMessage id="ui-agreements.license.noLicenseLinked" />
+          <FormattedMessage id="ui-licenses.license.noLicenseLinked" />
         </strong>
       </Layout>
       <Layout className="textCentered">
-        <FormattedMessage id="ui-agreements.license.linkLicenseToStart" />
+        <FormattedMessage id="ui-licenses.license.linkLicenseToStart" />
       </Layout>
     </div>
   );
@@ -71,7 +71,7 @@ const LicenseLookup = ({ disabled, id, input: { name, value }, onResourceSelecte
           return (
             <Tooltip
               id={`${id}-license-button-tooltip`}
-              text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: resource?.name }} />}
+              text={<FormattedMessage id="ui-licenses.license.replaceLicenseSpecific" values={{ licenseName: resource?.name }} />}
               triggerRef={triggerButton}
             >
               {({ ariaIds }) => (
@@ -79,7 +79,7 @@ const LicenseLookup = ({ disabled, id, input: { name, value }, onResourceSelecte
                   aria-labelledby={ariaIds.text}
                   {...buttonProps}
                 >
-                  <FormattedMessage id="ui-agreements.license.replaceLicense" />
+                  <FormattedMessage id="ui-licenses.license.replaceLicense" />
                 </Button>
               )}
             </Tooltip>
@@ -90,13 +90,13 @@ const LicenseLookup = ({ disabled, id, input: { name, value }, onResourceSelecte
           <Button
             {...buttonProps}
           >
-            <FormattedMessage id="ui-agreements.license.linkLicense" />
+            <FormattedMessage id="ui-licenses.license.linkLicense" />
           </Button>
         );
       }}
       type="find-license"
     >
-      <FormattedMessage id="ui-agreements.license.noFindLicensePlugin" />
+      <FormattedMessage id="ui-licenses.license.noFindLicensePlugin" />
     </Pluggable>
   );
 
@@ -107,7 +107,7 @@ const LicenseLookup = ({ disabled, id, input: { name, value }, onResourceSelecte
       headerStart={(
         <AppIcon app="licenses" size="small">
           <strong>
-            <FormattedMessage id="ui-agreements.agreements.license" />
+            <FormattedMessage id="ui-licenses.license" />
           </strong>
         </AppIcon>
       )}

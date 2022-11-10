@@ -1,15 +1,10 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Accordion } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import initialValues from './testResources';
 import FormCoreDocs from './FormCoreDocs';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  DocumentsFieldArray: () => <div>DocumentsFieldArray</div>,
-}));
 
 const onSubmitMock = jest.fn();
 const onDownloadFileMock = jest.fn();

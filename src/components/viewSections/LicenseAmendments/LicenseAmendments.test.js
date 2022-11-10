@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Accordion, MultiColumnListCell, MultiColumnList } from '@folio/stripes-testing';
 import {
@@ -14,11 +14,6 @@ import {
 } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import LicenseAmendments from './LicenseAmendments';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  LicenseEndDate: () => <div>LicenseEndDate</div>,
-}));
 
 describe('LicenseAmendments', () => {
   let renderComponent;

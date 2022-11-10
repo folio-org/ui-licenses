@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router';
 import { SearchField, MultiColumnList, Pane } from '@folio/stripes-testing';
 import Licenses from './Licenses';
@@ -16,11 +16,6 @@ import {
   source
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  LicenseEndDate: () => <div>LicenseEndDate</div>
-}));
 
 jest.mock('../LicenseFilters', () => () => <div>LicenseFilters</div>);
 

@@ -1,21 +1,11 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes-testing';
 import Amendment from './Amendment';
 import { data, handlers, urls } from './testResources';
 import translationsProperties from '../../../test/helpers';
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingPane: () => <div>LoadingPane</div>,
-}));
-
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  CustomPropertiesView: () => <div>CustomPropertiesView</div>,
-}));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
