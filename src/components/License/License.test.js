@@ -81,7 +81,7 @@ describe('License', () => {
     });
 
     test('clicking the expandAll button', async () => {
-      await Button('stripes-components.expandAll').click();
+      await Button('Expand all').click();
     });
 
     it('renders the CustomPropertiesView component', () => {
