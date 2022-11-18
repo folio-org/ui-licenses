@@ -22,12 +22,12 @@ export default class AmendmentLicense extends React.Component {
     }),
   }
 
-  renderLicensor = () => {
+  renderPrimaryOrg = () => {
     const { license: { orgs = [] } } = this.props;
-    const licensor = orgs.find(o => o?.role?.value === 'licensor');
-    const licensorName = licensor?.org?.name || <FormattedMessage id="ui-licenses.prop.licensor.notSet" />;
+    const primaryOrg = orgs.find(o => o?.primaryOrg === true);
+    const primaryOrgName = primaryOrg?.org?.name || <FormattedMessage id="ui-licenses.prop.licensor.notSet" />;
 
-    return licensorName;
+    return primaryOrgName;
   }
 
   render() {
@@ -77,9 +77,9 @@ export default class AmendmentLicense extends React.Component {
             </KeyValue>
           </Col>
           <Col md={3} xs={6}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.amendments.view.license.licensor" />}>
-              <div data-test-amendment-license-licensor-name>
-                {this.renderLicensor()}
+            <KeyValue label={<FormattedMessage id="ui-licenses.organizations.primary" />}>
+              <div data-test-agreement-primary-org-name>
+                {this.renderPrimaryOrg()}
               </div>
             </KeyValue>
           </Col>

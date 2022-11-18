@@ -1,5 +1,11 @@
 # Change history for ui-licenses
 
+## 8.3.1 2022-11-18
+* ERM-2434 "customProperties.ctx.title": "" in en.json
+* ERM-2420 Amendment doesn't show licensor value of parent license
+* ERM-2414 Missing translation values in license settings
+* ERM-2398 LicenseFilters should not be rendered within <form> intended for search field
+
 ## 8.3.0 2022-10-26
 * ERM-2386 Show a user-friendly message when deleting a pick list with 0 values which is assigned to a License Term
 * ERM-2379 @folio/stripes-testing is incorrectly listed as a direct dependency
