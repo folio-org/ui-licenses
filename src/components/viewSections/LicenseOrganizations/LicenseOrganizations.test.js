@@ -157,10 +157,6 @@ const license = {
   ]
 };
 
-const handlers = {
-  onFetchCredentials: () => { }
-};
-
 let renderComponent;
 
 describe('LicenseOrganizations', () => {
@@ -168,7 +164,6 @@ describe('LicenseOrganizations', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <LicenseOrganizations
-          handlers={handlers}
           id="licenseOrganizations"
           license={license}
         />,
@@ -190,7 +185,6 @@ describe('LicenseOrganizations', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <LicenseOrganizations
-          handlers={handlers}
           id="licenseOrganizations"
           license={{}}
         />,
