@@ -6,7 +6,7 @@ import { useMutation } from 'react-query';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useInfiniteFetch, useTags } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useInfiniteFetch, useTags, downloadBlob } from '@folio/stripes-erm-components';
 
 import View from '../../components/Licenses';
 import NoPermissions from '../../components/NoPermissions';
@@ -90,22 +90,10 @@ const LicensesRoute = ({
     }
   );
 
-  const downloadBlob = () => (
-    blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'compare_terms.csv';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }
-  );
-
   const { mutateAsync: handleCompareLicenseTerms } = useMutation(
     [`${LICENSES_ENDPOINT}/compareTerms`, 'ui-licenses', 'LicensesRoute', 'compareTerms'],
     (payload) => ky.post(`${LICENSES_ENDPOINT}/compareTerms`, { json: payload }).blob()
-      .then(downloadBlob())
+      .then(downloadBlob('compare_terms.csv'))
   );
 
   if (!hasPerms) return <NoPermissions />;
