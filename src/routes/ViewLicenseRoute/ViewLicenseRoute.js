@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { get, flatten, uniqBy } from 'lodash';
+import { flatten } from 'lodash';
 
-import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
+import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useBatchedFetch, useInterfaces, useUsers } from '@folio/stripes-erm-components';
 
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
@@ -17,20 +16,17 @@ import { LICENSES_ENDPOINT, LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from 
 import { useLicensesHelperApp } from '../../hooks';
 
 const RECORDS_PER_REQUEST = 100;
-const credentialsArray = [];
 
 const ViewLicenseRoute = ({
   handlers = {},
   history,
   location,
   match: { params: { id: licenseId } },
-  mutator,
-  resources,
-  stripes
 }) => {
-  const callout = useContext(CalloutContext);
+  const callout = useCallout();
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+  const stripes = useStripes();
 
   const licensePath = LICENSE_ENDPOINT(licenseId);
 
@@ -55,6 +51,10 @@ const ViewLicenseRoute = ({
     }
   );
 
+  const interfaces = useInterfaces({
+    interfaceIds: flatten((license?.orgs ?? []).map(o => o?.org?.orgsUuid_object?.interfaces ?? []))
+  }) ?? [];
+
   // Users fetch
   const { data: { users = [] } = {} } = useUsers(license?.contacts?.filter(c => c.user)?.map(c => c.user));
 
@@ -73,10 +73,6 @@ const ViewLicenseRoute = ({
     path: LINKED_AGREEMENTS_ENDPOINT(licenseId),
   });
 
-  const getRecord = (id, resourceType) => {
-    return get(resources, `${resourceType}.records`, [])
-      .find(i => i.id === id);
-  };
 
   const getCompositeLicense = () => {
     const contacts = license.contacts?.map(c => ({
@@ -84,21 +80,12 @@ const ViewLicenseRoute = ({
       user: users?.find(user => user?.id === c.user) || c.user,
     }));
 
-    const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
-
-    if (interfacesCredentials[0]) {
-      const index = credentialsArray.findIndex(object => object.id === interfacesCredentials[0].id);
-      if (index === -1) {
-        credentialsArray.push(interfacesCredentials[0]);
-      }
-    }
-
     const orgs = license.orgs?.map(o => ({
       ...o,
-      interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
+      interfaces: (o?.org?.orgsUuid_object?.interfaces ?? [])
         .map(id => ({
-          ...getRecord(id, 'interfaces') || {},
-          credentials: credentialsArray.find(cred => cred.interfaceId === id)
+          ...(interfaces?.find(int => int?.id === id) ?? {}),
+          /* Credentials are now handled by ViewOrganizationCard directly */
         })),
     }));
 
@@ -149,10 +136,6 @@ const ViewLicenseRoute = ({
     });
   };
 
-  const handleFetchCredentials = (id) => {
-    mutator.interfaceRecord.replace({ id });
-  };
-
   const urls = {
     edit: stripes.hasPerm('ui-licenses.licenses.edit') && (() => `${location.pathname}/edit${location.search}`),
     addAmendment: stripes.hasPerm('ui-licenses.licenses.edit') && (() => `${location.pathname}/amendments/create${location.search}`),
@@ -183,7 +166,6 @@ const ViewLicenseRoute = ({
         onClose: handleClose,
         onDelete: handleDelete,
         onEdit: editLicense,
-        onFetchCredentials: handleFetchCredentials,
         onAmendmentClick: viewAmendment,
         onToggleTags: handleToggleTags,
       }}
@@ -207,52 +189,6 @@ ViewLicenseRoute.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired
   }).isRequired,
-  mutator: PropTypes.shape({
-    interfaceRecord: PropTypes.shape({
-      replace: PropTypes.func,
-    }),
-  }).isRequired,
-  resources: PropTypes.shape({
-    interfaces: PropTypes.object,
-    license: PropTypes.object,
-    query: PropTypes.shape({
-      helper: PropTypes.string,
-    }),
-  }).isRequired,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-    okapi: PropTypes.object.isRequired,
-  }).isRequired,
 };
 
-ViewLicenseRoute.manifest = Object.freeze({
-  interfaces: {
-    type: 'okapi',
-    path: 'organizations-storage/interfaces',
-    perRequest: RECORDS_PER_REQUEST,
-    params: (_q, _p, _r, _l, props) => {
-      const orgs = get(props.resources, 'license.records[0].orgs', []);
-      const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
-      const query = [
-        ...new Set(interfaces.map(i => `id==${i}`))
-      ].join(' or ');
-
-      return query ? { query } : {};
-    },
-    fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
-    permissionsRequired: 'organizations-storage.interfaces.collection.get',
-    records: 'interfaces',
-  },
-  interfacesCredentials: {
-    clientGeneratePk: false,
-    throwErrors: false,
-    path: 'organizations-storage/interfaces/%{interfaceRecord.id}/credentials',
-    type: 'okapi',
-    pk: 'FAKE_PK',  // it's done to fool stripes-connect not to add cred id to the path's end.
-    permissionsRequired: 'organizations-storage.interfaces.credentials.item.get',
-    fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
-  },
-  interfaceRecord: {},
-});
-
-export default stripesConnect(ViewLicenseRoute);
+export default ViewLicenseRoute;
