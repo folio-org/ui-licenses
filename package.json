@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "8.2.3",
+  "version": "8.2.4",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -11,7 +11,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "yarn run test:jest && yarn run test:bigtest",
+    "test": "yarn run test:jest",
     "test:jest": "jest --ci --coverage",
     "test:bigtest": "stripes test karma --bundle",
     "test-bigtest-once": "stripes test karma --karma.singleRun",
