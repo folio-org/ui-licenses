@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 8.2.3 2022-12-15
+* ERM-2538 On agreement and license view not all linked Org interfaces displaying
+
 ## 8.2.2 2022-07-29
 * ERM-2297 Number of tags doesn't update on adding tags to agreement or agreement line
 * ERM-2282 Toast message fails to display to user
