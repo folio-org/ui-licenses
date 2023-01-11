@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { HeadlineInteractor as Headline, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Button, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
@@ -30,9 +30,8 @@ describe('ExportLicenseAsCSVModal', () => {
     );
   });
 
-  test('renders expected modal heading', () => {
-    const { getByRole } = renderComponent;
-    expect(getByRole('heading', { name: 'Export licenses as CSV' })).toBeInTheDocument();
+  test('renders expected modal heading', async () => {
+    await Headline('Export licenses as CSV').exists();
   });
 
   test('renders expected text', () => {
