@@ -1,25 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
-import {
-  tagsEnabled,
-  handlers,
-  match,
-  okapi,
-  interfaces,
-  interfacesCredentials,
-  license,
-  linkedAgreements,
-  terms,
-  users,
-  interfaceRecord,
-  tagSettings
-} from './testResources';
 import translationsProperties from '../../../test/helpers';
 import ViewLicenseRoute from './ViewLicenseRoute';
 
@@ -43,10 +27,6 @@ const DeleteButton = (props) => {
 
 const EditButton = (props) => {
   return <Button onClick={props.handlers.onEdit}>EditButton</Button>;
-};
-
-const HandleFetchCredentialsButton = (props) => {
-  return <Button onClick={props.handlers.onFetchCredentials}>HandleFetchCredentialsButton</Button>;
 };
 
 const ViewAmendmentButton = (props) => {
@@ -85,12 +65,6 @@ EditButton.propTypes = {
   }),
 };
 
-HandleFetchCredentialsButton.propTypes = {
-  handlers: PropTypes.shape({
-    onFetchCredentials: PropTypes.func,
-  }),
-};
-
 ViewAmendmentButton.propTypes = {
   handlers: PropTypes.shape({
     onAmendmentClick: PropTypes.func,
@@ -110,9 +84,6 @@ HandleToggleTagsButton.propTypes = {
 };
 
 const historyPushMock = jest.fn();
-const hasPermMock = jest.fn();
-const mutatorInterfaceMock = jest.fn();
-const mutatorQueryMock = jest.fn();
 
 jest.mock('../../components/License', () => {
   return (props) => (
@@ -122,7 +93,6 @@ jest.mock('../../components/License', () => {
       <CloseButton {...props} />
       <DeleteButton {...props} />
       <EditButton {...props} />
-      <HandleFetchCredentialsButton {...props} />
       <ViewAmendmentButton {...props} />
       <HandleToggleHelperButton {...props} />
       <HandleToggleTagsButton {...props} />
@@ -131,8 +101,6 @@ jest.mock('../../components/License', () => {
 });
 
 const data = {
-  tagsEnabled,
-  handlers,
   history: {
     push: historyPushMock
   },
@@ -140,39 +108,14 @@ const data = {
     'pathname': '/licenses/766aea02-9071-4cec-a6ef-3ed8208194de',
     'search': '?filters=status.active&sort=name',
   },
-  mutator: {
-    interfaceRecord: {
-      replace: mutatorInterfaceMock
-    },
-    license: {
-      DELETE: noop
-    },
-    query: {
-      update: mutatorQueryMock
+  match: {
+    'path': '/licenses/:id',
+    'url': '/licenses/e73d0d15-17ca-43cc-a4ee-3e800ac1c4d5',
+    'isExact': true,
+    'params': {
+      'id': 'e73d0d15-17ca-43cc-a4ee-3e800ac1c4d5'
     }
   },
-  match,
-  resources: {
-    interfaces,
-    interfacesCredentials,
-    license,
-    linkedAgreements,
-    terms,
-    users,
-    interfaceRecord,
-    query:{
-      helper: '',
-    },
-    tagSettings,
-  },
-  stripes: {
-    hasPerm: hasPermMock,
-    okapi: {
-      tenant: 'diku',
-      token: 'okapi-token',
-    }
-  },
-  okapi
 };
 
 describe('ViewLicenseRoute', () => {
@@ -215,16 +158,6 @@ describe('ViewLicenseRoute', () => {
     test('renders the EditButton ', () => {
       const { getByText } = renderComponent;
       expect(getByText('EditButton')).toBeInTheDocument();
-    });
-
-    test('triggers the HandleFetchCredentialsButton callback', async () => {
-      await ButtonInteractor('HandleFetchCredentialsButton').click();
-      expect(mutatorInterfaceMock).toHaveBeenCalled();
-    });
-
-    test('renders the HandleFetchCredentialsButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('HandleFetchCredentialsButton')).toBeInTheDocument();
     });
 
     test('triggers the ViewAmendmentButton callback', async () => {

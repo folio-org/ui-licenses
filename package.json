@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "8.3.1",
+  "version": "8.3.2",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -31,7 +31,7 @@
     "@folio/eslint-config-stripes": "^6.3.0",
     "@folio/stripes": "^7.3.1",
     "@folio/stripes-cli": "^2.6.1",
-    "@folio/stripes-erm-components": "^7.0.1",
+    "@folio/stripes-erm-components": "^7.0.5",
     "@folio/stripes-testing": "^4.2.0",
     "@formatjs/cli": "^4.2.29",
     "@testing-library/dom": "^8.16.0",
@@ -67,7 +67,7 @@
     "typescript": "^2.8.0"
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^3.0.2",
+    "@k-int/stripes-kint-components": "^3.2.2",
     "@rehooks/local-storage": "2.4.4",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -82,7 +82,7 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^7.3.1",
-    "@folio/stripes-erm-components": "^7.0.1",
+    "@folio/stripes-erm-components": "^7.0.5",
     "moment": "^2.29.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

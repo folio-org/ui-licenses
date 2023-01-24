@@ -1,5 +1,9 @@
 # Change history for ui-licenses
 
+## 8.3.2 2023-01-24
+* ERM-2547 On agreement and license user details do not display when more than one user linked to agreement/license as Internal contact
+* ERM-2538 On agreement and license view not all linked Org interfaces displaying
+
 ## 8.3.1 2022-11-18
 * ERM-2434 "customProperties.ctx.title": "" in en.json
 * ERM-2420 Amendment doesn't show licensor value of parent license
