@@ -32,7 +32,7 @@ const LicensesCustomProperties = () => {
   ];
 
   const stripes = useStripes();
-  const perm = stripes.hasPerm('ui-licenses.picklists.manage');
+  const perm = stripes.hasPerm('ui-licenses.terms.manage');
   const displayConditions = {
     create: perm,
     delete: perm,
