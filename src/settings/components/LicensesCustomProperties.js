@@ -2,7 +2,7 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useQueryClient } from 'react-query';
-
+import { useStripes } from '@folio/stripes/core';
 import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
 import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants/endpoints';
@@ -31,6 +31,14 @@ const LicensesCustomProperties = () => {
     }
   ];
 
+  const stripes = useStripes();
+  const perm = stripes.hasPerm('ui-licenses.picklists.manage');
+  const displayConditions = {
+    create: perm,
+    delete: perm,
+    edit: perm
+  };
+
   const helpPopovers = {
     name: <FormattedMessage id="ui-licenses.terms.help.name" />,
     label: <FormattedMessage id="ui-licenses.terms.help.label" />,
@@ -46,6 +54,7 @@ const LicensesCustomProperties = () => {
       }}
       contextFilterOptions={contexts}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+      displayConditions={displayConditions}
       helpPopovers={helpPopovers}
       refdataEndpoint={REFDATA_ENDPOINT}
     />

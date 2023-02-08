@@ -1,5 +1,6 @@
 # Change history for ui-licenses
 ## 8.4.0 In progress
+* ERM-2625 Add view only permissions for Agreement settings
 
 ## 8.3.0 2022-10-26
 * ERM-2386 Show a user-friendly message when deleting a pick list with 0 values which is assigned to a License Term

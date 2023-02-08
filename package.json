@@ -68,7 +68,7 @@
     "typescript": "^2.8.0"
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^4.4.0",
+    "@k-int/stripes-kint-components": "^4.4.1",
     "@rehooks/local-storage": "2.4.4",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
