@@ -175,34 +175,13 @@
         ]
       },
       {
-        "permissionName": "ui-licenses.picklists.view",
-        "displayName": "Settings (Licenses): View pick lists and values",
-        "description": "Grants permissions to access the License settings and the ability to manage pick lists and pick list values.",
-        "visible": true,
-        "subPermissions": [
-          "settings.licenses.enabled",
-          "licenses.refdata.view"
-        ]
-      },
-      {
         "permissionName": "ui-licenses.picklists.manage",
         "displayName": "Settings (Licenses): Manage pick lists and values",
         "description": "Grants permissions to access the License settings and the ability to manage pick lists and pick list values.",
         "visible": true,
         "subPermissions": [
-          "ui-licenses.picklists.view",
-          "licenses.refdata.manage"
-        ]
-      },
-      {
-        "permissionName": "ui-licenses.terms.view",
-        "displayName": "Settings (Licenses): View license terms",
-        "description": "Grants permissions to access the License settings and the ability to manage the available.",
-        "visible": true,
-        "subPermissions": [
           "settings.licenses.enabled",
-          "licenses.custprops.view",
-          "licenses.refdata.view"
+          "licenses.refdata.manage"
         ]
       },
       {
@@ -211,8 +190,9 @@
         "description": "Grants permissions to access the License settings and the ability to manage the available.",
         "visible": true,
         "subPermissions": [
-          "ui-licenses.terms.view",
-          "licenses.custprops.manage"
+          "settings.licenses.enabled",
+          "licenses.custprops.manage",
+          "licenses.refdata.view"
         ]
       },
       {
@@ -231,7 +211,7 @@
         "description": "Grants permission to view and edit the Licenses application settings",
         "visible": true,
         "subPermissions": [
-          "ui-licenses.appSettings.view",
+          "settings.licenses.enabled",
           "licenses.settings.manage"
         ]
       }
