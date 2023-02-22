@@ -1,4 +1,7 @@
 # Change history for ui-licenses
+
+## 9.1.0 In progress
+
 ## 9.0.0 2023-02-22
 * ERM-2565 Increment ui-licenses to Stripes v8
 * ERM-2533 Refactor interfaces code to react-query
