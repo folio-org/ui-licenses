@@ -12,7 +12,7 @@ import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 const PickListSettings = () => {
   const history = useHistory();
   const stripes = useStripes();
-  const perm = stripes.hasPerm('ui-agreements.picklists.manage');
+  const perm = stripes.hasPerm('ui-licenses.picklists.manage');
   const displayConditions = {
     create: perm,
     delete: perm,
