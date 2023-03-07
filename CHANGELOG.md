@@ -1,6 +1,23 @@
 # Change history for ui-licenses
-## 8.4.0 In progress
+
+## 9.1.0 In progress
 * ERM-2625 Add view only permissions for License settings
+## 9.0.0 2023-02-22
+* ERM-2565 Increment ui-licenses to Stripes v8
+* ERM-2533 Refactor interfaces code to react-query
+* ERM-2487 Refactor licenses routes
+* ERM-2467 Change export file name and file extension in Agreements and Local KB admin
+* ERM-2455 Bump ui-licenses erm-components dep
+* ERM-2434 "customProperties.ctx.title": "" in en.json
+* ERM-2420 Amendment doesn't show licensor value of parent license
+* ERM-2414 Missing translation values in license settings
+* ERM-2398 LicenseFilters should not be rendered within <form> intended for search field
+* ERM-2294 Remove BigTest/Nightmare dependencies and tests (ui-licenses)
+* FAT-82 ui-licenses: UI tests replacement with RTL/Jest
+  * ERM-2276 Add test coverage for ui-licenses settings <LicensesCustomProperties>
+  * ERM-2272 Add test coverage for ui-licenses routes <EditLicenseRoute>
+  * ERM-2261 Add test coverage for ui-licenses viewSections <AmendmentLicense>
+  * ERM-2258 Add test coverage for ui-licenses <LicenseLookup>
 
 ## 8.3.0 2022-10-26
 * ERM-2386 Show a user-friendly message when deleting a pick list with 0 values which is assigned to a License Term
