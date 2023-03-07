@@ -37,7 +37,7 @@ const LicenseSettings = (props) => {
         {
           component: LicensesCustomProperties,
           label: <FormattedMessage id="ui-licenses.section.terms" />,
-          perm: 'settings.licenses.enabled',
+          perm: 'ui-licenses.terms.view',
           route: 'terms',
         },
       ]
@@ -48,13 +48,13 @@ const LicenseSettings = (props) => {
         {
           component: PickListSettings,
           label: <FormattedMessage id="ui-licenses.settings.pickLists" />,
-          perm: 'settings.licenses.enabled',
+          perm: 'ui-licenses.picklists.view',
           route: 'pick-lists',
         },
         {
           component: PickListValueSettings,
           label: <FormattedMessage id="ui-licenses.settings.pickListValues" />,
-          perm: 'settings.licenses.enabled',
+          perm: 'ui-licenses.picklists.view',
           route: 'pick-list-values',
         },
       ]
