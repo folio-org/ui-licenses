@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
-
+import { useStripes } from '@folio/stripes/core';
 import { useSettings } from '@k-int/stripes-kint-components';
 
 import {
@@ -19,7 +19,10 @@ import {
 } from '../constants/endpoints';
 
 const LicenseSettings = (props) => {
+  const stripes = useStripes();
+  const allowGlobalEdit = stripes.hasPerm('ui-licenses.appSettings.manage');
   const { isLoading, pageList, SettingsContextProvider } = useSettings({
+    allowGlobalEdit,
     dynamicPageExclusions: ['registry'], // Registry AppSettings hold StringTemplating details etc -- not for user editing
     intlKey: 'ui-licenses',
     persistentPages: [],
@@ -34,7 +37,7 @@ const LicenseSettings = (props) => {
         {
           component: LicensesCustomProperties,
           label: <FormattedMessage id="ui-licenses.section.terms" />,
-          perm: 'ui-licenses.terms.manage',
+          perm: 'ui-licenses.terms.view',
           route: 'terms',
         },
       ]
@@ -45,13 +48,13 @@ const LicenseSettings = (props) => {
         {
           component: PickListSettings,
           label: <FormattedMessage id="ui-licenses.settings.pickLists" />,
-          perm: 'ui-licenses.picklists.manage',
+          perm: 'ui-licenses.picklists.view',
           route: 'pick-lists',
         },
         {
           component: PickListValueSettings,
           label: <FormattedMessage id="ui-licenses.settings.pickListValues" />,
-          perm: 'ui-licenses.picklists.manage',
+          perm: 'ui-licenses.picklists.view',
           route: 'pick-list-values',
         },
       ]

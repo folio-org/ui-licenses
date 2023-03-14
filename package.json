@@ -68,7 +68,7 @@
     "typescript": "^2.8.0"
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^4.0.0",
+    "@k-int/stripes-kint-components": "^4.4.1",
     "@rehooks/local-storage": "2.4.4",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -175,24 +175,43 @@
         ]
       },
       {
+        "permissionName": "ui-licenses.picklists.view",
+        "displayName": "Settings (Licenses): View pick lists and values",
+        "description": "Grants permissions to access the License settings and the ability to view pick lists and pick list values.",
+        "visible": true,
+        "subPermissions": [
+          "settings.licenses.enabled",
+          "licenses.refdata.view"
+        ]
+      },
+      {
         "permissionName": "ui-licenses.picklists.manage",
         "displayName": "Settings (Licenses): Manage pick lists and values",
         "description": "Grants permissions to access the License settings and the ability to manage pick lists and pick list values.",
         "visible": true,
         "subPermissions": [
-          "settings.licenses.enabled",
+          "ui-licenses.picklists.view",
           "licenses.refdata.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-licenses.terms.view",
+        "displayName": "Settings (Licenses): View license terms",
+        "description": "Grants permissions to access the License settings and the ability to view the available terms.",
+        "visible": true,
+        "subPermissions": [
+          "settings.licenses.enabled",
+          "licenses.custprops.view"
         ]
       },
       {
         "permissionName": "ui-licenses.terms.manage",
         "displayName": "Settings (Licenses): Manage license terms",
-        "description": "Grants permissions to access the License settings and the ability to manage the available.",
+        "description": "Grants permissions to access the License settings and the ability to manage the available terms.",
         "visible": true,
         "subPermissions": [
-          "settings.licenses.enabled",
-          "licenses.custprops.manage",
-          "licenses.refdata.view"
+          "ui-licenses.terms.view",
+          "licenses.custprops.manage"
         ]
       },
       {
@@ -211,7 +230,7 @@
         "description": "Grants permission to view and edit the Licenses application settings",
         "visible": true,
         "subPermissions": [
-          "settings.licenses.enabled",
+          "ui-licenses.appSettings.view",
           "licenses.settings.manage"
         ]
       }
