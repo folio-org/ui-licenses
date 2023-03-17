@@ -198,7 +198,7 @@
     "customProperties.ctx": "Categoria",
     "customProperties.ctx.addContext": "Aggiungi categoria {value}",
     "customProperties.noCtxFound": "No matching category found",
-    "customProperties.weight": "Order weight",
+    "customProperties.weight": "Peso per l'ordinamento",
     "customProperties.type": "Tipologia",
     "customProperties.internalFalse": "Pubblico",
     "customProperties.internalNote": "Nota interna",
