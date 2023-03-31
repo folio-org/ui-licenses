@@ -286,5 +286,6 @@
     "license.replaceLicenseSpecific": "Nahradit licenci {licenseName}",
     "terms.help.label": "\"Štítek\" licenční podmínky se používá při zobrazování podmínky uživatelům ve FOLIO a v jakýchkoli jiných systémech, které uživatelům zobrazují licenční podmínky. Měl by to být krátký textový řetězec, který jasně sděluje, jaké informace jsou v dané podmínce zaznamenány. Popis by měl být použit tam, kde je pro zobrazení uživatelům vyžadováno další vysvětlení pojmu.",
     "terms.help.name": "\"Název\" licenční podmínky se používá při výstupu dat podmínky ve strojově čitelném formátu. Není určeno k zobrazení uživatelům (zaměstnancům nebo čtenářům). Mělo by se jednat o krátký řetězec latinské abecedy, který mohou používat jakékoli externí systémy nebo programy, které přistupují k datům licenčních podmínek. Využití camelCase je doporučeno, ale není vyžadováno. Změny názvů licenčních podmínek by ovlivnily jakékoli externí systémy využívající data licenčních podmínek a změny by neměly být prováděny bez konzultace s osobami odpovědnými za příslušné externí systémy a software.",
-    "terms.help.category": "Podmínky lze kategorizovat. Každá kategorie se při prohlížení nebo úpravě licence zobrazí jako samostatný odstavec."
+    "terms.help.category": "Podmínky lze kategorizovat. Každá kategorie se při prohlížení nebo úpravě licence zobrazí jako samostatný odstavec.",
+    "settings.appSettings": "Nastavení aplikace"
 }
