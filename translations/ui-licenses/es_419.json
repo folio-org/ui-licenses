@@ -286,5 +286,6 @@
     "license.replaceLicenseSpecific": "Reemplazar licencia {licenseName}",
     "terms.help.label": "La \"etiqueta\" de un término de licencia se utiliza cuando se muestra el término a los usuarios dentro de Folio y en cualquier otro sistema que muestre los términos de licencia a los usuarios. Debe ser una cadena de texto corta que comunique claramente qué información se registra en el término. La descripción debe utilizarse cuando se requiera una explicación más detallada del término para mostrarlo a los usuarios.",
     "terms.help.name": "El término de licencia \"nombre\" se utiliza cuando se imprimen los datos del término en un formato legible por máquina. No está pensado para ser mostrado a los usuarios (personal o usuarios). Debe ser una cadena corta en alfabeto latino que pueda ser utilizada por cualquier sistema o programa externo que acceda a los datos del término de licencia. Se sugiere el uso de camelCase, pero no es obligatorio. Los cambios en el nombre del término de la licencia afectarían a cualquier sistema externo que utilice los datos del término de la licencia y los cambios no deberían realizarse sin consultar a los responsables de los sistemas y programas externos pertinentes.",
-    "terms.help.category": "Los términos pueden ser categorizados. Cada categoría aparecerá como un acordeón separado al ver o editar la licencia."
+    "terms.help.category": "Los términos pueden ser categorizados. Cada categoría aparecerá como un acordeón separado al ver o editar la licencia.",
+    "settings.appSettings": "App settings"
 }

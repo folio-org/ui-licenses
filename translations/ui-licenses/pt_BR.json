@@ -286,5 +286,6 @@
     "license.replaceLicenseSpecific": "Substituir licença {licenseName}",
     "terms.help.label": "Um termo de licença 'etiqueta' é usado ao exibir o termo aos usuários dentro do FOLIO e em qualquer outro sistema que exiba termos de licença aos usuários. Deve ser um pequeno texto que comunique claramente quais informações são registradas no termo. A Descrição deve ser usada quando for necessário explicar melhor o termo para exibição aos usuários.",
     "terms.help.name": "Um termo de licença 'nome' é usado quando se emite o termo dados em um formato legível por máquina. Ele não deve ser exibido aos usuários (funcionários ou usuários). Deve ser um pequeno termo ou expressão do alfabeto latino que pode ser usado por quaisquer sistemas ou programas externos que acessem os dados do termo de licença. O uso da expressão com as palavras iniciais em Letra Maiúscula é sugerido, mas não é necessário. Alterações no nome do termo de licença afetariam qualquer sistema externo que utilize dados do termo de licença e as alterações não devem ser feitas sem consultar os responsáveis pelos sistemas e softwares externos relevantes.",
-    "terms.help.category": "Os termos podem ser categorizados. Cada categoria aparecerá como um acordeão separado ao visualizar ou editar a licença."
+    "terms.help.category": "Os termos podem ser categorizados. Cada categoria aparecerá como um acordeão separado ao visualizar ou editar a licença.",
+    "settings.appSettings": "Aplicativo de Configurações"
 }
