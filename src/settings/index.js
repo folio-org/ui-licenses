@@ -57,7 +57,7 @@ const LicenseSettings = (props) => {
       ]
     },
     {
-      label: <FormattedMessage id="ui-licenses.settings.appSettings" />,
+      label: <FormattedMessage id="ui-agreements.settings.appSettings" />,
       pages: pageList
     }
   ];
