@@ -1,7 +1,6 @@
 # Change history for ui-licenses
 
-## 9.0.1 IN PROGRESS
-
+## 9.0.1 2023-04-03
 * ERM-2893 Update some Japanese translations
 
 ## 9.0.0 2023-02-22
