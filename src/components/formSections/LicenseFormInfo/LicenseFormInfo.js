@@ -70,7 +70,9 @@ export default class LicenseFormInfo extends React.Component {
               id="edit-license-type"
               label={<FormattedMessage id="ui-licenses.prop.type" />}
               name="type"
+              placeholder=" "
               required
+              validate={requiredValidator}
             />
           </Col>
           <Col md={6} xs={12}>
@@ -80,7 +82,9 @@ export default class LicenseFormInfo extends React.Component {
               id="edit-license-status"
               label={<FormattedMessage id="ui-licenses.prop.status" />}
               name="status"
+              placeholder=" "
               required
+              validate={requiredValidator}
             />
           </Col>
         </Row>
