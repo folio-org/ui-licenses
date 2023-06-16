@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Datepicker, Checkbox } from '@folio/stripes-testing';
+import { Datepicker, Checkbox, Select } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import { data, values, mutators } from './testResources';
 import LicenseFormInfo from './LicenseFormInfo';
@@ -41,14 +41,12 @@ describe('LicenseFormInfo', () => {
     expect(getByRole('textbox', { name: 'Description' }));
   });
 
-  test('renders the Type dropdown', () => {
-    const { getByRole } = renderComponent;
-    expect(getByRole('combobox', { name: 'Type' }));
+  test('renders the Type dropdown', async () => {
+    await Select('Type*').exists();
   });
 
-  test('renders the Status dropdown', () => {
-    const { getByRole } = renderComponent;
-    expect(getByRole('combobox', { name: 'Status' }));
+  test('renders the Status dropdown', async () => {
+    await Select('Status*').exists();
   });
 
   test('renders Start date Datepicker', async () => {

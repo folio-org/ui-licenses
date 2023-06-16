@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router';
 import { SearchField, MultiColumnList, Pane } from '@folio/stripes-testing';
@@ -90,8 +88,7 @@ describe('Licenses', () => {
     expect(getByRole('tooltip', { name: 'Hide search pane' }));
   });
 
-  test('renders the Search Licenses searchbox', () => {
-    const { getByRole } = renderComponent;
-    expect(getByRole('searchbox', { name: 'Search Licenses' }));
+  test('renders the Search Licenses searchbox', async () => {
+    await SearchField().exists()
   });
 });

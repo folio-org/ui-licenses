@@ -1,6 +1,6 @@
 
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Datepicker, Checkbox, Button } from '@folio/stripes-testing';
+import { Datepicker, Checkbox, Button, Select } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import { data, handlers, mutators, values, initialValues } from './testResources';
 import AmendmentFormInfo from './AmendmentFormInfo';
@@ -30,9 +30,8 @@ describe('AmendmentFormInfo', () => {
       expect(getByRole('textbox', { name: 'Name' }));
     });
 
-    test('renders the Status dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Status' }));
+    test('renders the Status dropdown', async () => {
+      await Select('Status*').exists();
     });
 
     test('renders start date DatePicker', async () => {
@@ -74,9 +73,8 @@ describe('AmendmentFormInfo', () => {
       expect(getByRole('textbox', { name: 'Name' })).toHaveDisplayValue('Amendment Test');
     });
 
-    test('renders the expected value in the Status field', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Status' })).toHaveDisplayValue('Active');
+    test('renders the expected value in the Status field', async () => {
+      await Select('Status*').has({ value: 'active' });
     });
 
     test('renders the expected value in the start date field', () => {
