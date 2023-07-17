@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
-import { useBatchedFetch } from '@folio/stripes-erm-components';
+import { useParallelBatchFetch } from '@folio/stripes-erm-components';
 
 import DuplicateAmendmentModal from '../../components/DuplicateAmendmentModal';
 import View from '../../components/Amendment';
@@ -14,7 +14,6 @@ import View from '../../components/Amendment';
 import { errorTypes } from '../../constants';
 import { AMENDMENT_ENDPOINT, LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
 
-const RECORDS_PER_REQUEST = 100;
 const propTypes = {
   handlers: PropTypes.object,
   history: PropTypes.shape({
@@ -67,11 +66,10 @@ const ViewAmendmentRoute = ({
 
   // LinkedAgreements BATCH FETCH
   const {
-    results: linkedAgreements = [],
-  } = useBatchedFetch({
-    batchSize: RECORDS_PER_REQUEST,
-    nsArray: ['ERM', 'License', licenseId, 'LinkedAgreements'],
-    path: LINKED_AGREEMENTS_ENDPOINT(licenseId),
+    items: linkedAgreements = [],
+  } = useParallelBatchFetch({
+    generateQueryKey: ({ offset }) => ['ERM', 'License', licenseId, 'LinkedAgreements', offset],
+    endpoint: LINKED_AGREEMENTS_ENDPOINT(licenseId),
   });
 
   const getCompositeLicense = () => {

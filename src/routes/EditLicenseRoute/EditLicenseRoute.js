@@ -7,7 +7,7 @@ import { cloneDeep, get } from 'lodash';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useUsers } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useChunkedUsers } from '@folio/stripes-erm-components';
 
 import Form from '../../components/LicenseForm';
 import NoPermissions from '../../components/NoPermissions';
@@ -72,7 +72,7 @@ const EditLicenseRoute = ({
   );
 
   // Users
-  const { data: { users = [] } = {} } = useUsers(license?.contacts?.filter(c => c.user)?.map(c => c.user));
+  const { users } = useChunkedUsers(license?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
 
   const getInitialValues = () => {
     const initialValues = cloneDeep(license);

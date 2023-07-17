@@ -89,6 +89,6 @@ describe('Licenses', () => {
   });
 
   test('renders the Search Licenses searchbox', async () => {
-    await SearchField().exists()
+    await SearchField().exists();
   });
 });
