@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { flatten } from 'lodash';
 
 import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useBatchedFetch, useInterfaces, useUsers } from '@folio/stripes-erm-components';
+import { useChunkedUsers, useInterfaces, useParallelBatchFetch } from '@folio/stripes-erm-components';
 
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
@@ -15,7 +15,6 @@ import { LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants/en
 
 import { useLicensesHelperApp } from '../../hooks';
 
-const RECORDS_PER_REQUEST = 100;
 
 const ViewLicenseRoute = ({
   handlers = {},
@@ -57,7 +56,7 @@ const ViewLicenseRoute = ({
   }) ?? [];
 
   // Users fetch
-  const { data: { users = [] } = {} } = useUsers(license?.contacts?.filter(c => c.user)?.map(c => c.user));
+  const { users } = useChunkedUsers(license?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
 
   // License delete
   const { mutateAsync: deleteLicense } = useMutation(
@@ -67,11 +66,10 @@ const ViewLicenseRoute = ({
 
   // LinkedAgreements BATCH FETCH
   const {
-    results: linkedAgreements,
-  } = useBatchedFetch({
-    batchSize: RECORDS_PER_REQUEST,
-    nsArray: ['ERM', 'License', licenseId, 'LinkedAgreements'],
-    path: LINKED_AGREEMENTS_ENDPOINT(licenseId),
+    items: linkedAgreements = [],
+  } = useParallelBatchFetch({
+    generateQueryKey: ({ offset }) => ['ERM', 'License', licenseId, 'LinkedAgreements', offset],
+    endpoint: LINKED_AGREEMENTS_ENDPOINT(licenseId),
   });
 
 
