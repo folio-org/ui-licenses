@@ -1,8 +1,12 @@
-import React from 'react';
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { StaticRouter as Router } from 'react-router-dom';
-import { Accordion, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
+
+import {
+  Accordion,
+  MultiColumnList,
+  MultiColumnListCell,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
+
 import {
   amendment,
   id,

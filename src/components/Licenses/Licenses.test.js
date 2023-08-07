@@ -1,6 +1,12 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router';
-import { SearchField, MultiColumnList, Pane } from '@folio/stripes-testing';
+
+import {
+  MultiColumnList,
+  Pane,
+  renderWithIntl,
+  SearchField,
+} from '@folio/stripes-erm-testing';
+
 import Licenses from './Licenses';
 import {
   data,

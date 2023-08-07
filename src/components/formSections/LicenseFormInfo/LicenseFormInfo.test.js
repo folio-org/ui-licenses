@@ -1,7 +1,11 @@
-import React from 'react';
+import {
+  Checkbox,
+  Datepicker,
+  Select,
+  TestForm,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
 
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Datepicker, Checkbox, Select } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import { data, values, mutators } from './testResources';
 import LicenseFormInfo from './LicenseFormInfo';
