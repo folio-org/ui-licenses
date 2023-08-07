@@ -1,12 +1,10 @@
-import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { useFileHandlers } from '@folio/stripes-erm-components';
 
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
-import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import withFileHandlers from './withFileHandlers';
 
@@ -49,12 +47,12 @@ describe('withFileHandlers', () => {
     });
 
     test('calls the Download button', async () => {
-      await ButtonInteractor('Download').click();
+      await Button('Download').click();
       expect(mockDownload).toHaveBeenCalledTimes(1);
     });
 
     test('calls the Upload button', async () => {
-      await ButtonInteractor('Upload').click();
+      await Button('Upload').click();
       expect(mockUpload).toHaveBeenCalledTimes(1);
     });
   });

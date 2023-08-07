@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
+import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { CustomPropertiesView } from '@k-int/stripes-kint-components';
 
 import {
@@ -23,6 +23,7 @@ import {
   expandAllSections
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, useStripes } from '@folio/stripes/core';
+
 import DuplicateLicenseModal from '../DuplicateLicenseModal';
 
 import {

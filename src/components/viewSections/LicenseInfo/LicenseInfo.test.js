@@ -1,7 +1,9 @@
-import React from 'react';
+import {
+  MultiColumnList,
+  MultiColumnListCell,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import LicenseInfo from './LicenseInfo';
 

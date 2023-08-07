@@ -1,8 +1,8 @@
-import React from 'react';
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Button } from '@folio/stripes-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import Amendment from './Amendment';
 import { data, handlers, urls } from './testResources';
 import translationsProperties from '../../../test/helpers';
@@ -71,16 +71,21 @@ describe('Amendment', () => {
     });
 
     test('clicking and calling the delete button under the Actions dropdown', async () => {
-      await Button('Actions').click();
-      await Button('Delete').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Delete').click();
+      });
+
       expect(handlers.onDelete).toHaveBeenCalled();
     });
 
     test('clicking the edit/duplicate/delete buttons under the Actions dropdown', async () => {
-      await Button('Actions').click();
-      await Button('Edit').click();
-      await Button('Duplicate').click();
-      await Button('Delete').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Edit').click();
+        await Button('Duplicate').click();
+        await Button('Delete').click();
+      });
     });
   });
 

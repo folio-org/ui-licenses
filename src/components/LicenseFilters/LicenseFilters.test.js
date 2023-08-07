@@ -1,9 +1,15 @@
-import React from 'react';
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Accordion, Checkbox, Selection, SelectionList as SelectListInteractor } from '@folio/stripes-testing';
-import { waitFor } from '@testing-library/dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
+import {
+  Accordion,
+  Checkbox,
+  renderWithIntl,
+  Selection,
+  SelectionList
+} from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import LicenseFilters from './LicenseFilters';
@@ -153,7 +159,9 @@ describe('LicenseFilters', () => {
 
   it('choosing an organization role option', async () => {
     await Selection({ id: 'org-role-selector' }).exists();
-    await Selection().open();
-    await SelectListInteractor({ optionCount: 1 }).exists();
+    await waitFor(async () => {
+      await Selection().open();
+    });
+    await SelectionList({ optionCount: 1 }).exists();
   });
 });

@@ -1,7 +1,5 @@
-import React from 'react';
+import { Accordion, renderWithIntl } from '@folio/stripes-erm-testing';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import LicenseOrganizations from './LicenseOrganizations';
 
