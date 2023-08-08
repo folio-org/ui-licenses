@@ -1,7 +1,5 @@
-import React from 'react';
+import { Accordion, TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import initialValues from './testResources';
 import FormCoreDocs from './FormCoreDocs';

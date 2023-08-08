@@ -1,8 +1,6 @@
-import React from 'react';
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Button, Pane } from '@folio/stripes-testing';
+
+import { Button, Pane, renderWithIntl } from '@folio/stripes-erm-testing';
 import AmendmentForm from './AmendmentForm';
 import {
   data,

@@ -1,8 +1,12 @@
-import React from 'react';
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Accordion, MultiColumnListCell, MultiColumnList } from '@folio/stripes-testing';
+
+import {
+  Accordion,
+  MultiColumnListCell,
+  MultiColumnList,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
+
 import {
   licenseAmendmentsAccordionLabel,
   record,

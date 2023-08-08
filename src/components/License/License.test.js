@@ -1,9 +1,9 @@
-import React from 'react';
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useStripes } from '@folio/stripes/core';
-import { Button, Pane } from '@folio/stripes-testing';
+import { Button, Pane, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import { data, isLoading, handlers, urls } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import License from './License';
@@ -81,7 +81,9 @@ describe('License', () => {
     });
 
     test('clicking the expandAll button', async () => {
-      await Button('Expand all').click();
+      await waitFor(async () => {
+        await Button('Expand all').click();
+      });
     });
 
     it('renders the CustomPropertiesView component', () => {

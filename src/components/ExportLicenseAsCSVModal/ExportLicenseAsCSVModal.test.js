@@ -1,8 +1,12 @@
-import React from 'react';
-
-import { HeadlineInteractor as Headline, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Button, Checkbox } from '@folio/stripes-testing';
+
+import {
+  Button,
+  Checkbox,
+  Headline,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import ExportLicenseAsCSVModal from './ExportLicenseAsCSVModal';
 

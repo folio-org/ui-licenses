@@ -1,7 +1,10 @@
 # Change history for ui-licenses
 
-## 9.1.0 In progress
+## 10.0.0 In progress
 * ERM-2625 Add view only permissions for License settings
+* STRIPES-870 BREAKING upgrade react to v18
+  * ERM-2990 Upgrade ui-licenses React to v18
+
 ## 9.0.0 2023-02-22
 * ERM-2565 Increment ui-licenses to Stripes v8
 * ERM-2533 Refactor interfaces code to react-query
@@ -18,6 +21,7 @@
   * ERM-2272 Add test coverage for ui-licenses routes <EditLicenseRoute>
   * ERM-2261 Add test coverage for ui-licenses viewSections <AmendmentLicense>
   * ERM-2258 Add test coverage for ui-licenses <LicenseLookup>
+
 
 ## 8.3.0 2022-10-26
 * ERM-2386 Show a user-friendly message when deleting a pick list with 0 values which is assigned to a License Term

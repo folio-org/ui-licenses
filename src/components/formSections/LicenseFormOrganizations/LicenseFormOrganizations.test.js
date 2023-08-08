@@ -1,7 +1,5 @@
-import React from 'react';
+import { Accordion, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Accordion } from '@folio/stripes-testing';
 import { data, initialValues } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import LicenseFormOrganizations from './LicenseFormOrganizations';

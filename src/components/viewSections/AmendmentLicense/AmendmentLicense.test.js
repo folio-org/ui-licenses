@@ -1,8 +1,7 @@
-import React from 'react';
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { KeyValue } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import { license, urls } from './testResources';
 import AmendmentLicense from './AmendmentLicense';
