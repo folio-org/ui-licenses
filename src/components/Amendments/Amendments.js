@@ -7,16 +7,14 @@ import {
   Button,
   Checkbox,
   FormattedUTCDate,
-  // HasCommand,
   Icon,
   MultiColumnList,
   Pane,
   PaneMenu,
   SearchField,
-  // checkScope
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -31,7 +29,6 @@ import ExportLicenseAsCSVModal from '../ExportLicenseAsCSVModal';
 
 import LicenseFilters from '../LicenseFilters';
 import RouteSwitcher from '../RouteSwitcher';
-import { statuses } from '../../constants';
 import { urls } from '../utils';
 
 import css from '../Licenses/Licenses.css';
@@ -82,23 +79,7 @@ const Amendments = ({
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
 
-  // const goToNew = () => {
-  //   history.push(`/licenses/create${searchString}`);
-  // };
-
-  // const shortcuts = [
-  //   {
-  //     name: 'new',
-  //     handler: goToNew,
-  //   },
-  // ];
-
   return (
-    // <HasCommand
-    //   // commands={shortcuts}
-    //   isWithinScope={checkScope}
-    //   scope={document.body}
-    // >
     <div data-test-amendments data-testid="amendments">
       <SearchAndSortQuery
         initialFilterState={{ status: ['active'] }}
@@ -252,14 +233,16 @@ const Amendments = ({
                       name: <FormattedMessage id="ui-licenses.prop.name" />,
                       status: <FormattedMessage id="ui-licenses.prop.status" />,
                       startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
-                      endDate: <FormattedMessage id="ui-licenses.prop.endDate" />
+                      endDate: <FormattedMessage id="ui-licenses.prop.endDate" />,
+                      parentLicense: <FormattedMessage id="ui-licenses.prop.parentLicense" />
                     }}
                     columnWidths={{
                       selected: 40,
                       name: 500,
                       status: 150,
                       startDate: 120,
-                      endDate: 120
+                      endDate: 120,
+                      parentLicense: 350
                     }}
                     contentData={data.amendments}
                     formatter={{
@@ -272,7 +255,6 @@ const Amendments = ({
                         />
                       ),
                       name: amendment => {
-                        // const iconKey = amendment?.status?.value === statuses.EXPIRED || amendment?.status?.value === statuses.REJECTED ? 'inactiveAmendment' : 'amendment';
                         return (
                           <AppIcon
                             app="licenses"
@@ -289,6 +271,7 @@ const Amendments = ({
                       status: amendment => amendment.status?.label,
                       startDate: amendment => (amendment.startDate ? <FormattedUTCDate value={amendment.startDate} /> : ''),
                       endDate: amendment => <LicenseEndDate license={amendment} />,
+                      parentLicense: amendment => amendment.owner.id,
                     }}
                     hasMargin
                     id="list-amendments"
@@ -309,7 +292,6 @@ const Amendments = ({
                     onNeedMoreData={onNeedMoreData}
                     onRowClick={(_e, row) => {
                       history.push(`${urls.amendmentNativeView(row.owner.id, row.id)}${searchString}`);
-                      // history.push(`${urls.amendmentNativeView(row.id)}${searchString}`);
                     }}
                     rowProps={{
                       labelStrings: ({ rowData }) => [
@@ -322,7 +304,7 @@ const Amendments = ({
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
                     virtualize
-                    visibleColumns={['selected', 'name', 'status', 'startDate', 'endDate']}
+                    visibleColumns={['selected', 'name', 'status', 'startDate', 'endDate', 'parentLicense']}
                   />
                 </Pane>
                 {children}
@@ -339,7 +321,6 @@ const Amendments = ({
         }
       </SearchAndSortQuery>
     </div>
-    // </HasCommand>
   );
 };
 

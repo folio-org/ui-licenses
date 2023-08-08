@@ -20,10 +20,10 @@ const [
   LICENSE_TYPE,
   LICENSE_ORG_ROLE,
 ] = [
-    'License.Status',
-    'License.Type',
-    'LicenseOrg.Role',
-  ];
+  'License.Status',
+  'License.Type',
+  'LicenseOrg.Role',
+];
 
 // const LICENSE_STATUS = 'License.Status';
 
@@ -59,10 +59,9 @@ const AmendmentsRoute = ({
   const amendmentsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       license: 'owner.id',
-      searchKey: 'name,alternateNames.name,description',
+      searchKey: 'name,description',
       filterKeys: {
         status: 'status.value',
-        tags: 'tags.value',
       },
       sortKeys: {
         status: 'status.label',
