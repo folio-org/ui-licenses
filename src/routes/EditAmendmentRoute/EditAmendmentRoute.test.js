@@ -50,7 +50,8 @@ const data = {
     push: historyPushMock
   },
   location: {
-    search: ''
+    search: '',
+    pathname: ''
   },
   mutator: {
     license: {

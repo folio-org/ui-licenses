@@ -2,13 +2,47 @@ import React from 'react';
 
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Accordion, Checkbox, Selection, SelectionList as SelectListInteractor } from '@folio/stripes-testing';
+import { Accordion, Checkbox } from '@folio/stripes-testing';
 import { waitFor } from '@testing-library/dom';
 import translationsProperties from '../../../test/helpers';
-import { activeFilters, data } from './testResources';
 import AmendmentFilters from './AmendmentFilters';
 
 const stateMock = jest.fn();
+
+const activeFilters = {
+  'status': [
+    'active'
+  ]
+};
+
+const data = {
+  'statusValues': [{
+    'id': '2c91809d821bd92801821bdfdde10018',
+    'value': 'active',
+    'label': 'Active'
+  },
+  {
+    'id': '2c91809d821bd92801821bdfddf0001a',
+    'value': 'expired',
+    'label': 'Expired'
+  },
+  {
+    'id': '2c91809d821bd92801821bdfddd30016',
+    'value': 'in_negotiation',
+    'label': 'In negotiation'
+  },
+  {
+    'id': '2c91809d821bd92801821bdfddd90017',
+    'value': 'not_yet_active',
+    'label': 'Not yet active'
+  },
+  {
+    'id': '2c91809d821bd92801821bdfdde90019',
+    'value': 'rejected',
+    'label': 'Rejected'
+  }
+  ],
+};
 
 const filterHandlers = {
   state: stateMock,
@@ -58,7 +92,7 @@ describe('AmendmentFilters', () => {
     });
   });
 
-  test('clicking the negotiation checkbox', async () => {
+  test('clicking the in negotiation checkbox', async () => {
     await waitFor(async () => {
       await Checkbox({ id: 'clickable-filter-status-in-negotiation' }).click();
     });
@@ -68,7 +102,7 @@ describe('AmendmentFilters', () => {
     });
   });
 
-  test('clicking the in not active yet checkbox', async () => {
+  test('clicking the not yet active checkbox', async () => {
     await waitFor(async () => {
       await Checkbox({ id: 'clickable-filter-status-not-yet-active' }).click();
     });

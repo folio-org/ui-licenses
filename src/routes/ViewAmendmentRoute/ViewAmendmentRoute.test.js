@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
-import { handlers, resources, okapi } from './testResources';
+import { handlers, location, resources, okapi } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import ViewAmendmentRoute from './ViewAmendmentRoute';
 
@@ -81,9 +81,7 @@ const data = {
   history: {
     push: historyPushMock
   },
-  location: {
-    search: ''
-  },
+  location,
   mutator: {
     license: {
       PUT: noop

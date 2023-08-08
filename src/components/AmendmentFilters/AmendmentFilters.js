@@ -65,7 +65,7 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
       activeFilters={activeFilters}
       filterHandlers={filterHandlers}
       name="startDate"
-      resourceName={intl.formatMessage({ id: 'ui-licenses.licenses' }).toLowerCase()}
+      resourceName={intl.formatMessage({ id: 'ui-licenses.amendments' }).toLowerCase()}
     />;
   };
 
@@ -74,7 +74,7 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
       activeFilters={activeFilters}
       filterHandlers={filterHandlers}
       name="endDate"
-      resourceName={intl.formatMessage({ id: 'ui-licenses.licenses' }).toLowerCase()}
+      resourceName={intl.formatMessage({ id: 'ui-licenses.amendments' }).toLowerCase()}
     />;
   };
 
