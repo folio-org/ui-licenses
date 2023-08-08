@@ -15,17 +15,7 @@ import { useLicenseRefdata } from '../../hooks';
 
 const RECORDS_PER_REQUEST = 100;
 
-const [
-  LICENSE_STATUS,
-  LICENSE_TYPE,
-  LICENSE_ORG_ROLE,
-] = [
-  'License.Status',
-  'License.Type',
-  'LicenseOrg.Role',
-];
-
-// const LICENSE_STATUS = 'License.Status';
+const LICENSE_STATUS = 'License.Status';
 
 const AmendmentsRoute = ({
   children,
@@ -48,9 +38,7 @@ const AmendmentsRoute = ({
 
   const refdata = useLicenseRefdata({
     desc: [
-      LICENSE_STATUS,
-      LICENSE_TYPE,
-      LICENSE_ORG_ROLE,
+      LICENSE_STATUS
     ]
   });
 

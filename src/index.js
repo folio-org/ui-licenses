@@ -55,12 +55,6 @@ const App = (props) => {
   const addKey = useIntlKeyStore(state => state.addKey);
   addKey('ui-licenses');
 
-  // const searchInput = () => {
-  //   return location.pathname.search('/licenses') === 0 ?
-  //     'input-license-search' :
-  //     undefined;
-  // };
-
   const searchInput = () => {
     if (location.pathname?.startsWith('/licenses/amendments')) {
       return 'input-amendment-search';
