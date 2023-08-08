@@ -27,7 +27,7 @@ import {
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 import ExportLicenseAsCSVModal from '../ExportLicenseAsCSVModal';
 
-import LicenseFilters from '../LicenseFilters';
+import AmendmentFilters from '../AmendmentFilters';
 import RouteSwitcher from '../RouteSwitcher';
 import { urls } from '../utils';
 
@@ -161,7 +161,7 @@ const Amendments = ({
                         </Button>
                       </div>
                     </form>
-                    <LicenseFilters
+                    <AmendmentFilters
                       activeFilters={activeFilters.state}
                       data={data}
                       filterHandlers={getFilterHandlers()}

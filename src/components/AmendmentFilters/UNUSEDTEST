@@ -1,0 +1,90 @@
+import React from 'react';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { MemoryRouter } from 'react-router-dom';
+import { Accordion, Checkbox, Selection, SelectionList as SelectListInteractor } from '@folio/stripes-testing';
+import { waitFor } from '@testing-library/dom';
+import translationsProperties from '../../../test/helpers';
+import { activeFilters, data } from './testResources';
+import AmendmentFilters from './AmendmentFilters';
+
+const stateMock = jest.fn();
+
+const filterHandlers = {
+  state: stateMock,
+  checkbox: () => { },
+  clear: () => { },
+  clearGroup: () => { },
+  reset: () => { },
+  stat: () => { },
+};
+
+describe('AmendmentFilters', () => {
+  // let renderComponent;
+  beforeEach(() => {
+    renderWithIntl(
+      <MemoryRouter>
+        <AmendmentFilters
+          activeFilters={activeFilters}
+          data={data}
+          filterHandlers={filterHandlers}
+        />
+      </MemoryRouter>,
+      translationsProperties
+    );
+  });
+
+  test('renders the Status Accordion', async () => {
+    await Accordion('Status').exists();
+  });
+
+  test('clicking the active checkbox', async () => {
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-active' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(1);
+    });
+  });
+
+  test('clicking the expired checkbox', async () => {
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-expired' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(2);
+    });
+  });
+
+  test('clicking the negotiation checkbox', async () => {
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-in-negotiation' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(3);
+    });
+  });
+
+  test('clicking the in not active yet checkbox', async () => {
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-not-yet-active' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(4);
+    });
+  });
+
+  test('clicking the rejected checkbox', async () => {
+    await waitFor(async () => {
+      await Checkbox({ id: 'clickable-filter-status-rejected' }).click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock.mock.calls.length).toEqual(5);
+    });
+  });
+});
