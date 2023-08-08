@@ -13,6 +13,7 @@ import View from '../../components/Amendment';
 
 import { errorTypes } from '../../constants';
 import { AMENDMENT_ENDPOINT, LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+import { urls as appUrls } from '../../components/utils';
 
 const propTypes = {
   handlers: PropTypes.object,
@@ -20,6 +21,7 @@ const propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({
@@ -80,7 +82,12 @@ const ViewAmendmentRoute = ({
   };
 
   const handleClose = () => {
-    history.push(`/licenses/${licenseId}${location.search}`);
+    // If we're coming from amendments, go back to amendments, else go back to license view
+    if (location.pathname.startsWith('/licenses/amendments')) {
+      history.push(`${appUrls.amendments()}${location.search}`);
+    } else {
+      history.push(`${appUrls.licenseView(licenseId)}${location.search}`);
+    }
   };
 
   // AMENDMENT delete
@@ -103,9 +110,13 @@ const ViewAmendmentRoute = ({
   );
 
   const urls = {
-    editAmendment: stripes.hasPerm('ui-licenses.licenses.edit') && (aID => `/licenses/${licenseId}/amendments/${aID}/edit${location.search}`),
-    licenseView: id => `/licenses/${id}`,
-    viewAmendment: aID => `/licenses/${licenseId}/amendments/${aID}${location.search}`,
+    editAmendment: stripes.hasPerm('ui-licenses.licenses.edit') && (
+      aID => (location.pathname.startsWith('/licenses/amendments') ?
+        appUrls.amendmentNativeEdit(licenseId, aID)
+        :
+        appUrls.amendmentEdit(licenseId, aID)
+      )
+    ),
   };
 
   // AMENDMENT clone
@@ -143,7 +154,12 @@ const ViewAmendmentRoute = ({
   };
 
   const handleViewAmendment = (id) => {
-    history.push(urls.viewAmendment(id));
+    // If we're coming from amendments, go back to amendments, else go back to license view
+    if (location.pathname.startsWith('/licenses/amendments')) {
+      history.push(`${appUrls.amendmentNativeView(licenseId, id)}${location.search}`);
+    } else {
+      history.push(`${appUrls.amendmentView(licenseId, id)}${location.search}`);
+    }
   };
 
   return (

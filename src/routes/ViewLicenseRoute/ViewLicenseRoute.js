@@ -107,7 +107,7 @@ const ViewLicenseRoute = ({
     }).then(text => {
       const data = JSON.parse(text); // Try to parse it as json
       if (data.id) {
-        return Promise.resolve(history.push(`${appUrls.licensesEdit(data.id)}${location.search}`));
+        return Promise.resolve(history.push(`${appUrls.licenseEdit(data.id)}${location.search}`));
       } else {
         throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
       }

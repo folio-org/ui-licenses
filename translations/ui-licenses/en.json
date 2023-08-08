@@ -3,10 +3,12 @@
 
   "loading": "Loading...",
   "searchInputLabel": "Search Licenses",
+  "amendments.searchInputLabel": "Search Amendments",
 
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
 
   "amendment": "Amendment",
+  "amendments": "Amendments",
   "license": "License",
   "licenses": "Licenses",
   "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
