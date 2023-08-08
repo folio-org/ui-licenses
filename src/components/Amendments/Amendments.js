@@ -173,17 +173,6 @@ const Amendments = ({
                     const numSelectedAmendments = Object.values(selectedAmendments).filter(item => item === true).length;
                     return (
                       <>
-                        {/* <IfPermission perm="ui-licenses.licenses.edit">
-                            <Button
-                              buttonStyle="dropdownItem"
-                              id="clickable-dropdown-create-license"
-                              onClick={goToNew}
-                            >
-                              <Icon icon="plus-sign">
-                                <FormattedMessage id="stripes-smart-components.new" />
-                              </Icon>
-                            </Button>
-                          </IfPermission> */}
                         <Button
                           buttonStyle="dropdownItem"
                           disabled={numSelectedAmendments === 0}
