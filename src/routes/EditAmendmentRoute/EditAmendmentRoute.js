@@ -65,6 +65,7 @@ const EditAmendmentRoute = ({
       .then(() => {
         /* Invalidate cached queries */
         queryClient.invalidateQueries(['ERM', 'Licenses']);
+        queryClient.invalidateQueries(['ERM', 'Amendments']);
         queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
       })
   );

@@ -66,7 +66,7 @@ const Amendments = ({
 
   const searchField = useRef(null);
 
-  const [selectedAmendments, toggleLicenseSelection] = useReducer(
+  const [selectedAmendments, toggleAmendmentSelection] = useReducer(
     (state, amendmentId) => ({ ...state, [amendmentId]: !state[amendmentId] }),
     {}
   );
@@ -239,7 +239,7 @@ const Amendments = ({
                         <Checkbox
                           checked={!!(selectedAmendments[amendment.id])}
                           name={`selected-${amendment.id}`}
-                          onChange={() => toggleLicenseSelection(amendment.id)}
+                          onChange={() => toggleAmendmentSelection(amendment.id)}
                           onClick={e => e.stopPropagation()}
                         />
                       ),
@@ -260,7 +260,7 @@ const Amendments = ({
                       status: amendment => amendment.status?.label,
                       startDate: amendment => (amendment.startDate ? <FormattedUTCDate value={amendment.startDate} /> : ''),
                       endDate: amendment => <LicenseEndDate license={amendment} />,
-                      parentLicense: amendment => amendment.owner.id,
+                      parentLicense: amendment => amendment.owner.name,
                     }}
                     hasMargin
                     id="list-amendments"

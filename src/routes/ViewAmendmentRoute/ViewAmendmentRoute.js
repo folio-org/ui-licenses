@@ -103,6 +103,7 @@ const ViewAmendmentRoute = ({
       }
     }).then(() => {
       queryClient.invalidateQueries(licensePath);
+      queryClient.invalidateQueries(['ERM', 'Amendments']);
 
       callout.sendCallout({ message: <FormattedMessage id="ui-licenses.amendments.delete.callout" values={{ name: amendment.name }} /> });
       handleClose();
