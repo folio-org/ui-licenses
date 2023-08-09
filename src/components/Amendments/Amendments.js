@@ -1,11 +1,10 @@
-import React, { useReducer, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
   Button,
-  Checkbox,
   FormattedUTCDate,
   Icon,
   MultiColumnList,
@@ -25,7 +24,6 @@ import {
 } from '@folio/stripes/smart-components';
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
-import ExportLicenseAsCSVModal from '../ExportLicenseAsCSVModal';
 
 import AmendmentFilters from '../AmendmentFilters';
 import RouteSwitcher from '../RouteSwitcher';
@@ -37,7 +35,6 @@ const propTypes = {
   children: PropTypes.node,
   data: PropTypes.object,
   history: PropTypes.object,
-  onCompareLicenseTerms: PropTypes.func,
   onNeedMoreData: PropTypes.func,
   queryGetter: PropTypes.func,
   querySetter: PropTypes.func,
@@ -52,7 +49,6 @@ const Amendments = ({
   children,
   data,
   history,
-  onCompareLicenseTerms,
   onNeedMoreData,
   queryGetter,
   querySetter,
@@ -65,12 +61,6 @@ const Amendments = ({
   const sortOrder = query.sort ?? '';
 
   const searchField = useRef(null);
-
-  const [selectedAmendments, toggleAmendmentSelection] = useReducer(
-    (state, amendmentId) => ({ ...state, [amendmentId]: !state[amendmentId] }),
-    {}
-  );
-  const [showExportLicenseAsCSVModal, setShowExportLicenseAsCSVModal] = useState(false);
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
@@ -169,26 +159,6 @@ const Amendments = ({
                   </Pane>
                 }
                 <Pane
-                  actionMenu={({ onToggle }) => {
-                    const numSelectedAmendments = Object.values(selectedAmendments).filter(item => item === true).length;
-                    return (
-                      <>
-                        <Button
-                          buttonStyle="dropdownItem"
-                          disabled={numSelectedAmendments === 0}
-                          id="export-amendments-csv"
-                          onClick={() => {
-                            setShowExportLicenseAsCSVModal(true);
-                            onToggle();
-                          }}
-                        >
-                          <Icon icon="download">
-                            <FormattedMessage id="ui-licenses.export.csv.label" values={{ count: numSelectedAmendments }} />
-                          </Icon>
-                        </Button>
-                      </>
-                    );
-                  }}
                   appIcon={<AppIcon app="licenses" iconKey="amendment" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
@@ -218,7 +188,6 @@ const Amendments = ({
                   <MultiColumnList
                     autosize
                     columnMapping={{
-                      selected: ' ',
                       name: <FormattedMessage id="ui-licenses.prop.name" />,
                       status: <FormattedMessage id="ui-licenses.prop.status" />,
                       startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
@@ -226,7 +195,6 @@ const Amendments = ({
                       parentLicense: <FormattedMessage id="ui-licenses.prop.parentLicense" />
                     }}
                     columnWidths={{
-                      selected: 40,
                       name: 500,
                       status: 150,
                       startDate: 120,
@@ -235,14 +203,6 @@ const Amendments = ({
                     }}
                     contentData={data.amendments}
                     formatter={{
-                      selected: amendment => (
-                        <Checkbox
-                          checked={!!(selectedAmendments[amendment.id])}
-                          name={`selected-${amendment.id}`}
-                          onChange={() => toggleAmendmentSelection(amendment.id)}
-                          onClick={e => e.stopPropagation()}
-                        />
-                      ),
                       name: amendment => {
                         return (
                           <AppIcon
@@ -288,22 +248,14 @@ const Amendments = ({
                         rowData.status?.label,
                       ],
                     }}
-                    rowUpdater={amendment => selectedAmendments[amendment.id]}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
                     virtualize
-                    visibleColumns={['selected', 'name', 'status', 'startDate', 'endDate', 'parentLicense']}
+                    visibleColumns={['name', 'status', 'startDate', 'endDate', 'parentLicense']}
                   />
                 </Pane>
                 {children}
-                {showExportLicenseAsCSVModal &&
-                  <ExportLicenseAsCSVModal
-                    onClose={() => setShowExportLicenseAsCSVModal(false)}
-                    onCompareLicenseTerms={onCompareLicenseTerms}
-                    selectedLicenses={Object.keys(selectedAmendments).filter(item => selectedAmendments[item] === true)}
-                  />
-                }
               </PersistedPaneset>
             );
           }
