@@ -45,7 +45,7 @@ describe('Amendments', () => {
   });
 
   test('renders expected column headers', async () => {
-    await MultiColumnList({ columns: [' ', 'Name', 'Status', 'Start date', 'End date', 'Parent license'] }).exists();
+    await MultiColumnList({ columns: ['Name', 'Status', 'Start date', 'End date', 'Parent license'] }).exists();
   });
 
   test('renders the expected Search and filter Pane', async () => {
