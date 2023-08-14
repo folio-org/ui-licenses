@@ -31,9 +31,12 @@ const LicenseAmendments = ({
     if (!urls.addAmendment) return renderBadge();
 
     return (
-      <Button id="add-amendment-button" to={urls.addAmendment()}>
-        <FormattedMessage id="ui-licenses.amendments.add" />
-      </Button>
+      <>
+        <Button id="add-amendment-button" to={urls.addAmendment()}>
+          <FormattedMessage id="ui-licenses.amendments.add" />
+        </Button>
+        {renderBadge()}
+      </>
     );
   };
 
