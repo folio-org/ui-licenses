@@ -4,6 +4,7 @@
 * ERM-2625 Add view only permissions for License settings
 * STRIPES-870 BREAKING upgrade react to v18
   * ERM-2990 Upgrade ui-licenses React to v18
+* ERM-2993 Add amendments search in licenses app
 
 ## 9.0.0 2023-02-22
 * ERM-2565 Increment ui-licenses to Stripes v8
@@ -122,7 +123,7 @@
 * Included interface dependency for licenses 4.0
 
 ## 6.1.1 2021-07-30
-* Fixed bug with Incorrect "status in agreement" displaying for a license when there are multiple licenses for a single agreement. ERM-1767 
+* Fixed bug with Incorrect "status in agreement" displaying for a license when there are multiple licenses for a single agreement. ERM-1767
 ## 6.1.0 2021-06-16
 * ERM-1683 Set up ui-licenses Registry entry
 * ERM-1640 Lock ui-licenses to @rehooks/local-storage 2.4.0

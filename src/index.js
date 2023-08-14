@@ -22,6 +22,7 @@ import CreateLicenseRoute from './routes/CreateLicenseRoute';
 import EditLicenseRoute from './routes/EditLicenseRoute';
 import ViewLicenseRoute from './routes/ViewLicenseRoute';
 
+import AmendmentsRoute from './routes/AmendmentsRoute/AmendmentsRoute';
 import ViewAmendmentRoute from './routes/ViewAmendmentRoute';
 import CreateAmendmentRoute from './routes/CreateAmendmentRoute';
 import EditAmendmentRoute from './routes/EditAmendmentRoute/EditAmendmentRoute';
@@ -55,9 +56,13 @@ const App = (props) => {
   addKey('ui-licenses');
 
   const searchInput = () => {
-    return location.pathname.search('/licenses') === 0 ?
-      'input-license-search' :
-      undefined;
+    if (location.pathname?.startsWith('/licenses/amendments')) {
+      return 'input-amendment-search';
+    } else if (location.pathname?.startsWith('/licenses')) {
+      return 'input-license-search';
+    } else {
+      return undefined;
+    }
   };
 
   const focusSearchField = () => {
@@ -116,6 +121,10 @@ const App = (props) => {
             <Route component={EditLicenseRoute} path={`${path}/:id/edit`} />
             <Route component={CreateAmendmentRoute} path={`${path}/:id/amendments/create`} />
             <Route component={EditAmendmentRoute} path={`${path}/:id/amendments/:amendmentId/edit`} />
+            <Route component={EditAmendmentRoute} path={`${path}/amendments/:amendmentId/license/:id/edit`} />
+            <Route component={AmendmentsRoute} path={`${path}/amendments/:id?`}>
+              <Route component={ViewAmendmentRoute} path={`${path}/amendments/:amendmentId/license/:id`} />
+            </Route>
             <Route component={LicensesRoute} path={`${path}/:id?`}>
               <Switch>
                 <Route exact path={`${path}/:id`} render={(routeProps) => (<ViewLicenseRoute key={routeProps.match.params.id} {...routeProps} />)} />

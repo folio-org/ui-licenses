@@ -12,6 +12,7 @@ import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import Form from '../../components/AmendmentForm';
 import { LICENSE_ENDPOINT } from '../../constants/endpoints';
+import { urls } from '../../components/utils';
 import useLicenseRefdata from '../../hooks/useLicenseRefdata';
 
 const [
@@ -41,7 +42,11 @@ const EditAmendmentRoute = ({
   });
 
   const handleClose = () => {
-    history.push(`/licenses/${licenseId}/amendments/${amendmentId}${location.search}`);
+    if (location.pathname.startsWith('/licenses/amendments')) {
+      history.push(`${urls.amendmentNativeView(licenseId, amendmentId)}${location.search}`);
+    } else {
+      history.push(`${urls.amendmentView(licenseId, amendmentId)}${location.search}`);
+    }
   };
 
   const { data: license = {}, isFetching: isLicenseLoading } = useQuery(
@@ -51,13 +56,16 @@ const EditAmendmentRoute = ({
 
   const { mutateAsync: editAmendment } = useMutation(
     [LICENSE_ENDPOINT(licenseId), 'editAmendment'],
-    (amendmentPayload) => ky.put(LICENSE_ENDPOINT(licenseId), { json: {
-      ...license,
-      amendments: [amendmentPayload]
-    } }).json()
+    (amendmentPayload) => ky.put(LICENSE_ENDPOINT(licenseId), {
+      json: {
+        ...license,
+        amendments: [amendmentPayload]
+      }
+    }).json()
       .then(() => {
         /* Invalidate cached queries */
         queryClient.invalidateQueries(['ERM', 'Licenses']);
+        queryClient.invalidateQueries(['ERM', 'Amendments']);
         queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
       })
   );
@@ -127,6 +135,7 @@ EditAmendmentRoute.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({

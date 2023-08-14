@@ -56,13 +56,16 @@ const CreateAmendmentRoute = ({
 
   const { mutateAsync: createAmendment } = useMutation(
     [LICENSE_ENDPOINT(licenseId), 'createAmendment'],
-    (amendmentPayload) => ky.put(LICENSE_ENDPOINT(licenseId), { json: {
-      ...license,
-      amendments: [amendmentPayload]
-    } }).json()
+    (amendmentPayload) => ky.put(LICENSE_ENDPOINT(licenseId), {
+      json: {
+        ...license,
+        amendments: [amendmentPayload]
+      }
+    }).json()
       .then(updatedLicense => {
         /* Invalidate cached queries */
         queryClient.invalidateQueries(['ERM', 'Licenses']);
+        queryClient.invalidateQueries(['ERM', 'Amendments']);
         queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
 
         const originalAmendmentIds = {};

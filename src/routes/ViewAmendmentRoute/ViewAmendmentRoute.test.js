@@ -6,8 +6,8 @@ import { noop } from 'lodash';
 
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import { handlers, location, resources, okapi } from './testResources';
 
-import { handlers, resources, okapi } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import ViewAmendmentRoute from './ViewAmendmentRoute';
 
@@ -82,9 +82,7 @@ const data = {
   history: {
     push: historyPushMock
   },
-  location: {
-    search: ''
-  },
+  location,
   mutator: {
     license: {
       PUT: noop

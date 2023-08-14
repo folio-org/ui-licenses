@@ -11,15 +11,13 @@ import {
   NoValue,
   Row,
 } from '@folio/stripes/components';
-
 import { LicenseEndDate } from '@folio/stripes-erm-components';
+import { urls as appUrls } from '../../utils';
+
 
 export default class AmendmentLicense extends React.Component {
   static propTypes = {
     license: PropTypes.object.isRequired,
-    urls: PropTypes.shape({
-      licenseView: PropTypes.func.isRequired,
-    }),
   }
 
   renderPrimaryOrg = () => {
@@ -31,7 +29,7 @@ export default class AmendmentLicense extends React.Component {
   }
 
   render() {
-    const { license, urls } = this.props;
+    const { license } = this.props;
     return (
       <>
         <Row>
@@ -47,7 +45,7 @@ export default class AmendmentLicense extends React.Component {
             }
             >
               <div data-test-amendment-license-parent-license>
-                <Link to={urls.licenseView(license.id)}>
+                <Link to={appUrls.licenseView(license.id)}>
                   {license?.name ?? <NoValue />}
                 </Link>
               </div>
