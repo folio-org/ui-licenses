@@ -10,7 +10,7 @@
     "prop.description": "Description",
     "prop.endDate": "End date",
     "prop.name": "Name",
-    "prop.parentLicense": "Parent License",
+    "prop.parentLicense": "Parent license",
     "prop.terms": "License Terms",
     "prop.startDate": "Start date",
     "prop.type": "Type",
@@ -287,5 +287,7 @@
     "terms.help.label": "A license term 'label' is used when displaying the term to users within Folio and in any other systems that display license terms to users. It should be a short text string that clearly communicates what information is recorded in the term. The Description should be used where further explanation of the term is required for display to users.",
     "terms.help.name": "A license term 'name' is used when outputting the term data in a machine readable format. It is not intended to be displayed to users (staff or patrons). It should be a short Latin alphabet string that can be used by any external systems or programs that access the license term data. Use of camelCase is suggested but not required. Changes to the license term name would affect any external systems using license term data and changes should not be made without consulting those responsible for relevant external systems and software.",
     "terms.help.category": "Terms can be categorised. Each category will appear as a separate accordion when viewing or editing the license.",
-    "settings.appSettings": "App settings"
+    "settings.appSettings": "App settings",
+    "amendments.searchInputLabel": "Search Amendments",
+    "amendments": "Amendments"
 }
