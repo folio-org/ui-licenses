@@ -33,7 +33,7 @@ import {
   FormSupplementaryDocs,
 } from '../formSections';
 
-import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import { CUSTPROP_ENDPOINT } from '../../constants';
 import { useLicensesContexts } from '../../hooks';
 
 const AmendmentForm = ({

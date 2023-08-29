@@ -10,7 +10,7 @@ import { DateFilter, OrganizationSelection } from '@folio/stripes-erm-components
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
-import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const FILTERS = [
   'status',

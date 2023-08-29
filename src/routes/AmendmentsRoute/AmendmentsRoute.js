@@ -10,7 +10,8 @@ import { getRefdataValuesByDesc, useInfiniteFetch, downloadBlob } from '@folio/s
 
 import View from '../../components/Amendments';
 import NoPermissions from '../../components/NoPermissions';
-import { AMENDMENTS_ENDPOINT } from '../../constants/endpoints';
+
+import { AMENDMENTS_ENDPOINT } from '../../constants';
 import { useLicenseRefdata } from '../../hooks';
 
 const RECORDS_PER_REQUEST = 100;

@@ -6,13 +6,20 @@ import { FormattedMessage } from 'react-intl';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
-import { useParallelBatchFetch } from '@folio/stripes-erm-components';
+import {
+  INVALID_JSON_ERROR,
+  JSON_ERROR,
+  useParallelBatchFetch
+} from '@folio/stripes-erm-components';
 
 import DuplicateAmendmentModal from '../../components/DuplicateAmendmentModal';
 import View from '../../components/Amendment';
 
-import { errorTypes } from '../../constants';
-import { AMENDMENT_ENDPOINT, LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+import {
+  AMENDMENT_ENDPOINT,
+  LICENSE_ENDPOINT,
+  LINKED_AGREEMENTS_ENDPOINT
+} from '../../constants';
 import { urls as appUrls } from '../../components/utils';
 
 const propTypes = {
@@ -130,14 +137,14 @@ const ViewAmendmentRoute = ({
       if (response.ok) {
         return response.text(); // Parse it as text
       } else {
-        throw new Error(errorTypes.JSON_ERROR);
+        throw new Error(JSON_ERROR);
       }
     }).then(text => {
       const data = JSON.parse(text); // Try to parse it as json
       if (data.id) {
         return Promise.resolve(history.push(`${urls.editAmendment(data.id)}`)); // Location search is already a part of urls.editAmendment
       } else {
-        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+        throw new Error(INVALID_JSON_ERROR); // when the json response body doesn't contain an id
       }
     }).catch(error => {
       throw error;

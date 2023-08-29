@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { keyBy, mapValues, pickBy, sortBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+
+import { useCustomProperties } from '@k-int/stripes-kint-components';
+
 import {
   Button,
   Checkbox,
@@ -10,10 +13,9 @@ import {
   ModalFooter,
 } from '@folio/stripes/components';
 
-import { useCustomProperties } from '@k-int/stripes-kint-components';
 
 import css from './ExportLicenseAsCSVModal.css';
-import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const propTypes = {
   onClose: PropTypes.func,

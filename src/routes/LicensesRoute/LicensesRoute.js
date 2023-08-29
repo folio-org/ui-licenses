@@ -10,7 +10,8 @@ import { getRefdataValuesByDesc, useInfiniteFetch, useTags, downloadBlob } from 
 
 import View from '../../components/Licenses';
 import NoPermissions from '../../components/NoPermissions';
-import { LICENSES_ENDPOINT } from '../../constants/endpoints';
+
+import { LICENSES_ENDPOINT } from '../../constants';
 import { useLicenseRefdata } from '../../hooks';
 
 const RECORDS_PER_REQUEST = 100;

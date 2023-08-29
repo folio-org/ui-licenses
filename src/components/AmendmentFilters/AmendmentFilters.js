@@ -4,13 +4,14 @@ import isEqual from 'lodash/isEqual';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
+
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 import { DateFilter } from '@folio/stripes-erm-components';
 
-import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
-import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const FILTERS = [
   'status',
