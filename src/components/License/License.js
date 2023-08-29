@@ -38,7 +38,7 @@ import {
 } from '../viewSections';
 
 import { useLicensesContexts } from '../../hooks';
-import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const License = ({
   components: {

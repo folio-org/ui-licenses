@@ -11,7 +11,8 @@ import { getRefdataValuesByDesc, useChunkedUsers } from '@folio/stripes-erm-comp
 
 import Form from '../../components/LicenseForm';
 import NoPermissions from '../../components/NoPermissions';
-import { LICENSE_ENDPOINT } from '../../constants/endpoints';
+
+import { LICENSE_ENDPOINT } from '../../constants';
 import { useLicenseRefdata } from '../../hooks';
 
 const [

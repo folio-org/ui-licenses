@@ -16,7 +16,7 @@ import {
 import {
   REFDATA_ENDPOINT,
   SETTINGS_ENDPOINT
-} from '../constants/endpoints';
+} from '../constants';
 
 const LicenseSettings = (props) => {
   const stripes = useStripes();

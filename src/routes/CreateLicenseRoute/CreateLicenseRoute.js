@@ -10,8 +10,8 @@ import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import View from '../../components/LicenseForm';
 import NoPermissions from '../../components/NoPermissions';
-import { LICENSES_ENDPOINT } from '../../constants/endpoints';
 
+import { LICENSES_ENDPOINT } from '../../constants';
 import { useLicenseRefdata } from '../../hooks';
 
 const [

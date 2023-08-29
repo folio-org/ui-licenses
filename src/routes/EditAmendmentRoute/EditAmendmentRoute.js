@@ -11,9 +11,10 @@ import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import Form from '../../components/AmendmentForm';
-import { LICENSE_ENDPOINT } from '../../constants/endpoints';
 import { urls } from '../../components/utils';
-import useLicenseRefdata from '../../hooks/useLicenseRefdata';
+
+import { LICENSE_ENDPOINT } from '../../constants';
+import { useLicenseRefdata } from '../../hooks';
 
 const [
   LICENSE_STATUS,

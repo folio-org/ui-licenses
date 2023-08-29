@@ -5,7 +5,7 @@ import { useQueryClient } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
 import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
-import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants';
 import { useLicensesContexts } from '../../hooks';
 
 const LicensesCustomProperties = () => {

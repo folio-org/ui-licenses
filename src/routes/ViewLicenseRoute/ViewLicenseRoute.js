@@ -6,15 +6,19 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { flatten } from 'lodash';
 
 import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useChunkedUsers, useInterfaces, useParallelBatchFetch } from '@folio/stripes-erm-components';
+import {
+  INVALID_JSON_ERROR,
+  JSON_ERROR,
+  useChunkedUsers,
+  useInterfaces,
+  useParallelBatchFetch
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
-import { errorTypes } from '../../constants';
-import { LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
 
+import { LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants';
 import { useLicensesHelperApp } from '../../hooks';
-
 
 const ViewLicenseRoute = ({
   handlers = {},
@@ -102,14 +106,14 @@ const ViewLicenseRoute = ({
       if (response.ok) {
         return response.text(); // Parse it as text
       } else {
-        throw new Error(errorTypes.JSON_ERROR);
+        throw new Error(JSON_ERROR);
       }
     }).then(text => {
       const data = JSON.parse(text); // Try to parse it as json
       if (data.id) {
         return Promise.resolve(history.push(`${appUrls.licenseEdit(data.id)}${location.search}`));
       } else {
-        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+        throw new Error(INVALID_JSON_ERROR); // when the json response body doesn't contain an id
       }
     }).catch(error => {
       throw error;
