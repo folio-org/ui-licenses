@@ -45,7 +45,6 @@ const AmendmentsRoute = ({
 
   const amendmentsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      license: 'owner.id',
       searchKey: 'name,description',
       filterKeys: {
         status: 'status.value',
