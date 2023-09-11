@@ -5,6 +5,7 @@
 * STRIPES-870 BREAKING upgrade react to v18
   * ERM-2990 Upgrade ui-licenses React to v18
 * ERM-2993 Add amendments search in licenses app
+* ERM-3032 *BREAKING* bump `react-intl` to `v6.4.4`
 
 ## 9.0.0 2023-02-22
 * ERM-2565 Increment ui-licenses to Stripes v8
