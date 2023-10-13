@@ -1,11 +1,21 @@
 # Change history for ui-licenses
 
-## 10.0.0 In progress
-* ERM-2625 Add view only permissions for License settings
-* STRIPES-870 BREAKING upgrade react to v18
-  * ERM-2990 Upgrade ui-licenses React to v18
+## 10.0.0 2023-10-13
+* ERM-3037 unlock @rehooks/local-storage from 2.4.4
+* ERM-3029 *BREAKING* bump `react-intl` to `v6.4.4`
+* ERM-3019 Remove `license=owner.id` in Amendments search params
+* ERM-3001 Update Node.js to v18 in GitHub Actions
 * ERM-2993 Add amendments search in licenses app
-* ERM-3032 *BREAKING* bump `react-intl` to `v6.4.4`
+* ERM-2973 Replace naive fetch hooks with parallelised ones (and deprecate)
+  * ERM-2976 Switch to useParallelBatchFetch
+  * ERM-2977 Switch to useChunkedUsers
+* ERM-2903 License form is incorrectly initialized if refdata lacks type=local and status=active
+* ERM-2625 Add view only permissions for License settings
+* ERM-2641 Upgrade to Grails 5 (including Hibernate 5.6.x) for Poppy
+  * Added okapi interface dependency on new licenses interface 5.0
+* ERM-2189 Display the amendment count badge on a license when the Amendments accordion is expanded
+* STRIPES-870 *BREAKING* upgrade react to v18
+  * ERM-2990 Upgrade ui-licenses React to v18
 
 ## 9.0.0 2023-02-22
 * ERM-2565 Increment ui-licenses to Stripes v8
