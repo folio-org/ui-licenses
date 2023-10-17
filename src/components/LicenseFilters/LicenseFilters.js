@@ -192,7 +192,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     />;
   };
 
-  const renderDocumentFilter = () => {
+  const renderCoreDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}
       filterHandlers={filterHandlers}
@@ -210,7 +210,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
       {renderEndDateFilter()}
       {renderCustomPropertyFilters()}
       {renderSupplementaryDocumentFilter()}
-      {renderDocumentFilter()}
+      {renderCoreDocumentFilter()}
     </AccordionSet>
   );
 }
