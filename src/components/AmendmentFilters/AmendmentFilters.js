@@ -10,7 +10,7 @@ import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/c
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 import { DateFilter } from '@folio/stripes-erm-components';
 
-
+import AmendmentContentFilter from '../AmendmentContentFilter';
 import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const FILTERS = [
@@ -87,12 +87,38 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
     />;
   };
 
+  const renderAmendmentContentFilter = () => {
+    const amendmentContentFilters = activeFilters.amendmentContent || [];
+
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={amendmentContentFilters.length > 0}
+        header={FilterAccordionHeader}
+        id="clickable-amendment-content-filter"
+        label={<FormattedMessage id="ui-licenses.amendmentContent" />}
+        onClearFilter={() => {
+          filterHandlers.clearGroup('amendmentContent');
+        }}
+        separator={false}
+      >
+        <AmendmentContentFilter
+          activeFilters={activeFilters}
+          amendmentContentFilters={amendmentContentFilters}
+          filterHandlers={filterHandlers}
+          name="amendmentContent"
+        />
+      </Accordion>
+    );
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('status')}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCustomPropertyFilters()}
+      {renderAmendmentContentFilter()}
     </AccordionSet>
   );
 }

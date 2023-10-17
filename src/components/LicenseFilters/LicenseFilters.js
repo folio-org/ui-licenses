@@ -10,6 +10,7 @@ import { DateFilter, OrganizationSelection } from '@folio/stripes-erm-components
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
+import LicenseContentFilter from '../LicenseContentFilter';
 import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const FILTERS = [
@@ -179,6 +180,31 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     />;
   };
 
+  const renderLicenseContentFilter = () => {
+    const licenseContentFilters = activeFilters.licenseContent || [];
+
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={licenseContentFilters.length > 0}
+        header={FilterAccordionHeader}
+        id="clickable-license-content-filter"
+        label={<FormattedMessage id="ui-licenses.licenseContent" />}
+        onClearFilter={() => {
+          filterHandlers.clearGroup('licenseContent');
+        }}
+        separator={false}
+      >
+        <LicenseContentFilter
+          activeFilters={activeFilters}
+          filterHandlers={filterHandlers}
+          licenseContentFilters={licenseContentFilters}
+          name="licenseContent"
+        />
+      </Accordion>
+    );
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('status')}
@@ -189,6 +215,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCustomPropertyFilters()}
+      {renderLicenseContentFilter()}
     </AccordionSet>
   );
 }
