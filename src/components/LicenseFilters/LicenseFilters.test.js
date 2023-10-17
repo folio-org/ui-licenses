@@ -18,11 +18,11 @@ const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
-  checkbox: () => {},
-  clear: () => {},
-  clearGroup: () => {},
-  reset: () => {},
-  stat: () => {},
+  checkbox: () => { },
+  clear: () => { },
+  clearGroup: () => { },
+  reset: () => { },
+  stat: () => { },
 };
 
 describe('LicenseFilters', () => {
@@ -65,6 +65,14 @@ describe('LicenseFilters', () => {
     await waitFor(() => {
       expect(getByText('OrganizationSelection')).toBeInTheDocument();
     });
+  });
+
+  test('renders the Supplementary documents Accordion', async () => {
+    await Accordion('Supplementary documents').exists();
+  });
+
+  test('renders the Core documents Accordion', async () => {
+    await Accordion('Core documents').exists();
   });
 
   test('clicking the active checkbox', async () => {

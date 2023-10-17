@@ -6,11 +6,12 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, OrganizationSelection } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter, OrganizationSelection, selectifyRefdata, SupplementaryDocumentFilter } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import { CUSTPROP_ENDPOINT } from '../../constants';
+import { useLicenseRefdata } from '../../hooks';
 
 const FILTERS = [
   'status',
@@ -25,6 +26,10 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     type: [],
     tags: [],
   });
+
+  const [AT_TYPE] = ['DocumentAttachment.AtType'];
+  const refdataValues = useLicenseRefdata([AT_TYPE]);
+  const atTypeValues = selectifyRefdata(refdataValues, AT_TYPE, 'value');
 
   useEffect(() => {
     const newState = {};
@@ -179,6 +184,21 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     />;
   };
 
+  const renderSupplementaryDocumentFilter = () => {
+    return <SupplementaryDocumentFilter
+      activeFilters={activeFilters}
+      atTypeValues={atTypeValues}
+      filterHandlers={filterHandlers}
+    />;
+  };
+
+  const renderDocumentFilter = () => {
+    return <DocumentFilter
+      activeFilters={activeFilters}
+      filterHandlers={filterHandlers}
+    />;
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('status')}
@@ -189,6 +209,8 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCustomPropertyFilters()}
+      {renderSupplementaryDocumentFilter()}
+      {renderDocumentFilter()}
     </AccordionSet>
   );
 }
