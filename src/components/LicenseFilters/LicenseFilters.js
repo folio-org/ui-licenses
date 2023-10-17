@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, OrganizationSelection, selectifyRefdata, SupplementaryDocumentFilter } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter, OrganizationSelection, selectifyRefdata } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
@@ -185,7 +185,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
   };
 
   const renderSupplementaryDocumentFilter = () => {
-    return <SupplementaryDocumentFilter
+    return <DocumentFilter
       activeFilters={activeFilters}
       atTypeValues={atTypeValues}
       filterHandlers={filterHandlers}

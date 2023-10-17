@@ -8,7 +8,7 @@ import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, selectifyRefdata, SupplementaryDocumentFilter } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter, selectifyRefdata } from '@folio/stripes-erm-components';
 
 
 import { CUSTPROP_ENDPOINT } from '../../constants';
@@ -94,7 +94,7 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
   };
 
   const renderSupplementaryDocumentFilter = () => {
-    return <SupplementaryDocumentFilter
+    return <DocumentFilter
       activeFilters={activeFilters}
       atTypeValues={atTypeValues}
       filterHandlers={filterHandlers}
