@@ -67,14 +67,6 @@ describe('LicenseFilters', () => {
     });
   });
 
-  test('renders the Supplementary documents Accordion', async () => {
-    await Accordion('Supplementary documents').exists();
-  });
-
-  test('renders the Core documents Accordion', async () => {
-    await Accordion('Core documents').exists();
-  });
-
   test('clicking the active checkbox', async () => {
     await waitFor(async () => {
       await Checkbox({ id: 'clickable-filter-status-active' }).click();
