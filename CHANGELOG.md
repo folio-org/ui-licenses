@@ -1,6 +1,7 @@
 # Change history for ui-licenses
 
 ## 10.1.0 In progress
+* test github-ci
 
 ## 10.0.0 2023-10-13
 * ERM-3037 unlock @rehooks/local-storage from 2.4.4
