@@ -1,20 +1,25 @@
 import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useInfiniteFetch, useTags, downloadBlob } from '@folio/stripes-erm-components';
+import {
+  getRefdataValuesByDesc,
+  useTags,
+  downloadBlob,
+  usePrevNextPagination
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/Licenses';
 import NoPermissions from '../../components/NoPermissions';
 
-import { LICENSES_ENDPOINT } from '../../constants';
+import { LICENSES_ENDPOINT, resultCount } from '../../constants';
 import { useLicenseRefdata } from '../../hooks';
 
-const RECORDS_PER_REQUEST = 100;
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const [
   LICENSE_STATUS,
@@ -38,6 +43,7 @@ const LicensesRoute = ({
   const searchField = useRef();
 
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
+  const { currentPage } = usePrevNextPagination();
 
   useEffect(() => {
     if (searchField.current) {
@@ -69,24 +75,21 @@ const LicensesRoute = ({
         status: 'status.label',
         type: 'type.label',
       },
-      perPage: RECORDS_PER_REQUEST
+      page: currentPage,
+      perPage: RESULT_COUNT_INCREMENT_MEDIUM
     }, (query ?? {}))
-  ), [query]);
+  ), [query, currentPage]);
 
 
   const {
-    infiniteQueryObject: {
-      error: licensesError,
-      fetchNextPage: fetchNextLicensePage,
-      isLoading: areLicensesLoading,
-      isError: isLicensesError
-    },
-    results: licenses = [],
-    total: licensesCount = 0
-  } = useInfiniteFetch(
+    data: { results: licenses = [], totalRecords: licensesCount = 0 } = {},
+    error: licensesError,
+    isLoading: areLicensesLoading,
+    isError: isLicensesError
+  } = useQuery(
     ['ERM', 'Licenses', licensesQueryParams, LICENSES_ENDPOINT],
-    ({ pageParam = 0 }) => {
-      const params = [...licensesQueryParams, `offset=${pageParam}`];
+    () => {
+      const params = [...licensesQueryParams];
       return ky.get(`${LICENSES_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
@@ -110,7 +113,6 @@ const LicensesRoute = ({
       }}
       history={history}
       onCompareLicenseTerms={handleCompareLicenseTerms}
-      onNeedMoreData={(_askAmount, index) => fetchNextLicensePage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchString={location.search}
