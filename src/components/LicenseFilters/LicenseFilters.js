@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, OrganizationSelection } from '@folio/stripes-erm-components';
+import { CoreDocumentFilter, DateFilter, DocumentFilter, OrganizationSelection, SupplementaryDocumentFilter } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
@@ -183,7 +183,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
 
   // for supplementary documents pass the atTypeValues
   const renderSupplementaryDocumentFilter = () => {
-    return <DocumentFilter
+    return <SupplementaryDocumentFilter
       activeFilters={activeFilters}
       atTypeValues={atTypeValues}
       filterHandlers={filterHandlers}
@@ -192,7 +192,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
 
   // for core documents DO NOT pass the atTypeValues
   const renderCoreDocumentFilter = () => {
-    return <DocumentFilter
+    return <CoreDocumentFilter
       activeFilters={activeFilters}
       filterHandlers={filterHandlers}
     />;
