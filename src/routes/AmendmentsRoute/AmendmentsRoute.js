@@ -1,20 +1,20 @@
 import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useInfiniteFetch, downloadBlob } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, downloadBlob, usePrevNextPagination } from '@folio/stripes-erm-components';
 
 import View from '../../components/Amendments';
 import NoPermissions from '../../components/NoPermissions';
 
-import { AMENDMENTS_ENDPOINT } from '../../constants';
+import { AMENDMENTS_ENDPOINT, resultCount } from '../../constants';
 import { useLicenseRefdata } from '../../hooks';
 
-const RECORDS_PER_REQUEST = 100;
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const LICENSE_STATUS = 'License.Status';
 
@@ -30,6 +30,7 @@ const AmendmentsRoute = ({
   const searchField = useRef();
 
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
+  const { currentPage } = usePrevNextPagination();
 
   useEffect(() => {
     if (searchField.current) {
@@ -52,24 +53,21 @@ const AmendmentsRoute = ({
       sortKeys: {
         status: 'status.label',
       },
-      perPage: RECORDS_PER_REQUEST
+      page: currentPage,
+      perPage: RESULT_COUNT_INCREMENT_MEDIUM
     }, (query ?? {}))
-  ), [query]);
+  ), [query, currentPage]);
 
 
   const {
-    infiniteQueryObject: {
-      error: amendmentsError,
-      fetchNextPage: fetchNextLicensePage,
-      isLoading: areAmendmentsLoading,
-      isError: isAmendmentsError
-    },
-    results: amendments = [],
-    total: amendmentsCount = 0
-  } = useInfiniteFetch(
+    data: { results: amendments = [], totalRecords: amendmentsCount = 0 } = {},
+    error: amendmentsError,
+    isLoading: areAmendmentsLoading,
+    isError: isAmendmentsError
+  } = useQuery(
     ['ERM', 'Amendments', amendmentsQueryParams, AMENDMENTS_ENDPOINT],
-    ({ pageParam = 0 }) => {
-      const params = [...amendmentsQueryParams, `offset=${pageParam}`];
+    () => {
+      const params = [...amendmentsQueryParams];
       return ky.get(`${AMENDMENTS_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
@@ -90,7 +88,6 @@ const AmendmentsRoute = ({
       }}
       history={history}
       onCompareLicenseTerms={handleCompareLicenseTerms}
-      onNeedMoreData={(_askAmount, index) => fetchNextLicensePage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchString={location.search}

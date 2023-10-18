@@ -23,19 +23,19 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import { LicenseEndDate } from '@folio/stripes-erm-components';
+import { LicenseEndDate, usePrevNextPagination } from '@folio/stripes-erm-components';
 
 import AmendmentFilters from '../AmendmentFilters';
 import RouteSwitcher from '../RouteSwitcher';
 import { urls } from '../utils';
-
+import { resultCount } from '../../constants';
 import css from '../Licenses/Licenses.css';
 
 const propTypes = {
   children: PropTypes.node,
   data: PropTypes.object,
   history: PropTypes.object,
-  onNeedMoreData: PropTypes.func,
+  page: PropTypes.number,
   queryGetter: PropTypes.func,
   querySetter: PropTypes.func,
   searchString: PropTypes.string,
@@ -44,12 +44,12 @@ const propTypes = {
 };
 
 const filterPaneVisibilityKey = '@folio/licenses/amendmentsFilterPaneVisibility';
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const Amendments = ({
   children,
   data,
   history,
-  onNeedMoreData,
   queryGetter,
   querySetter,
   searchString,
@@ -59,6 +59,14 @@ const Amendments = ({
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
+
+  const {
+    paginationMCLProps,
+    paginationSASQProps
+  } = usePrevNextPagination({
+    count,
+    pageSize: RESULT_COUNT_INCREMENT_MEDIUM
+  });
 
   const searchField = useRef(null);
 
@@ -72,6 +80,7 @@ const Amendments = ({
   return (
     <div data-test-amendments data-testid="amendments">
       <SearchAndSortQuery
+        {...paginationSASQProps}
         initialFilterState={{ status: ['active'] }}
         initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
@@ -238,7 +247,7 @@ const Amendments = ({
                     }
                     isSelected={({ item }) => item.id === selectedRecordId}
                     onHeaderClick={onSort}
-                    onNeedMoreData={onNeedMoreData}
+                    {...paginationMCLProps}
                     onRowClick={(_e, row) => {
                       history.push(`${urls.amendmentNativeView(row.owner.id, row.id)}${searchString}`);
                     }}
