@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { CoreDocumentFilter, DateFilter, DocumentFilter, OrganizationSelection, SupplementaryDocumentFilter } from '@folio/stripes-erm-components';
+import { CoreDocumentFilter, DateFilter, OrganizationSelection, SupplementaryDocumentFilter } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 

@@ -12,23 +12,6 @@ const activeFilters = {
 
 const data = {
   'licenses': '[]',
-  'documentAtTypeValues': [
-    {
-      'id': '2c9180958abb5845018abb63d4580014',
-      'value': 'consortium_authorization_statement',
-      'label': 'Consortium authorization statement'
-    },
-    {
-      'id': '2c9180958abb5845018abb63d4600015',
-      'value': 'product_data_sheet',
-      'label': 'Product data sheet'
-    },
-    {
-      'id': '2c9180958abb5845018abb63d4690016',
-      'value': 'vendor_terms_and_conditions',
-      'label': 'Vendor terms and conditions'
-    }
-  ],
   'statusValues': [{
     'id': '2c91809d821bd92801821bdfdde10018',
     'value': 'active',

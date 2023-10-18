@@ -18,11 +18,11 @@ const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
-  checkbox: () => { },
-  clear: () => { },
-  clearGroup: () => { },
-  reset: () => { },
-  stat: () => { },
+  checkbox: () => {},
+  clear: () => {},
+  clearGroup: () => {},
+  reset: () => {},
+  stat: () => {},
 };
 
 describe('LicenseFilters', () => {
