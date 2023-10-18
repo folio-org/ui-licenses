@@ -11,7 +11,6 @@ import { DateFilter, DocumentFilter, OrganizationSelection } from '@folio/stripe
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import { CUSTPROP_ENDPOINT } from '../../constants';
-import { useLicenseRefdata } from '../../hooks';
 
 const FILTERS = [
   'status',
@@ -27,8 +26,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     tags: [],
   });
 
-  // get DocumentAttachment.AtType refdata for SupplementaryDocumentFilter
-  const refdataValues = useLicenseRefdata({ desc: 'DocumentAttachment.AtType' });
+  const atTypeValues = data.documentAtTypeValues;
 
   useEffect(() => {
     const newState = {};
@@ -183,16 +181,16 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     />;
   };
 
-  // for supplementary documents pass the refdataValues
+  // for supplementary documents pass the atTypeValues
   const renderSupplementaryDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}
+      atTypeValues={atTypeValues}
       filterHandlers={filterHandlers}
-      refdataValues={refdataValues}
     />;
   };
 
-  // for core documents DO NOT pass the refdataValues
+  // for core documents DO NOT pass the atTypeValues
   const renderCoreDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}

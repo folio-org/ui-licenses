@@ -8,11 +8,10 @@ import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, selectifyRefdata } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter } from '@folio/stripes-erm-components';
 
 
 import { CUSTPROP_ENDPOINT } from '../../constants';
-import { useLicenseRefdata } from '../../hooks';
 
 const FILTERS = [
   'status',
@@ -25,10 +24,7 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
     status: [],
   });
 
-  const [AT_TYPE] = ['DocumentAttachment.AtType'];
-  const refdataValues = useLicenseRefdata([AT_TYPE]);
-  const atTypeValues = selectifyRefdata(refdataValues, AT_TYPE, 'value');
-
+  const atTypeValues = data.documentAtTypeValues;
 
   useEffect(() => {
     const newState = {};
@@ -93,6 +89,7 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
     />;
   };
 
+  // for supplementary documents pass the atTypeValues
   const renderSupplementaryDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}
@@ -101,6 +98,7 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
     />;
   };
 
+  // for core documents DO NOT pass the atTypeValues
   const renderCoreDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}
