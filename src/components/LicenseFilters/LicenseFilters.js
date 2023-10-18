@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, OrganizationSelection, selectifyRefdata } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter, OrganizationSelection } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
@@ -27,9 +27,8 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     tags: [],
   });
 
-  const [AT_TYPE] = ['DocumentAttachment.AtType'];
-  const refdataValues = useLicenseRefdata([AT_TYPE]);
-  const atTypeValues = selectifyRefdata(refdataValues, AT_TYPE, 'value');
+  // get DocumentAttachment.AtType refdata for SupplementaryDocumentFilter
+  const refdataValues = useLicenseRefdata({ desc: 'DocumentAttachment.AtType' });
 
   useEffect(() => {
     const newState = {};
@@ -184,14 +183,16 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     />;
   };
 
+  // for supplementary documents pass the refdataValues
   const renderSupplementaryDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}
-      atTypeValues={atTypeValues}
       filterHandlers={filterHandlers}
+      refdataValues={refdataValues}
     />;
   };
 
+  // for core documents DO NOT pass the refdataValues
   const renderCoreDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}
