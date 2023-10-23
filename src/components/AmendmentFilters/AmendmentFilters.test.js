@@ -141,4 +141,12 @@ describe('AmendmentFilters', () => {
       expect(stateMock.mock.calls.length).toEqual(5);
     });
   });
+
+  test('renders the Supplementary documents Accordion', async () => {
+    await Accordion('Supplementary documents').exists();
+  });
+
+  test('renders the Core documents Accordion', async () => {
+    await Accordion('Core documents').exists();
+  });
 });
