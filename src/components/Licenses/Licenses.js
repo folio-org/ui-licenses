@@ -26,12 +26,12 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import { LicenseEndDate } from '@folio/stripes-erm-components';
+import { LicenseEndDate, usePrevNextPagination } from '@folio/stripes-erm-components';
 import ExportLicenseAsCSVModal from '../ExportLicenseAsCSVModal';
 
 import LicenseFilters from '../LicenseFilters';
 import RouteSwitcher from '../RouteSwitcher';
-import { statuses } from '../../constants';
+import { statuses, resultCount } from '../../constants';
 
 import css from './Licenses.css';
 
@@ -40,7 +40,7 @@ const propTypes = {
   data: PropTypes.object,
   history: PropTypes.object,
   onCompareLicenseTerms: PropTypes.func,
-  onNeedMoreData: PropTypes.func,
+  page: PropTypes.number,
   queryGetter: PropTypes.func,
   querySetter: PropTypes.func,
   searchString: PropTypes.string,
@@ -49,13 +49,13 @@ const propTypes = {
 };
 
 const filterPaneVisibilityKey = '@folio/licenses/licensesFilterPaneVisibility';
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const Licenses = ({
   children,
   data,
   history,
   onCompareLicenseTerms,
-  onNeedMoreData,
   queryGetter,
   querySetter,
   searchString,
@@ -65,6 +65,14 @@ const Licenses = ({
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
+
+  const {
+    paginationMCLProps,
+    paginationSASQProps
+  } = usePrevNextPagination({
+    count,
+    pageSize: RESULT_COUNT_INCREMENT_MEDIUM
+  });
 
   const searchField = useRef(null);
 
@@ -100,6 +108,7 @@ const Licenses = ({
     >
       <div data-test-licenses data-testid="licenses">
         <SearchAndSortQuery
+          {...paginationSASQProps}
           initialFilterState={{ status: ['active'] }}
           initialSearchState={{ query: '' }}
           initialSortState={{ sort: 'name' }}
@@ -308,7 +317,7 @@ const Licenses = ({
                       }
                       isSelected={({ item }) => item.id === selectedRecordId}
                       onHeaderClick={onSort}
-                      onNeedMoreData={onNeedMoreData}
+                      {...paginationMCLProps}
                       rowProps={{
                         labelStrings: ({ rowData }) => [
                           rowData.name,
