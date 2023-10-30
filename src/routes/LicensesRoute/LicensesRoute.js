@@ -22,10 +22,12 @@ import { useLicenseRefdata } from '../../hooks';
 const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const [
+  DOCUMENT_AT_TYPE,
   LICENSE_STATUS,
   LICENSE_TYPE,
   LICENSE_ORG_ROLE,
 ] = [
+  'DocumentAttachment.AtType',
   'License.Status',
   'License.Type',
   'LicenseOrg.Role',
@@ -53,6 +55,7 @@ const LicensesRoute = ({
 
   const refdata = useLicenseRefdata({
     desc: [
+      DOCUMENT_AT_TYPE,
       LICENSE_STATUS,
       LICENSE_TYPE,
       LICENSE_ORG_ROLE,
@@ -109,6 +112,7 @@ const LicensesRoute = ({
         statusValues: getRefdataValuesByDesc(refdata, LICENSE_STATUS),
         typeValues: getRefdataValuesByDesc(refdata, LICENSE_TYPE),
         orgRoleValues: getRefdataValuesByDesc(refdata, LICENSE_ORG_ROLE),
+        documentAtTypeValues: getRefdataValuesByDesc(refdata, DOCUMENT_AT_TYPE),
         tags
       }}
       history={history}

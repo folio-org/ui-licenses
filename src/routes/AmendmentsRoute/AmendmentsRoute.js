@@ -16,7 +16,13 @@ import { useLicenseRefdata } from '../../hooks';
 
 const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
-const LICENSE_STATUS = 'License.Status';
+const [
+  DOCUMENT_AT_TYPE,
+  LICENSE_STATUS,
+] = [
+  'DocumentAttachment.AtType',
+  'License.Status',
+];
 
 const AmendmentsRoute = ({
   children,
@@ -40,6 +46,7 @@ const AmendmentsRoute = ({
 
   const refdata = useLicenseRefdata({
     desc: [
+      DOCUMENT_AT_TYPE,
       LICENSE_STATUS
     ]
   });
@@ -85,6 +92,7 @@ const AmendmentsRoute = ({
       data={{
         amendments,
         statusValues: getRefdataValuesByDesc(refdata, LICENSE_STATUS),
+        documentAtTypeValues: getRefdataValuesByDesc(refdata, DOCUMENT_AT_TYPE),
       }}
       history={history}
       onCompareLicenseTerms={handleCompareLicenseTerms}

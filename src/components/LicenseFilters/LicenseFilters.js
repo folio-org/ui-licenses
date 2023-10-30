@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, OrganizationSelection } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter, OrganizationSelection } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
@@ -25,6 +25,8 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     type: [],
     tags: [],
   });
+
+  const atTypeValues = data.documentAtTypeValues;
 
   useEffect(() => {
     const newState = {};
@@ -179,6 +181,23 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     />;
   };
 
+  // for supplementary documents pass the atTypeValues
+  const renderSupplementaryDocumentFilter = () => {
+    return <DocumentFilter
+      activeFilters={activeFilters}
+      atTypeValues={atTypeValues}
+      filterHandlers={filterHandlers}
+    />;
+  };
+
+  // for core documents DO NOT pass the atTypeValues
+  const renderCoreDocumentFilter = () => {
+    return <DocumentFilter
+      activeFilters={activeFilters}
+      filterHandlers={filterHandlers}
+    />;
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('status')}
@@ -189,6 +208,8 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCustomPropertyFilters()}
+      {renderSupplementaryDocumentFilter()}
+      {renderCoreDocumentFilter()}
     </AccordionSet>
   );
 }

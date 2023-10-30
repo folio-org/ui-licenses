@@ -8,7 +8,7 @@ import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
-import { DateFilter } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter } from '@folio/stripes-erm-components';
 
 
 import { CUSTPROP_ENDPOINT } from '../../constants';
@@ -23,6 +23,8 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
   const [filterState, setFilterState] = useState({
     status: [],
   });
+
+  const atTypeValues = data.documentAtTypeValues;
 
   useEffect(() => {
     const newState = {};
@@ -87,12 +89,32 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
     />;
   };
 
+  // for supplementary documents pass the atTypeValues
+  const renderSupplementaryDocumentFilter = () => {
+    return <DocumentFilter
+      activeFilters={activeFilters}
+      atTypeValues={atTypeValues}
+      filterHandlers={filterHandlers}
+    />;
+  };
+
+  // for core documents DO NOT pass the atTypeValues
+  const renderCoreDocumentFilter = () => {
+    return <DocumentFilter
+      activeFilters={activeFilters}
+      filterHandlers={filterHandlers}
+    />;
+  };
+
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('status')}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCustomPropertyFilters()}
+      {renderSupplementaryDocumentFilter()}
+      {renderCoreDocumentFilter()}
     </AccordionSet>
   );
 }
