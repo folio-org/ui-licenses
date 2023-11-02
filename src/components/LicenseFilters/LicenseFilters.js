@@ -4,20 +4,35 @@ import isEqual from 'lodash/isEqual';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
-import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, OrganizationSelection } from '@folio/stripes-erm-components';
+import {
+  Accordion,
+  AccordionSet,
+  FilterAccordionHeader,
+  Selection,
+} from '@folio/stripes/components';
+import {
+  CheckboxFilter,
+  MultiSelectionFilter,
+} from '@folio/stripes/smart-components';
+import {
+  DateFilter,
+  DocumentFilter,
+  OrganizationSelection,
+} from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
-import { CUSTPROP_ENDPOINT } from '../../constants';
+import { CUSTPROP_ENDPOINT, licenseContentOptions } from '../../constants';
 
-const FILTERS = [
-  'status',
-  'type',
-];
+import ContentFilter from '../ContentFilter';
 
-export default function LicenseFilters({ activeFilters, data, filterHandlers }) {
+const FILTERS = ['status', 'type'];
+
+export default function LicenseFilters({
+  activeFilters,
+  data,
+  filterHandlers,
+}) {
   const intl = useIntl();
 
   const [filterState, setFilterState] = useState({
@@ -30,7 +45,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
 
   useEffect(() => {
     const newState = {};
-    FILTERS.forEach(filter => {
+    FILTERS.forEach((filter) => {
       const values = data[`${filter}Values`];
       if (!isEqual(values, filterState[filter])) {
         newState[filter] = values;
@@ -42,7 +57,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
     }
 
     if (Object.keys(newState).length) {
-      setFilterState(prevState => ({ ...prevState, ...newState }));
+      setFilterState((prevState) => ({ ...prevState, ...newState }));
     }
   }, [data, filterState]);
 
@@ -55,14 +70,21 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
         header={FilterAccordionHeader}
         id={`filter-accordion-${name}`}
         label={<FormattedMessage id={`ui-licenses.prop.${name}`} />}
-        onClearFilter={() => { filterHandlers.clearGroup(name); }}
+        onClearFilter={() => {
+          filterHandlers.clearGroup(name);
+        }}
         separator={false}
         {...prps}
       >
         <CheckboxFilter
           dataOptions={filterState[name] || []}
           name={name}
-          onChange={(group) => { filterHandlers.state({ ...activeFilters, [group.name]: group.values }); }}
+          onChange={(group) => {
+            filterHandlers.state({
+              ...activeFilters,
+              [group.name]: group.values,
+            });
+          }}
           selectedValues={groupFilters}
         />
       </Accordion>
@@ -89,7 +111,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
         <OrganizationSelection
           input={{
             name: 'license-orgs-filter',
-            onChange: value => filterHandlers.state({ ...activeFilters, org: [value] }),
+            onChange: (value) => filterHandlers.state({ ...activeFilters, org: [value] }),
             value: orgFilters[0] || '',
           }}
           path="licenses/org"
@@ -100,7 +122,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
 
   const renderOrganizationRoleFilter = () => {
     const roles = data.orgRoleValues;
-    const dataOptions = roles.map(role => ({
+    const dataOptions = roles.map((role) => ({
       value: role.id,
       label: role.label,
     }));
@@ -113,7 +135,9 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
         displayClearButton={roleFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-licenses.filters.organizationRole" />}
-        onClearFilter={() => { filterHandlers.clearGroup('role'); }}
+        onClearFilter={() => {
+          filterHandlers.clearGroup('role');
+        }}
         separator={false}
       >
         <FormattedMessage id="ui-licenses.organizations.selectRole">
@@ -121,7 +145,8 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
             <Selection
               dataOptions={dataOptions}
               id="org-role-selector"
-              onChange={value => filterHandlers.state({ ...activeFilters, role: [value] })}
+              onChange={(value) => filterHandlers.state({ ...activeFilters, role: [value] })
+              }
               placeholder={placeholder}
               value={roleFilters[0] || ''}
             />
@@ -141,14 +166,17 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
         header={FilterAccordionHeader}
         id="clickable-tags-filter"
         label={<FormattedMessage id="ui-licenses.tags" />}
-        onClearFilter={() => { filterHandlers.clearGroup('tags'); }}
+        onClearFilter={() => {
+          filterHandlers.clearGroup('tags');
+        }}
         separator={false}
       >
         <MultiSelectionFilter
           dataOptions={filterState.tags || []}
           id="tags-filter"
           name="tags"
-          onChange={e => filterHandlers.state({ ...activeFilters, tags: e.values })}
+          onChange={(e) => filterHandlers.state({ ...activeFilters, tags: e.values })
+          }
           selectedValues={tagFilters}
         />
       </Accordion>
@@ -156,46 +184,83 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
   };
 
   const renderStartDateFilter = () => {
-    return <DateFilter
-      activeFilters={activeFilters}
-      filterHandlers={filterHandlers}
-      name="startDate"
-      resourceName={intl.formatMessage({ id: 'ui-licenses.licenses' }).toLowerCase()}
-    />;
+    return (
+      <DateFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        name="startDate"
+        resourceName={intl
+          .formatMessage({ id: 'ui-licenses.licenses' })
+          .toLowerCase()}
+      />
+    );
   };
 
   const renderEndDateFilter = () => {
-    return <DateFilter
-      activeFilters={activeFilters}
-      filterHandlers={filterHandlers}
-      name="endDate"
-      resourceName={intl.formatMessage({ id: 'ui-licenses.licenses' }).toLowerCase()}
-    />;
+    return (
+      <DateFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        name="endDate"
+        resourceName={intl
+          .formatMessage({ id: 'ui-licenses.licenses' })
+          .toLowerCase()}
+      />
+    );
   };
 
   const renderCustomPropertyFilters = () => {
-    return <CustomPropertiesFilter
-      activeFilters={activeFilters}
-      customPropertiesEndpoint={CUSTPROP_ENDPOINT}
-      filterHandlers={filterHandlers}
-    />;
+    return (
+      <CustomPropertiesFilter
+        activeFilters={activeFilters}
+        customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+        filterHandlers={filterHandlers}
+      />
+    );
   };
 
   // for supplementary documents pass the atTypeValues
   const renderSupplementaryDocumentFilter = () => {
-    return <DocumentFilter
-      activeFilters={activeFilters}
-      atTypeValues={atTypeValues}
-      filterHandlers={filterHandlers}
-    />;
+    return (
+      <DocumentFilter
+        activeFilters={activeFilters}
+        atTypeValues={atTypeValues}
+        filterHandlers={filterHandlers}
+      />
+    );
   };
 
   // for core documents DO NOT pass the atTypeValues
   const renderCoreDocumentFilter = () => {
-    return <DocumentFilter
-      activeFilters={activeFilters}
-      filterHandlers={filterHandlers}
-    />;
+    return (
+      <DocumentFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+      />
+    );
+  };
+
+  const renderContentFilter = () => {
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={activeFilters?.licenseContent?.length > 0}
+        header={FilterAccordionHeader}
+        id="clickable-content-filter"
+        label={<FormattedMessage id="ui-licenses.content.filter.licenseContent" />}
+        onClearFilter={() => {
+          filterHandlers.clearGroup('licenseContent');
+        }}
+        separator={false}
+      >
+        <ContentFilter
+          activeFilters={activeFilters}
+          contentOptions={licenseContentOptions}
+          filterHandlers={filterHandlers}
+          name="licenseContent"
+        />
+      </Accordion>
+    );
   };
 
   return (
@@ -210,6 +275,7 @@ export default function LicenseFilters({ activeFilters, data, filterHandlers }) 
       {renderCustomPropertyFilters()}
       {renderSupplementaryDocumentFilter()}
       {renderCoreDocumentFilter()}
+      {renderContentFilter()}
     </AccordionSet>
   );
 }
@@ -219,7 +285,7 @@ LicenseFilters.propTypes = {
   data: PropTypes.object.isRequired,
   filterHandlers: PropTypes.object,
   intl: PropTypes.shape({
-    formatMessage: PropTypes.func.isRequired
+    formatMessage: PropTypes.func.isRequired,
   }),
 };
 
@@ -227,5 +293,5 @@ LicenseFilters.defaultProps = {
   activeFilters: {
     status: [],
     type: [],
-  }
+  },
 };

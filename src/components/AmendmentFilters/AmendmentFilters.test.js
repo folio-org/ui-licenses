@@ -149,4 +149,8 @@ describe('AmendmentFilters', () => {
   test('renders the Core documents Accordion', async () => {
     await Accordion('Core documents').exists();
   });
+
+  test('renders the Amendment content Accordion', async () => {
+    await Accordion('Amendment content').exists();
+  });
 });
