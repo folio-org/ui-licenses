@@ -1,10 +1,8 @@
 import { useHistory } from 'react-router';
-import { FormattedMessage } from 'react-intl';
 
-import { EditableRefdataCategoryList } from '@k-int/stripes-kint-components';
+import { RefdataCategoriesSettings } from '@k-int/stripes-kint-components';
 
 import { useStripes } from '@folio/stripes/core';
-import { Pane } from '@folio/stripes/components';
 
 import { REFDATA_ENDPOINT } from '../../constants';
 
@@ -20,23 +18,11 @@ const PickListSettings = () => {
   };
 
   return (
-    <Pane
-      defaultWidth="fill"
-      dismissible
-      id="edit-refdata-desc"
+    <RefdataCategoriesSettings
+      displayConditions={displayConditions}
       onClose={() => history.push('/settings/licenses')}
-      paneTitle={
-        <FormattedMessage id="ui-licenses.settings.pickLists" />
-      }
-    >
-      <EditableRefdataCategoryList
-        displayConditions={displayConditions}
-        label={
-          <FormattedMessage id="ui-licenses.settings.pickLists" />
-        }
-        refdataEndpoint={REFDATA_ENDPOINT}
-      />
-    </Pane>
+      refdataEndpoint={REFDATA_ENDPOINT}
+    />
   );
 };
 
