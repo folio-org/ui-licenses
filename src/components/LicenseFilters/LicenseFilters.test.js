@@ -75,6 +75,10 @@ describe('LicenseFilters', () => {
     await Accordion('Core documents').exists();
   });
 
+  test('renders the License content Accordion', async () => {
+    await Accordion('License content').exists();
+  });
+
   test('clicking the active checkbox', async () => {
     await waitFor(async () => {
       await Checkbox({ id: 'clickable-filter-status-active' }).click();
