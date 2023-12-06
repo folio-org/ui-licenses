@@ -4,10 +4,7 @@ import { Settings } from '@folio/stripes/smart-components';
 import { useStripes } from '@folio/stripes/core';
 import { useSettings } from '@k-int/stripes-kint-components';
 
-import {
-  PickListSettings,
-  PickListValueSettings,
-} from './routes';
+import { PickListSettings } from './routes';
 
 import {
   LicensesCustomProperties
@@ -50,12 +47,6 @@ const LicenseSettings = (props) => {
           label: <FormattedMessage id="ui-licenses.settings.pickLists" />,
           perm: 'ui-licenses.picklists.view',
           route: 'pick-lists',
-        },
-        {
-          component: PickListValueSettings,
-          label: <FormattedMessage id="ui-licenses.settings.pickListValues" />,
-          perm: 'ui-licenses.picklists.view',
-          route: 'pick-list-values',
         },
       ]
     },
