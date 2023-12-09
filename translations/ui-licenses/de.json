@@ -289,5 +289,10 @@
     "terms.help.category": "Bedingungen können kategorisiert werden. Jede Kategorie wird beim Anzeigen oder Bearbeiten des Lizenzvertrages als separates Akkordeon angezeigt.",
     "settings.appSettings": "App-Einstellungen",
     "amendments.searchInputLabel": "Vertragsänderungen suchen",
-    "amendments": "Vertragsänderungen"
+    "amendments": "Vertragsänderungen",
+    "content.filter.amendmentContent": "Amendment content",
+    "content.filter.licenseContent": "License content",
+    "content.filter.addFilter": "Add filter",
+    "content.filter.has": "Has",
+    "content.filter.hasNot": "Has not"
 }

@@ -289,5 +289,10 @@
     "terms.help.category": "条款可以分类。查看或编辑许可证时，每个类别都将显示为单独的折叠块。",
     "settings.appSettings": "应用设置",
     "amendments.searchInputLabel": "搜索修正案",
-    "amendments": "修正案"
+    "amendments": "修正案",
+    "content.filter.amendmentContent": "Amendment content",
+    "content.filter.licenseContent": "License content",
+    "content.filter.addFilter": "Add filter",
+    "content.filter.has": "Has",
+    "content.filter.hasNot": "Has not"
 }

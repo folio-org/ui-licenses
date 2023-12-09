@@ -181,7 +181,7 @@
     "notSet": "Nenastaveno",
     "save": "Uložit",
     "actions": "Akce",
-    "search": "Vyhledávání",
+    "search": "Vyhledat",
     "saveAndClose": "Uložit a zavřít",
     "new": "Nový",
     "yes": "Ano",
@@ -289,5 +289,10 @@
     "terms.help.category": "Podmínky lze kategorizovat. Každá kategorie se při prohlížení nebo úpravě licence zobrazí jako samostatný odstavec.",
     "settings.appSettings": "Nastavení aplikace",
     "amendments.searchInputLabel": "Vyhledat dodatky",
-    "amendments": "Dodatky"
+    "amendments": "Dodatky",
+    "content.filter.amendmentContent": "Obsah dodatku",
+    "content.filter.licenseContent": "Obsah licence",
+    "content.filter.addFilter": "Přidat filtr",
+    "content.filter.has": "Má",
+    "content.filter.hasNot": "Nemá"
 }

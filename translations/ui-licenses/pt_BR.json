@@ -289,5 +289,10 @@
     "terms.help.category": "Os termos podem ser categorizados. Cada categoria aparecerá como um acordeão separado ao visualizar ou editar a licença.",
     "settings.appSettings": "Aplicativo de Configurações",
     "amendments.searchInputLabel": "Buscar Alterações",
-    "amendments": "Alterações"
+    "amendments": "Alterações",
+    "content.filter.amendmentContent": "Conteúdo da alteração",
+    "content.filter.licenseContent": "Conteúdo da licença",
+    "content.filter.addFilter": "Adicionar filtro",
+    "content.filter.has": "Tem",
+    "content.filter.hasNot": "Não tem"
 }
