@@ -289,5 +289,10 @@
     "terms.help.category": "조건(Terms)을 카테코리화 할 수 있습니다. 라이선스를 보거나 편집할 때 각 카테고리는 별도의 아코디언으로 표시됩니다.",
     "settings.appSettings": "앱 설정",
     "amendments.searchInputLabel": "수정본 검색",
-    "amendments": "수정본 (Amendments)"
+    "amendments": "수정본 (Amendments)",
+    "content.filter.amendmentContent": "Amendment content",
+    "content.filter.licenseContent": "License content",
+    "content.filter.addFilter": "Add filter",
+    "content.filter.has": "Has",
+    "content.filter.hasNot": "Has not"
 }

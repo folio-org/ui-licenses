@@ -289,5 +289,10 @@
     "terms.help.category": "Terms can be categorised. Each category will appear as a separate accordion when viewing or editing the license.",
     "settings.appSettings": "App settings",
     "amendments.searchInputLabel": "Search Amendments",
-    "amendments": "Amendments"
+    "amendments": "Amendments",
+    "content.filter.amendmentContent": "Amendment content",
+    "content.filter.licenseContent": "License content",
+    "content.filter.addFilter": "Add filter",
+    "content.filter.has": "Has",
+    "content.filter.hasNot": "Has not"
 }
