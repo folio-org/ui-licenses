@@ -27,8 +27,10 @@ const LicenseOrganizations = ({
                 <Link to={`/organizations/view/${org.orgsUuid}`}>
                   <strong>{org.name}</strong>
                 </Link>
-                { primaryOrg ? ' . ' : null }
-                { primaryOrg ? <FormattedMessage id="ui-licenses.organizations.primary" /> : null }
+                {primaryOrg ? ' · ' : null}
+                {primaryOrg ? <FormattedMessage id="ui-licenses.organizations.primary" /> : null}
+                {org.orgsUuid_object.status ? ' · ' : null}
+                {org.orgsUuid_object.status ? <FormattedMessage id={`ui-organizations.organizationStatus.${org.orgsUuid_object.status.toLowerCase()}`} /> : null}
               </AppIcon>
             </span>
           }
