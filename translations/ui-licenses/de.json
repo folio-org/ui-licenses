@@ -290,9 +290,9 @@
     "settings.appSettings": "App-Einstellungen",
     "amendments.searchInputLabel": "Vertragsänderungen suchen",
     "amendments": "Vertragsänderungen",
-    "content.filter.amendmentContent": "Amendment content",
-    "content.filter.licenseContent": "License content",
-    "content.filter.addFilter": "Add filter",
-    "content.filter.has": "Has",
-    "content.filter.hasNot": "Has not"
+    "content.filter.amendmentContent": "Inhalt der Vertragsänderung",
+    "content.filter.licenseContent": "Inhalt des Lizenzvertrages",
+    "content.filter.addFilter": "Filter hinzufügen",
+    "content.filter.has": "Hat",
+    "content.filter.hasNot": "Hat nicht"
 }
