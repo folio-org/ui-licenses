@@ -290,9 +290,9 @@
     "settings.appSettings": "应用设置",
     "amendments.searchInputLabel": "搜索修正案",
     "amendments": "修正案",
-    "content.filter.amendmentContent": "Amendment content",
-    "content.filter.licenseContent": "License content",
-    "content.filter.addFilter": "Add filter",
-    "content.filter.has": "Has",
-    "content.filter.hasNot": "Has not"
+    "content.filter.amendmentContent": "修改内容",
+    "content.filter.licenseContent": "许可内容",
+    "content.filter.addFilter": "添加筛选",
+    "content.filter.has": "有",
+    "content.filter.hasNot": "没有"
 }
