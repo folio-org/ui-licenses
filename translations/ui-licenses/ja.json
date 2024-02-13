@@ -229,7 +229,7 @@
     "customProperties.errors.primaryRetired": "条件をプライマリと不使用の両方にすることはできません",
     "customProperties.errors.customPropertyNoteInvalidNumber": "A valid number must be entered in order to save a note",
     "customProperties.errors.customPropertyNoteWithoutValue": "ノートを保存するためには、値を設定する必要があります。",
-    "customProperties.defaultTitle": "条件",
+    "customProperties.defaultTitle": "条件 ({ctx})",
     "customProperties.optionalProperties": "オプション条件",
     "customProperties.primaryProperties": "プライマリ条件",
     "customProperties.addProperty": "Add term",
