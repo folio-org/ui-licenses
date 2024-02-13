@@ -233,7 +233,7 @@
     "customProperties.optionalProperties": "선택적 조건",
     "customProperties.primaryProperties": "기본 조건",
     "customProperties.addProperty": "조건 추가",
-    "customProperty.optionalPropertyHeader": "조건",
+    "customProperty.optionalPropertyHeader": "조건 {number}",
     "customProperty.remove": "조건 {number} 삭제",
     "customProperty": "조건",
     "customProperty.filtersApplied": "{count} 조건 필터 적용됨",
