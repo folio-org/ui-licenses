@@ -217,7 +217,7 @@
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyInteger": "Celé číslo",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata": "Výběrový seznam",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyRefdataDefinition": "Definice výběrového seznamu",
-    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyText": "Textová",
+    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyText": "Text",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyLocalDate": "Datum",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyMultiRefdata": "Výběrový seznam (vícenásobný výběr)",
     "customProperties.config.all": "Všechny",
