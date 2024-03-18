@@ -1,6 +1,15 @@
 # Change history for ui-licenses
 
 ## 10.1.0 In progress
+* ERM-1910 Swap Licenses Pick lists settings screen to single 4 pane based layout
+* ERM-2057 Licenses and Amendments - Implement MCL Next/Previous pagination
+* ERM-3056 Filter for core documents in Licenses
+* ERM-3057 Filter for core documents in License amendments
+* ERM-3058 Filter for supplementary documents in Licenses
+* ERM-3059 Filter for supplementary documents in License amendments
+* ERM-3062 Add has/has not filter in Licenses and amendments
+* ERM-3119 Add Organisation status to organisation card display
+* ERM-3129 Remove explicit typescript version
 
 ## 10.0.0 2023-10-13
 * ERM-3037 unlock @rehooks/local-storage from 2.4.4
