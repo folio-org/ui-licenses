@@ -1,5 +1,7 @@
 # Change history for ui-licenses
 
+## 11.1.0 In progress
+
 ## 11.0.0 2024-03-22
 * ERM-3129 Remove explicit typescript version
 * ERM-3119 Add Organisation status to organisation card display
