@@ -51,7 +51,6 @@ const App = (props) => {
     setShowKeyboardShortcutsModal(true);
   };
 
-
   const addKey = useIntlKeyStore(state => state.addKey);
   addKey('ui-licenses');
 
