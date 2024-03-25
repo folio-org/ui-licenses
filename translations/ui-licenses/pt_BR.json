@@ -163,7 +163,7 @@
     "prop.amendmentLinkStatus": "Status do link para aditivo",
     "prop.unassigned": "Não atribuído",
     "section.amendmentsOnParentLicense": "Aditivos na licença pai",
-    "section.parentLicenseAgreements": "Acordos vinculados à licença pai",
+    "section.parentLicenseAgreements": "Contratos vinculados à licença pai",
     "settings.settingsSection.fileStorage": "Armazenamento de arquivo",
     "settings.fileStorage.s3AccessKey": "chave de acesso S3",
     "settings.fileStorage.s3BucketName": "Nome do bucket do S3",
