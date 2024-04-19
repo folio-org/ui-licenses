@@ -2,6 +2,10 @@
 
 ## 11.1.0 In progress
 
+## 11.0.1 2024-04-19
+  * ERM-3182 Scrolling content in license view pane can overlap header
+  * Translations
+
 ## 11.0.0 2024-03-22
 * ERM-3129 Remove explicit typescript version
 * ERM-3119 Add Organisation status to organisation card display
