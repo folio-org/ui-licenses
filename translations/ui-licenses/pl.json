@@ -216,7 +216,7 @@
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyDecimal": "Decimal",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyInteger": "Integer",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata": "Lista wyboru",
-    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyRefdataDefinition": "Pick list definition",
+    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyRefdataDefinition": "Definicja listy wyboru",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyText": "Text",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyLocalDate": "Date",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyMultiRefdata": "Lista wyboru (wielokrotny wybór)",
