@@ -218,7 +218,7 @@
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata": "Lista wyboru",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyRefdataDefinition": "Definicja listy wyboru",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyText": "Text",
-    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyLocalDate": "Date",
+    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyLocalDate": "Data",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyMultiRefdata": "Lista wyboru (wielokrotny wybór)",
     "customProperties.config.all": "Wszystko",
     "customProperties.config.delete.errorMessage": "There was an error deleting term: <strong>{label}</strong>. {error}",
