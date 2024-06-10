@@ -28,11 +28,14 @@ import ContentFilter from '../ContentFilter';
 
 const FILTERS = ['status', 'type'];
 
-export default function LicenseFilters({
-  activeFilters,
+const LicenseFilters = ({
+  activeFilters = {
+    status: [],
+    type: [],
+  },
   data,
   filterHandlers,
-}) {
+}) => {
   const intl = useIntl();
 
   const [filterState, setFilterState] = useState({
@@ -278,7 +281,7 @@ export default function LicenseFilters({
       {renderContentFilter()}
     </AccordionSet>
   );
-}
+};
 
 LicenseFilters.propTypes = {
   activeFilters: PropTypes.object,
@@ -289,9 +292,4 @@ LicenseFilters.propTypes = {
   }),
 };
 
-LicenseFilters.defaultProps = {
-  activeFilters: {
-    status: [],
-    type: [],
-  },
-};
+export default LicenseFilters;
