@@ -19,7 +19,7 @@ const FILTERS = [
   'status',
 ];
 
-export default function AmendmentFilters({ activeFilters, data, filterHandlers }) {
+const AmendmentFilters = ({ activeFilters = { status: [] }, data, filterHandlers }) => {
   const intl = useIntl();
 
   const [filterState, setFilterState] = useState({
@@ -143,7 +143,7 @@ export default function AmendmentFilters({ activeFilters, data, filterHandlers }
       {renderContentFilter()}
     </AccordionSet>
   );
-}
+};
 
 AmendmentFilters.propTypes = {
   activeFilters: PropTypes.object,
@@ -154,8 +154,4 @@ AmendmentFilters.propTypes = {
   }),
 };
 
-AmendmentFilters.defaultProps = {
-  activeFilters: {
-    status: [],
-  }
-};
+export default AmendmentFilters;

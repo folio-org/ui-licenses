@@ -8,7 +8,7 @@ const propTypes = {
   license: PropTypes.object,
 };
 
-export default function LicenseHeader({ license }) {
+const LicenseHeader = ({ license = {} }) => {
   return (
     <LicenseCard
       className={css.licenseHeader}
@@ -16,9 +16,8 @@ export default function LicenseHeader({ license }) {
       renderName={false}
     />
   );
-}
+};
 
 LicenseHeader.propTypes = propTypes;
-LicenseHeader.defaultProps = {
-  license: {},
-};
+
+export default LicenseHeader;

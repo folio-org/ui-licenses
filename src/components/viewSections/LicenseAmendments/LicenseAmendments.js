@@ -15,7 +15,7 @@ const LicenseAmendments = ({
   license,
   handlers: { onAmendmentClick },
   id,
-  licenseAmendmentsAccordionLabel,
+  licenseAmendmentsAccordionLabel = <FormattedMessage id="ui-licenses.section.amendments" />,
   urls
 }) => {
   const onRowClick = (_, row) => {
@@ -97,10 +97,6 @@ LicenseAmendments.propTypes = {
     addAmendment: PropTypes.func,
     viewAmendment: PropTypes.func.isRequired,
   }).isRequired
-};
-
-LicenseAmendments.defaultProps = {
-  licenseAmendmentsAccordionLabel: <FormattedMessage id="ui-licenses.section.amendments" />
 };
 
 export default LicenseAmendments;
