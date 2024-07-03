@@ -113,7 +113,8 @@
         "description": "A user with this permission is able to download and view the content of License document files",
         "visible": true,
         "subPermissions": [
-          "licenses.files.item.download"
+          "licenses.files.item.download",
+          "licenses.files.view"
         ]
       },
       {
