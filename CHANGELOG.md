@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 11.0.2 2024-07-05
+  * ERM-3285 Fix permission on /licenses/files/{id}/raw in mod-licenses
+
 ## 11.0.1 2024-04-19
   * ERM-3182 Scrolling content in license view pane can overlap header
   * Translations
