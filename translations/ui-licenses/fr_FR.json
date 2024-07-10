@@ -58,7 +58,7 @@
     "placeholder.amendmentDescription": "Entrez une description de l'amendement",
     "section.amendmentInformation": "Informations sur les modifications",
     "license": "Licence",
-    "licensePlural": "{count} {count, plural, one { licence } other { licences }}",
+    "licensePlural": "{count} {count, plural, one {licence} other {licences}}",
     "organizations.addOrganizationToLicense": "Ajouter une organisation",
     "errors.termVisibilityWithoutValue": "Une valeur doit être définie pour ce terme afin de changer la visibilité",
     "prop.termVisibility": "Visibilité",
