@@ -75,7 +75,7 @@
     "coreDocs.removeCoreDoc": "Remove core document",
     "supplementaryDocs.remove": "Remove supplementary document",
     "delete": "Delete",
-    "edit": "Edit",
+    "edit": "Bewerken",
     "section.supplementaryDocuments": "Supplementary documents",
     "create.callout": "<strong>License created:</strong> {name}",
     "update.callout": "<strong>License updated:</strong> {name}",
