@@ -1,6 +1,5 @@
 name: Centralized workflow test
 on:
-  # todo: what would be best here?
   - push
   - pull_request
   - workflow_dispatch
