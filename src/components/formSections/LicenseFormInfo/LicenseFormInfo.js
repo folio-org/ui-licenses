@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
-
-import { AlternativeNamesFieldArray, requiredValidator } from '@folio/stripes-erm-components';
 
 import {
   Checkbox,
@@ -14,9 +12,20 @@ import {
   Select,
   TextArea,
   TextField,
+  getLocaleDateFormat
 } from '@folio/stripes/components';
 
+import {
+  AlternativeNamesFieldArray,
+  requiredValidator,
+  datePlausibilityCheck,
+} from '@folio/stripes-erm-components';
+
+
 const LicenseFormInfo = ({ data: { statusValues, typeValues }, id, mutators, values }) => {
+  const intl = useIntl();
+  const dateFormat = getLocaleDateFormat({ intl });
+  const backendDateStandard = 'YYYY-MM-DD';
   /* istanbul ignore next */
   const validateEndDate = (value, allValues) => {
     if (value && allValues.startDate && (allValues.openEnded !== true)) {
@@ -79,51 +88,52 @@ const LicenseFormInfo = ({ data: { statusValues, typeValues }, id, mutators, val
       <Row>
         <Col md={5} xs={12}>
           <Field
-            backendDateStandard="YYYY-MM-DD"
             component={Datepicker}
             id="edit-license-start-date"
             label={<FormattedMessage id="ui-licenses.prop.startDate" />}
             name="startDate"
-            parse={v => v} // Lets us pass an empty string instead of `undefined`
+            parse={(v) => v} // Lets us pass an empty string instead of `undefined`
             timeZone="UTC"
+            validate={(value) => datePlausibilityCheck(value, dateFormat, backendDateStandard)}
           />
         </Col>
         <Col md={5} xs={10}>
           <Field
-            backendDateStandard="YYYY-MM-DD"
             component={Datepicker}
             disabled={values.openEnded}
             id="edit-license-end-date"
             label={<FormattedMessage id="ui-licenses.prop.endDate" />}
             name="endDate"
-            parse={v => v} // Lets us pass an empty string instead of `undefined`
+            parse={(v) => v} // Lets us pass an empty string instead of `undefined`
             timeZone="UTC"
-            validate={validateEndDate}
+            validate={
+              ((value) => datePlausibilityCheck(value, dateFormat, backendDateStandard),
+              validateEndDate)
+            }
           />
         </Col>
         <Col style={{ paddingTop: 20 }} xs={2}>
-          <Field
-            name="openEnded"
-            type="checkbox"
-          >
+          <Field name="openEnded" type="checkbox">
             {(input) => {
               /* istanbul ignore next */
-              return (<Checkbox
-                checked={input.checked}
-                id="edit-license-open-ended"
-                label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
-                onChange={e => {
-                  input.onChange(e);
-                  mutators.setFieldData('endDate', {
-                    warning: e.target.checked ? (
-                      <div data-test-warn-clear-end-date>
-                        <FormattedMessage id="ui-licenses.warn.clearEndDate" />
-                      </div>
-                    ) : undefined
-                  });
-                }}
-                type="checkbox"
-              />);
+              return (
+                <Checkbox
+                  checked={input.checked}
+                  id="edit-license-open-ended"
+                  label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
+                  onChange={(e) => {
+                    input.onChange(e);
+                    mutators.setFieldData('endDate', {
+                      warning: e.target.checked ? (
+                        <div data-test-warn-clear-end-date>
+                          <FormattedMessage id="ui-licenses.warn.clearEndDate" />
+                        </div>
+                      ) : undefined,
+                    });
+                  }}
+                  type="checkbox"
+                />
+              );
             }}
           </Field>
         </Col>
@@ -135,7 +145,7 @@ const LicenseFormInfo = ({ data: { statusValues, typeValues }, id, mutators, val
             id="edit-license-description"
             label={<FormattedMessage id="ui-licenses.prop.description" />}
             name="description"
-            parse={v => v} // Lets us pass an empty string instead of `undefined`
+            parse={(v) => v} // Lets us pass an empty string instead of `undefined`
           />
         </Col>
       </Row>
