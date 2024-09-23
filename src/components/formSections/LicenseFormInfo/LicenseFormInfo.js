@@ -7,18 +7,19 @@ import { FieldArray } from 'react-final-form-arrays';
 import {
   Checkbox,
   Col,
-  Datepicker,
   Row,
   Select,
   TextArea,
   TextField,
-  getLocaleDateFormat
+  getLocaleDateFormat,
+  AppValidatedDatepicker
 } from '@folio/stripes/components';
 
 import {
   AlternativeNamesFieldArray,
   requiredValidator,
   datePlausibilityCheck,
+  composeValidators
 } from '@folio/stripes-erm-components';
 
 
@@ -88,7 +89,8 @@ const LicenseFormInfo = ({ data: { statusValues, typeValues }, id, mutators, val
       <Row>
         <Col md={5} xs={12}>
           <Field
-            component={Datepicker}
+            backendDateStandard={backendDateStandard}
+            component={AppValidatedDatepicker}
             id="edit-license-start-date"
             label={<FormattedMessage id="ui-licenses.prop.startDate" />}
             name="startDate"
@@ -99,22 +101,23 @@ const LicenseFormInfo = ({ data: { statusValues, typeValues }, id, mutators, val
         </Col>
         <Col md={5} xs={10}>
           <Field
-            component={Datepicker}
+            backendDateStandard={backendDateStandard}
+            component={AppValidatedDatepicker}
             disabled={values.openEnded}
             id="edit-license-end-date"
             label={<FormattedMessage id="ui-licenses.prop.endDate" />}
             name="endDate"
             parse={(v) => v} // Lets us pass an empty string instead of `undefined`
             timeZone="UTC"
-            validate={
-              ((value) => datePlausibilityCheck(value, dateFormat, backendDateStandard),
-              validateEndDate)
-            }
+            validate={composeValidators(
+              (value) => datePlausibilityCheck(value, dateFormat, backendDateStandard),
+              validateEndDate
+            )}
           />
         </Col>
         <Col style={{ paddingTop: 20 }} xs={2}>
           <Field name="openEnded" type="checkbox">
-            {(input) => {
+            {({ input }) => {
               /* istanbul ignore next */
               return (
                 <Checkbox
