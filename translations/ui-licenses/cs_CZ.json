@@ -135,7 +135,7 @@
     "alternativeNames": "Alternativní názvy",
     "duplicateAmendmentModal.cloneEndpointError": "Dodatek nelze duplikovat. Ke koncovému bodu klonu se nepodařilo získat přístup.",
     "duplicateAmendmentModal.coreDocs": "Základní dokumenty",
-    "duplicateAmendmentModal.duplicateAmendment": "Duplicitní dodatek",
+    "duplicateAmendmentModal.duplicateAmendment": "Duplikovat dodatek",
     "duplicateAmendmentModal.duplicateMessage": "Vyberte, které části dodatku chcete duplikovat",
     "duplicateAmendmentModal.duplicateModalError": "Chyba: dodatek nebyl duplikován",
     "duplicateAmendmentModal.invalidResponseError": "Dodatek nelze duplikovat. Odpověď přijatá ze serveru byla neplatná.",

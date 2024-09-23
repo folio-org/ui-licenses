@@ -234,7 +234,7 @@
     "customProperties.primaryProperties": "Primaire eigenschappen",
     "customProperties.addProperty": "Eigenschap toevoegen",
     "customProperty.optionalPropertyHeader": "Aanvullende eigenschap {number}",
-    "customProperty.remove": "Verwijder {type, select, term {Term} supplementaryProperty {supplementary property} other {none}}",
+    "customProperty.remove": "Term verwijderen {number}",
     "customProperty": "Maatwerkeigenschap",
     "customProperty.filtersApplied": "{count} aanvullende eigenschapsfilters toegepast",
     "customProperty.retiredName": "AFGESCHREVEN: {name}",
