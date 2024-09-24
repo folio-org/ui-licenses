@@ -202,7 +202,7 @@
     "customProperties.type": "Rodzaj",
     "customProperties.internalFalse": "Public",
     "customProperties.internalNote": "Uwaga wewnętrzna",
-    "customProperties.internalTrue": "Internal",
+    "customProperties.internalTrue": "Wewnętrzne",
     "customProperties.publicNote": "Uwaga publiczna",
     "customProperties.name": "Nazwa",
     "customProperties.description": "Opis",
