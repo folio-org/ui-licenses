@@ -26,7 +26,7 @@ const AmendmentFilters = ({ activeFilters = { status: [] }, data, filterHandlers
     status: [],
   });
 
-  const atTypeValues = data.documentAtTypeValues;
+  const categoryValues = data.documentAtTypeValues;
 
   useEffect(() => {
     const newState = {};
@@ -91,20 +91,29 @@ const AmendmentFilters = ({ activeFilters = { status: [] }, data, filterHandlers
     />;
   };
 
-  // for supplementary documents pass the atTypeValues
+  // for supplementary documents pass the categoryValues
   const renderSupplementaryDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}
-      atTypeValues={atTypeValues}
+      categoryValues={categoryValues}
       filterHandlers={filterHandlers}
+      filterLabel={<FormattedMessage id="stripes-erm-components.documentFilter.filterName.supplementaryDocuments" />}
+      filterModalProps={{
+        label: <FormattedMessage id="stripes-erm-components.documentFilter.filterBuilder.supplementaryDocuments" />
+      }}
+      filterName="supplementaryDocs"
     />;
   };
 
-  // for core documents DO NOT pass the atTypeValues
+  // for core documents DO NOT pass the categoryValues
   const renderCoreDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}
       filterHandlers={filterHandlers}
+      filterLabel={<FormattedMessage id="stripes-erm-components.documentFilter.filterName.coreDocuments" />}
+      filterModalProps={{
+        label: <FormattedMessage id="stripes-erm-components.documentFilter.filterBuilder.coreDocuments" />
+      }}
     />;
   };
 
