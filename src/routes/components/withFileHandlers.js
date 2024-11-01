@@ -6,6 +6,7 @@ const getDisplayName = (WrappedComponent) => {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 };
 
+// DEPRECATED we can safely remove this and its test
 export default function withFileHandlers(WrappedComponent) {
   const WithFileHandlers = ({ handlers, ...rest }) => {
     const { handleDownloadFile, handleUploadFile } = useFileHandlers('licenses/files');

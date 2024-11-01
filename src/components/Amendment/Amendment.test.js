@@ -35,56 +35,43 @@ describe('Amendment', () => {
       );
     });
 
-    it('renders the AmendmentInfo component', () => {
+    test.each([
+      'AmendmentInfo',
+      'AmendmentLicense',
+      'CoreDocs',
+      'LicenseAgreements',
+      'LicenseAmendments',
+      'SupplementaryDocs',
+      'CustomPropertiesView'
+    ])('renders the %s component', (componentText) => {
       const { getByText } = renderComponent;
-      expect(getByText('AmendmentInfo')).toBeInTheDocument();
+      expect(getByText(componentText)).toBeInTheDocument();
     });
 
-    it('renders the AmendmentLicense component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('AmendmentLicense')).toBeInTheDocument();
-    });
-
-    it('renders the CoreDocs component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('CoreDocs')).toBeInTheDocument();
-    });
-
-    it('renders the LicenseAgreements component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('LicenseAgreements')).toBeInTheDocument();
-    });
-
-    it('renders the LicenseAmendments component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('LicenseAmendments')).toBeInTheDocument();
-    });
-
-    it('renders the SupplementaryDocs component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('SupplementaryDocs')).toBeInTheDocument();
-    });
-
-    it('renders the CustomPropertiesView component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('CustomPropertiesView')).toBeInTheDocument();
-    });
-
-    test('clicking and calling the delete button under the Actions dropdown', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Delete').click();
+    describe('clicking the actions button', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
       });
 
-      expect(handlers.onDelete).toHaveBeenCalled();
-    });
+      describe.each([
+        // This edit one should probably be from the handlers, but we have two different ways of achieving the same outcome right now... needs refactoring
+        { buttonLabel: 'Edit', callback: urls.editAmendment },
+        { buttonLabel: 'Duplicate', callback: handlers.onClone },
+        { buttonLabel: 'Delete', callback: handlers.onDelete }
+      ])('clicking the $buttonLabel button', ({ buttonLabel, callback }) => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button(buttonLabel).click();
+          });
+        });
 
-    test('clicking the edit/duplicate/delete buttons under the Actions dropdown', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Edit').click();
-        await Button('Duplicate').click();
-        await Button('Delete').click();
+        test(`${buttonLabel} handler got called`, async () => {
+          await waitFor(() => {
+            expect(callback).toHaveBeenCalled();
+          });
+        });
       });
     });
   });

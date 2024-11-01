@@ -1,5 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import {
   Button,
   Checkbox,
@@ -43,6 +45,7 @@ describe('ExportLicenseAsCSVModal', () => {
     expect(getByText('Please select which license details to export')).toBeInTheDocument();
   });
 
+  // TODO we can probably make these tests nicer with an each, maybe combined with the below.
   test('renders expected Select all/deselect all checkbox label', () => {
     const { getByText } = renderComponent;
     expect(getByText('Select all/deselect all')).toBeInTheDocument();
@@ -63,28 +66,39 @@ describe('ExportLicenseAsCSVModal', () => {
     expect(getByText('Term names')).toBeInTheDocument();
   });
 
-  test('clicking the monograph checkbox', async () => {
-    await Checkbox('Select all/deselect all').is({ checked: false });
-    await Checkbox('License information').is({ checked: false });
-    await Checkbox('Name').is({ checked: false });
-    await Checkbox('Start date').is({ checked: false });
-    await Checkbox('End date').is({ checked: false });
-    await Checkbox('Status').is({ checked: false });
-    await Checkbox('Type').is({ checked: false });
-    await Checkbox('Terms').is({ checked: false });
-    await Checkbox('Value').is({ checked: false });
-    await Checkbox('Internal note').is({ checked: false });
-    await Checkbox('Public note').is({ checked: false });
-    await Checkbox('Visibility').is({ checked: false });
-    await Checkbox('Term names').is({ checked: true });
+  test.each([
+    { checkboxLabel: 'Select all/deselect all', checked: false },
+    { checkboxLabel: 'License information', checked: false },
+    { checkboxLabel: 'Name', checked: false },
+    { checkboxLabel: 'Start date', checked: false },
+    { checkboxLabel: 'End date', checked: false },
+    { checkboxLabel: 'Status', checked: false },
+    { checkboxLabel: 'Type', checked: false },
+    { checkboxLabel: 'Terms', checked: false },
+    { checkboxLabel: 'Value', checked: false },
+    { checkboxLabel: 'Internal note', checked: false },
+    { checkboxLabel: 'Public note', checked: false },
+    { checkboxLabel: 'Visibility', checked: false },
+    { checkboxLabel: 'Term names', checked: true },
+  ])('Checking checkbox $checkboxLabel exists in the correct state (checked: $checked)', async ({ checkboxLabel, checked }) => {
+    await Checkbox(checkboxLabel).is({ checked });
   });
 
   test('renders the Cancel button', async () => {
     await Button('Cancel').exists();
   });
 
-  test('clicking the close button', async () => {
-    await Button({ id: 'export-licenses-modal-close-button' }).click();
-    expect(onClose).toHaveBeenCalled();
+  describe('Clicking the close button', () => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await Button({ id: 'export-licenses-modal-close-button' }).click();
+      });
+    });
+
+    test('onClose was called', async () => {
+      await waitFor(() => {
+        expect(onClose).toHaveBeenCalled();
+      });
+    });
   });
 });

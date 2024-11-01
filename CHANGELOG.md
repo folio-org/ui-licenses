@@ -1,6 +1,11 @@
 # Change history for ui-licenses
 
-## 11.1.0 In progress
+## 11.1.0 2024-11-01
+  * ERM-3379 Update module license and guidance for ui-licenses
+  * ERM-3353 Review and cleanup Module Descriptor for ui-licenses
+  * ERM-3298 Block save on invalid date in license edit
+  * ERM-3233 React v19: refactor ui-licenses away from default props for functional components
+  * ERM-3165 Replace moment with dayjs across app suite
   * FOLIO-4086 Fix GitHub Actions workflow not running for tags
 
 ## 11.0.2 2024-07-05

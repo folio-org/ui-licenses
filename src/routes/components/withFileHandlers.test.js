@@ -1,6 +1,9 @@
 import { MemoryRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
+import { Button as MockStripesButton } from '@folio/stripes/components';
 import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { useFileHandlers } from '@folio/stripes-erm-components';
@@ -12,8 +15,8 @@ import withFileHandlers from './withFileHandlers';
 const MockApp = (props) => {
   return (
     <>
-      <button onClick={props.handlers.onUploadFile} type="button">Upload</button>
-      <button onClick={props.handlers.onDownloadFile} type="button">Download</button>
+      <MockStripesButton onClick={props.handlers.onUploadFile} type="button">Upload</MockStripesButton>
+      <MockStripesButton onClick={props.handlers.onDownloadFile} type="button">Download</MockStripesButton>
     </>
   );
 };
@@ -46,14 +49,21 @@ describe('withFileHandlers', () => {
       );
     });
 
-    test('calls the Download button', async () => {
-      await Button('Download').click();
-      expect(mockDownload).toHaveBeenCalledTimes(1);
-    });
+    describe.each([
+      { buttonLabel: 'Download', callback: mockDownload },
+      { buttonLabel: 'Upload', callback: mockUpload }
+    ])('Clicking $buttonLabel button', ({ buttonLabel, callback }) => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button(buttonLabel).click();
+        });
+      });
 
-    test('calls the Upload button', async () => {
-      await Button('Upload').click();
-      expect(mockUpload).toHaveBeenCalledTimes(1);
+      test(`expect ${callback} to have been called`, async () => {
+        await waitFor(() => {
+          expect(callback).toHaveBeenCalledTimes(1);
+        });
+      });
     });
   });
 });

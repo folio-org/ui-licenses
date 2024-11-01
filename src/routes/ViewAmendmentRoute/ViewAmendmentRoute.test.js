@@ -1,82 +1,36 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { MemoryRouter } from 'react-router-dom';
 import { noop } from 'lodash';
 
-import { Button } from '@folio/stripes/components';
-import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
-import { handlers, location, resources, okapi } from './testResources';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
+import { Button as MockStripesButton } from '@folio/stripes/components';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
+import { handlers, location, resources, okapi, mockButtons, historyPushMock } from './testResources';
 
 import translationsProperties from '../../../test/helpers';
 import ViewAmendmentRoute from './ViewAmendmentRoute';
 
-const CloseButton = (props) => {
-  return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
-};
+// Same approach as ViewLicenseRoute... playing around with an array of buttons we can then test for
+// altogether instead of writing individual tests
+jest.mock('../../components/Amendment', () => (props) => (
+  <>
+    Amendment
+    {mockButtons.map(({ handlerKey, label }) => (
+      <MockStripesButton
+        key={`mock-button-label-${label}`}
+        onClick={props.handlers[handlerKey]}
+      >
+        {label}
+      </MockStripesButton>
+    ))}
+  </>
+));
 
-const DeleteButton = (props) => {
-  return <Button onClick={props.handlers.onDelete}>DeleteButton</Button>;
-};
-
-const CloneButton = (props) => {
-  return <Button onClick={props.handlers.onClone}>CloneButton</Button>;
-};
-
-const EditAmendmentButton = (props) => {
-  return <Button onClick={props.handlers.onEditAmendment}>EditAmendmentButton</Button>;
-};
-
-const ViewAmendmentButton = (props) => {
-  return <Button onClick={props.handlers.onAmendmentClick}>ViewAmendmentButton</Button>;
-};
-
-CloseButton.propTypes = {
-  handlers: PropTypes.shape({
-    onClose: PropTypes.func,
-  }),
-};
-
-DeleteButton.propTypes = {
-  handlers: PropTypes.shape({
-    onDelete: PropTypes.func,
-  }),
-};
-
-CloneButton.propTypes = {
-  handlers: PropTypes.shape({
-    onClone: PropTypes.func,
-  }),
-};
-
-EditAmendmentButton.propTypes = {
-  handlers: PropTypes.shape({
-    onEditAmendment: PropTypes.func,
-  }),
-};
-
-ViewAmendmentButton.propTypes = {
-  handlers: PropTypes.shape({
-    onAmendmentClick: PropTypes.func,
-  }),
-};
-
-const historyPushMock = jest.fn();
 const hasPermMock = jest.fn();
 
-jest.mock('../../components/Amendment', () => {
-  return (props) => (
-    <div>
-      <div>Amendment</div>
-      <CloseButton {...props} />
-      <DeleteButton {...props} />
-      <CloneButton {...props} />
-      <EditAmendmentButton {...props} />
-      <ViewAmendmentButton {...props} />
-    </div>
-  );
-});
-
+// TODO this seems totally wrong to me
 const data = {
   handlers,
   history: {
@@ -120,40 +74,28 @@ describe('ViewAmendmentRoute', () => {
       expect(getByText('Amendment')).toBeInTheDocument();
     });
 
-    test('renders the CloseButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('CloseButton')).toBeInTheDocument();
-    });
+    describe.each(mockButtons)('Testing $label', ({ callback, handlerKey: _hk, label }) => {
+      test(`renders the ${label}`, async () => {
+        const { getByText } = renderComponent;
+        expect(getByText(label)).toBeInTheDocument();
+      });
 
-    test('triggers the CloseButton callback', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
-    });
+      if (callback) {
+        describe(`Clicking ${label}`, () => {
+          beforeEach(async () => {
+            historyPushMock.mockClear();
+            await waitFor(async () => {
+              await Button(label).click();
+            });
+          });
 
-    test('renders the DeleteButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('DeleteButton')).toBeInTheDocument();
-    });
-
-    test('renders the CloneButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('CloneButton')).toBeInTheDocument();
-    });
-
-    test('renders the EditAmendmentButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('EditAmendmentButton')).toBeInTheDocument();
-    });
-
-
-    test('renders the ViewAmendmentButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('ViewAmendmentButton')).toBeInTheDocument();
-    });
-
-    test('triggers the ViewAmendmentButton callback', async () => {
-      await ButtonInteractor('ViewAmendmentButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+          test(`triggers the ${label} callback`, async () => {
+            await waitFor(() => {
+              expect(callback).toHaveBeenCalled();
+            });
+          });
+        });
+      }
     });
   });
 });

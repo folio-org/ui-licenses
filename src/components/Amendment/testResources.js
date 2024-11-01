@@ -1,3 +1,5 @@
+
+// TODO this test reosurce is horrifically long and just copied from JSON. The data should be centralised, and all functions jest.fn();
 const data = {
   'amendment': {
     'id': '5f02f957-fe98-4d5b-9e62-cdb9384c784d',
@@ -1026,16 +1028,16 @@ const data = {
 };
 
 const urls = {
-  'editAmendment': () => {},
-  'licenseView': () => {},
-  'viewAmendment': () => {},
+  editAmendment: jest.fn(),
+  licenseView: jest.fn(),
+  viewAmendment: jest.fn(),
 };
+
 
 const handlers = {
   onClone: jest.fn(),
   onClose: jest.fn(),
   onDelete: jest.fn(),
-  onEdit: jest.fn(),
   onEditAmendment: jest.fn(),
 };
 
