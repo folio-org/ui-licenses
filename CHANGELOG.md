@@ -1,5 +1,7 @@
 # Change history for ui-licenses
 
+## 11.2.0 IN PROGRESS
+
 ## 11.1.0 2024-11-01
   * ERM-3379 Update module license and guidance for ui-licenses
   * ERM-3353 Review and cleanup Module Descriptor for ui-licenses
