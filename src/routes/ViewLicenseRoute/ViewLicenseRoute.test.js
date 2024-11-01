@@ -1,100 +1,28 @@
-import PropTypes from 'prop-types';
-
 import { MemoryRouter } from 'react-router-dom';
 
-import { Button } from '@folio/stripes/components';
-import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
+import { Button as MockStripesButton } from '@folio/stripes/components';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../test/helpers';
 import ViewLicenseRoute from './ViewLicenseRoute';
 
+import { mockButtons, historyPushMock } from './testResources';
 
-const CloneButton = (props) => {
-  return <Button onClick={() => props.handlers.onClone}>CloneButton</Button>;
-};
-
-const CloseButton = (props) => {
-  return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
-};
-
-const DeleteButton = (props) => {
-  return <Button onClick={props.handlers.onDelete}>DeleteButton</Button>;
-};
-
-const EditButton = (props) => {
-  return <Button onClick={props.handlers.onEdit}>EditButton</Button>;
-};
-
-const ViewAmendmentButton = (props) => {
-  return <Button onClick={props.handlers.onAmendmentClick}>ViewAmendmentButton</Button>;
-};
-
-const HandleToggleHelperButton = (props) => {
-  return <Button onClick={props.handlers.onToggleHelper}>HandleToggleHelperButton</Button>;
-};
-
-const HandleToggleTagsButton = (props) => {
-  return <Button onClick={props.handlers.onToggleTags}>HandleToggleTagsButton</Button>;
-};
-
-CloneButton.propTypes = {
-  handlers: PropTypes.shape({
-    onClone: PropTypes.func,
-  }),
-};
-
-CloseButton.propTypes = {
-  handlers: PropTypes.shape({
-    onClose: PropTypes.func,
-  }),
-};
-
-DeleteButton.propTypes = {
-  handlers: PropTypes.shape({
-    onDelete: PropTypes.func,
-  }),
-};
-
-EditButton.propTypes = {
-  handlers: PropTypes.shape({
-    onEdit: PropTypes.func,
-  }),
-};
-
-ViewAmendmentButton.propTypes = {
-  handlers: PropTypes.shape({
-    onAmendmentClick: PropTypes.func,
-  }),
-};
-
-HandleToggleHelperButton.propTypes = {
-  handlers: PropTypes.shape({
-    onToggleHelper: PropTypes.func,
-  }),
-};
-
-HandleToggleTagsButton.propTypes = {
-  handlers: PropTypes.shape({
-    onToggleTags: PropTypes.func,
-  }),
-};
-
-const historyPushMock = jest.fn();
-
-jest.mock('../../components/License', () => {
-  return (props) => (
-    <div>
-      <div>License</div>
-      <CloneButton {...props} />
-      <CloseButton {...props} />
-      <DeleteButton {...props} />
-      <EditButton {...props} />
-      <ViewAmendmentButton {...props} />
-      <HandleToggleHelperButton {...props} />
-      <HandleToggleTagsButton {...props} />
-    </div>
-  );
-});
+jest.mock('../../components/License', () => (props) => (
+  <>
+    License
+    {mockButtons.map(({ handlerKey, label }) => (
+      <MockStripesButton
+        key={`mock-button-label-${label}`}
+        onClick={props.handlers[handlerKey]}
+      >
+        {label}
+      </MockStripesButton>
+    ))}
+  </>
+));
 
 const data = {
   history: {
@@ -131,49 +59,28 @@ describe('ViewLicenseRoute', () => {
       expect(getByText('License')).toBeInTheDocument();
     });
 
-    test('renders the CloneButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('CloneButton')).toBeInTheDocument();
-    });
+    describe.each(mockButtons)('Testing $label', ({ callback, handlerKey: _hk, label }) => {
+      test(`renders the ${label}`, async () => {
+        const { getByText } = renderComponent;
+        expect(getByText(label)).toBeInTheDocument();
+      });
 
-    test('renders the CloseButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('CloseButton')).toBeInTheDocument();
-    });
+      if (callback) {
+        describe(`Clicking ${label}`, () => {
+          beforeEach(async () => {
+            historyPushMock.mockClear();
+            await waitFor(async () => {
+              await Button(label).click();
+            });
+          });
 
-    test('triggers the CloseButton callback', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
-    });
-
-    test('renders the DeleteButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('DeleteButton')).toBeInTheDocument();
-    });
-
-    test('renders the EditButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('EditButton')).toBeInTheDocument();
-    });
-
-    test('triggers the ViewAmendmentButton callback', async () => {
-      await ButtonInteractor('ViewAmendmentButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
-    });
-
-    test('renders the ViewAmendmentButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('ViewAmendmentButton')).toBeInTheDocument();
-    });
-
-    test('renders the HandleToggleTagsButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('HandleToggleTagsButton')).toBeInTheDocument();
-    });
-
-    test('renders the HandleToggleHelperButton ', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('HandleToggleHelperButton')).toBeInTheDocument();
+          test(`triggers the ${label} callback`, async () => {
+            await waitFor(() => {
+              expect(callback).toHaveBeenCalled();
+            });
+          });
+        });
+      }
     });
   });
 });

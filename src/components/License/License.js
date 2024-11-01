@@ -167,6 +167,7 @@ const License = ({
   const shortcuts = [
     {
       name: 'edit',
+      // TODO we have two different method calls for the same action
       handler: handlers.onEdit,
     },
     {

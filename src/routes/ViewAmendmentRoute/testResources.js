@@ -1,3 +1,6 @@
+// TODO these test resources are out of date and are NOT proper javascript objects. For example onDownloadFile should be a jest.fn() etc
+// The keys should not need to be strings, stuff like that. These need to be centralised as well here possible
+
 const handlers = {
   'onDownloadFile': 'ƒ () {}',
   'onUploadFile': 'ƒ () {}'
@@ -83,6 +86,26 @@ const mutator = {
   'terms': '{DELETE: ƒ DELETE() {}, POST: ƒ POST() {}, PUT: ƒ P…}'
 };
 
+const historyPushMock = jest.fn();
+
+const mockButtons = [
+  { handlerKey: 'onClone', label: 'CloneButton' },
+  { handlerKey: 'onClose', label: 'CloseButton' },
+  { handlerKey: 'onDelete', label: 'DeleteButton' },
+  { handlerKey: 'onEditAmendment', label: 'EditAmendmentButton' },
+  { callback: historyPushMock, handlerKey: 'onAmendmentClick', label: 'ViewAmendmentButton' },
+];
+
 export {
-  handlers, history, location, match, stripes, resources, okapi, mutator
+  handlers,
+  history,
+  historyPushMock,
+  location,
+  match,
+  stripes,
+  resources,
+  okapi,
+  mockButtons,
+  mutator
 };
+

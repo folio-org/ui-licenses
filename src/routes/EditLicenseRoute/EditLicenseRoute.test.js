@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { MemoryRouter } from 'react-router-dom';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 
@@ -18,6 +20,7 @@ const match = {
   }
 };
 
+// TODO See ViewLicenseRoute for potential way to clean this up and expand
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
 };
@@ -69,8 +72,17 @@ describe('EditLicenseRoute', () => {
     expect(getByText('CloseButton')).toBeInTheDocument();
   });
 
-  test('triggers the CloseButton callback', async () => {
-    await ButtonInteractor('CloseButton').click();
-    expect(historyPushMock).toHaveBeenCalled();
+  describe('clicking the CloseButton', () => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+    });
+
+    test('triggers the CloseButton callback', async () => {
+      await waitFor(() => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
+    });
   });
 });
