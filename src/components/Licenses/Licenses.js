@@ -330,7 +330,6 @@ const Licenses = ({
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                       sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                       totalCount={count}
-                      virtualize
                       visibleColumns={['selected', 'name', 'type', 'status', 'startDate', 'endDate']}
                     />
                   </Pane>
