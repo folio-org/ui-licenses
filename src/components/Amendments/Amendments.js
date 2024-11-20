@@ -260,7 +260,6 @@ const Amendments = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    virtualize
                     visibleColumns={['name', 'status', 'startDate', 'endDate', 'parentLicense']}
                   />
                 </Pane>
