@@ -76,6 +76,7 @@ const ContentFieldArray = ({ handleSubmit, contentOptions, name }) => {
                       }}
                     />
                     <Field
+                      key={values[name][index]?.content}
                       component={MultiSelection}
                       dataOptions={translatedContentOptions}
                       id={`${filter}-content-multi-select`}
