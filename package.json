@@ -223,5 +223,8 @@
         "title": "Amendment"
       }
     ]
-  }
+  },
+  "resolutions": {
+    "nwsapi": "2.2.13"
+  }  
 }
