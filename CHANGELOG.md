@@ -1,5 +1,10 @@
 # Change history for ui-licenses
 
+## 11.1.1 2024-11-29
+  * ERM-3437 The License content filter is not set back to it's original state of two empty dropdown selection boxes
+  * ERM-3426 Search and sort results MCL scrolling does not work as expected
+  * ERM-3421 The incorrect header is displayed for the 'S3 bucket region' section
+
 ## 11.1.0 2024-11-01
   * ERM-3379 Update module license and guidance for ui-licenses
   * ERM-3353 Review and cleanup Module Descriptor for ui-licenses
