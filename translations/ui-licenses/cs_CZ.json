@@ -294,5 +294,6 @@
     "content.filter.licenseContent": "Obsah licence",
     "content.filter.addFilter": "Přidat filtr",
     "content.filter.has": "Má",
-    "content.filter.hasNot": "Nemá"
+    "content.filter.hasNot": "Nemá",
+    "settings.fileStorage.s3BucketRegion": "Oblast segmentu S3"
 }

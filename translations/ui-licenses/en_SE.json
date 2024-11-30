@@ -294,5 +294,6 @@
     "content.filter.licenseContent": "License content",
     "content.filter.addFilter": "Add filter",
     "content.filter.has": "Has",
-    "content.filter.hasNot": "Has not"
+    "content.filter.hasNot": "Has not",
+    "settings.fileStorage.s3BucketRegion": "S3 bucket region"
 }
