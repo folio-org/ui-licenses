@@ -294,5 +294,6 @@
     "content.filter.licenseContent": "授權內容",
     "content.filter.addFilter": "新增篩選",
     "content.filter.has": "有",
-    "content.filter.hasNot": "還沒有"
+    "content.filter.hasNot": "還沒有",
+    "settings.fileStorage.s3BucketRegion": "S3 bucket region"
 }
