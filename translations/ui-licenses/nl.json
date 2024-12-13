@@ -295,5 +295,5 @@
     "content.filter.addFilter": "Filter toevoegen",
     "content.filter.has": "Heeft",
     "content.filter.hasNot": "Heeft niet",
-    "settings.fileStorage.s3BucketRegion": "S3 bucket region"
+    "settings.fileStorage.s3BucketRegion": "S3-bucketregio"
 }
