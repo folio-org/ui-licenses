@@ -219,7 +219,7 @@
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyRefdataDefinition": "挑選清單定義",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyText": "文字",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyLocalDate": "日期",
-    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyMultiRefdata": "挑選清單（多選）",
+    "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyMultiRefdata": "挑選清單 ( 多選 )",
     "customProperties.config.all": "全部",
     "customProperties.config.delete.errorMessage": "刪除術語時出錯： <strong> {label} </strong> 。 {error}",
     "customProperties.config.delete.confirmHeading": "刪除條款",
