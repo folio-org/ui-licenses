@@ -1,6 +1,5 @@
-
 import React from 'react';
-
+import { cleanup } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { MemoryRouter } from 'react-router-dom';
@@ -24,7 +23,7 @@ jest.mock('../../hooks', () => ({
 
 const routeProps = {
   history: {
-    push: () => jest.fn()
+    push: () => jest.fn(),
   },
   location: {},
   match: {
@@ -40,7 +39,7 @@ describe('LicensesRoute', () => {
         <MemoryRouter>
           <LicensesRoute {...routeProps} />
         </MemoryRouter>,
-        translationsProperties
+        translationsProperties,
       );
     });
 
@@ -49,20 +48,24 @@ describe('LicensesRoute', () => {
       expect(getByTestId('licenses')).toBeInTheDocument();
     });
 
-    describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
+    describe('re-rendering the route', () => {
+      // makes sure that we hit the componentDidUpdate block
       beforeEach(() => {
-        renderWithIntl(
+        // Using this to clean up the render component prior to rerender
+        cleanup();
+
+        renderComponent = renderWithIntl(
           <MemoryRouter>
             <LicensesRoute {...routeProps} />
           </MemoryRouter>,
           translationsProperties,
-          renderComponent.rerender
+          renderComponent.rerender,
         );
       });
 
-      test('renders the licenses component', () => {
+      test('renders the licenses component', async () => {
         const { getByTestId } = renderComponent;
-        expect(getByTestId('licenses')).toBeInTheDocument();
+        await expect(getByTestId('licenses')).toBeInTheDocument();
       });
     });
   });
@@ -74,17 +77,17 @@ describe('LicensesRoute', () => {
       hasPerm.mockImplementation(() => false);
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <LicensesRoute
-            {...routeProps}
-          />
+          <LicensesRoute {...routeProps} />
         </MemoryRouter>,
-        translationsProperties
+        translationsProperties,
       );
     });
 
     test('displays the permission error', () => {
       const { getByText } = renderComponent;
-      expect(getByText('Sorry - your permissions do not allow access to this page.')).toBeInTheDocument();
+      expect(
+        getByText('Sorry - your permissions do not allow access to this page.'),
+      ).toBeInTheDocument();
     });
   });
 });
