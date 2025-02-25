@@ -230,6 +230,7 @@
   "settings.fileStorage.s3BucketRegion": "S3 bucket region",
   "settings.customProperties.all": "All",
   "settings.customProperties.none": "None",
+  "settings.noCurrentValue": "No current value",
 
   "errors.invalidNumber": "Please enter a valid number to continue",
   "errors.hasNonAlphaName": "The name can only contain Latin alphabetical characters (a-z) and non-leading numeric characters.",
