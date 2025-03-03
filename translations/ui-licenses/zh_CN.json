@@ -295,5 +295,6 @@
     "content.filter.addFilter": "添加筛选",
     "content.filter.has": "有",
     "content.filter.hasNot": "没有",
-    "settings.fileStorage.s3BucketRegion": "S3存储桶区域"
+    "settings.fileStorage.s3BucketRegion": "S3存储桶区域",
+    "settings.noCurrentValue": "No current value"
 }

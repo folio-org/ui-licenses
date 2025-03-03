@@ -295,5 +295,6 @@
     "content.filter.addFilter": "Přidat filtr",
     "content.filter.has": "Má",
     "content.filter.hasNot": "Nemá",
-    "settings.fileStorage.s3BucketRegion": "Oblast segmentu S3"
+    "settings.fileStorage.s3BucketRegion": "Oblast segmentu S3",
+    "settings.noCurrentValue": "Žádná aktuální hodnota"
 }
