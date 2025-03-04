@@ -295,5 +295,6 @@
     "content.filter.addFilter": "Adicionar filtro",
     "content.filter.has": "Tem",
     "content.filter.hasNot": "Não tem",
-    "settings.fileStorage.s3BucketRegion": "Região do bucket S3"
+    "settings.fileStorage.s3BucketRegion": "Região do bucket S3",
+    "settings.noCurrentValue": "Nenhum valor atual"
 }
