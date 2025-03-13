@@ -1,6 +1,8 @@
 # Change history for ui-licenses
 
-## 12.0.0 2025-03-13
+## 12.1.0 2025-03-13
+
+## 12.0.1 2025-03-13
   * ERM-3625 Missing translation key for ui-licenses
   * ERM-3612 *BREAKING* Stripes v10 dependencies update
     * Updated all stripes-* dependencies for the stripes v10 upgrade along with react-intl and formatjs/cli
