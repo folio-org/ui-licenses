@@ -1,6 +1,13 @@
 # Change history for ui-licenses
 
-## 11.2.0 IN PROGRESS
+## 12.0.0 2025-03-13
+  * ERM-3625 Missing translation key for ui-licenses
+  * ERM-3612 *BREAKING* Stripes v10 dependencies update
+    * Updated all stripes-* dependencies for the stripes v10 upgrade along with react-intl and formatjs/cli
+  * ERM-3452 Centralise content filter array used in Licenses and Agreements
+  * ERM-3437 The License content filter is not set back to it's original state of two empty dropdown selection boxes
+  * ERM-3426 Search and sort results MCL scrolling does not work as expected
+  * ERM-3421 The incorrect header is displayed for the 'S3 bucket region' section
 
 ## 11.1.0 2024-11-01
   * ERM-3379 Update module license and guidance for ui-licenses
