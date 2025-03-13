@@ -1,6 +1,6 @@
 # Change history for ui-licenses
 
-## 12.1.0 2025-03-13
+## 12.1.0 IN PROGRESS
 
 ## 12.0.1 2025-03-13
   * ERM-3625 Missing translation key for ui-licenses
