@@ -296,5 +296,5 @@
     "content.filter.has": "Heeft",
     "content.filter.hasNot": "Heeft niet",
     "settings.fileStorage.s3BucketRegion": "S3-bucketregio",
-    "settings.noCurrentValue": "No current value"
+    "settings.noCurrentValue": "Geen Huidige Waarde"
 }
