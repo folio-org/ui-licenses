@@ -178,7 +178,7 @@
     "settings.pickList.deletePickListError": "There was an error deleting pick list: <strong>{label}</strong>. {error}",
     "settings.pickListValues.deletePickListValue": "Delete pick list value",
     "settings.pickListValues.deletePickListValueError": "There was an error deleting pick list value: <strong>{label}</strong>. {error}",
-    "notSet": "Not set",
+    "notSet": "Nie ustawiono",
     "save": "Zapisz",
     "actions": "Akcje",
     "search": "Szukaj",
