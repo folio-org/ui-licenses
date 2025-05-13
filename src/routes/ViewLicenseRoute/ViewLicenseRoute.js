@@ -11,14 +11,14 @@ import {
   JSON_ERROR,
   useChunkedUsers,
   useInterfaces,
-  useParallelBatchFetch
+  useParallelBatchFetch,
+  useErmHelperApp
 } from '@folio/stripes-erm-components';
 
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
 
 import { LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants';
-import { useLicensesHelperApp } from '../../hooks';
 
 const ViewLicenseRoute = ({
   handlers = {},
@@ -37,7 +37,7 @@ const ViewLicenseRoute = ({
     handleToggleTags,
     HelperComponent,
     TagButton,
-  } = useLicensesHelperApp();
+  } = useErmHelperApp();
 
   // License fetch
   const {
