@@ -207,7 +207,7 @@
     "customProperties.name": "Nazwa",
     "customProperties.description": "Opis",
     "customProperties.category": "Lista wyboru",
-    "customProperties.defaultVisibility": "Widoczność",
+    "customProperties.defaultVisibility": "Domyślna widoczność",
     "customProperties.value": "Wartość(i)",
     "customProperties.visibility": "Widoczność",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyBlob": "Blob",
