@@ -194,7 +194,7 @@
     "customProperties": "Semestry",
     "customProperties.label": "Etykieta",
     "customProperties.primary": "Główny",
-    "customProperties.retired": "Nieaktualny",
+    "customProperties.retired": "Wycofany",
     "customProperties.ctx": "Kategoria",
     "customProperties.ctx.addContext": "Dodaj kategorię {value}",
     "customProperties.noCtxFound": "Nie znaleziono pasującej kategorii",
