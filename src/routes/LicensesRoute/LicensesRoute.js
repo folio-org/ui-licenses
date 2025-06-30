@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 
 import { useMutation, useQuery } from 'react-query';
 
-import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, useKiwtSASQuery, usePrevNextPagination } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   getRefdataValuesByDesc,
   useTags,
   downloadBlob,
-  usePrevNextPagination
 } from '@folio/stripes-erm-components';
 
 import View from '../../components/Licenses';

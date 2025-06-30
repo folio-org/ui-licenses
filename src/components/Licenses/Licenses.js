@@ -26,9 +26,10 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import { LicenseEndDate, usePrevNextPagination } from '@folio/stripes-erm-components';
-import ExportLicenseAsCSVModal from '../ExportLicenseAsCSVModal';
+import { LicenseEndDate } from '@folio/stripes-erm-components';
+import { usePrevNextPagination } from '@k-int/stripes-kint-components';
 
+import ExportLicenseAsCSVModal from '../ExportLicenseAsCSVModal';
 import LicenseFilters from '../LicenseFilters';
 import RouteSwitcher from '../RouteSwitcher';
 import { statuses, resultCount } from '../../constants';

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
@@ -23,7 +24,8 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import { LicenseEndDate, usePrevNextPagination } from '@folio/stripes-erm-components';
+import { LicenseEndDate } from '@folio/stripes-erm-components';
+import { usePrevNextPagination } from '@k-int/stripes-kint-components';
 
 import AmendmentFilters from '../AmendmentFilters';
 import RouteSwitcher from '../RouteSwitcher';
