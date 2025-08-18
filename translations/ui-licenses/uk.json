@@ -166,7 +166,7 @@
     "section.parentLicenseAgreements": "Угоди, пов'язані з батьківською ліцензією",
     "settings.settingsSection.fileStorage": "Сховище файлів",
     "settings.fileStorage.s3AccessKey": "Ключ доступу S3",
-    "settings.fileStorage.s3BucketName": "Назва корзини S3",
+    "settings.fileStorage.s3BucketName": "Назва бакета S3",
     "settings.fileStorage.s3Endpoint": "Кінцева точка (ендпоінт) S3",
     "settings.fileStorage.s3ObjectPrefix": "Префікс об'єкта S3",
     "settings.fileStorage.s3SecretKey": "Секретний ключ S3",
@@ -188,7 +188,7 @@
     "no": "Ні",
     "errors.invalidNumber": "Введіть, будь ласка, дійсний номер щоб продовжити",
     "errors.hasNonAlphaName": "Ім'я може містити лише символи латинського алфавіту (az), без цифрових символів на початку.",
-    "errors.valueNotInRange": "Please enter a whole number in the range {min} to {max} to continue",
+    "errors.valueNotInRange": "Щоб продовжити введіть, будь ласка, ціле число в діапазоні від {min} до {max}",
     "errors.decimalValueNotInRange": "Щоб продовжити введіть, будь ласка, число в діапазоні від {min} до {max}",
     "errors.maxTwoDecimals": "Введіть, будь ласка, число максимум з двома знаками після коми",
     "customProperties": "Умови",
@@ -295,6 +295,6 @@
     "content.filter.addFilter": "Додати фільтр",
     "content.filter.has": "Має",
     "content.filter.hasNot": "Не має",
-    "settings.fileStorage.s3BucketRegion": "S3 bucket region",
+    "settings.fileStorage.s3BucketRegion": "Регіон бакета S3",
     "settings.noCurrentValue": "Поточне значення відсутнє"
 }

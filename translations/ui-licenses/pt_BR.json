@@ -237,7 +237,7 @@
     "customProperty.remove": "Remover termo {number}",
     "customProperty": "Termo",
     "customProperty.filtersApplied": "{count} filtros de termos aplicados",
-    "customProperty.retiredName": "OBSOLETO: {name}",
+    "customProperty.retiredName": "DESCONTINUADO: {name}",
     "customProperty.filterIndex": "Filtro de termo {index}",
     "customProperty.removeFilter": "Remover filtro de termos {index}",
     "customProperty.addFilter": "Adicionar filtro de termos",
