@@ -162,7 +162,7 @@
     "organizations.primary": "Organizacja główna",
     "prop.amendmentLinkStatus": "Amendment link status",
     "prop.unassigned": "Unassigned",
-    "section.amendmentsOnParentLicense": "Amendments on parent license",
+    "section.amendmentsOnParentLicense": "Poprawki w licencji nadrzędnej",
     "section.parentLicenseAgreements": "Agreements linked to the parent license",
     "settings.settingsSection.fileStorage": "Magazyn danych",
     "settings.fileStorage.s3AccessKey": "S3 access key",
