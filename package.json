@@ -90,7 +90,9 @@
           "tags.collection.get",
           "licenses.refdata.view",
           "note.types.collection.get",
-          "mod-settings.global.read.stripes-core.prefs.manage"
+          "mod-settings.global.read.stripes-core.prefs.manage",
+          "mod-settings.entries.collection.get"
+
         ]
       },
       {
@@ -144,7 +146,8 @@
         "displayName": "Settings (Licenses): display list of settings pages",
         "subPermissions": [
           "settings.enabled",
-          "mod-settings.global.read.stripes-core.prefs.manage"
+          "mod-settings.global.read.stripes-core.prefs.manage",
+          "mod-settings.entries.collection.get"
         ]
       },
       {
