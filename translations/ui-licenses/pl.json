@@ -170,7 +170,7 @@
     "settings.fileStorage.s3Endpoint": "S3 endpoint",
     "settings.fileStorage.s3ObjectPrefix": "S3 object prefix",
     "settings.fileStorage.s3SecretKey": "S3 secret key",
-    "settings.fileStorage.storageEngine": "Storage engine",
+    "settings.fileStorage.storageEngine": "Silnik magazynu",
     "settings.customProperties.all": "Wszystko",
     "settings.customProperties.none": "Brak",
     "settings.noOfValues": "# liczba wartości",
@@ -295,6 +295,6 @@
     "content.filter.addFilter": "Dodaj filtr",
     "content.filter.has": "Zawiera",
     "content.filter.hasNot": "Nie zawiera",
-    "settings.fileStorage.s3BucketRegion": "S3 bucket region",
+    "settings.fileStorage.s3BucketRegion": "Region bucketu S3",
     "settings.noCurrentValue": "Brak aktualnej wartości"
 }
