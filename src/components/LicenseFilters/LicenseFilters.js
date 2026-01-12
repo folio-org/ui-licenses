@@ -37,7 +37,7 @@ const LicenseFilters = ({
   filterHandlers,
 }) => {
   const intl = useIntl();
-  const tagsEnabled = useTagsEnabled();
+  const tagsEnabled = useTagsEnabled({ useSettings: false });
 
   const [filterState, setFilterState] = useState({
     status: [],
