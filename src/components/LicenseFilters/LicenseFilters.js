@@ -20,7 +20,7 @@ import {
   OrganizationSelection,
 } from '@folio/stripes-erm-components';
 
-import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
+import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-components';
 
 import { CUSTPROP_ENDPOINT, licenseContentOptions } from '../../constants';
 
@@ -37,6 +37,7 @@ const LicenseFilters = ({
   filterHandlers,
 }) => {
   const intl = useIntl();
+  const tagsEnabled = useTagsEnabled({ useSettings: true });
 
   const [filterState, setFilterState] = useState({
     status: [],
@@ -281,7 +282,7 @@ const LicenseFilters = ({
       {renderCheckboxFilter('type')}
       {renderOrganizationFilter()}
       {renderOrganizationRoleFilter()}
-      {renderTagsFilter()}
+      {tagsEnabled && renderTagsFilter()}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCustomPropertyFilters()}
