@@ -3,10 +3,16 @@ import { FormattedMessage } from 'react-intl';
 
 import PropTypes from 'prop-types';
 
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
+import {
+  CREATE,
+  getRefdataValuesByDesc,
+  useClaim,
+  useGetAccess
+} from '@folio/stripes-erm-components';
+import { parseErrorResponse } from '@k-int/stripes-kint-components';
 
 import View from '../../components/LicenseForm';
 import NoPermissions from '../../components/NoPermissions';
@@ -36,8 +42,18 @@ const CreateLicenseRoute = ({
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
   const hasPerms = stripes.hasPerm('ui-licenses.licenses.edit');
+
+  const accessControlData = useGetAccess({
+    resourceEndpoint: LICENSES_ENDPOINT,
+    restrictions: [CREATE],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', canDo]
+  });
+
+  const { canCreate, canCreateLoading } = accessControlData;
+  const { claim } = useClaim({ resourceEndpoint: LICENSES_ENDPOINT });
 
   const refdata = useLicenseRefdata({
     desc: [
@@ -51,12 +67,49 @@ const CreateLicenseRoute = ({
 
   const { mutateAsync: createLicense } = useMutation(
     [LICENSES_ENDPOINT, 'ui-licenses', 'CreateLicenseRoute', 'createLicense'],
-    (payload) => ky.post(LICENSES_ENDPOINT, { json: payload }).json()
-      .then(({ id, name }) => {
-        callout.sendCallout({ message: <FormattedMessage id="ui-licenses.create.callout" values={{ name }} /> });
+    (payload) => ky.post(LICENSES_ENDPOINT, { json: payload })
+      .json()
+      .then(async (response) => {
+        return response;
+      })
+      .then((response) => {
+        const { id, name } = response;
+
+        // Invalidate cached queries
+        queryClient.invalidateQueries(['ERM', 'Licenses']);
+        callout.sendCallout({
+          type: 'success',
+          message: (
+            <FormattedMessage
+              id="ui-licenses.create.callout"
+              values={{ name }}
+            />
+          ),
+        });
         history.push(`/licenses/${id}${location.search}`);
+
+        return response;
+      })
+      .catch((licenseError) => {
+        // license failed to create
+        callout.sendCallout({
+          type: 'error',
+          message: (
+            <FormattedMessage
+              id="ui-licenses.create.error.callout"
+              values={{
+                name: payload?.name ?? 'unknown',
+                error: licenseError.message,
+              }}
+            />
+          ),
+          timeout: 0,
+        });
+
+        throw licenseError;
       })
   );
+
 
   const getInitialValues = () => {
     const activeStatus = getRefdataValuesByDesc(refdata, LICENSE_STATUS)?.find(v => v.value === 'active') || {};
@@ -79,6 +132,14 @@ const CreateLicenseRoute = ({
 
   return (
     <View
+      accessControlData={{
+        isAccessControlLoading: canCreateLoading, // Special prop used by LicenseForm to avoid edit/create distinctions
+        isAccessDenied: !canCreate, // Special prop used by LicenseForm to avoid edit/create distinctions
+        ...accessControlData,
+        // Cheat these values for the sake of the form.
+        canApplyPolicies: true,
+        canApplyPoliciesLoading: false,
+      }}
       data={{
         contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
         documentCategories: getRefdataValuesByDesc(refdata, DOCUMENT_ATTACHMENT_TYPE),

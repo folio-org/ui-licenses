@@ -7,7 +7,17 @@ import { cloneDeep, get } from 'lodash';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useChunkedUsers } from '@folio/stripes-erm-components';
+import {
+  APPLY_POLICIES,
+  getRefdataValuesByDesc,
+  READ,
+  UPDATE,
+  useAgreement,
+  useChunkedUsers,
+  useClaim,
+  useGetAccess,
+  usePolicies
+} from '@folio/stripes-erm-components';
 
 import Form from '../../components/LicenseForm';
 import NoPermissions from '../../components/NoPermissions';
@@ -40,6 +50,19 @@ const EditLicenseRoute = ({
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
 
+  const accessControlData = useGetAccess({
+    resourceEndpoint: LICENSE_ENDPOINT,
+    resourceId: licenseId,
+    restrictions: [READ, UPDATE, APPLY_POLICIES],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
+  });
+
+  const {
+    canRead,
+    canReadLoading,
+    canEdit,
+    canEditLoading,
+  } = accessControlData;
   const refdata = useLicenseRefdata({
     desc: [
       LICENSE_STATUS,
@@ -103,6 +126,11 @@ const EditLicenseRoute = ({
 
   return (
     <Form
+      accessControlData={{
+        isAccessControlLoading: canEditLoading || canReadLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
+        isAccessDenied: !canRead || !canEdit, // Special prop used by AgreementForm to avoid edit/create distinctions
+        ...accessControlData
+      }}
       data={{
         contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
         documentCategories: getRefdataValuesByDesc(refdata, DOCUMENT_ATTACHMENT_TYPE),
