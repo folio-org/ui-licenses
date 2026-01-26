@@ -49,7 +49,6 @@ const LicenseForm = ({
   data = {},
   handlers,
   handleSubmit,
-  isLoading,
   form,
   pristine,
   submitting,

@@ -16,6 +16,10 @@ jest.mock('../formSections/LicenseFormInternalContacts', () => () => <div>Licens
 jest.mock('../formSections/LicenseFormOrganizations', () => () => <div>LicenseFormOrganizations</div>);
 jest.mock('../formSections/FormSupplementaryDocs', () => () => <div>FormSupplementaryDocs</div>);
 jest.mock('../formSections/FormCoreDocs', () => () => <div>FormCoreDocs</div>);
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  LoadingView: () => <div>LoadingView</div>
+}));
 
 const onSubmitMock = jest.fn();
 const onDownloadFileMock = jest.fn();
@@ -130,6 +134,12 @@ describe('LicenseForm', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <LicenseForm
+            accessControlData={{
+              isAccessDenied: false,
+              isAccessControlLoading: true,
+              canApplyPolicies: false,
+              canApplyPoliciesLoading: false,
+            }}
             data={data}
             form={form}
             handlers={{
@@ -137,7 +147,6 @@ describe('LicenseForm', () => {
               onDownloadFile: onDownloadFileMock,
               onUploadFile: onUploadFileMock
             }}
-            isLoading
             onSubmit={onSubmitMock}
           />
         </MemoryRouter>,
@@ -150,3 +159,4 @@ describe('LicenseForm', () => {
     });
   });
 });
+
