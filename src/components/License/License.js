@@ -289,6 +289,7 @@ License.propTypes = {
     tagsLink: PropTypes.string,
     terms: PropTypes.arrayOf(PropTypes.object),
     users: PropTypes.arrayOf(PropTypes.object),
+    policies: PropTypes.arrayOf(PropTypes.object),
   }),
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,
