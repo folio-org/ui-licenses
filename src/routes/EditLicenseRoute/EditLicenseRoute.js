@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, get, omit } from 'lodash';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+
+import { parseErrorResponse } from '@k-int/stripes-kint-components';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
@@ -15,6 +17,9 @@ import {
   UPDATE,
   useChunkedUsers,
   useGetAccess,
+  useClaim,
+  usePolicies,
+  isEqualClaimPolicies,
 } from '@folio/stripes-erm-components';
 
 import Form from '../../components/LicenseForm';
@@ -83,16 +88,60 @@ const EditLicenseRoute = ({
     }
   );
 
+  const { claim } = useClaim({ resourceEndpoint: LICENSES_ENDPOINT });
+
+  const { policies } = usePolicies({
+    resourceEndpoint: LICENSES_ENDPOINT,
+    resourceId: licenseId,
+    queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
+  });
+
   const { mutateAsync: putLicense } = useMutation(
     [LICENSE_ENDPOINT(licenseId), 'putLicense'],
-    (payload) => ky.put(LICENSE_ENDPOINT(licenseId), { json: payload }).json()
-      .then(({ name }) => {
+    (payload) => ky.put(LICENSE_ENDPOINT(licenseId), { json: omit(payload, ['claimPolicies']) }).json()
+      .then(async (response) => {
+        const { name } = response;
+        // Handle claim policies if they have changed
+        if (!isEqualClaimPolicies(policies ?? [], payload?.claimPolicies ?? [])) {
+          await claim({ resourceId: licenseId, payload: { claims: payload.claimPolicies ?? [] } })
+            .then(() => {
+              callout.sendCallout({
+                type: 'success',
+                message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.callout" values={{ name }} />,
+              });
+            })
+            .catch(async (claimError) => {
+              const responseObj = claimError?.response;
+              const parsedError = await parseErrorResponse(responseObj);
+              callout.sendCallout({
+                type: 'error',
+                message: <FormattedMessage
+                  id="ui-agreements.agreements.claimPolicies.update.error.callout"
+                  values={{ name, error: parsedError?.message }}
+                />,
+                timeout: 0,
+              });
+            });
+        }
+        return response;
+      })
+      .then(async (response) => {
+        const { name } = response;
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(['ERM', 'Licenses']);
-        queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
+        await queryClient.invalidateQueries(['ERM', 'Licenses']);
+        await queryClient.invalidateQueries(LICENSE_ENDPOINT(licenseId));
 
         callout.sendCallout({ message: <FormattedMessage id="ui-licenses.update.callout" values={{ name }} /> });
         handleClose();
+        return response;
+      })
+      .catch((licenseError) => {
+        callout.sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-licenses.update.error.callout" values={{ name: payload?.name ?? '', error: licenseError.message }} />,
+          timeout: 0,
+        });
+        throw licenseError;
       })
   );
 
@@ -115,6 +164,7 @@ const EditLicenseRoute = ({
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role ? o.role.value : undefined }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: get(o, 'atType.value') }));
+    initialValues.claimPolicies = policies;
 
     return initialValues;
   };
@@ -133,8 +183,8 @@ const EditLicenseRoute = ({
   return (
     <Form
       accessControlData={{
-        isAccessControlLoading: canEditLoading || canReadLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
-        isAccessDenied: !canRead || !canEdit, // Special prop used by AgreementForm to avoid edit/create distinctions
+        isAccessControlLoading: canEditLoading || canReadLoading, // Special prop used by LicenseForm to avoid edit/create distinctions
+        isAccessDenied: !canRead || !canEdit, // Special prop used by LicenseForm to avoid edit/create distinctions
         ...accessControlData
       }}
       data={{
