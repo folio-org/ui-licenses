@@ -13,7 +13,11 @@ import {
   useInterfaces,
   useParallelBatchFetch,
   useErmHelperApp,
-  usePolicies
+  usePolicies,
+  UPDATE,
+  DELETE,
+  APPLY_POLICIES,
+  useGetAccess
 } from '@folio/stripes-erm-components';
 
 import View from '../../components/License';
@@ -39,6 +43,21 @@ const ViewLicenseRoute = ({
     HelperComponent,
     TagButton,
   } = useErmHelperApp();
+
+  // Access control fetch
+  const accessControlData = useGetAccess({
+    resourceEndpoint: LICENSES_ENDPOINT,
+    resourceId: licenseId,
+    restrictions: [UPDATE, DELETE, APPLY_POLICIES],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
+  });
+
+  const {
+    canEdit,
+    canEditLoading,
+    canDelete,
+    canDeleteLoading,
+  } = accessControlData;
 
   // License fetch
   const {
@@ -163,6 +182,13 @@ const ViewLicenseRoute = ({
 
   return (
     <View
+      accessControlData={{
+        canEdit,
+        canEditLoading,
+        canDelete,
+        canDeleteLoading,
+        ...accessControlData
+      }}
       components={{
         HelperComponent,
         TagButton

@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { CustomPropertiesView } from '@k-int/stripes-kint-components';
-import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
+import { AccessControl } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -43,15 +43,11 @@ import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const License = ({
   accessControlData: {
-    canRead,
-    canReadLoading,
     canEdit,
     canEditLoading,
     canDelete,
     canDeleteLoading
   } = {
-    canRead: true,
-    canReadLoading: false,
     canEdit: true,
     canEditLoading: false,
     canDelete: true,
@@ -91,15 +87,15 @@ const License = ({
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
 
-    if (stripes.hasPerm('ui-licenses.licenses.edit') && canEdit !== false) {
+    if (stripes.hasPerm('ui-licenses.licenses.edit')) {
       if (!urls.edit) return null;
       buttons.push(
         <Button
           key="clickable-dropdown-edit-license"
           buttonStyle="dropdownItem"
-          disabled={canEditLoading}
+          disabled={!canEdit || canEditLoading}
           id="clickable-dropdown-edit-license"
-          to={urls.edit()}
+          onClick={handlers.onEdit}
         >
           <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
             <FormattedMessage id="ui-licenses.edit" />
@@ -123,19 +119,19 @@ const License = ({
       );
     }
 
-    if (stripes.hasPerm('ui-licenses.licenses.delete') && canDelete !== false) {
+    if (stripes.hasPerm('ui-licenses.licenses.delete')) {
       buttons.push(
         <Button
           key="clickable-dropdown-delete-licenses"
           buttonStyle="dropdownItem"
-          disabled={canDeleteLoading}
+          disabled={!canDelete || canDeleteLoading}
           id="clickable-dropdown-delete-licenses"
           onClick={() => {
             setShowDeleteConfirmationModal(true);
             onToggle();
           }}
         >
-          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'trash'}>
+          <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
             <FormattedMessage id="ui-licenses.delete" />
           </Icon>
         </Button>
@@ -180,15 +176,7 @@ const License = ({
     onClose: handlers.onClose,
   };
 
-  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
-
-  if (!canRead) {
-    return (
-      <AccessControlErrorPane
-        {...paneProps}
-      />
-    );
-  }
+  if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
   // istanbul ignore next
   const shortcuts = [
