@@ -7,22 +7,20 @@ import { cloneDeep, get } from 'lodash';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { LoadingView } from '@folio/stripes/components';
 import {
   APPLY_POLICIES,
   getRefdataValuesByDesc,
   READ,
   UPDATE,
-  useAgreement,
   useChunkedUsers,
-  useClaim,
   useGetAccess,
-  usePolicies
 } from '@folio/stripes-erm-components';
 
 import Form from '../../components/LicenseForm';
 import NoPermissions from '../../components/NoPermissions';
 
-import { LICENSE_ENDPOINT } from '../../constants';
+import { LICENSE_ENDPOINT, LICENSES_ENDPOINT } from '../../constants';
 import { useLicenseRefdata } from '../../hooks';
 
 const [
@@ -51,7 +49,7 @@ const EditLicenseRoute = ({
   const queryClient = useQueryClient();
 
   const accessControlData = useGetAccess({
-    resourceEndpoint: LICENSE_ENDPOINT,
+    resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
     restrictions: [READ, UPDATE, APPLY_POLICIES],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
@@ -79,7 +77,10 @@ const EditLicenseRoute = ({
 
   const { data: license = {}, isLoading: isLicenseLoading } = useQuery(
     [LICENSE_ENDPOINT(licenseId), 'getLicense'],
-    () => ky.get(LICENSE_ENDPOINT(licenseId)).json()
+    () => ky.get(LICENSE_ENDPOINT(licenseId)).json(),
+    {
+      enabled: !canReadLoading && !!canRead
+    }
   );
 
   const { mutateAsync: putLicense } = useMutation(
@@ -122,7 +123,12 @@ const EditLicenseRoute = ({
     return putLicense(values);
   };
 
+  const fetchIsPending = () => {
+    return isLicenseLoading;
+  };
+
   if (!stripes.hasPerm('ui-licenses.licenses.edit')) return <NoPermissions />;
+  if (fetchIsPending()) return <LoadingView dismissible onClose={handleClose} />;
 
   return (
     <Form

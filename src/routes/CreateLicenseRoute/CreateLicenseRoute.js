@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { omit } from 'lodash';
 
 import PropTypes from 'prop-types';
 
@@ -16,6 +17,7 @@ import { parseErrorResponse } from '@k-int/stripes-kint-components';
 
 import View from '../../components/LicenseForm';
 import NoPermissions from '../../components/NoPermissions';
+import urls from '../../components/utils/urls';
 
 import { LICENSES_ENDPOINT } from '../../constants';
 import { useLicenseRefdata } from '../../hooks';
@@ -67,27 +69,41 @@ const CreateLicenseRoute = ({
 
   const { mutateAsync: createLicense } = useMutation(
     [LICENSES_ENDPOINT, 'ui-licenses', 'CreateLicenseRoute', 'createLicense'],
-    (payload) => ky.post(LICENSES_ENDPOINT, { json: payload })
-      .json()
+    (payload) => ky.post(LICENSES_ENDPOINT, { json: omit(payload, ['claimPolicies']) }).json()
       .then(async (response) => {
-        return response;
-      })
-      .then((response) => {
-        const { id, name } = response;
+        const { id: licenseId, name } = response;
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        if ('claimPolicies' in payload) {
+          // Make blocking here, since we want this to happen FIRST before we try to save
+          await claim({ resourceId: licenseId, payload: { claims: payload.claimPolicies } })
+            .then(() => {
+              callout.sendCallout({
+                type: 'success',
+                message: (
+                  <FormattedMessage
+                    id="ui-agreements.agreements.claimPolicies.update.callout"
+                    values={{ name }}
+                  />
+                )
+              });
+            })
+            .catch(async (claimError) => {
+              const responseObj = claimError?.response;
+              const parsedError = await parseErrorResponse(responseObj);
+              callout.sendCallout({
+                type: 'error',
+                message: (
+                  <FormattedMessage
+                    id="ui-agreements.agreements.claimPolicies.update.error.callout"
+                    values={{ name, error: parsedError?.message }}
+                  />
+                ),
+                timeout: 0,
+              });
+            });
+        }
 
-        // Invalidate cached queries
-        queryClient.invalidateQueries(['ERM', 'Licenses']);
-        callout.sendCallout({
-          type: 'success',
-          message: (
-            <FormattedMessage
-              id="ui-licenses.create.callout"
-              values={{ name }}
-            />
-          ),
-        });
-        history.push(`/licenses/${id}${location.search}`);
-
+        //  return license response at the end for the license callouts to use
         return response;
       })
       .catch((licenseError) => {
@@ -109,6 +125,22 @@ const CreateLicenseRoute = ({
         throw licenseError;
       })
   );
+
+  const handleSubmit = (values) => {
+    return createLicense(values).then((response) => {
+      const { id: licenseId, name } = response;
+
+      /* Invalidate cached queries */
+      queryClient.invalidateQueries(['ERM', 'Licenses']);
+
+      callout.sendCallout({
+        type: 'success',
+        message: <FormattedMessage id="ui-licenses.create.success.callout" values={{ name }} />
+      });
+
+      history.push(`${urls.licenseView(licenseId)}${location.search}`);
+    });
+  };
 
 
   const getInitialValues = () => {
@@ -154,7 +186,7 @@ const CreateLicenseRoute = ({
       }}
       initialValues={getInitialValues()}
       isLoading={false} // I don't think this will ever need to be "loading"
-      onSubmit={createLicense}
+      onSubmit={handleSubmit}
     />
   );
 };

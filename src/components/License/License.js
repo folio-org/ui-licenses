@@ -155,6 +155,7 @@ const License = ({
       licenseSupplement: false,
       licenseAgreements: false,
       licenseNotes: false,
+      accessControl: false
     };
   };
 
@@ -236,7 +237,7 @@ const License = ({
                 </Col>
               </Row>
               <AccordionSet initialStatus={getInitialAccordionsState()}>
-                <AccessControl policies={data.policies} />
+                {data.policies?.length > 0 && <AccessControl policies={data.policies} />}
                 {data.license?.contacts?.length > 0 && <LicenseInternalContacts {...getSectionProps('licenseInternalContacts')} />}
                 {data.license?.orgs?.length > 0 && <LicenseOrganizations {...getSectionProps('licenseOrganizations')} />}
                 {data.license?.docs?.length > 0 && <CoreDocs {...getSectionProps('licenseCoreDocs')} />}
