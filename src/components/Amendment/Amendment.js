@@ -23,6 +23,11 @@ import {
 import { AppIcon, TitleManager } from '@folio/stripes/core';
 
 import {
+  AccessControl,
+  AccessControlErrorPane,
+} from '@folio/stripes-erm-components';
+
+import {
   AmendmentInfo,
   AmendmentLicense,
   CoreDocs,
@@ -35,6 +40,21 @@ import { useLicensesContexts } from '../../hooks';
 import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const Amendment = ({
+  accessControlData: {
+    canRead,
+    canReadLoading,
+    canEdit,
+    canEditLoading,
+    canDelete,
+    canDeleteLoading,
+  } = {
+    canRead: true,
+    canReadLoading: false,
+    canEdit: true,
+    canEditLoading: false,
+    canDelete: true,
+    canDeleteLoading: false,
+  }, // If not passed, assume everything is accessible and not loading...?
   data,
   handlers,
   isLoading,
@@ -64,6 +84,7 @@ const Amendment = ({
       amendmentSupplementaryDocs: false,
       amendmentTerms: false,
       licenseAgreements: false,
+      AccessControl: false,
     };
   };
 
@@ -87,6 +108,7 @@ const Amendment = ({
           <>
             <Button
               buttonStyle="dropdownItem"
+              disabled={canEditLoading || !canEdit}
               id="clickable-dropdown-edit-amendment"
               to={urls.editAmendment(amendmentId)}
             >
@@ -110,13 +132,14 @@ const Amendment = ({
         {handlers.onDelete &&
           <Button
             buttonStyle="dropdownItem"
+            disabled={canDeleteLoading || !canDelete}
             id="clickable-delete-amendment"
             onClick={() => {
               handlers.onDelete();
               onToggle();
             }}
           >
-            <Icon icon="trash">
+            <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'trash'}>
               <FormattedMessage id="ui-licenses.delete" />
             </Icon>
           </Button>
@@ -132,7 +155,15 @@ const Amendment = ({
     onClose: handlers.onClose,
   };
 
-  if (isLoading) return <LoadingPane {...paneProps} />;
+  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  if (!canRead) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
 
   const shortcuts = [
     {
@@ -176,6 +207,7 @@ const Amendment = ({
               </Col>
             </Row>
             <AccordionSet initialStatus={getInitialAccordionsState()}>
+              <AccessControl policies={data.policies} />
               {data.license?.amendments?.length > 1 && <LicenseAmendments {...getSectionProps('licenseAmendments')} licenseAmendmentsAccordionLabel={<FormattedMessage id="ui-licenses.section.amendmentsOnParentLicense" />} />}
               {data.amendment?.docs?.length > 0 && <CoreDocs {...getSectionProps('amendmentCoreDocs')} />}
               <CustomPropertiesView
@@ -195,6 +227,14 @@ const Amendment = ({
 };
 
 Amendment.propTypes = {
+  accessControlData: PropTypes.shape({
+    canRead: PropTypes.bool,
+    canReadLoading: PropTypes.bool,
+    canEdit: PropTypes.bool,
+    canEditLoading: PropTypes.bool,
+    canDelete: PropTypes.bool,
+    canDeleteLoading: PropTypes.bool,
+  }),
   data: PropTypes.shape({
     amendment: PropTypes.shape({
       customProperties: PropTypes.object,
@@ -205,6 +245,7 @@ Amendment.propTypes = {
         label: PropTypes.string,
       }),
       supplementaryDocs: PropTypes.arrayOf(PropTypes.object),
+      policies: PropTypes.arrayOf(PropTypes.shape({})),
     }).isRequired,
     license: PropTypes.object.isRequired,
     terms: PropTypes.arrayOf(PropTypes.object),
