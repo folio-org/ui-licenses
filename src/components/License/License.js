@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { CustomPropertiesView } from '@k-int/stripes-kint-components';
+import { AccessControl } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -41,6 +42,17 @@ import { useLicensesContexts } from '../../hooks';
 import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const License = ({
+  accessControlData: {
+    canEdit,
+    canEditLoading,
+    canDelete,
+    canDeleteLoading
+  } = {
+    canEdit: true,
+    canEditLoading: false,
+    canDelete: true,
+    canDeleteLoading: false
+  }, // If not passed, assume everything is accessible and not loading...?
   components: {
     HelperComponent,
     TagButton,
@@ -81,10 +93,11 @@ const License = ({
         <Button
           key="clickable-dropdown-edit-license"
           buttonStyle="dropdownItem"
+          disabled={!canEdit || canEditLoading}
           id="clickable-dropdown-edit-license"
-          to={urls.edit()}
+          onClick={handlers.onEdit}
         >
-          <Icon icon="edit">
+          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
             <FormattedMessage id="ui-licenses.edit" />
           </Icon>
         </Button>
@@ -111,13 +124,14 @@ const License = ({
         <Button
           key="clickable-dropdown-delete-licenses"
           buttonStyle="dropdownItem"
+          disabled={!canDelete || canDeleteLoading}
           id="clickable-dropdown-delete-licenses"
           onClick={() => {
             setShowDeleteConfirmationModal(true);
             onToggle();
           }}
         >
-          <Icon icon="trash">
+          <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
             <FormattedMessage id="ui-licenses.delete" />
           </Icon>
         </Button>
@@ -137,6 +151,7 @@ const License = ({
       licenseSupplement: false,
       licenseAgreements: false,
       licenseNotes: false,
+      accessControl: false
     };
   };
 
@@ -161,7 +176,7 @@ const License = ({
     onClose: handlers.onClose,
   };
 
-  if (isLoading) return <LoadingPane {...paneProps} />;
+  if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
   // istanbul ignore next
   const shortcuts = [
@@ -210,6 +225,7 @@ const License = ({
                 </Col>
               </Row>
               <AccordionSet initialStatus={getInitialAccordionsState()}>
+                {data.policies?.length > 0 && <AccessControl policies={data.policies} />}
                 {data.license?.contacts?.length > 0 && <LicenseInternalContacts {...getSectionProps('licenseInternalContacts')} />}
                 {data.license?.orgs?.length > 0 && <LicenseOrganizations {...getSectionProps('licenseOrganizations')} />}
                 {data.license?.docs?.length > 0 && <CoreDocs {...getSectionProps('licenseCoreDocs')} />}
@@ -219,7 +235,13 @@ const License = ({
                   customPropertiesEndpoint={CUSTPROP_ENDPOINT}
                   id="terms"
                 />
-                <LicenseAmendments {...getSectionProps('licenseAmendments')} />
+                <LicenseAmendments
+                  {...getSectionProps('licenseAmendments')}
+                  accessControlData={{
+                    canEdit,
+                    canEditLoading,
+                  }}
+                />
                 {data.license?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('licenseSupplement')} />}
                 {data.license?.linkedAgreements?.length > 0 && <LicenseAgreements {...getSectionProps('licenseAgreements')} />}
                 {
@@ -273,6 +295,7 @@ License.propTypes = {
     tagsLink: PropTypes.string,
     terms: PropTypes.arrayOf(PropTypes.object),
     users: PropTypes.arrayOf(PropTypes.object),
+    policies: PropTypes.arrayOf(PropTypes.object),
   }),
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,

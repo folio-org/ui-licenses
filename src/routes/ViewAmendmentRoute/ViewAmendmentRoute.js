@@ -9,7 +9,12 @@ import { ConfirmationModal } from '@folio/stripes/components';
 import {
   INVALID_JSON_ERROR,
   JSON_ERROR,
-  useParallelBatchFetch
+  useParallelBatchFetch,
+  usePolicies,
+  UPDATE,
+  DELETE,
+  READ,
+  useGetAccess
 } from '@folio/stripes-erm-components';
 
 import DuplicateAmendmentModal from '../../components/DuplicateAmendmentModal';
@@ -18,12 +23,13 @@ import View from '../../components/Amendment';
 import {
   AMENDMENT_ENDPOINT,
   LICENSE_ENDPOINT,
-  LINKED_AGREEMENTS_ENDPOINT
+  LINKED_AGREEMENTS_ENDPOINT,
+  AMENDMENTS_ENDPOINT,
 } from '../../constants';
 import { urls as appUrls } from '../../components/utils';
 
 const propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({}),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -55,9 +61,22 @@ const ViewAmendmentRoute = ({
 
   const amendmentPath = AMENDMENT_ENDPOINT(amendmentId);
 
+  const accessControlData = useGetAccess({
+    resourceEndpoint: AMENDMENTS_ENDPOINT,
+    resourceId: amendmentId,
+    restrictions: [READ, UPDATE, DELETE],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Amendment', amendmentId, canDo]
+  });
+
+  const {
+    canRead,
+    canReadLoading,
+  } = accessControlData;
+
   const { data: amendment = {} } = useQuery(
     [amendmentPath, 'ui-licenses', 'ViewAmendmentRoute', 'getAmendment'],
-    () => ky.get(amendmentPath).json()
+    () => ky.get(amendmentPath).json(),
+    { enabled: !canReadLoading && !!canRead }
   );
 
   const licensePath = LICENSE_ENDPOINT(licenseId);
@@ -87,6 +106,12 @@ const ViewAmendmentRoute = ({
       linkedAgreements,
     };
   };
+
+  const { policies = [] } = usePolicies({
+    resourceEndpoint: AMENDMENTS_ENDPOINT,
+    resourceId: amendmentId,
+    queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'AmendmentPolicies', amendmentId],
+  });
 
   const handleClose = () => {
     // If we're coming from amendments, go back to amendments, else go back to license view
@@ -173,9 +198,11 @@ const ViewAmendmentRoute = ({
   return (
     <>
       <View
+        accessControlData={accessControlData}
         data={{
           amendment,
           license: getCompositeLicense(),
+          policies,
         }}
         handlers={{
           ...handlers,
