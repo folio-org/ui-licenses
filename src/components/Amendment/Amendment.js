@@ -207,7 +207,7 @@ const Amendment = ({
               </Col>
             </Row>
             <AccordionSet initialStatus={getInitialAccordionsState()}>
-              <AccessControl policies={data.policies} />
+              {data.policies?.length > 0 && <AccessControl policies={data.policies} />}
               {data.license?.amendments?.length > 1 && <LicenseAmendments {...getSectionProps('licenseAmendments')} licenseAmendmentsAccordionLabel={<FormattedMessage id="ui-licenses.section.amendmentsOnParentLicense" />} />}
               {data.amendment?.docs?.length > 0 && <CoreDocs {...getSectionProps('amendmentCoreDocs')} />}
               <CustomPropertiesView
