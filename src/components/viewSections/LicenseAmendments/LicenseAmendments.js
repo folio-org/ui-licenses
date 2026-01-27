@@ -16,11 +16,19 @@ const LicenseAmendments = ({
   handlers: { onAmendmentClick },
   id,
   licenseAmendmentsAccordionLabel = <FormattedMessage id="ui-licenses.section.amendments" />,
-  urls
+  urls,
+  accessControlData = {}
 }) => {
   const onRowClick = (_, row) => {
     onAmendmentClick(row.id);
   };
+
+  const {
+    canEdit = true,
+    canEditLoading = false,
+  } = accessControlData;
+
+  const isDisabled = canEditLoading || !canEdit;
 
   const renderBadge = () => {
     const count = license?.amendments?.length;
@@ -32,7 +40,7 @@ const LicenseAmendments = ({
 
     return (
       <>
-        <Button id="add-amendment-button" to={urls.addAmendment()}>
+        <Button disabled={isDisabled} id="add-amendment-button" to={isDisabled ? null : urls.addAmendment()}>
           <FormattedMessage id="ui-licenses.amendments.add" />
         </Button>
         {renderBadge()}

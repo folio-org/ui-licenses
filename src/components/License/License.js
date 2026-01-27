@@ -235,7 +235,13 @@ const License = ({
                   customPropertiesEndpoint={CUSTPROP_ENDPOINT}
                   id="terms"
                 />
-                <LicenseAmendments {...getSectionProps('licenseAmendments')} />
+                <LicenseAmendments
+                  {...getSectionProps('licenseAmendments')}
+                  accessControlData={{
+                    canEdit,
+                    canEditLoading,
+                  }}
+                />
                 {data.license?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('licenseSupplement')} />}
                 {data.license?.linkedAgreements?.length > 0 && <LicenseAgreements {...getSectionProps('licenseAgreements')} />}
                 {
