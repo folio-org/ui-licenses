@@ -12,6 +12,11 @@ import AmendmentFilters from './AmendmentFilters';
 
 const stateMock = jest.fn();
 
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  SimpleAccessControlFilter: () => <div>SimpleAccessControlFilter</div>,
+}));
+
 const activeFilters = {
   'status': [
     'active'
@@ -74,9 +79,9 @@ const filterHandlers = {
 };
 
 describe('AmendmentFilters', () => {
-  // let renderComponent;
+  let renderComponent;
   beforeEach(() => {
-    renderWithIntl(
+    renderComponent = renderWithIntl(
       <MemoryRouter>
         <AmendmentFilters
           activeFilters={activeFilters}
@@ -90,6 +95,12 @@ describe('AmendmentFilters', () => {
 
   test('renders the Status Accordion', async () => {
     await Accordion('Status').exists();
+  });
+
+
+  test('renders SimpleAccessControlFilter component', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('SimpleAccessControlFilter')).toBeInTheDocument();
   });
 
   test('clicking the active checkbox', async () => {
