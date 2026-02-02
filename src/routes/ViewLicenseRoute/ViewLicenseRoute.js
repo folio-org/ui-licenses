@@ -12,13 +12,18 @@ import {
   useChunkedUsers,
   useInterfaces,
   useParallelBatchFetch,
-  useErmHelperApp
+  useErmHelperApp,
+  usePolicies,
+  UPDATE,
+  DELETE,
+  APPLY_POLICIES,
+  useGetAccess
 } from '@folio/stripes-erm-components';
 
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
 
-import { LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT } from '../../constants';
+import { LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT, LICENSES_ENDPOINT } from '../../constants';
 
 const ViewLicenseRoute = ({
   handlers = {},
@@ -38,6 +43,21 @@ const ViewLicenseRoute = ({
     HelperComponent,
     TagButton,
   } = useErmHelperApp();
+
+  // Access control fetch
+  const accessControlData = useGetAccess({
+    resourceEndpoint: LICENSES_ENDPOINT,
+    resourceId: licenseId,
+    restrictions: [UPDATE, DELETE, APPLY_POLICIES],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
+  });
+
+  const {
+    canEdit,
+    canEditLoading,
+    canDelete,
+    canDeleteLoading,
+  } = accessControlData;
 
   // License fetch
   const {
@@ -74,6 +94,13 @@ const ViewLicenseRoute = ({
   } = useParallelBatchFetch({
     generateQueryKey: ({ offset }) => ['ERM', 'License', licenseId, 'LinkedAgreements', offset],
     endpoint: LINKED_AGREEMENTS_ENDPOINT(licenseId),
+  });
+
+  // Policies fetch
+  const { policies = [] } = usePolicies({
+    resourceEndpoint: LICENSES_ENDPOINT,
+    resourceId: licenseId,
+    queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
   });
 
 
@@ -155,12 +182,20 @@ const ViewLicenseRoute = ({
 
   return (
     <View
+      accessControlData={{
+        canEdit,
+        canEditLoading,
+        canDelete,
+        canDeleteLoading,
+        ...accessControlData
+      }}
       components={{
         HelperComponent,
         TagButton
       }}
       data={{
         license: getCompositeLicense(),
+        policies,
         tagsLink: licensePath
       }}
       handlers={{
