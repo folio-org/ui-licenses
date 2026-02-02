@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { isEqual } from 'lodash';
 import setFieldData from 'final-form-set-field-data';
 import { CustomPropertiesEdit } from '@k-int/stripes-kint-components';
-import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
+import { handleSaveKeyCommand, AccessControlErrorPane, FormAccessControl } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -35,14 +35,23 @@ import {
   FormSupplementaryDocs,
 } from '../formSections';
 
-import { CUSTPROP_ENDPOINT } from '../../constants';
+import {
+  LICENSE_ENDPOINT,
+  LICENSE_ACCESSCONTROL_ENDPOINT,
+  CUSTPROP_ENDPOINT
+} from '../../constants';
 import { useLicensesContexts } from '../../hooks';
 
 const LicenseForm = ({
+  accessControlData: {
+    isAccessDenied,
+    isAccessControlLoading,
+    canApplyPolicies,
+    canApplyPoliciesLoading,
+  } = {},
   data = {},
   handlers,
   handleSubmit,
-  isLoading,
   form,
   pristine,
   submitting,
@@ -102,7 +111,7 @@ const LicenseForm = ({
     );
   };
 
-  const renderFirstMenu = () => {
+  const renderFirstMenu = useCallback(() => {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-licenses.closeEditLicense">
@@ -117,7 +126,7 @@ const LicenseForm = ({
         </FormattedMessage>
       </PaneMenu>
     );
-  };
+  }, [handlers.onClose]);
 
   /* istanbul ignore next */
   const shortcuts = [
@@ -137,12 +146,23 @@ const LicenseForm = ({
 
   const { id, name } = values;
 
-  const paneProps = {
+  const paneProps = useMemo(() => ({
+    appIcon: <AppIcon app="licenses" />,
+    centerContent: true,
     defaultWidth: '100%',
+    firstMenu: renderFirstMenu(),
     id: 'pane-license-form',
-  };
+  }), [renderFirstMenu]);
 
-  if (isLoading) return <LoadingView {...paneProps} />;
+  if (isAccessControlLoading) return <LoadingView {...paneProps} />;
+
+  if (isAccessDenied) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
 
   return (
     <HasCommand
@@ -160,6 +180,7 @@ const LicenseForm = ({
               firstMenu={renderFirstMenu()}
               footer={renderPaneFooter()}
               paneTitle={id ? <FormattedMessage id="ui-licenses.editLicense.name" values={{ name }} /> : <FormattedMessage id="ui-licenses.createLicense" />}
+              {...paneProps}
             >
               <TitleManager record={id ? name : create?.[0]}>
                 <form id="form-license">
@@ -171,6 +192,15 @@ const LicenseForm = ({
                     </Row>
                     <AccordionSet initialStatus={getInitialAccordionsState()}>
                       <LicenseFormInfo {...getSectionProps('licenseFormInfo')} />
+                      <FormAccessControl
+                        accessControlEndpoint={LICENSE_ACCESSCONTROL_ENDPOINT}
+                        disabled={!canApplyPolicies}
+                        isLoading={canApplyPoliciesLoading}
+                        resourceEndpoint={LICENSE_ENDPOINT(id)}
+                        resourceId={id}
+                        resourceType="Licenses"
+                        {...getSectionProps('formAccessControl')}
+                      />
                       <LicenseFormInternalContacts {...getSectionProps('licenseFormInternalContacts')} />
                       <LicenseFormOrganizations {...getSectionProps('licenseFormOrganizations')} />
                       <FormCoreDocs {...getSectionProps('licenseFormDocs')} />
