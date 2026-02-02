@@ -133,10 +133,7 @@ const CreateLicenseRoute = ({
       /* Invalidate cached queries */
       queryClient.invalidateQueries(['ERM', 'Licenses']);
 
-      callout.sendCallout({
-        type: 'success',
-        message: <FormattedMessage id="ui-licenses.create.success.callout" values={{ name }} />
-      });
+      callout.sendCallout({ message: <FormattedMessage id="ui-licenses.create.callout" values={{ name }} /> });
 
       history.push(`${urls.licenseView(licenseId)}${location.search}`);
     });
