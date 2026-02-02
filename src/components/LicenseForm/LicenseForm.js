@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { isEqual } from 'lodash';
@@ -35,8 +35,11 @@ import {
   FormSupplementaryDocs,
 } from '../formSections';
 
-import { LICENSE_ENDPOINT, LICENSE_ACCESSCONTROL_ENDPOINT } from '../../constants/endpoints';
-import { CUSTPROP_ENDPOINT } from '../../constants';
+import {
+  LICENSE_ENDPOINT,
+  LICENSE_ACCESSCONTROL_ENDPOINT,
+  CUSTPROP_ENDPOINT
+} from '../../constants';
 import { useLicensesContexts } from '../../hooks';
 
 const LicenseForm = ({
@@ -108,7 +111,7 @@ const LicenseForm = ({
     );
   };
 
-  const renderFirstMenu = () => {
+  const renderFirstMenu = useCallback(() => {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-licenses.closeEditLicense">
@@ -123,7 +126,7 @@ const LicenseForm = ({
         </FormattedMessage>
       </PaneMenu>
     );
-  };
+  }, [handlers.onClose]);
 
   /* istanbul ignore next */
   const shortcuts = [

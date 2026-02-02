@@ -74,7 +74,7 @@ const ViewAmendmentRoute = ({
   } = accessControlData;
 
   const { data: amendment = {} } = useQuery(
-    [amendmentPath, 'ui-licenses', 'ViewAmendmentRoute', 'getAmendment'],
+    ['ERM', 'Amendment', amendmentId, 'GET', amendmentPath],
     () => ky.get(amendmentPath).json(),
     { enabled: !canReadLoading && !!canRead }
   );
@@ -110,6 +110,9 @@ const ViewAmendmentRoute = ({
   const { policies = [] } = usePolicies({
     resourceEndpoint: AMENDMENTS_ENDPOINT,
     resourceId: amendmentId,
+    // While this is note the pattern we use for Amendment fetches, this is
+    // because in this case Amendment policies _rely_ on License policies,
+    // so a refresh should affect both
     queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'AmendmentPolicies', amendmentId],
   });
 
