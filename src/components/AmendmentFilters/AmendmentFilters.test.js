@@ -10,12 +10,12 @@ import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import translationsProperties from '../../../test/helpers';
 import AmendmentFilters from './AmendmentFilters';
 
-const stateMock = jest.fn();
-
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
   SimpleAccessControlFilter: () => <div>SimpleAccessControlFilter</div>,
 }));
+
+const stateMock = jest.fn();
 
 const activeFilters = {
   'status': [
@@ -96,7 +96,6 @@ describe('AmendmentFilters', () => {
   test('renders the Status Accordion', async () => {
     await Accordion('Status').exists();
   });
-
 
   test('renders SimpleAccessControlFilter component', () => {
     const { getByText } = renderComponent;
