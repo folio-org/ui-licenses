@@ -8,10 +8,10 @@ import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter, SimpleAccessControlFilter } from '@folio/stripes-erm-components';
 
 
-import { CUSTPROP_ENDPOINT, amendmentContentOptions } from '../../constants';
+import { LICENSE_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT, amendmentContentOptions } from '../../constants';
 
 import ContentFilter from '../ContentFilter';
 
@@ -141,9 +141,20 @@ const AmendmentFilters = ({ activeFilters = { status: [] }, data, filterHandlers
   };
 
 
+  const renderAccessControlFilter = () => {
+    return (
+      <SimpleAccessControlFilter
+        accessControlEndpoint={LICENSE_ACCESSCONTROL_ENDPOINT}
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+      />
+    );
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('status')}
+      {renderAccessControlFilter()}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCustomPropertyFilters()}

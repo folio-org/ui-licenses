@@ -10,6 +10,7 @@ import {
   getRefdataValuesByDesc,
   useTags,
   downloadBlob,
+  POLICIES_FILTER_CONFIG,
 } from '@folio/stripes-erm-components';
 
 import View from '../../components/Licenses';
@@ -66,6 +67,9 @@ const LicensesRoute = ({
   const licensesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name,alternateNames.name,description',
+      filterConfig: [
+        POLICIES_FILTER_CONFIG
+      ],
       filterKeys: {
         org: 'orgs.org',
         role: 'orgs.roles.role',
