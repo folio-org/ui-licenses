@@ -6,7 +6,7 @@ import { useMutation, useQuery } from 'react-query';
 import { generateKiwtQueryParams, useKiwtSASQuery, usePrevNextPagination } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, downloadBlob } from '@folio/stripes-erm-components';
+import { POLICIES_FILTER_CONFIG, getRefdataValuesByDesc, downloadBlob } from '@folio/stripes-erm-components';
 
 import View from '../../components/Amendments';
 import NoPermissions from '../../components/NoPermissions';
@@ -54,6 +54,9 @@ const AmendmentsRoute = ({
   const amendmentsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name,description',
+      filterConfig: [
+        POLICIES_FILTER_CONFIG
+      ],
       filterKeys: {
         status: 'status.value',
       },
