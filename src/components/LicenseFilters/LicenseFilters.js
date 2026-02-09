@@ -18,11 +18,12 @@ import {
   DateFilter,
   DocumentFilter,
   OrganizationSelection,
+  SimpleAccessControlFilter
 } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-components';
 
-import { CUSTPROP_ENDPOINT, licenseContentOptions } from '../../constants';
+import { LICENSE_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT, licenseContentOptions } from '../../constants';
 
 import ContentFilter from '../ContentFilter';
 
@@ -276,10 +277,21 @@ const LicenseFilters = ({
     );
   };
 
+  const renderAccessControlFilter = () => {
+    return (
+      <SimpleAccessControlFilter
+        accessControlEndpoint={LICENSE_ACCESSCONTROL_ENDPOINT}
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+      />
+    );
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('status')}
       {renderCheckboxFilter('type')}
+      {renderAccessControlFilter()}
       {renderOrganizationFilter()}
       {renderOrganizationRoleFilter()}
       {tagsEnabled && renderTagsFilter()}
