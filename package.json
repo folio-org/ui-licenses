@@ -90,6 +90,9 @@
           "tags.collection.get",
           "licenses.refdata.view",
           "note.types.collection.get",
+          "ui-licenses.accesspolicies.view",
+          "acquisitions-units.memberships.collection.get",
+          "acquisitions-units.units.collection.get",
           "stripes-core.settings.read"
         ]
       },
@@ -205,6 +208,14 @@
         "subPermissions": [
           "ui-licenses.appSettings.view",
           "licenses.settings.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-licenses.accesspolicies.view",
+        "displayName": "Licenses: View access policies",
+        "visible": false,
+        "subPermissions": [
+          "licenses.accesspolicies.view"
         ]
       }
     ],
