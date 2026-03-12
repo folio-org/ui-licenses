@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { keyBy, mapValues, pickBy, sortBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { useCustomProperties } from '@k-int/stripes-kint-components';
+import { useCustProps } from '@k-int/stripes-kint-components';
 
 import {
   Button,
@@ -27,14 +27,14 @@ const keys = {
   licenseInformation: [
     { key: 'name', value: <FormattedMessage id="ui-licenses.exportLicensesModal.name" /> },
     { key: 'startDate', value: <FormattedMessage id="ui-licenses.exportLicensesModal.startDate" /> },
-    { key: 'endDate', value : <FormattedMessage id="ui-licenses.exportLicensesModal.endDate" /> },
+    { key: 'endDate', value: <FormattedMessage id="ui-licenses.exportLicensesModal.endDate" /> },
     { key: 'status', value: <FormattedMessage id="ui-licenses.exportLicensesModal.status" /> },
     { key: 'type', value: <FormattedMessage id="ui-licenses.exportLicensesModal.type" /> },
   ],
   terms: [
     { key: 'value', value: <FormattedMessage id="ui-licenses.exportLicensesModal.value" /> },
     { key: 'note', value: <FormattedMessage id="ui-licenses.exportLicensesModal.note" /> },
-    { key: 'publicNote', value : <FormattedMessage id="ui-licenses.exportLicensesModal.publicNote" /> },
+    { key: 'publicNote', value: <FormattedMessage id="ui-licenses.exportLicensesModal.publicNote" /> },
     { key: 'internal', value: <FormattedMessage id="ui-licenses.exportLicensesModal.internal" /> },
   ]
 };
@@ -44,7 +44,7 @@ const ExportLicenseAsCSVModal = ({
   onClose,
   selectedLicenses
 }) => {
-  const { data: fetchedTerms = [], isLoading } = useCustomProperties({
+  const { custprops: fetchedTerms = [], isLoading } = useCustProps({
     endpoint: CUSTPROP_ENDPOINT,
     returnQueryObject: true,
     options: {
@@ -123,18 +123,18 @@ const ExportLicenseAsCSVModal = ({
         />
         <Layout className="padding-start-gutter">
           {
-          keys[section].map(({ key, value }, index) => (
-            <Checkbox
-              key={index}
-              checked={checkedState[section][key]}
-              label={value}
-              labelClass={css.labelClass}
-              name={key}
-              onChange={(e) => updateSelection(e, section)}
-              value={key}
-            />
-          ))
-        }
+            keys[section].map(({ key, value }, index) => (
+              <Checkbox
+                key={index}
+                checked={checkedState[section][key]}
+                label={value}
+                labelClass={css.labelClass}
+                name={key}
+                onChange={(e) => updateSelection(e, section)}
+                value={key}
+              />
+            ))
+          }
         </Layout>
       </>
     );
