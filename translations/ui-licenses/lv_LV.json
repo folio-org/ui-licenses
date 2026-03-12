@@ -250,7 +250,7 @@
     "addRule": "Add rule",
     "AND": "AND",
     "OR": "OR",
-    "apply": "Apply",
+    "apply": "Apstiprināt",
     "refdata.deleteRefdataValue": "Delete pick list value",
     "refdata.deleteRefdataValue.confirmMessage": "<strong>{name}</strong> will be deleted.",
     "refdata.deleteRefdataValue.errorMessage": "<strong>Error:</strong> Pick list value <strong>{label}</strong> was not deleted because it is in use in one or more terms on one or more licenses.",
