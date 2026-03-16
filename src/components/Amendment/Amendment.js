@@ -41,19 +41,15 @@ import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const Amendment = ({
   accessControlData: {
+    isLoading: isAccessControlLoading,
     canRead,
-    canReadLoading,
     canEdit,
-    canEditLoading,
     canDelete,
-    canDeleteLoading,
   } = {
+    isLoading: false,
     canRead: true,
-    canReadLoading: false,
     canEdit: true,
-    canEditLoading: false,
     canDelete: true,
-    canDeleteLoading: false,
   }, // If not passed, assume everything is accessible and not loading...?
   data,
   handlers,
@@ -108,7 +104,7 @@ const Amendment = ({
           <>
             <Button
               buttonStyle="dropdownItem"
-              disabled={canEditLoading || !canEdit}
+              disabled={isAccessControlLoading || !canEdit}
               id="clickable-dropdown-edit-amendment"
               to={urls.editAmendment(amendmentId)}
             >
@@ -132,14 +128,14 @@ const Amendment = ({
         {handlers.onDelete &&
           <Button
             buttonStyle="dropdownItem"
-            disabled={canDeleteLoading || !canDelete}
+            disabled={isAccessControlLoading || !canDelete}
             id="clickable-delete-amendment"
             onClick={() => {
               handlers.onDelete();
               onToggle();
             }}
           >
-            <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'trash'}>
+            <Icon icon={isAccessControlLoading ? 'spinner-ellipsis' : 'trash'}>
               <FormattedMessage id="ui-licenses.delete" />
             </Icon>
           </Button>
@@ -155,7 +151,7 @@ const Amendment = ({
     onClose: handlers.onClose,
   };
 
-  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (isLoading || isAccessControlLoading) return <LoadingPane data-loading {...paneProps} />;
 
   if (!canRead) {
     return (
@@ -228,12 +224,10 @@ const Amendment = ({
 
 Amendment.propTypes = {
   accessControlData: PropTypes.shape({
+    isLoading: PropTypes.bool,
     canRead: PropTypes.bool,
-    canReadLoading: PropTypes.bool,
     canEdit: PropTypes.bool,
-    canEditLoading: PropTypes.bool,
     canDelete: PropTypes.bool,
-    canDeleteLoading: PropTypes.bool,
   }),
   data: PropTypes.shape({
     amendment: PropTypes.shape({
