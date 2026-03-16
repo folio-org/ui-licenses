@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { CustomPropertiesView } from '@k-int/stripes-kint-components';
-import { AccessControl } from '@folio/stripes-erm-components';
+import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -43,7 +43,8 @@ import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const License = ({
   accessControlData = {
-    isLoading: true,
+    isLoading: false,
+    canRead: true,
     canEdit: true,
     canDelete: true,
   }, // If not passed, assume everything is accessible and not loading...?
@@ -62,6 +63,7 @@ const License = ({
 
   const {
     isLoading: isAccessControlLoading,
+    canRead,
     canEdit,
     canDelete,
   } = accessControlData;
@@ -176,7 +178,15 @@ const License = ({
     onClose: handlers.onClose,
   };
 
-  if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (isLoading || isAccessControlLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  if (!canRead) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
 
   // istanbul ignore next
   const shortcuts = [

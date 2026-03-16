@@ -48,6 +48,11 @@ const ViewLicenseRoute = ({
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
   });
 
+  const {
+    isLoading: isAccessControlLoading,
+    canRead,
+  } = accessControlData;
+
   // License fetch
   const {
     data: license = {
@@ -60,7 +65,7 @@ const ViewLicenseRoute = ({
     [licensePath, 'getLicense'],
     () => ky.get(licensePath).json(),
     {
-      enabled: !!licenseId
+      enabled: !!licenseId && !isAccessControlLoading && !!canRead
     }
   );
 
@@ -83,6 +88,9 @@ const ViewLicenseRoute = ({
   } = useParallelBatchFetch({
     generateQueryKey: ({ offset }) => ['ERM', 'License', licenseId, 'LinkedAgreements', offset],
     endpoint: LINKED_AGREEMENTS_ENDPOINT(licenseId),
+    queryOptions: {
+      enabled: !isAccessControlLoading && !!canRead
+    }
   });
 
   // Policies fetch
@@ -90,6 +98,9 @@ const ViewLicenseRoute = ({
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
     queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
+    queryOptions: {
+      enabled: !isAccessControlLoading && !!canRead
+    }
   });
 
 
