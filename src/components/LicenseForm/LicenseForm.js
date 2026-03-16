@@ -47,7 +47,6 @@ const LicenseForm = ({
     isAccessDenied,
     isAccessControlLoading,
     canApplyPolicies,
-    canApplyPoliciesLoading,
   } = {},
   data = {},
   handlers,
@@ -195,7 +194,7 @@ const LicenseForm = ({
                       <FormAccessControl
                         accessControlEndpoint={LICENSE_ACCESSCONTROL_ENDPOINT}
                         disabled={!canApplyPolicies}
-                        isLoading={canApplyPoliciesLoading}
+                        isLoading={isAccessControlLoading}
                         resourceEndpoint={LICENSE_ENDPOINT(id)}
                         resourceId={id}
                         resourceType="Licenses"

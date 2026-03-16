@@ -11,9 +11,6 @@ import {
   JSON_ERROR,
   useParallelBatchFetch,
   usePolicies,
-  UPDATE,
-  DELETE,
-  READ,
   useGetAccess
 } from '@folio/stripes-erm-components';
 
@@ -64,19 +61,18 @@ const ViewAmendmentRoute = ({
   const accessControlData = useGetAccess({
     resourceEndpoint: AMENDMENTS_ENDPOINT,
     resourceId: amendmentId,
-    restrictions: [READ, UPDATE, DELETE],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Amendment', amendmentId, canDo]
   });
 
   const {
     canRead,
-    canReadLoading,
+    isLoading: isAccessControlLoading,
   } = accessControlData;
 
   const { data: amendment = {} } = useQuery(
     ['ERM', 'Amendment', amendmentId, 'GET', amendmentPath],
     () => ky.get(amendmentPath).json(),
-    { enabled: !canReadLoading && !!canRead }
+    { enabled: !isAccessControlLoading && !!canRead }
   );
 
   const licensePath = LICENSE_ENDPOINT(licenseId);

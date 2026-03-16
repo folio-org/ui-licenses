@@ -14,10 +14,6 @@ import {
   useParallelBatchFetch,
   useErmHelperApp,
   usePolicies,
-  READ,
-  UPDATE,
-  DELETE,
-  APPLY_POLICIES,
   useGetAccess
 } from '@folio/stripes-erm-components';
 
@@ -49,17 +45,12 @@ const ViewLicenseRoute = ({
   const accessControlData = useGetAccess({
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
-    restrictions: [READ, UPDATE, DELETE, APPLY_POLICIES],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
   });
 
   const {
+    isLoading: isAccessControlLoading,
     canRead,
-    canReadLoading,
-    canEdit,
-    canEditLoading,
-    canDelete,
-    canDeleteLoading,
   } = accessControlData;
 
   // License fetch
@@ -74,7 +65,7 @@ const ViewLicenseRoute = ({
     [licensePath, 'getLicense'],
     () => ky.get(licensePath).json(),
     {
-      enabled: !!licenseId && !canReadLoading && !!canRead
+      enabled: !!licenseId && !isAccessControlLoading && !!canRead
     }
   );
 
@@ -98,7 +89,7 @@ const ViewLicenseRoute = ({
     generateQueryKey: ({ offset }) => ['ERM', 'License', licenseId, 'LinkedAgreements', offset],
     endpoint: LINKED_AGREEMENTS_ENDPOINT(licenseId),
     queryOptions: {
-      enabled: !canReadLoading && !!canRead
+      enabled: !isAccessControlLoading && !!canRead
     }
   });
 
@@ -108,7 +99,7 @@ const ViewLicenseRoute = ({
     resourceId: licenseId,
     queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
     queryOptions: {
-      enabled: !canReadLoading && !!canRead
+      enabled: !isAccessControlLoading && !!canRead
     }
   });
 
@@ -191,13 +182,7 @@ const ViewLicenseRoute = ({
 
   return (
     <View
-      accessControlData={{
-        canEdit,
-        canEditLoading,
-        canDelete,
-        canDeleteLoading,
-        ...accessControlData
-      }}
+      accessControlData={accessControlData}
       components={{
         HelperComponent,
         TagButton
