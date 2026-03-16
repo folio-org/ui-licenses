@@ -42,16 +42,10 @@ import { useLicensesContexts } from '../../hooks';
 import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const License = ({
-  accessControlData: {
-    canEdit,
-    canEditLoading,
-    canDelete,
-    canDeleteLoading
-  } = {
+  accessControlData = {
+    isLoading: true,
     canEdit: true,
-    canEditLoading: false,
     canDelete: true,
-    canDeleteLoading: false
   }, // If not passed, assume everything is accessible and not loading...?
   components: {
     HelperComponent,
@@ -65,6 +59,12 @@ const License = ({
   const accordionStatusRef = useRef();
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [showDuplicateLicenseModal, setShowDuplicateLicenseModal] = useState(false);
+
+  const {
+    isLoading: isAccessControlLoading,
+    canEdit,
+    canDelete,
+  } = accessControlData;
 
   const stripes = useStripes();
 
@@ -93,11 +93,11 @@ const License = ({
         <Button
           key="clickable-dropdown-edit-license"
           buttonStyle="dropdownItem"
-          disabled={!canEdit || canEditLoading}
+          disabled={!canEdit || isAccessControlLoading}
           id="clickable-dropdown-edit-license"
           onClick={handlers.onEdit}
         >
-          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
+          <Icon icon={isAccessControlLoading ? 'spinner-ellipsis' : 'edit'}>
             <FormattedMessage id="ui-licenses.edit" />
           </Icon>
         </Button>
@@ -124,14 +124,14 @@ const License = ({
         <Button
           key="clickable-dropdown-delete-licenses"
           buttonStyle="dropdownItem"
-          disabled={!canDelete || canDeleteLoading}
+          disabled={!canDelete || isAccessControlLoading}
           id="clickable-dropdown-delete-licenses"
           onClick={() => {
             setShowDeleteConfirmationModal(true);
             onToggle();
           }}
         >
-          <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
+          <Icon icon={isAccessControlLoading ? 'spinner-ellipsis' : 'trash'}>
             <FormattedMessage id="ui-licenses.delete" />
           </Icon>
         </Button>
@@ -237,10 +237,7 @@ const License = ({
                 />
                 <LicenseAmendments
                   {...getSectionProps('licenseAmendments')}
-                  accessControlData={{
-                    canEdit,
-                    canEditLoading,
-                  }}
+                  accessControlData={accessControlData}
                 />
                 {data.license?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('licenseSupplement')} />}
                 {data.license?.linkedAgreements?.length > 0 && <LicenseAgreements {...getSectionProps('licenseAgreements')} />}

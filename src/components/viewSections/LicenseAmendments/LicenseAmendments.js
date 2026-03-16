@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -25,10 +24,10 @@ const LicenseAmendments = ({
 
   const {
     canEdit = true,
-    canEditLoading = false,
+    isLoading: isAccessControlLoading
   } = accessControlData;
 
-  const isDisabled = canEditLoading || !canEdit;
+  const isDisabled = isAccessControlLoading || !canEdit;
 
   const renderBadge = () => {
     const count = license?.amendments?.length;
