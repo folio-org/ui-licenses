@@ -43,7 +43,7 @@ import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const License = ({
   accessControlData = {
-    isLoading: true,
+    isLoading: false,
     canRead: true,
     canEdit: true,
     canDelete: true,
