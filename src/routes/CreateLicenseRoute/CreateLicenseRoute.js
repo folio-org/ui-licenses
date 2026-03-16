@@ -8,7 +8,6 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
-  CREATE,
   getRefdataValuesByDesc,
   useClaim,
   useGetAccess
@@ -50,11 +49,10 @@ const CreateLicenseRoute = ({
 
   const accessControlData = useGetAccess({
     resourceEndpoint: LICENSES_ENDPOINT,
-    restrictions: [CREATE],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', canDo]
   });
 
-  const { canCreate, canCreateLoading } = accessControlData;
+  const { canCreate, isLoading: isAccessControlLoading } = accessControlData;
   const { claim } = useClaim({ resourceEndpoint: LICENSES_ENDPOINT });
 
   const refdata = useLicenseRefdata({
@@ -162,12 +160,11 @@ const CreateLicenseRoute = ({
   return (
     <View
       accessControlData={{
-        isAccessControlLoading: canCreateLoading, // Special prop used by LicenseForm to avoid edit/create distinctions
+        isAccessControlLoading, // Special prop used by LicenseForm to avoid edit/create distinctions
         isAccessDenied: !canCreate, // Special prop used by LicenseForm to avoid edit/create distinctions
         ...accessControlData,
         // Cheat these values for the sake of the form.
         canApplyPolicies: true,
-        canApplyPoliciesLoading: false,
       }}
       data={{
         contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),

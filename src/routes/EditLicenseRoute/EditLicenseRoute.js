@@ -11,10 +11,7 @@ import { parseErrorResponse } from '@k-int/stripes-kint-components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 import {
-  APPLY_POLICIES,
   getRefdataValuesByDesc,
-  READ,
-  UPDATE,
   useChunkedUsers,
   useGetAccess,
   useClaim,
@@ -56,15 +53,13 @@ const EditLicenseRoute = ({
   const accessControlData = useGetAccess({
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
-    restrictions: [READ, UPDATE, APPLY_POLICIES],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
   });
 
   const {
     canRead,
-    canReadLoading,
     canEdit,
-    canEditLoading,
+    isLoading: isAccessControlLoading
   } = accessControlData;
   const refdata = useLicenseRefdata({
     desc: [
@@ -84,7 +79,7 @@ const EditLicenseRoute = ({
     [LICENSE_ENDPOINT(licenseId), 'getLicense'],
     () => ky.get(LICENSE_ENDPOINT(licenseId)).json(),
     {
-      enabled: !canReadLoading && !!canRead
+      enabled: !isAccessControlLoading && !!canRead
     }
   );
 
@@ -183,7 +178,7 @@ const EditLicenseRoute = ({
   return (
     <Form
       accessControlData={{
-        isAccessControlLoading: canEditLoading || canReadLoading, // Special prop used by LicenseForm to avoid edit/create distinctions
+        isAccessControlLoading, // Special prop used by LicenseForm to avoid edit/create distinctions
         isAccessDenied: !canRead || !canEdit, // Special prop used by LicenseForm to avoid edit/create distinctions
         ...accessControlData
       }}

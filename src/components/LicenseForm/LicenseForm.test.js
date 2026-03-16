@@ -138,7 +138,6 @@ describe('LicenseForm', () => {
               isAccessDenied: false,
               isAccessControlLoading: true,
               canApplyPolicies: false,
-              canApplyPoliciesLoading: false,
             }}
             data={data}
             form={form}
