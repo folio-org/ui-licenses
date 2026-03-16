@@ -14,6 +14,7 @@ import {
   useParallelBatchFetch,
   useErmHelperApp,
   usePolicies,
+  READ,
   UPDATE,
   DELETE,
   APPLY_POLICIES,
@@ -48,11 +49,13 @@ const ViewLicenseRoute = ({
   const accessControlData = useGetAccess({
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
-    restrictions: [UPDATE, DELETE, APPLY_POLICIES],
+    restrictions: [READ, UPDATE, DELETE, APPLY_POLICIES],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
   });
 
   const {
+    canRead,
+    canReadLoading,
     canEdit,
     canEditLoading,
     canDelete,
@@ -71,7 +74,7 @@ const ViewLicenseRoute = ({
     [licensePath, 'getLicense'],
     () => ky.get(licensePath).json(),
     {
-      enabled: !!licenseId
+      enabled: !!licenseId && !canReadLoading && !!canRead
     }
   );
 
@@ -94,6 +97,9 @@ const ViewLicenseRoute = ({
   } = useParallelBatchFetch({
     generateQueryKey: ({ offset }) => ['ERM', 'License', licenseId, 'LinkedAgreements', offset],
     endpoint: LINKED_AGREEMENTS_ENDPOINT(licenseId),
+    queryOptions: {
+      enabled: !canReadLoading && !!canRead
+    }
   });
 
   // Policies fetch
@@ -101,6 +107,9 @@ const ViewLicenseRoute = ({
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
     queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
+    queryOptions: {
+      enabled: !canReadLoading && !!canRead
+    }
   });
 
 

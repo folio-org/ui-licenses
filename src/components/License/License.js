@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { CustomPropertiesView } from '@k-int/stripes-kint-components';
-import { AccessControl } from '@folio/stripes-erm-components';
+import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -43,11 +43,15 @@ import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const License = ({
   accessControlData: {
+    canRead,
+    canReadLoading,
     canEdit,
     canEditLoading,
     canDelete,
     canDeleteLoading
   } = {
+    canRead: true,
+    canReadLoading: false,
     canEdit: true,
     canEditLoading: false,
     canDelete: true,
@@ -176,7 +180,15 @@ const License = ({
     onClose: handlers.onClose,
   };
 
-  if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  if (!canRead) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
 
   // istanbul ignore next
   const shortcuts = [
