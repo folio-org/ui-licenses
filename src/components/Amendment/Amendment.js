@@ -106,7 +106,7 @@ const Amendment = ({
               buttonStyle="dropdownItem"
               disabled={isAccessControlLoading || !canEdit}
               id="clickable-dropdown-edit-amendment"
-              to={urls.editAmendment(amendmentId)}
+              onClick={() => handlers.onEditAmendment(amendmentId)}
             >
               <Icon icon="edit">
                 <FormattedMessage id="ui-licenses.edit" />

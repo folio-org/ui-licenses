@@ -57,7 +57,7 @@ describe('Amendment', () => {
 
       describe.each([
         // This edit one should probably be from the handlers, but we have two different ways of achieving the same outcome right now... needs refactoring
-        { buttonLabel: 'Edit', callback: urls.editAmendment },
+        { buttonLabel: 'Edit', callback: handlers.onEditAmendment },
         { buttonLabel: 'Duplicate', callback: handlers.onClone },
         { buttonLabel: 'Delete', callback: handlers.onDelete }
       ])('clicking the $buttonLabel button', ({ buttonLabel, callback }) => {
