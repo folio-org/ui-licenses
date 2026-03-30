@@ -45,11 +45,13 @@ const Amendment = ({
     canRead,
     canEdit,
     canDelete,
+    canCreate,
   } = {
     isLoading: false,
     canRead: true,
     canEdit: true,
     canDelete: true,
+    canCreate: true,
   }, // If not passed, assume everything is accessible and not loading...?
   data,
   handlers,
@@ -114,6 +116,7 @@ const Amendment = ({
             </Button>
             <Button
               buttonStyle="dropdownItem"
+              disabled={isAccessControlLoading || !canCreate}
               id="clickable-dropdown-duplicate-amendment"
               onClick={() => {
                 handlers.onClone();
@@ -228,6 +231,7 @@ Amendment.propTypes = {
     canRead: PropTypes.bool,
     canEdit: PropTypes.bool,
     canDelete: PropTypes.bool,
+    canCreate: PropTypes.bool,
   }),
   data: PropTypes.shape({
     amendment: PropTypes.shape({
