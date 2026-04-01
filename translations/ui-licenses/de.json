@@ -296,5 +296,7 @@
     "content.filter.has": "Hat",
     "content.filter.hasNot": "Hat nicht",
     "settings.fileStorage.s3BucketRegion": "S3 bucket region",
-    "settings.noCurrentValue": "Kein aktueller Wert"
+    "settings.noCurrentValue": "Kein aktueller Wert",
+    "customProperties.config.create.errorMessage": "Fehler beim Speichern der Bedingung: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "Fehler beim Bearbeiten der Bedingung: <strong>{label}</strong>. {error}"
 }

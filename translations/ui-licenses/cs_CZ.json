@@ -296,5 +296,7 @@
     "content.filter.has": "Má",
     "content.filter.hasNot": "Nemá",
     "settings.fileStorage.s3BucketRegion": "Oblast segmentu S3",
-    "settings.noCurrentValue": "Žádná aktuální hodnota"
+    "settings.noCurrentValue": "Žádná aktuální hodnota",
+    "customProperties.config.create.errorMessage": "Při ukládání termínu došlo k chybě: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "Při úpravě výrazu došlo k chybě: <strong>{label}</strong>. {error}"
 }

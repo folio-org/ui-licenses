@@ -296,5 +296,7 @@
     "content.filter.has": "Tem",
     "content.filter.hasNot": "Não tem",
     "settings.fileStorage.s3BucketRegion": "Região do bucket S3",
-    "settings.noCurrentValue": "Nenhum valor atual"
+    "settings.noCurrentValue": "Nenhum valor atual",
+    "customProperties.config.create.errorMessage": "Houve um erro ao salvar o termo: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "Houve um erro ao editar o termo: <strong>{label}</strong>. {error}"
 }

@@ -296,5 +296,7 @@
     "content.filter.has": "Has",
     "content.filter.hasNot": "Değil",
     "settings.fileStorage.s3BucketRegion": "S3 kova bölgesi",
-    "settings.noCurrentValue": "Aktif değer yok"
+    "settings.noCurrentValue": "Aktif değer yok",
+    "customProperties.config.create.errorMessage": "There was an error saving term: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "There was an error editing term: <strong>{label}</strong>. {error}"
 }

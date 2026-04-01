@@ -296,5 +296,7 @@
     "content.filter.has": "有",
     "content.filter.hasNot": "没有",
     "settings.fileStorage.s3BucketRegion": "S3存储桶区域",
-    "settings.noCurrentValue": "无当前值"
+    "settings.noCurrentValue": "无当前值",
+    "customProperties.config.create.errorMessage": "There was an error saving term: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "There was an error editing term: <strong>{label}</strong>. {error}"
 }
