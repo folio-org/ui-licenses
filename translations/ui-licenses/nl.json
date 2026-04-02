@@ -296,5 +296,7 @@
     "content.filter.has": "Heeft",
     "content.filter.hasNot": "Heeft niet",
     "settings.fileStorage.s3BucketRegion": "S3-bucketregio",
-    "settings.noCurrentValue": "Geen Huidige Waarde"
+    "settings.noCurrentValue": "Geen Huidige Waarde",
+    "customProperties.config.create.errorMessage": "There was an fout saving term: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "There was an fout editing term: <strong>{label}</strong>. {error}"
 }

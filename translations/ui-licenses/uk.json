@@ -296,5 +296,7 @@
     "content.filter.has": "Має",
     "content.filter.hasNot": "Не має",
     "settings.fileStorage.s3BucketRegion": "Регіон бакета S3",
-    "settings.noCurrentValue": "Поточне значення відсутнє"
+    "settings.noCurrentValue": "Поточне значення відсутнє",
+    "customProperties.config.create.errorMessage": "Сталася помилка під час збереження терміна: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "Сталася помилка під час редагування терміна: <strong>{label}</strong>. {error}"
 }
