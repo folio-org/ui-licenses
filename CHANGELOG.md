@@ -1,6 +1,25 @@
 # Change history for ui-licenses
 
-## 12.1.0 IN PROGRESS
+## 12.1.0 2026-04-17
+  * ERM-3979: Make "Duplicate" option in Amendment actions menu inactive and greyed out when parent license cannot be edited via access control
+  * ERM-3977: Creating new custom property: Error message appears only in Dev Tools when attempting to create a license term with the same name as an existing one
+  * ERM-3967: can* calls can now be consolidated into a single call to Agreements/Licenses (cutting down MASSIVELY) on calls to Acquisitions
+  * ERM-3962: When trying to view a license protected by an acquisition unit, an empty license is shown
+  * ERM-3961: Option to Edit amendment should be greyed out if the user cannot edit the parent license due to access control
+  * ERM-3953: Implement a 'parallel batched fetch' approach for retrieving custom properties in Agreements and Licenses
+  * ERM-3948: Add missing permissions to support access policies and acquisition units in the Licenses UI
+  * ERM-3916: Add Acquisition Units filter to Amendment search
+  * ERM-3915: Add Acquisition Units filter to License search
+  * ERM-3914: Use acquisition units to modify Actions menus in Amendments view
+  * ERM-3913: Use acquisition units to modify Actions menus in licenses view
+  * ERM-3912: Add Acquisition Units to Amendment view screen
+  * ERM-3911: Add Acquisition Units to License view screen
+  * ERM-3910: Add Acquisition Units to License creation and edit screens
+  * ERM-3901: Hide tags filter in licenses search and sort when tags not enabled
+  * ERM-3899: Licenses: In "Supplementary documents filter builder" on "Add rule" focus should move to "Attribute" field
+  * ERM-3854: ui-licenses: include global permissions in package.json base permissions
+  * ERM-3719: Replace deprecated components from erm-components
+  * ERM-3704: Hide tags icon when tags are disabled
 
 ## 12.0.1 2025-03-13
   * ERM-3625 Missing translation key for ui-licenses
