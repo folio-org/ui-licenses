@@ -1,5 +1,7 @@
 # Change history for ui-licenses
 
+## 12.2.0 IN PROGRESS
+
 ## 12.1.0 2026-04-17
   * ERM-3979: Make "Duplicate" option in Amendment actions menu inactive and greyed out when parent license cannot be edited via access control
   * ERM-3977: Creating new custom property: Error message appears only in Dev Tools when attempting to create a license term with the same name as an existing one
