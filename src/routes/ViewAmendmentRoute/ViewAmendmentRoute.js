@@ -11,7 +11,8 @@ import {
   JSON_ERROR,
   useParallelBatchFetch,
   usePolicies,
-  useGetAccess
+  useGetAccess,
+  useErmHelperApp
 } from '@folio/stripes-erm-components';
 
 import DuplicateAmendmentModal from '../../components/DuplicateAmendmentModal';
@@ -52,6 +53,12 @@ const ViewAmendmentRoute = ({
   const callout = useContext(CalloutContext);
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+
+  const {
+    handleToggleTags,
+    HelperComponent,
+    TagButton,
+  } = useErmHelperApp();
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showDuplicate, setShowDuplicate] = useState(false);
@@ -198,10 +205,15 @@ const ViewAmendmentRoute = ({
     <>
       <View
         accessControlData={accessControlData}
+        components={{
+          HelperComponent,
+          TagButton
+        }}
         data={{
           amendment,
           license: getCompositeLicense(),
           policies,
+          tagsLink: amendmentPath
         }}
         handlers={{
           ...handlers,
@@ -209,7 +221,8 @@ const ViewAmendmentRoute = ({
           onDelete: stripes.hasPerm('ui-licenses.licenses.edit') && deleteAmendment && showDeleteConfirmationModal,
           onClone: stripes.hasPerm('ui-licenses.licenses.edit') && cloneAmendment && showDuplicateModal,
           onEditAmendment: handleEditAmendment,
-          onAmendmentClick: handleViewAmendment
+          onAmendmentClick: handleViewAmendment,
+          onToggleTags: handleToggleTags
         }}
         isLoading={isLicenseLoading}
         urls={urls}
