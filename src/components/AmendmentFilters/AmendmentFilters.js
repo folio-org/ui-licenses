@@ -7,12 +7,13 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-components';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
-import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
+import { CheckboxFilter } from '@folio/stripes/smart-components';
 import { DateFilter, DocumentFilter, SimpleAccessControlFilter } from '@folio/stripes-erm-components';
 
 import { LICENSE_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT, amendmentContentOptions } from '../../constants';
 
 import ContentFilter from '../ContentFilter';
+import TagsFilter from '../TagsFilter';
 
 const FILTERS = [
   'status',
@@ -157,29 +158,12 @@ const AmendmentFilters = ({ activeFilters = { status: [] }, data, filterHandlers
   };
 
   const renderTagsFilter = () => {
-    const tagFilters = activeFilters.tags || [];
-
     return (
-      <Accordion
-        closedByDefault
-        displayClearButton={tagFilters.length > 0}
-        header={FilterAccordionHeader}
-        id="clickable-tags-filter"
-        label={<FormattedMessage id="ui-licenses.tags" />}
-        onClearFilter={() => {
-          filterHandlers.clearGroup('tags');
-        }}
-        separator={false}
-      >
-        <MultiSelectionFilter
-          dataOptions={filterState.tags || []}
-          id="tags-filter"
-          name="tags"
-          onChange={(e) => filterHandlers.state({ ...activeFilters, tags: e.values })
-          }
-          selectedValues={tagFilters}
-        />
-      </Accordion>
+      <TagsFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        tags={filterState.tags}
+      />
     );
   };
 

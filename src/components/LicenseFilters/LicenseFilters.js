@@ -12,7 +12,6 @@ import {
 } from '@folio/stripes/components';
 import {
   CheckboxFilter,
-  MultiSelectionFilter,
 } from '@folio/stripes/smart-components';
 import {
   DateFilter,
@@ -26,6 +25,7 @@ import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-comp
 import { LICENSE_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT, licenseContentOptions } from '../../constants';
 
 import ContentFilter from '../ContentFilter';
+import TagsFilter from '../TagsFilter';
 
 const FILTERS = ['status', 'type'];
 
@@ -160,31 +160,13 @@ const LicenseFilters = ({
       </Accordion>
     );
   };
-
   const renderTagsFilter = () => {
-    const tagFilters = activeFilters.tags || [];
-
     return (
-      <Accordion
-        closedByDefault
-        displayClearButton={tagFilters.length > 0}
-        header={FilterAccordionHeader}
-        id="clickable-tags-filter"
-        label={<FormattedMessage id="ui-licenses.tags" />}
-        onClearFilter={() => {
-          filterHandlers.clearGroup('tags');
-        }}
-        separator={false}
-      >
-        <MultiSelectionFilter
-          dataOptions={filterState.tags || []}
-          id="tags-filter"
-          name="tags"
-          onChange={(e) => filterHandlers.state({ ...activeFilters, tags: e.values })
-          }
-          selectedValues={tagFilters}
-        />
-      </Accordion>
+      <TagsFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        tags={filterState.tags}
+      />
     );
   };
 
