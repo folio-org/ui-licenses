@@ -17,7 +17,8 @@ import {
   DateFilter,
   DocumentFilter,
   OrganizationSelection,
-  SimpleAccessControlFilter
+  SimpleAccessControlFilter,
+  TagsFilter
 } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-components';
@@ -25,7 +26,6 @@ import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-comp
 import { LICENSE_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT, licenseContentOptions } from '../../constants';
 
 import ContentFilter from '../ContentFilter';
-import TagsFilter from '../TagsFilter';
 
 const FILTERS = ['status', 'type'];
 

@@ -8,12 +8,11 @@ import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-comp
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, SimpleAccessControlFilter } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter, SimpleAccessControlFilter, TagsFilter } from '@folio/stripes-erm-components';
 
 import { LICENSE_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT, amendmentContentOptions } from '../../constants';
 
 import ContentFilter from '../ContentFilter';
-import TagsFilter from '../TagsFilter';
 
 const FILTERS = [
   'status',
