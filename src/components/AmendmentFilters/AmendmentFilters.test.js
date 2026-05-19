@@ -168,6 +168,10 @@ describe('AmendmentFilters', () => {
     });
   });
 
+  test('renders the Tags Accordion', async () => {
+    await Accordion('Tags').exists();
+  });
+
   test('renders the Supplementary documents Accordion', async () => {
     await Accordion('Supplementary documents').exists();
   });
