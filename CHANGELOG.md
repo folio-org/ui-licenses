@@ -1,6 +1,7 @@
 # Change history for ui-licenses
 
 ## 12.2.0 IN PROGRESS
+  * ERM-4014: Change default `headingLevel` in meta section header to `3`
 
 ## 12.1.0 2026-04-17
   * ERM-3979: Make "Duplicate" option in Amendment actions menu inactive and greyed out when parent license cannot be edited via access control
