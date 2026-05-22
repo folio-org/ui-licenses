@@ -14,6 +14,8 @@ import {
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
+import { DEFAULT_META_SECTION_HEADING_LEVEL } from '../../../constants';
+
 const propTypes = {
   amendment: PropTypes.shape({
     dateCreated: PropTypes.string,
@@ -47,6 +49,7 @@ const AmendmentInfo = ({ amendment }) => {
       <MetaSection
         contentId="amendmentInfoRecordMetaContent"
         createdDate={amendment.dateCreated}
+        headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
         hideSource
         id="amendmentInfoRecordMeta"
         lastUpdatedDate={amendment.lastUpdated}

@@ -11,6 +11,8 @@ import {
   Row
 } from '@folio/stripes/components';
 
+import { DEFAULT_META_SECTION_HEADING_LEVEL } from '../../../constants';
+
 class LicenseInfo extends React.Component {
   static propTypes = {
     license: PropTypes.object,
@@ -38,6 +40,7 @@ class LicenseInfo extends React.Component {
         <MetaSection
           contentId="licenseInfoRecordMetaContent"
           createdDate={license.dateCreated}
+          headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
           hideSource
           id="licenseInfoRecordMeta"
           lastUpdatedDate={license.lastUpdated}

@@ -4,3 +4,4 @@ export { default as resultCount } from './resultCount';
 export { default as amendmentContentOptions } from './amendmentContentOptions';
 export { default as licenseContentOptions } from './licenseContentOptions';
 export * from './endpoints';
+export * from './metasection';
