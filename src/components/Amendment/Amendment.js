@@ -14,13 +14,14 @@ import {
   Icon,
   LoadingPane,
   Pane,
+  PaneMenu,
   Row,
   checkScope,
   collapseAllSections,
   expandAllSections
 } from '@folio/stripes/components';
 
-import { AppIcon, TitleManager } from '@folio/stripes/core';
+import { AppIcon, TitleManager, useStripes } from '@folio/stripes/core';
 
 import {
   AccessControl,
@@ -53,12 +54,17 @@ const Amendment = ({
     canDelete: true,
     canCreate: true,
   }, // If not passed, assume everything is accessible and not loading...?
+  components: {
+    HelperComponent = () => null,
+    TagButton = () => null,
+  } = {},
   data,
   handlers,
   isLoading,
   urls,
 }) => {
   const accordionStatusRef = useRef();
+  const stripes = useStripes();
 
   const { data: custpropContexts = [] } = useLicensesContexts();
   // Ensure the custprops with no contexts get rendered
@@ -184,6 +190,20 @@ const Amendment = ({
     }
   ];
 
+  const renderLastMenu = () => {
+    const { amendment } = data;
+
+    return stripes.hasPerm('ui-licenses.licenses.edit') ? (
+      <PaneMenu>
+        {handlers.onToggleTags &&
+          <TagButton
+            entity={amendment}
+          />
+        }
+      </PaneMenu>
+    ) : null;
+  };
+
   return (
     <HasCommand
       commands={shortcuts}
@@ -193,6 +213,7 @@ const Amendment = ({
       <Pane
         actionMenu={renderActionMenu}
         appIcon={<AppIcon app="licenses" iconKey="amendment" />}
+        lastMenu={renderLastMenu()}
         paneTitle={<FormattedMessage id="ui-licenses.amendments.view.paneTitle" values={{ name: data.amendment.name }} />}
         {...paneProps}
       >
@@ -221,6 +242,10 @@ const Amendment = ({
           </AccordionStatus>
         </TitleManager>
       </Pane>
+      <HelperComponent
+        link={data.tagsLink}
+        onToggle={handlers.onToggleTags}
+      />
     </HasCommand>
   );
 };
@@ -233,6 +258,7 @@ Amendment.propTypes = {
     canDelete: PropTypes.bool,
     canCreate: PropTypes.bool,
   }),
+  components: PropTypes.object,
   data: PropTypes.shape({
     amendment: PropTypes.shape({
       customProperties: PropTypes.object,
@@ -246,13 +272,15 @@ Amendment.propTypes = {
       policies: PropTypes.arrayOf(PropTypes.shape({})),
     }).isRequired,
     license: PropTypes.object.isRequired,
+    tagsLink: PropTypes.string,
     terms: PropTypes.arrayOf(PropTypes.object),
   }),
   handlers: PropTypes.shape({
     onClone: PropTypes.func,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func,
-    onEditAmendment: PropTypes.func.isRequired
+    onEditAmendment: PropTypes.func.isRequired,
+    onToggleTags: PropTypes.func
   }),
   isLoading: PropTypes.bool,
   urls: PropTypes.shape({

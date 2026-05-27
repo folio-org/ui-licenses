@@ -6,7 +6,12 @@ import { useMutation, useQuery } from 'react-query';
 import { generateKiwtQueryParams, useKiwtSASQuery, usePrevNextPagination } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { POLICIES_FILTER_CONFIG, getRefdataValuesByDesc, downloadBlob } from '@folio/stripes-erm-components';
+import {
+  POLICIES_FILTER_CONFIG,
+  getRefdataValuesByDesc,
+  downloadBlob,
+  useTags
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/Amendments';
 import NoPermissions from '../../components/NoPermissions';
@@ -51,6 +56,8 @@ const AmendmentsRoute = ({
     ]
   });
 
+  const { data: { tags = [] } = {} } = useTags();
+
   const amendmentsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name,description',
@@ -59,6 +66,7 @@ const AmendmentsRoute = ({
       ],
       filterKeys: {
         status: 'status.value',
+        tags: 'tags.value',
       },
       sortKeys: {
         status: 'status.label',
@@ -96,6 +104,7 @@ const AmendmentsRoute = ({
         amendments,
         statusValues: getRefdataValuesByDesc(refdata, LICENSE_STATUS),
         documentAtTypeValues: getRefdataValuesByDesc(refdata, DOCUMENT_AT_TYPE),
+        tags
       }}
       history={history}
       onCompareLicenseTerms={handleCompareLicenseTerms}
