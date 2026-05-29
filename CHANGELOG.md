@@ -1,5 +1,10 @@
 # Change history for ui-licenses
 
+## 12.1.1 2026-05-29
+  * ERM-4014: Change default `headingLevel` in meta section header to `3`
+  * ERM-3994: Tags helper not exposed in Amendment UI
+  * Updated dependencies for Trillium release
+
 ## 12.1.0 2026-04-17
   * ERM-3979: Make "Duplicate" option in Amendment actions menu inactive and greyed out when parent license cannot be edited via access control
   * ERM-3977: Creating new custom property: Error message appears only in Dev Tools when attempting to create a license term with the same name as an existing one

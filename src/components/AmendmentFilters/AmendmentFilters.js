@@ -4,12 +4,11 @@ import isEqual from 'lodash/isEqual';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
+import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-components';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, SimpleAccessControlFilter } from '@folio/stripes-erm-components';
-
+import { DateFilter, DocumentFilter, SimpleAccessControlFilter, TagsFilter } from '@folio/stripes-erm-components';
 
 import { LICENSE_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT, amendmentContentOptions } from '../../constants';
 
@@ -21,9 +20,11 @@ const FILTERS = [
 
 const AmendmentFilters = ({ activeFilters = { status: [] }, data, filterHandlers }) => {
   const intl = useIntl();
+  const tagsEnabled = useTagsEnabled({ useSettings: true });
 
   const [filterState, setFilterState] = useState({
     status: [],
+    tags: [],
   });
 
   const categoryValues = data.documentAtTypeValues;
@@ -36,6 +37,10 @@ const AmendmentFilters = ({ activeFilters = { status: [] }, data, filterHandlers
         newState[filter] = values;
       }
     });
+
+    if ((data?.tags?.length ?? 0) !== filterState.tags?.length) {
+      newState.tags = data.tags.map(({ label }) => ({ value: label, label }));
+    }
 
     if (Object.keys(newState).length) {
       setFilterState(prevState => ({ ...prevState, ...newState }));
@@ -151,10 +156,21 @@ const AmendmentFilters = ({ activeFilters = { status: [] }, data, filterHandlers
     );
   };
 
+  const renderTagsFilter = () => {
+    return (
+      <TagsFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        tags={filterState.tags}
+      />
+    );
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('status')}
       {renderAccessControlFilter()}
+      {tagsEnabled && renderTagsFilter()}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCustomPropertyFilters()}

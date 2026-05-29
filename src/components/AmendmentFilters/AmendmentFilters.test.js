@@ -10,6 +10,11 @@ import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import translationsProperties from '../../../test/helpers';
 import AmendmentFilters from './AmendmentFilters';
 
+jest.mock('@k-int/stripes-kint-components', () => ({
+  ...jest.requireActual('@k-int/stripes-kint-components'),
+  useTagsEnabled: jest.fn(() => true),
+}));
+
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
   SimpleAccessControlFilter: () => <div>SimpleAccessControlFilter</div>,
@@ -67,6 +72,13 @@ const data = {
     'label': 'Rejected'
   }
   ],
+  'tags': [
+    {
+      'id': 3,
+      'normValue': 'important',
+      'value': 'important'
+    }
+  ]
 };
 
 const filterHandlers = {
@@ -95,6 +107,10 @@ describe('AmendmentFilters', () => {
 
   test('renders the Status Accordion', async () => {
     await Accordion('Status').exists();
+  });
+
+  test('renders the Tags Accordion', async () => {
+    await Accordion('Tags').exists();
   });
 
   test('renders SimpleAccessControlFilter component', () => {
@@ -150,6 +166,10 @@ describe('AmendmentFilters', () => {
     await waitFor(() => {
       expect(stateMock.mock.calls.length).toEqual(5);
     });
+  });
+
+  test('renders the Tags Accordion', async () => {
+    await Accordion('Tags').exists();
   });
 
   test('renders the Supplementary documents Accordion', async () => {

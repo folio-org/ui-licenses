@@ -26,6 +26,10 @@ describe('Amendment', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <Amendment
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={data}
             handlers={handlers}
             urls={urls}
@@ -42,7 +46,8 @@ describe('Amendment', () => {
       'LicenseAgreements',
       'LicenseAmendments',
       'SupplementaryDocs',
-      'CustomPropertiesView'
+      'CustomPropertiesView',
+      'HelperComponent'
     ])('renders the %s component', (componentText) => {
       const { getByText } = renderComponent;
       expect(getByText(componentText)).toBeInTheDocument();
@@ -81,6 +86,10 @@ describe('Amendment', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <Amendment
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={data}
             handlers={handlers}
             isLoading

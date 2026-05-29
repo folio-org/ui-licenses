@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "12.1.0",
+  "version": "12.1.1",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -17,12 +17,12 @@
   "devDependencies": {
     "@babel/core": "^7.18.6",
     "@babel/eslint-parser": "^7.15.0",
-    "@folio/eslint-config-stripes": "^8.0.0",
-    "@folio/jest-config-stripes": "^3.0.0",
-    "@folio/stripes": "^10.0.0",
-    "@folio/stripes-cli": "^4.0.0",
-    "@folio/stripes-erm-components": "^10.0.0",
-    "@folio/stripes-erm-testing": "^3.0.0",
+    "@folio/eslint-config-stripes": "^9.0.0",
+    "@folio/jest-config-stripes": "^3.1.0",
+    "@folio/stripes": "^10.1.0",
+    "@folio/stripes-cli": "^5.0.0",
+    "@folio/stripes-erm-components": "^10.1.1",
+    "@folio/stripes-erm-testing": "^3.1.0",
     "@formatjs/cli": "^6.6.0",
     "core-js": "^3.6.1",
     "eslint": "^7.32.0",
@@ -39,7 +39,7 @@
     "rxjs": "^6.6.3"
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^5.15.0",
+    "@k-int/stripes-kint-components": "^5.37.0",
     "@rehooks/local-storage": "^2.4.4",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -53,8 +53,8 @@
     "react-router-prop-types": "^1.0.4"
   },
   "peerDependencies": {
-    "@folio/stripes": "^10.0.0",
-    "@folio/stripes-erm-components": "^10.0.0",
+    "@folio/stripes": "^10.1.0",
+    "@folio/stripes-erm-components": "^10.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^7.1.5",
