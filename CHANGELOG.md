@@ -1,6 +1,7 @@
 # Change history for ui-licenses
 
 ## 12.2.0 IN PROGRESS
+  * ERM-4101: Update validation and user feedback for creating/updating the terms settings
 
 ## 12.1.1 2026-05-29
   * ERM-4014: Change default `headingLevel` in meta section header to `3`
