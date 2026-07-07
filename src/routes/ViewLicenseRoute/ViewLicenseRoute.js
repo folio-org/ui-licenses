@@ -20,7 +20,12 @@ import {
 import View from '../../components/License';
 import { urls as appUrls } from '../../components/utils';
 
-import { LICENSE_ENDPOINT, LINKED_AGREEMENTS_ENDPOINT, LICENSES_ENDPOINT } from '../../constants';
+import {
+  LICENSE_ENDPOINT,
+  LINKED_AGREEMENTS_ENDPOINT,
+  LICENSES_ENDPOINT,
+  LICENSE_ACCESSCONTROL_ENDPOINT
+} from '../../constants';
 
 const ViewLicenseRoute = ({
   handlers = {},
@@ -43,14 +48,17 @@ const ViewLicenseRoute = ({
 
   // Access control fetch
   const accessControlData = useGetAccess({
+    accessControlEndpoint: LICENSE_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
   });
 
   const {
-    isLoading: isAccessControlLoading,
     canRead,
+    doAccessControl,
+    isLoading: isAccessControlLoading,
+    isDoAccessControlLoading,
   } = accessControlData;
 
   // License fetch
@@ -97,6 +105,8 @@ const ViewLicenseRoute = ({
   const { policies = [] } = usePolicies({
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
+    doAccessControl,
+    isDoAccessControlLoading,
     queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
     queryOptions: {
       enabled: !isAccessControlLoading && !!canRead

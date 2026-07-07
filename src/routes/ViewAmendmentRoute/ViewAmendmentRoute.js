@@ -23,6 +23,7 @@ import {
   LICENSE_ENDPOINT,
   LINKED_AGREEMENTS_ENDPOINT,
   AMENDMENTS_ENDPOINT,
+  LICENSE_ACCESSCONTROL_ENDPOINT
 } from '../../constants';
 import { urls as appUrls } from '../../components/utils';
 
@@ -66,6 +67,7 @@ const ViewAmendmentRoute = ({
   const amendmentPath = AMENDMENT_ENDPOINT(amendmentId);
 
   const accessControlData = useGetAccess({
+    accessControlEndpoint: LICENSE_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: AMENDMENTS_ENDPOINT,
     resourceId: amendmentId,
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Amendment', amendmentId, canDo]
@@ -73,7 +75,9 @@ const ViewAmendmentRoute = ({
 
   const {
     canRead,
+    doAccessControl,
     isLoading: isAccessControlLoading,
+    isDoAccessControlLoading,
   } = accessControlData;
 
   const { data: amendment = {} } = useQuery(
@@ -113,6 +117,8 @@ const ViewAmendmentRoute = ({
   const { policies = [] } = usePolicies({
     resourceEndpoint: AMENDMENTS_ENDPOINT,
     resourceId: amendmentId,
+    doAccessControl,
+    isDoAccessControlLoading,
     // While this is note the pattern we use for Amendment fetches, this is
     // because in this case Amendment policies _rely_ on License policies,
     // so a refresh should affect both
