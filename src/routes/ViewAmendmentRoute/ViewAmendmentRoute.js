@@ -77,7 +77,6 @@ const ViewAmendmentRoute = ({
     canRead,
     doAccessControl,
     isLoading: isAccessControlLoading,
-    isDoAccessControlLoading,
   } = accessControlData;
 
   const { data: amendment = {} } = useQuery(
@@ -118,7 +117,6 @@ const ViewAmendmentRoute = ({
     resourceEndpoint: AMENDMENTS_ENDPOINT,
     resourceId: amendmentId,
     doAccessControl,
-    isDoAccessControlLoading,
     // While this is note the pattern we use for Amendment fetches, this is
     // because in this case Amendment policies _rely_ on License policies,
     // so a refresh should affect both

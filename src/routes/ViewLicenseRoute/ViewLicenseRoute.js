@@ -58,7 +58,6 @@ const ViewLicenseRoute = ({
     canRead,
     doAccessControl,
     isLoading: isAccessControlLoading,
-    isDoAccessControlLoading,
   } = accessControlData;
 
   // License fetch
@@ -106,7 +105,6 @@ const ViewLicenseRoute = ({
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
     doAccessControl,
-    isDoAccessControlLoading,
     queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
     queryOptions: {
       enabled: !isAccessControlLoading && !!canRead

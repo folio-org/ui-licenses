@@ -62,7 +62,6 @@ const EditLicenseRoute = ({
     canEdit,
     doAccessControl,
     isLoading: isAccessControlLoading,
-    isDoAccessControlLoading,
   } = accessControlData;
   const refdata = useLicenseRefdata({
     desc: [
@@ -92,7 +91,6 @@ const EditLicenseRoute = ({
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
     doAccessControl,
-    isDoAccessControlLoading,
     queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
   });
 
