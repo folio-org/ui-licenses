@@ -18,7 +18,7 @@ import View from '../../components/LicenseForm';
 import NoPermissions from '../../components/NoPermissions';
 import urls from '../../components/utils/urls';
 
-import { LICENSES_ENDPOINT } from '../../constants';
+import { LICENSES_ENDPOINT, LICENSE_ACCESSCONTROL_ENDPOINT } from '../../constants';
 import { useLicenseRefdata } from '../../hooks';
 
 const [
@@ -48,6 +48,7 @@ const CreateLicenseRoute = ({
   const hasPerms = stripes.hasPerm('ui-licenses.licenses.edit');
 
   const accessControlData = useGetAccess({
+    accessControlEndpoint: LICENSE_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: LICENSES_ENDPOINT,
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', canDo]
   });
