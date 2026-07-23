@@ -15,7 +15,6 @@ import {
   useChunkedUsers,
   useGetAccess,
   useClaim,
-  usePolicies,
   isEqualClaimPolicies,
 } from '@folio/stripes-erm-components';
 
@@ -54,14 +53,15 @@ const EditLicenseRoute = ({
     accessControlEndpoint: LICENSE_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
-    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo],
+    policiesQueryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
   });
 
   const {
     canRead,
     canEdit,
-    doAccessControl,
     isLoading: isAccessControlLoading,
+    policies
   } = accessControlData;
   const refdata = useLicenseRefdata({
     desc: [
@@ -86,13 +86,6 @@ const EditLicenseRoute = ({
   );
 
   const { claim } = useClaim({ resourceEndpoint: LICENSES_ENDPOINT });
-
-  const { policies } = usePolicies({
-    resourceEndpoint: LICENSES_ENDPOINT,
-    resourceId: licenseId,
-    doAccessControl,
-    queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
-  });
 
   const { mutateAsync: putLicense } = useMutation(
     [LICENSE_ENDPOINT(licenseId), 'putLicense'],

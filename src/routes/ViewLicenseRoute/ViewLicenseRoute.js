@@ -13,7 +13,6 @@ import {
   useInterfaces,
   useParallelBatchFetch,
   useErmHelperApp,
-  usePolicies,
   useGetAccess
 } from '@folio/stripes-erm-components';
 
@@ -51,13 +50,14 @@ const ViewLicenseRoute = ({
     accessControlEndpoint: LICENSE_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: LICENSES_ENDPOINT,
     resourceId: licenseId,
-    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo]
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'License', licenseId, canDo],
+    policiesQueryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
   });
 
   const {
     canRead,
-    doAccessControl,
     isLoading: isAccessControlLoading,
+    policies = []
   } = accessControlData;
 
   // License fetch
@@ -95,17 +95,6 @@ const ViewLicenseRoute = ({
   } = useParallelBatchFetch({
     generateQueryKey: ({ offset }) => ['ERM', 'License', licenseId, 'LinkedAgreements', offset],
     endpoint: LINKED_AGREEMENTS_ENDPOINT(licenseId),
-    queryOptions: {
-      enabled: !isAccessControlLoading && !!canRead
-    }
-  });
-
-  // Policies fetch
-  const { policies = [] } = usePolicies({
-    resourceEndpoint: LICENSES_ENDPOINT,
-    resourceId: licenseId,
-    doAccessControl,
-    queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'policies'],
     queryOptions: {
       enabled: !isAccessControlLoading && !!canRead
     }

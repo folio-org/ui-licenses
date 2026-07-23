@@ -10,7 +10,6 @@ import {
   INVALID_JSON_ERROR,
   JSON_ERROR,
   useParallelBatchFetch,
-  usePolicies,
   useGetAccess,
   useErmHelperApp
 } from '@folio/stripes-erm-components';
@@ -70,12 +69,17 @@ const ViewAmendmentRoute = ({
     accessControlEndpoint: LICENSE_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: AMENDMENTS_ENDPOINT,
     resourceId: amendmentId,
-    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Amendment', amendmentId, canDo]
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Amendment', amendmentId, canDo],
+    // While this is note the pattern we use for Amendment fetches, this is
+    // because in this case Amendment policies _rely_ on License policies,
+    // so a refresh should affect both
+    policiesQueryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'AmendmentPolicies', amendmentId],
+
   });
 
   const {
     canRead,
-    doAccessControl,
+    policies = [],
     isLoading: isAccessControlLoading,
   } = accessControlData;
 
@@ -112,16 +116,6 @@ const ViewAmendmentRoute = ({
       linkedAgreements,
     };
   };
-
-  const { policies = [] } = usePolicies({
-    resourceEndpoint: AMENDMENTS_ENDPOINT,
-    resourceId: amendmentId,
-    doAccessControl,
-    // While this is note the pattern we use for Amendment fetches, this is
-    // because in this case Amendment policies _rely_ on License policies,
-    // so a refresh should affect both
-    queryNamespaceGenerator: () => ['ERM', 'License', licenseId, 'AmendmentPolicies', amendmentId],
-  });
 
   const handleClose = () => {
     // If we're coming from amendments, go back to amendments, else go back to license view
