@@ -26,6 +26,11 @@ import {
 import { AppIcon, TitleManager, useStripes } from '@folio/stripes/core';
 
 import DuplicateLicenseModal from '../DuplicateLicenseModal';
+import {
+  ConnectedTasksJobsButton,
+  ConnectedTasksJobsPane,
+} from '../ConnectedTasksJobs';
+import { CONNECTED_RECORD_TYPES } from '../ConnectedTasksJobs/constants';
 
 import {
   LicenseAgreements,
@@ -69,6 +74,17 @@ const License = ({
   } = accessControlData;
 
   const stripes = useStripes();
+
+  const connectedTasksJobsProps = {
+    recordId: data.license.id,
+    recordObject: {
+      description: data.license.description,
+      name: data.license.name,
+      status: data.license.status,
+      type: data.license.type,
+    },
+    recordType: CONNECTED_RECORD_TYPES.LICENSE,
+  };
 
   const { data: custpropContexts = [] } = useLicensesContexts();
   // Ensure the custprops with no contexts get rendered
@@ -160,15 +176,16 @@ const License = ({
   const renderLastMenu = () => {
     const { license } = data;
 
-    return stripes.hasPerm('ui-licenses.licenses.edit') ? (
+    return (
       <PaneMenu>
-        {handlers.onToggleTags &&
+        {stripes.hasPerm('ui-licenses.licenses.edit') && handlers.onToggleTags &&
           <TagButton
             entity={license}
           />
         }
+        <ConnectedTasksJobsButton {...connectedTasksJobsProps} />
       </PaneMenu>
-    ) : null;
+    );
   };
 
   const paneProps = {
@@ -266,6 +283,7 @@ const License = ({
             </AccordionStatus>
           </TitleManager>
         </Pane>
+        <ConnectedTasksJobsPane {...connectedTasksJobsProps} />
         <HelperComponent
           link={data.tagsLink}
           onToggle={handlers.onToggleTags}
