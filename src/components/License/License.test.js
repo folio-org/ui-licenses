@@ -1,7 +1,10 @@
 import { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { useStripes } from '@folio/stripes/core';
+import {
+  Pluggable,
+  useStripes,
+} from '@folio/stripes/core';
 import { Button, Pane, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { data, isLoading, handlers, urls } from './testResources';
@@ -113,6 +116,29 @@ describe('License', () => {
 
     test('renders the expected Pane', async () => {
       await Pane('MR License').is({ visible: true });
+    });
+
+    it('provides the License context to the connected Tasks/Jobs plugin', () => {
+      expect(Pluggable.mock.calls.map(([props]) => props)).toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          componentType: 'ConnectedTasksJobsButton',
+          recordId: data.license.id,
+          recordObject: {
+            description: data.license.description,
+            name: data.license.name,
+            status: data.license.status,
+            type: data.license.type,
+          },
+          recordType: 'license',
+          type: 'task-list',
+        }),
+        expect.objectContaining({
+          componentType: 'ConnectedTasksJobsPane',
+          recordId: data.license.id,
+          recordType: 'license',
+          type: 'task-list',
+        }),
+      ]));
     });
   });
 });

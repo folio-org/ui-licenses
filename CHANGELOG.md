@@ -2,6 +2,7 @@
 
 ## 12.2.0 IN PROGRESS
   * ERM-4101: Update validation and user feedback for creating/updating the terms settings
+  * ERM-4156: Add the Connected Tasks/Jobs fourth pane to License view.
 
 ## 12.1.1 2026-05-29
   * ERM-4014: Change default `headingLevel` in meta section header to `3`
